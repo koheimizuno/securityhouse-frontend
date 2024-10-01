@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`border rounded-full w-[200px] h-[40px] sm:w-[60px] sm:h-[40px] md:w-auto md:h-auto md:px-8 md:py-2 flex flex-row justify-center items-center gap-2
+      className={`border rounded-full w-[200px] h-[40px] md:w-auto md:h-auto md:px-8 md:py-2 flex flex-row justify-center items-center gap-2
         ${outline ? "border-borderColor" : "border-primary"}
         ${outline ? "bg-[#f0f0f0]" : "bg-primary"}
         ${outline ? "text-txtColor" : "text-white"}
@@ -33,9 +33,9 @@ const Button: React.FC<ButtonProps> = ({
     >
       {icon && <img src={icon} alt={alt} height={16} />}
       <span
-        className={`text-[14px] font-bold block ${
-          spTxtHidden ? "sm:hidden" : ""
-        } md:block`}
+        className={`text-[14px] font-bold whitespace-nowrap ${
+          spTxtHidden ? "hidden md:block" : ""
+        }`}
       >
         {value}
       </span>

@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="ja">
       <body>
         <Header />
-        {children}
+        <main className="mt-[73px]">{children}</main>
         <Footer />
       </body>
     </html>
