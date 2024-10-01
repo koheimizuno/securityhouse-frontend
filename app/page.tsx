@@ -1,8 +1,6 @@
 import Image from "next/image";
+import Loader from "@/app/components/Loader";
 
 export default function Home() {
-  return (
-    <div>
-    </div>
-  );
+  return <div className="foreground">{/* <Loader /> */}</div>;
 }
