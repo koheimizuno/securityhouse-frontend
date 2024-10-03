@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
-import Button from "../Button";
+import Button from "../common/Button";
 
 const Footer = () => {
   const handleMoveTop = () => {
@@ -16,8 +16,15 @@ const Footer = () => {
       <div className="px-[20px] md:px-[80px] lg:px-[180px] mx-auto">
         <div className="flex justify-between items-center gap-8 lg:gap-[148px]">
           <div className="flex flex-col items-start gap-0">
-            <Image src="/images/logo.svg" alt="Logo" width={250} height={47} />
-            <p className="text-[15px] font-bold text-[#333] ps-2 md:ps-0">
+            <Image
+              src="/images/logo.svg"
+              alt="Logo"
+              className="w-[125px] h-[24px] lg:w-[250px] lg:h-[47px]"
+              width={250}
+              height={47}
+              priority
+            />
+            <p className="text-[12px] lg:text-[15px] font-bold text-[#333] ps-2 md:ps-0">
               SH会員専用ページ
             </p>
           </div>
@@ -32,6 +39,7 @@ const Footer = () => {
                   <Image
                     src="/images/arrow-right.svg"
                     alt="arrow-right"
+                    className="w-[5px] h-[10px]"
                     width={5}
                     height={10}
                   />
@@ -46,6 +54,7 @@ const Footer = () => {
                   <Image
                     src="/images/arrow-right.svg"
                     alt="arrow-right"
+                    className="w-[5px] h-[10px]"
                     width={5}
                     height={10}
                   />
@@ -60,6 +69,7 @@ const Footer = () => {
                   <Image
                     src="/images/arrow-right.svg"
                     alt="arrow-right"
+                    className="w-[5px] h-[10px]"
                     width={5}
                     height={10}
                   />
@@ -74,6 +84,7 @@ const Footer = () => {
                   <Image
                     src="/images/arrow-right.svg"
                     alt="arrow-right"
+                    className="w-[5px] h-[10px]"
                     width={5}
                     height={10}
                   />
@@ -88,6 +99,7 @@ const Footer = () => {
                   <Image
                     src="/images/arrow-right.svg"
                     alt="arrow-right"
+                    className="w-[5px] h-[10px]"
                     width={5}
                     height={10}
                   />
@@ -99,8 +111,9 @@ const Footer = () => {
               value="マイページ"
               outline={false}
               spTxtHidden={true}
-              icon="/images/user-vector.svg"
-              className="w-[80px] h-[40px] md:w-[200px] md:h-[56px]"
+              size="lg"
+              icon="/images/user-icon.svg"
+              className="px-8 py-3 md:w-[200px] md:h-[56px]"
             />
           </div>
         </div>
@@ -117,7 +130,10 @@ const Footer = () => {
           </a>
         </div>
       </div>
-      <div className="absolute bottom-20 right-10" onClick={handleMoveTop}>
+      <div
+        className="absolute bottom-20 right-10 cursor-pointer"
+        onClick={handleMoveTop}
+      >
         <Image
           src="/images/page-top.svg"
           alt="page-top"

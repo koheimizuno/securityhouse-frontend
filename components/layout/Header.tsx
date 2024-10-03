@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Button from "@/app/components/Button";
+import Button from "@/components/common/Button";
 import { useState } from "react";
 
 const Header = () => {
@@ -15,7 +15,13 @@ const Header = () => {
       <nav className="relative px-4 sm:px-[27px] py-4 border-b-[1px]">
         <div className="flex flex-row items-center justify-between gap-3 md:gap-0">
           <div className="flex flex-col items-start gap-0 md:flex-row md:items-center md:gap-2">
-            <Image src="/images/logo.svg" alt="Logo" width={217} height={40} />
+            <Image
+              src="/images/logo.svg"
+              className="w-[217px] h-[40px]"
+              alt="Logo"
+              width={217}
+              height={40}
+            />
             <p className="text-[15px] font-bold text-[#333] ps-2 md:ps-0">
               SH会員専用ページ
             </p>
@@ -31,13 +37,15 @@ const Header = () => {
               onClick={() => {}}
               value="ブックマーク"
               outline={true}
-              icon="/images/bookmark-vector.svg"
+              className="w-[200px] h-10"
+              icon="/images/bookmark-icon-black.svg"
             />
             <Button
               onClick={() => {}}
               value="マイページ"
               outline={false}
-              icon="/images/user-vector.svg"
+              className="w-[200px] h-10"
+              icon="/images/user-icon.svg"
             />
           </div>
           <div
@@ -50,6 +58,40 @@ const Header = () => {
           </div>
         </div>
       </nav>
+      <ul className="sm:grid sm:grid-cols-4 bg-primary">
+        <li className="border-b sm:border-r border-colorGray1">
+          <a
+            href="#"
+            className="flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]"
+          >
+            トークルーム
+          </a>
+        </li>
+        <li className="border-b sm:border-r border-colorGray1">
+          <a
+            href="#"
+            className="flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]"
+          >
+            お知らせ
+          </a>
+        </li>
+        <li className="border-b sm:border-r border-colorGray1">
+          <a
+            href="#"
+            className="flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]"
+          >
+            資料集
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            className="flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]"
+          >
+            SH会情報
+          </a>
+        </li>
+      </ul>
     </header>
   );
 };
