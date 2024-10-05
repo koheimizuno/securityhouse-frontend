@@ -1,27 +1,77 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+@import "swiper/css";
+@import "swiper/css/pagination";
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+:root {
+  --primary: #004ea2;
+  --hover-primary: #bcd5f0;
+  --secondary: #ed6c00;
+  --txt-color: #1c1c1c;
+  --border-color: #bbb;
+  --danger: #e60012;
+  --bg-semiblue: #d4dfec;
+  --color-gray-1: #f5f5f5;
+  --color-gray-2: #dddddd;
+  --color-gray-3: #bbbbbb;
+  --color-gray-4: #6e6e6e;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+body {
+  color: var(--txt-color);
+  background: white;
+  font-family: Noto Sans JP, sans-serif;
+}
+
+.secondary-scroll {
+  scrollbar-width: thin;
+}
+
+/* Hamburger Start */
+.bar1,
+.bar2,
+.bar3 {
+  width: 30px;
+  height: 3px;
+  background-color: #333;
+  margin: 6px 0;
+  transition: 0.6s;
+}
+
+.change .bar1 {
+  transform: translate(0, 9px) rotate(-45deg);
+}
+
+.change .bar2 {
+  opacity: 0;
+}
+
+.change .bar3 {
+  transform: translate(0, -9px) rotate(45deg);
+}
+/* Hamburger End */
+
+h2 {
+  @apply text-2xl sm:text-[20px] md:text-[25px] font-bold;
+}
+
+h3 {
+  @apply text-lg font-bold;
 }
