@@ -1,9 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import React from "react";
+import Image from "next/image";
 
-interface RoomCardProps {
+import Button from "@/components/common/Button";
+
+interface PostCardProps {
   id: string;
   title: string;
   description: string;
@@ -14,12 +16,12 @@ interface RoomCardProps {
   user: {
     name: string;
     avatar: string;
-    unit: string;
+    company: string;
   };
   updatedAt: string;
 }
 
-const RoomCard = ({
+const PostCard = ({
   id,
   title,
   description,
@@ -29,7 +31,7 @@ const RoomCard = ({
   commentNum,
   user,
   updatedAt,
-}: RoomCardProps) => {
+}: PostCardProps) => {
   return (
     <div className="bg-white px-4 py-6 w-[282px] rounded-md">
       <p className="text-xs flex items-center gap-1 mb-3">
@@ -37,13 +39,13 @@ const RoomCard = ({
         <span>{category}</span>
       </p>
       <ul className="mb-5 flex items-center flex-wrap gap-2">
-        {tag.map((tag) => (
-          <li
-            key={tag}
+        {tag.map((tag, id) => (
+          <Button
+            key={id}
+            value={tag}
+            size="sm"
             className="text-sm font-bold bg-primary text-white px-2 py-1 rounded-full w-fit"
-          >
-            {tag}
-          </li>
+          />
         ))}
       </ul>
       <a href="#">
@@ -53,8 +55,8 @@ const RoomCard = ({
       <div className="grid grid-cols-2 gap-4 mt-[22px] mb-4">
         <div className="flex items-center gap-2">
           <Image
-            src="/images/like-icon.svg"
-            alt="like"
+            src="/images/thumbs-up.svg"
+            alt="thumbs-up"
             width={20}
             height={20}
           />
@@ -85,7 +87,7 @@ const RoomCard = ({
           height={24}
         />
         <p className="text-sm">
-          {user.name}/{user.unit}
+          {user.name}/{user.company}
         </p>
       </div>
       <div className="flex items-center justify-between">
@@ -101,4 +103,4 @@ const RoomCard = ({
   );
 };
 
-export default RoomCard;
+export default PostCard;

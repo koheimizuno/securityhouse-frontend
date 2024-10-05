@@ -1,4 +1,4 @@
-const useImageAlt = (src: string) => {
+const getImageAlt = (src: string) => {
   // Extract the filename with extension
   let fileNameWithExtension: string | undefined = src.split("/").pop();
 
@@ -10,4 +10,4 @@ const useImageAlt = (src: string) => {
   return fileNameWithoutExtension;
 };
 
-export default useImageAlt;
+export default getImageAlt;

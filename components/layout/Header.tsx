@@ -1,8 +1,10 @@
 "use client";
 
+import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+
 import Button from "@/components/common/Button";
-import { useState } from "react";
 
 const Header = () => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
@@ -15,13 +17,15 @@ const Header = () => {
       <nav className="relative px-4 sm:px-[27px] py-4 border-b-[1px]">
         <div className="flex flex-row items-center justify-between gap-3 md:gap-0">
           <div className="flex flex-col items-start gap-0 md:flex-row md:items-center md:gap-2">
-            <Image
-              src="/images/logo.svg"
-              className="w-[217px] h-[40px]"
-              alt="Logo"
-              width={217}
-              height={40}
-            />
+            <Link href="/">
+              <Image
+                src="/images/logo.svg"
+                className="w-[217px] h-[40px]"
+                alt="Logo"
+                width={217}
+                height={40}
+              />
+            </Link>
             <p className="text-[15px] font-bold text-[#333] ps-2 md:ps-0">
               SH会員専用ページ
             </p>
@@ -40,13 +44,15 @@ const Header = () => {
               className="w-[200px] h-10"
               icon="/images/bookmark-icon-black.svg"
             />
-            <Button
-              onClick={() => {}}
-              value="マイページ"
-              outline={false}
-              className="w-[200px] h-10"
-              icon="/images/user-icon.svg"
-            />
+            <a href="/profile/1">
+              <Button
+                onClick={() => {}}
+                value="マイページ"
+                outline={false}
+                className="w-[200px] h-10"
+                icon="/images/user-icon.svg"
+              />
+            </a>
           </div>
           <div
             className={`${isHamburgerOpen ? "change" : ""} sm:hidden`}

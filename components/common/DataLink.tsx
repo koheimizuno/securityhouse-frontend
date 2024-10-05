@@ -1,8 +1,10 @@
 "use client";
 
 import React from "react";
-import useImageAlt from "../../hooks/useImageAlt";
 import Image from "next/image";
+
+import getImageAlt from "@/utils/getImageAlt";
+
 type Props = {
   src: string;
   title: React.ReactNode;
@@ -17,7 +19,7 @@ const DataLink = ({ src, title }: Props) => {
       <div className="flex items-center gap-4">
         <Image
           src={src}
-          alt={useImageAlt(src) || ""}
+          alt={getImageAlt(src) || ""}
           className="w-6 h-6"
           width={25}
           height={25}

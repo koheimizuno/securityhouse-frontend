@@ -12,22 +12,16 @@
 
 :root {
   --primary: #004ea2;
+  --hover-primary: #bcd5f0;
   --secondary: #ed6c00;
   --txt-color: #1c1c1c;
   --border-color: #bbb;
-  --color-red: #e60012;
+  --danger: #e60012;
   --bg-semiblue: #d4dfec;
   --color-gray-1: #f5f5f5;
   --color-gray-2: #dddddd;
   --color-gray-3: #bbbbbb;
   --color-gray-4: #6e6e6e;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 h1,
@@ -42,36 +36,12 @@ p {
 
 body {
   color: var(--txt-color);
-  background: var(--background);
+  background: white;
   font-family: Noto Sans JP, sans-serif;
 }
 
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey;
-  border-radius: 8px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #ed6c00;
-  border-radius: 10px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #ed6c00;
-}
-
-@media screen and (max-width: 768px) {
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
+.secondary-scroll {
+  scrollbar-width: thin;
 }
 
 /* Hamburger Start */

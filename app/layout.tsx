@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import ClientOnly from "@/components/layout/ClientOnly";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-import "./globals.css";
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
   title: "Security House",
@@ -17,9 +18,13 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        <Header />
-        <main className="mt-[73px]">{children}</main>
-        <Footer />
+        <ClientOnly>
+          <Header />
+          <main className="mt-[300px] sm:mt-[145px] md:mt-[123px]">
+            {children}
+          </main>
+          <Footer />
+        </ClientOnly>
       </body>
     </html>
   );

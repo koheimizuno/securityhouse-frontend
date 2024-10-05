@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
-import Button from "../common/Button";
+import Button from "@/components/common/Button";
 
 const Footer = () => {
   const handleMoveTop = () => {
@@ -12,7 +12,7 @@ const Footer = () => {
     });
   };
   return (
-    <footer className="relative bg-white py-8 border-t border-borderColor">
+    <footer className="relative bg-white py-8 border-t border-b border-borderColor">
       <div className="px-[20px] md:px-[80px] lg:px-[180px] mx-auto">
         <div className="flex justify-between items-center gap-8 lg:gap-[148px]">
           <div className="flex flex-col items-start gap-0">

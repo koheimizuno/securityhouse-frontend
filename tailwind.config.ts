@@ -13,11 +13,12 @@ const config: Config = {
       },
       colors: {
         primary: "var(--primary)",
+        hoverPrimary: "var(--hover-primary)",
         secondary: "var(--secondary)",
         txtColor: "var(--txt-color)",
         borderColor: "var(--border-color)",
         bgSemiblue: "var(--bg-semiblue)",
-        colorRed: "var(--color-red)",
+        danger: "var(--danger)",
         colorGray1: "var(--color-gray-1)",
         colorGray2: "var(--color-gray-2)",
         colorGray3: "var(--color-gray-3)",

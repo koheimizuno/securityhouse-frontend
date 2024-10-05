@@ -10,7 +10,7 @@
     "user": {
       "name": "山田太郎",
       "avatar": "https://placehold.jp/100x100.png",
-      "unit": "所属名"
+      "company": "所属名"
     },
     "updatedAt": "2024-06-01 12:00:00"
   },
@@ -25,7 +25,7 @@
     "user": {
       "name": "山田太郎",
       "avatar": "https://placehold.jp/100x100.png",
-      "unit": "所属名"
+      "company": "所属名"
     },
     "updatedAt": "2024-06-01 12:00:00"
   },
@@ -40,7 +40,7 @@
     "user": {
       "name": "山田太郎",
       "avatar": "https://placehold.jp/100x100.png",
-      "unit": "所属名"
+      "company": "所属名"
     },
     "updatedAt": "2024-06-01 12:00:00"
   },
@@ -55,7 +55,7 @@
     "user": {
       "name": "山田太郎",
       "avatar": "https://placehold.jp/100x100.png",
-      "unit": "所属名"
+      "company": "所属名"
     },
     "updatedAt": "2024-06-01 12:00:00"
   },
@@ -70,7 +70,7 @@
     "user": {
       "name": "山田太郎",
       "avatar": "https://placehold.jp/100x100.png",
-      "unit": "所属名"
+      "company": "所属名"
     },
     "updatedAt": "2024-06-01 12:00:00"
   }
