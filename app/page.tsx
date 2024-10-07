@@ -1,5 +1,7 @@
 "use client";
 
+import React, { useState } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -21,6 +23,7 @@ import {
   A11y,
   Autoplay,
 } from "swiper/modules";
+import { Swiper as SwiperType } from "swiper";
 
 import roomData from "@/mockup/roomdata.json";
 import { ROOM_CATEGORY } from "@/utils/constants";
@@ -32,6 +35,8 @@ export default function Home() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
   };
+
+  const [progress, setProgress] = useState(0);
 
   return (
     <>
@@ -67,7 +72,7 @@ export default function Home() {
           />
           <div className="flex flex-col items-center mt-6 lg:flex-row lg:items-start">
             <TabVertical queryKey="room_cat" roomCat={ROOM_CATEGORY}>
-              <div className="w-full lg:w-[calc(100%-240px)] bg-primary lg:ps-10 py-7 shadow-lg rounded-xl rounded-tl-none">
+              <div className="w-full lg:w-[calc(100%-240px)] bg-primary py-7 px-4 lg:ps-10 shadow-lg rounded-xl rounded-tl-none">
                 <div className="text-right pe-8 mb-6">
                   <Link href="#" className="text-white font-bold">
                     SH会トークルーム一覧へ
@@ -76,7 +81,6 @@ export default function Home() {
                 <Swiper
                   modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
                   speed={800}
-                  loop={true}
                   centeredSlides
                   autoplay={{
                     delay: 2500,
@@ -96,6 +100,11 @@ export default function Home() {
                     nextEl: ".arrow-right",
                     prevEl: ".arrow-left",
                   }}
+                  onSwiper={(swiper: SwiperType) => {
+                    swiper.on("progress", (swiper: SwiperType) => {
+                      setProgress(swiper.progress * 100);
+                    });
+                  }}
                 >
                   {roomData.map((room) => (
                     <SwiperSlide key={room.id}>
@@ -112,6 +121,35 @@ export default function Home() {
                       />
                     </SwiperSlide>
                   ))}
+
+                  <div className="flex justify-end items-center gap-4 mt-4 md:mt-5 md:mr-4">
+                    <div className="w-full h-3 bg-white rounded-full p-[2px]">
+                      <div
+                        className="h-full bg-secondary rounded-full transition-all duration-300 ease-linear"
+                        style={{ width: `${progress}%` }}
+                      ></div>
+                    </div>
+                    <div className="flex items-center gap-2 md:gap-4">
+                      <button className="arrow-left">
+                        <Image
+                          src="/images/arrow-circle-left-outline.svg"
+                          alt="arrow-left"
+                          className="w-10 h-10"
+                          width={40}
+                          height={40}
+                        />
+                      </button>
+                      <button className="arrow-right">
+                        <Image
+                          src="/images/arrow-circle-right-outline.svg"
+                          alt="arrow-right"
+                          className="w-10 h-10"
+                          width={40}
+                          height={40}
+                        />
+                      </button>
+                    </div>
+                  </div>
                 </Swiper>
               </div>
             </TabVertical>
@@ -127,7 +165,7 @@ export default function Home() {
                 value="一覧を見る"
                 onClick={() => {}}
                 size="lg"
-                subIcon="/images/arrow-right-circle.svg"
+                subIcon="/images/arrow-circle-right-outline.svg"
                 className="hidden md:block h-14 hrounded-full border border-primary"
               />
             </div>
