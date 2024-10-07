@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Container from "@/components/layout/Container";
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
+import { SearchBar } from "@/components/common/SearchBar";
 import Button from "@/components/common/Button";
 import Input from "@/components/form/InputText";
 import PostCard from "@/components/post/PostCard";
@@ -40,30 +41,9 @@ export default function Home() {
 
   return (
     <>
+      <h1 className="text-center text-2xl font-bold hidden">Security House</h1>
       <Breadcrumb />
-      <section className="bg-[#f2f2f2]">
-        <Container>
-          <h1 className="text-center text-2xl font-bold hidden">
-            Security House
-          </h1>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 py-6">
-            <p className="text-[16px] font-bold">キーワード検索</p>
-            <div className="flex items-center">
-              <Input
-                name="keyword"
-                className="lg:w-[400px] rounded-l-full"
-                placeholder="ハッシュタグ、アカウント、資料、品番検索"
-                onChange={handleChange}
-              />
-              <Button
-                value="検索する"
-                onClick={() => {}}
-                className="rounded-none rounded-r-full px-4 w-[100px] lg:w-[200px] h-10 md:h-10 border border-primary"
-              />
-            </div>
-          </div>
-        </Container>
-      </section>
+      <SearchBar />
       <section className="bg-bgSemiblue py-8">
         <Container>
           <SectionTitle
@@ -116,6 +96,7 @@ export default function Home() {
                         tag={room.tag}
                         likeNum={room.likeNum}
                         commentNum={room.commentNum}
+                        isLiked={room.isLiked}
                         user={room.user}
                         updatedAt={room.updatedAt}
                       />

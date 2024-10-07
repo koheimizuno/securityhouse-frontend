@@ -13,6 +13,7 @@ interface PostCardProps {
   tag: string[];
   likeNum: number;
   commentNum: number;
+  isLiked: boolean;
   user: {
     name: string;
     avatar: string;
@@ -29,11 +30,19 @@ const PostCard = ({
   tag,
   likeNum,
   commentNum,
+  isLiked,
   user,
   updatedAt,
 }: PostCardProps) => {
   return (
-    <div className="bg-white px-4 py-6 w-[282px] rounded-md">
+    <div className="relative bg-white px-4 py-6 w-[282px] rounded-md">
+      <Image
+        src={isLiked ? "/images/bookmark-on.svg" : "/images/bookmark-off.svg"}
+        alt={isLiked ? "bookmark-on" : "bookmark-off"}
+        className="absolute -top-1 right-4 w-8 h-8"
+        width={32}
+        height={32}
+      />
       <p className="text-xs flex items-center gap-1 mb-3">
         <span className="text-primary">■</span>
         <span>{category}</span>
@@ -81,8 +90,8 @@ const PostCard = ({
       <hr className="border-b border-colorGray4" />
       <div className="flex items-center gap-2 mt-4 mb-3">
         <Image
-          src="/images/user-icon.svg"
-          alt="user-icon"
+          src="/images/user-icon00.svg"
+          alt="user-icon00"
           width={24}
           height={24}
         />

@@ -7,6 +7,7 @@
     "tag": ["事務局からのご案内"],
     "likeNum": 5,
     "commentNum": 3,
+    "isLiked": false,
     "user": {
       "name": "山田太郎",
       "avatar": "https://placehold.jp/100x100.png",
@@ -22,6 +23,7 @@
     "tag": ["事務局からのご案内"],
     "likeNum": 5,
     "commentNum": 3,
+    "isLiked": true,
     "user": {
       "name": "山田太郎",
       "avatar": "https://placehold.jp/100x100.png",
@@ -37,6 +39,7 @@
     "tag": ["事務局からのご案内"],
     "likeNum": 5,
     "commentNum": 3,
+    "isLiked": false,
     "user": {
       "name": "山田太郎",
       "avatar": "https://placehold.jp/100x100.png",
@@ -52,6 +55,7 @@
     "tag": ["事務局からのご案内"],
     "likeNum": 5,
     "commentNum": 3,
+    "isLiked": true,
     "user": {
       "name": "山田太郎",
       "avatar": "https://placehold.jp/100x100.png",
@@ -67,6 +71,7 @@
     "tag": ["事務局からのご案内"],
     "likeNum": 5,
     "commentNum": 3,
+    "isLiked": false,
     "user": {
       "name": "山田太郎",
       "avatar": "https://placehold.jp/100x100.png",
