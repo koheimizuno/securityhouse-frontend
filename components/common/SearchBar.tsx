@@ -6,7 +6,7 @@ import Container from "@/components/layout/Container";
 import Input from "@/components/form/InputText";
 import Button from "@/components/common/Button";
 
-export const SearchBar = () => {
+const SearchBar = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
   };
@@ -34,3 +34,5 @@ export const SearchBar = () => {
     </section>
   );
 };
+
+export default SearchBar;

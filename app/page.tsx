@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Container from "@/components/layout/Container";
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
-import { SearchBar } from "@/components/common/SearchBar";
+import SearchBar from "@/components/common/SearchBar";
 import Button from "@/components/common/Button";
 import Input from "@/components/form/InputText";
 import PostCard from "@/components/post/PostCard";
@@ -31,13 +31,39 @@ import { ROOM_CATEGORY } from "@/utils/constants";
 
 export default function Home() {
   const searchParams = useSearchParams();
-  const rootCat = searchParams.get("room_cat");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
-  };
-
+  const [roomCat, setRoomCat] = useState("1");
   const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const roomCatQuery = searchParams.get("room_cat");
+    if (roomCatQuery) {
+      setRoomCat(roomCatQuery);
+    }
+  }, [searchParams]);
+
+  let roomListTitle = "",
+    roomListHref = "";
+
+  switch (roomCat) {
+    case "1":
+      roomListTitle = "SH会トークルーム一覧へ";
+      roomListHref = "chatroom/sh-room";
+      break;
+    case "2":
+      roomListTitle = "仕事トークルーム一覧へ";
+      roomListHref = "chatroom/work-room";
+      break;
+    case "3":
+      roomListTitle = "交流トークルーム一覧へ";
+      roomListHref = "chatroom/exchange-room";
+      break;
+    case "4":
+      roomListTitle = "社長室トークルーム一覧へ";
+      roomListHref = "chatroom/boss-room";
+      break;
+    default:
+      break;
+  }
 
   return (
     <>
@@ -54,8 +80,8 @@ export default function Home() {
             <TabVertical queryKey="room_cat" roomCat={ROOM_CATEGORY}>
               <div className="w-full lg:w-[calc(100%-240px)] bg-primary py-7 px-4 lg:ps-10 shadow-lg rounded-xl rounded-tl-none">
                 <div className="text-right pe-8 mb-6">
-                  <Link href="#" className="text-white font-bold">
-                    SH会トークルーム一覧へ
+                  <Link href={roomListHref} className="text-white font-bold">
+                    {roomListTitle}
                   </Link>
                 </div>
                 <Swiper

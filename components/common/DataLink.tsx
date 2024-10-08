@@ -28,7 +28,7 @@ const DataLink = ({ src, title }: Props) => {
       </div>
       <Image
         src="/images/arrow-right.svg"
-        alt="arrow-right"
+        alt="arrow-right w-3 h-3"
         width={12}
         height={12}
       />

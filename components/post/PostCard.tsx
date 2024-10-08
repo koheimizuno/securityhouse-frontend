@@ -77,7 +77,7 @@ const PostCard = ({
         <div className="flex items-center gap-2">
           <Image
             src="/images/comment-icon.svg"
-            alt="comment"
+            alt="comment w-5 h-5"
             width={20}
             height={20}
           />
@@ -91,7 +91,7 @@ const PostCard = ({
       <div className="flex items-center gap-2 mt-4 mb-3">
         <Image
           src="/images/user-icon00.svg"
-          alt="user-icon00"
+          alt="user-icon00 w-6 h-6"
           width={24}
           height={24}
         />

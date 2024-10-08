@@ -5,6 +5,8 @@ import SectionTitle from "../common/SectionTitle";
 import InputText from "../form/InputText";
 import Button from "../common/Button";
 
+import { validateEmail } from "@/utils/validateUtils";
+
 const EmailEditContent = () => {
   const [notifications, setNotifications] = useState({
     comments: false,
@@ -19,11 +21,6 @@ const EmailEditContent = () => {
   const [errors, setErrors] = useState({
     new: "",
   });
-
-  const validateEmail = (email: string) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

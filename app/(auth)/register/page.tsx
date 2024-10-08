@@ -8,6 +8,8 @@ import Input from "@/components/form/InputText";
 import Button from "@/components/common/Button";
 import PageHeader from "@/components/common/PageHeader";
 
+import { validateEmail } from "@/utils/validateUtils";
+
 const Register = () => {
   const [formData, setFormData] = useState({
     id: "",
@@ -32,7 +34,7 @@ const Register = () => {
 
     if (!formData.id) newErrors.id = "IDは必須です";
     if (!formData.email) newErrors.email = "メールアドレスは必須です";
-    else if (!/\S+@\S+\.\S+/.test(formData.email))
+    else if (!validateEmail(formData.email))
       newErrors.email = "有効なメールアドレスを入力してください";
     if (!formData.password) newErrors.password = "パスワードは必須です";
     else if (formData.password.length < 8)
@@ -70,7 +72,6 @@ const Register = () => {
           <span className="text-sm font-bold">メールアドレス</span>
           <Input
             name="email"
-            type="email"
             onChange={handleChange}
             placeholder="メールアドレス"
           />
