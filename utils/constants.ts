@@ -24,7 +24,7 @@ export const ROOM_CATEGORY = [
   },
 ];
 
-export const PROFILE_CATEGORY = [
+export const PROFILE_TAB = [
   {
     icon: ["/images/edit-primary.svg", "/images/edit-white.svg"],
     title: "プロフィール編集",
@@ -40,48 +40,5 @@ export const PROFILE_CATEGORY = [
   {
     icon: ["/images/log-out-primary.svg", "/images/log-out-white.svg"],
     title: "ログアウト",
-  },
-];
-
-export const CATEGORY = [
-  {
-    label: "すべて",
-    segment: "all",
-  },
-  {
-    label: "事務所向け",
-    segment: "office",
-  },
-  {
-    label: "店舗向け",
-    segment: "store",
-  },
-  {
-    label: "事務局からのご案内",
-    segment: "secretariat",
-  },
-  {
-    label: "補助金",
-    segment: "subsidy",
-  },
-  {
-    label: "プロテクトスポンサード",
-    segment: "protect",
-  },
-  {
-    label: "青年部の部屋（限定公開）",
-    segment: "youth",
-  },
-  {
-    label: "役員会の部屋（限定公開）",
-    segment: "board",
-  },
-  {
-    label: "SH会事業のアイデア出し",
-    segment: "sh-association",
-  },
-  {
-    label: "その他",
-    segment: "other",
   },
 ];

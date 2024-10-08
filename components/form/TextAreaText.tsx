@@ -28,7 +28,7 @@ const TextAreaText = ({
       name={name}
       value={value}
       rows={5}
-      className={`w-full border border-colorGray3 focus:outline-none py-2 px-4 rounded-md ${className}`}
+      className={`w-full bg-colorGray1 border border-colorGray2 focus:outline-none py-2 px-4 rounded-md ${className}`}
       placeholder={placeholder}
       onChange={handleChange}
     />

@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import Container from "@/components/layout/Container";
 import PageHeader from "@/components/common/PageHeader";
-import Input from "@/components/form/InputText";
+import InputText from "@/components/form/InputText";
 import Button from "@/components/common/Button";
 
 const Login = () => {
@@ -48,14 +48,14 @@ const Login = () => {
         <PageHeader title="ログイン" className="text-center" />
         <label className="flex flex-col gap-2">
           <span className="text-sm font-bold">ID</span>
-          <Input name="id" onChange={handleChange} placeholder="ID" />
+          <InputText name="id" onChange={handleChange} placeholder="ID" />
           {errors.id && (
             <span className="text-danger text-sm">{errors.id}</span>
           )}
         </label>
         <label className="flex flex-col gap-2">
           <span className="text-sm font-bold">パスワード</span>
-          <Input
+          <InputText
             name="password"
             type="password"
             onChange={handleChange}

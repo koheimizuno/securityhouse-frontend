@@ -48,7 +48,7 @@ const Button: React.FC<ButtonProps> = ({
         <Image
           src={icon}
           alt={getImageAlt(icon) || ""}
-          className="w-4 h-4"
+          className={`${size === "md" ? "w-4 h-4" : "w-5 h-5"}`}
           width={16}
           height={16}
         />
@@ -68,7 +68,9 @@ const Button: React.FC<ButtonProps> = ({
             alt={getImageAlt(subIcon) || ""}
             width={20}
             height={20}
-            className="w-5 h-5 absolute -right-8 top-1/2 -translate-y-1/2"
+            className={`${
+              size === "md" ? "w-5 h-5" : "w-6 h-6"
+            } absolute -right-8 top-1/2 -translate-y-1/2`}
           />
         )}
       </span>

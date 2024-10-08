@@ -26,7 +26,7 @@ const SearchBar = () => {
             <Button
               value="検索する"
               onClick={() => {}}
-              className="rounded-none rounded-r-full px-4 w-[100px] lg:w-[200px] h-10 md:h-10 border border-primary"
+              className="rounded-none rounded-r-full px-4 w-[100px] lg:w-[200px] h-10 md:h-12 border border-primary"
             />
           </div>
         </div>

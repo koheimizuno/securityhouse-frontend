@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { CATEGORY } from "@/utils/constants";
+import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
 import { ROOM_CATEGORY } from "@/utils/constants";
 import getImageAlt from "@/utils/getImageAlt";
-import Link from "next/link";
+import postCategory from "@/mockup/postCategory.json";
 
 const Category = () => {
   const router = useRouter();
@@ -33,7 +34,7 @@ const Category = () => {
       <div className="flex flex-col gap-4">
         <h4 className="font-bold">カテゴリ</h4>
         <ul className="flex flex-col gap-2">
-          {CATEGORY.map((item, index) => (
+          {postCategory.map((item, index) => (
             <li
               key={index}
               className={`flex items-center gap-2 text-sm rounded-full ps-5 pe-2 py-2 cursor-pointer ${

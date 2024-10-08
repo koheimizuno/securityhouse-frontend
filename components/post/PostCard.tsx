@@ -2,8 +2,10 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import Button from "@/components/common/Button";
+import { usePathname } from "next/navigation";
 
 interface PostCardProps {
   id: string;
@@ -34,6 +36,7 @@ const PostCard = ({
   user,
   updatedAt,
 }: PostCardProps) => {
+  const pathname = usePathname();
   return (
     <div className="relative bg-white px-4 py-6 w-[282px] rounded-md">
       <Image
@@ -57,9 +60,9 @@ const PostCard = ({
           />
         ))}
       </ul>
-      <a href="#">
+      <Link href={`${pathname}/${id}`}>
         <h3 className="underline truncate text-txtColor">{title}</h3>
-      </a>
+      </Link>
       <p className="text-sm line-clamp-3">{description}</p>
       <div className="grid grid-cols-2 gap-4 mt-[22px] mb-4">
         <div className="flex items-center gap-2">
