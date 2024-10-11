@@ -10,10 +10,10 @@ import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 import SearchBar from "@/components/common/SearchBar";
 import Button from "@/components/common/Button";
 import Input from "@/components/form/InputText";
-import PostCard from "@/components/post/PostCard";
+import PostCard from "@/views/chatroom/PostCard";
 import DataLink from "@/components/common/DataLink";
 import SectionTitle from "@/components/common/SectionTitle";
-import AnnounceSmCard from "@/components/announce/AnnounceSmCard";
+import AnnounceSmCard from "@/views/announce/AnnounceSmCard";
 import TabVertical from "@/components/common/TabVertical";
 
 import { Swiper, SwiperSlide } from "swiper/react";

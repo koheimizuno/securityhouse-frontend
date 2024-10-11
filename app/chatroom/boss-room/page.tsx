@@ -3,8 +3,8 @@
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 import SearchBar from "@/components/common/SearchBar";
 import Container from "@/components/layout/Container";
-import Category from "@/components/room/Category";
-import BossRoomContent from "@/components/room/BossRoomContent";
+import Category from "@/views/chatroom/Category";
+import BossRoomContent from "@/views/chatroom/BossRoomContent";
 
 const BossRoom = () => {
   return (

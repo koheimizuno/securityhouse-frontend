@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import PostCard from "@/components/post/PostCard";
-import Pagination from "@/components/room/Pagination";
+import PostCard from "@/views/chatroom/PostCard";
+import Pagination from "@/views/chatroom/Pagination";
 
 import roomData from "@/mockup/roomdata.json";
 
-const BossRoomContent = () => {
+const ExchangeRoomContent = () => {
   const pathname = usePathname();
+
   return (
     <div className="w-[calc(100%-246px)]">
       <div className="flex items-center gap-3 mb-4">
@@ -18,7 +19,7 @@ const BossRoomContent = () => {
           width={25}
           height={25}
         />
-        <h1 className="text-xl font-bold">社長室トークルーム</h1>
+        <h1 className="text-xl font-bold">交流トークルーム</h1>
       </div>
       <div className="bg-bgSemiblue p-8 flex flex-col gap-6 rounded-2xl">
         <h2 className="text-[32px] font-bold">すべて</h2>
@@ -53,4 +54,4 @@ const BossRoomContent = () => {
   );
 };
 
-export default BossRoomContent;
+export default ExchangeRoomContent;

@@ -14,7 +14,7 @@ import Container from "@/components/layout/Container";
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 import Button from "@/components/common/Button";
 import SectionTitle from "@/components/common/SectionTitle";
-import AnnounceMdCard from "@/components/announce/AnnounceMdCard";
+import AnnounceMdCard from "@/views/announce/AnnounceMdCard";
 import PageHeader from "@/components/common/PageHeader";
 import SearchBar from "@/components/common/SearchBar";
 

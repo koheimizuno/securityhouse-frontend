@@ -3,8 +3,8 @@
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 import SearchBar from "@/components/common/SearchBar";
 import Container from "@/components/layout/Container";
-import Category from "@/components/room/Category";
-import SHRoomContent from "@/components/room/SHRoomContent";
+import Category from "@/views/chatroom/Category";
+import SHRoomContent from "@/views/chatroom/SHRoomContent";
 
 const ShRoom = () => {
   return (
