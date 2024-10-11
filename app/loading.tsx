@@ -1,9 +1,9 @@
-"use client";
+'use client'
 
-import Loader from "@/components/common/Loader";
+import Loader from '@/components/common/Loader'
 
 const Loading = () => {
-  return <Loader />;
-};
+  return <Loader />
+}
 
-export default Loading;
+export default Loading
