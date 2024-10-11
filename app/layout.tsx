@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import ClientOnly from '@/components/layout/ClientOnly'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import ToasterProvider from '@/providers/ToasterProvider'
 
 import '@/app/globals.css'
 
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang='ja'>
       <body>
         <ClientOnly>
+          <ToasterProvider />
           <Header />
           <main className='mt-[300px] sm:mt-[145px] md:mt-[123px]'>{children}</main>
           <Footer />

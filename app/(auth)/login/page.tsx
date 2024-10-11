@@ -2,15 +2,22 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
 
 import Container from '@/components/layout/Container'
 import PageHeader from '@/components/common/PageHeader'
 import InputText from '@/components/form/InputText'
 import Button from '@/components/common/Button'
 
+import { loginAction } from '@/actions/authAction'
+
+import { validateEmail } from '@/utils/validateUtils'
+
 const Login = () => {
-  const [formData, setFormData] = useState({ id: '', password: '' })
-  const [errors, setErrors] = useState({ id: '', password: '' })
+  const router = useRouter()
+  const [formData, setFormData] = useState({ email: '', password: '' })
+  const [errors, setErrors] = useState({ email: '', password: '' })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -18,13 +25,12 @@ const Login = () => {
     setErrors({ ...errors, [name]: '' })
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const newErrors = { id: '', password: '' }
+    const newErrors = { email: '', password: '' }
 
-    if (!formData.id.trim()) {
-      newErrors.id = 'IDを入力してください'
-    }
+    if (!formData.email) newErrors.email = 'メールアドレスは必須です'
+    else if (!validateEmail(formData.email)) newErrors.email = '有効なメールアドレスを入力してください'
 
     if (!formData.password) {
       newErrors.password = 'パスワードを入力してください'
@@ -34,8 +40,16 @@ const Login = () => {
 
     setErrors(newErrors)
 
-    if (!newErrors.id && !newErrors.password) {
-      console.log('Form is valid, submitting...', formData)
+    if (!newErrors.email && !newErrors.password) {
+      const res: any = await loginAction(formData)
+      if (res.status === 200) {
+        toast.success('ログインに成功しました。')
+        setTimeout(() => {
+          router.push('/')
+        }, 2000)
+      } else {
+        toast.error('サーバの問題でデータ取得に失敗しました。')
+      }
     }
   }
 
@@ -44,9 +58,9 @@ const Login = () => {
       <form className='flex flex-col gap-8 max-w-[450px] m-auto' onSubmit={handleSubmit}>
         <PageHeader title='ログイン' className='text-center' />
         <label className='flex flex-col gap-2'>
-          <span className='text-sm font-bold'>ID</span>
-          <InputText name='id' onChange={handleChange} placeholder='ID' />
-          {errors.id && <span className='text-danger text-sm'>{errors.id}</span>}
+          <span className='text-sm font-bold'>メールアドレス</span>
+          <InputText name='email' onChange={handleChange} placeholder='メールアドレス' />
+          {errors.email && <span className='text-danger text-sm'>{errors.email}</span>}
         </label>
         <label className='flex flex-col gap-2'>
           <span className='text-sm font-bold'>パスワード</span>
