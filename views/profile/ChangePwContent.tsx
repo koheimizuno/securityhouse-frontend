@@ -1,11 +1,17 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useParams } from 'next/navigation'
+
 import SectionTitle from '@/components/common/SectionTitle'
 import InputText from '@/components/form/InputText'
 import Button from '@/components/common/Button'
 
+import { editUserAction, getUserAction } from '@/actions/authAction'
+import { toastHandler } from '@/utils/toastHander'
+
 const ChangePwContent = () => {
+  const params = useParams()
   const [formData, setFormData] = useState({
     current_pw: '',
     new_pw: '',
@@ -17,18 +23,32 @@ const ChangePwContent = () => {
     new_pw_confirm: ''
   })
 
+  const id = params.id
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
     setErrors({ ...errors, [name]: '' })
   }
 
-  const validateForm = () => {
-    let isValid = true
+  const validateForm = async () => {
+    let isValid = true,
+      originUserData = {
+        password: ''
+      }
     const newErrors = { ...errors }
 
     if (formData.current_pw.length < 8) {
       newErrors.current_pw = '現在のパスワードは8文字以上である必要があります'
+      isValid = false
+    }
+
+    if (typeof id === 'string') {
+      originUserData = await getUserAction(id)
+    }
+
+    if (formData.current_pw !== originUserData.password) {
+      newErrors.current_pw = '現在のパスワードが正しくありません。'
       isValid = false
     }
 
@@ -46,11 +66,14 @@ const ChangePwContent = () => {
     return isValid
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (validateForm()) {
+    if (await validateForm()) {
       console.log('Form is valid, submit the data')
-      // Add your submit logic here
+      const res = await editUserAction({ password: formData.new_pw })
+      if (typeof res === 'object' && res !== null) {
+        toastHandler(res.status, 'ユーザー情報の変更に成功しました。', 'サーバの問題でデータ取得に失敗しました。')
+      }
     }
   }
 

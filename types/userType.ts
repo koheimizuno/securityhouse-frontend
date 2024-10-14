@@ -1,14 +1,14 @@
 export type UsersType = {
-  id: number
+  id: string
   name: string
   uid: string
   email: string
   password: string
   thumbnail: string
   intro: string
-  comment_not: boolean
-  news_not: boolean
-  dm_not: boolean
+  comment_not: '0' | '1'
+  news_not: '0' | '1'
+  dm_not: '0' | '1'
   role_id: string
   group_id: string
   ranking_id: string

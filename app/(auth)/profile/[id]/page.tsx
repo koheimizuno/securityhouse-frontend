@@ -13,14 +13,33 @@ import AnnounceMdCard from '@/views/announce/AnnounceMdCard'
 import PageHeader from '@/components/common/PageHeader'
 import SearchBar from '@/components/common/SearchBar'
 
+import { getUserAction } from '@/actions/authAction'
+import { UsersType } from '@/types/userType'
+
 const Profile = () => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const params = useParams()
   const [tab, setTab] = useState<string>('1')
+  const [userData, setUserData] = useState<Pick<UsersType, 'name' | 'uid' | 'intro'>>({
+    name: '',
+    uid: '',
+    intro: ''
+  })
 
   const id = params.id
+
+  useEffect(() => {
+    if (typeof id === 'string') {
+      const fetchUserData = async () => {
+        const data = await getUserAction(id)
+        setUserData(data)
+      }
+
+      fetchUserData()
+    }
+  }, [id])
 
   useEffect(() => {
     const tab = searchParams.get('tab')
@@ -32,7 +51,7 @@ const Profile = () => {
   const handleTab = (e: React.MouseEvent<HTMLLIElement>) => {
     const value = e.currentTarget.getAttribute('data-value')
     if (value) {
-      router.push(`${pathname}?tab=${value}`)
+      router.push(`${pathname}?tab=${value}`, { scroll: false })
     }
   }
 
@@ -57,16 +76,14 @@ const Profile = () => {
             <div className='w-full flex flex-col gap-2'>
               <div className='flex justify-between'>
                 <div className='flex flex-col gap-2'>
-                  <h2 className='text-xl font-bold'>山田太郎／所属名</h2>
-                  <p className='text-xs'>@aaaaaa</p>
+                  <h2 className='text-xl font-bold'>{userData.name}／所属名</h2>
+                  <p className='text-xs'>@{userData.uid}</p>
                 </div>
                 <Link href={`/profile/${id}/edit`}>
                   <Button value='アカウント設定' />
                 </Link>
               </div>
-              <p>
-                自己紹介が入ります自己紹介が入ります自己紹介が入ります自己紹介が入ります自己紹介が入ります自己紹介が入ります自己紹介が入ります
-              </p>
+              <p>{userData.intro}</p>
             </div>
           </section>
           <section className='py-12'>
@@ -76,7 +93,9 @@ const Profile = () => {
             <SectionTitle title='投稿履歴' icon='/images/talk-room.svg' />
             <ul className='flex items-center gap-6 mt-5'>
               <li
-                className={`px-4 py-2 ${tab === '1' ? 'bg-primary text-white' : 'bg-white text-txtColor'}`}
+                className={`px-4 py-2 cursor-pointer ${
+                  tab === '1' ? 'bg-primary text-white' : 'bg-white text-txtColor'
+                }`}
                 data-value='1'
                 onClick={handleTab}
               >
@@ -84,7 +103,9 @@ const Profile = () => {
               </li>
               <li className='text-2xl'>|</li>
               <li
-                className={`px-4 py-2 ${tab === '2' ? 'bg-primary text-white' : 'bg-white text-txtColor'}`}
+                className={`px-4 py-2 cursor-pointer ${
+                  tab === '2' ? 'bg-primary text-white' : 'bg-white text-txtColor'
+                }`}
                 data-value='2'
                 onClick={handleTab}
               >
@@ -92,7 +113,9 @@ const Profile = () => {
               </li>
               <li className='text-2xl'>|</li>
               <li
-                className={`px-4 py-2 ${tab === '3' ? 'bg-primary text-white' : 'bg-white text-txtColor'}`}
+                className={`px-4 py-2 cursor-pointer ${
+                  tab === '3' ? 'bg-primary text-white' : 'bg-white text-txtColor'
+                }`}
                 data-value='3'
                 onClick={handleTab}
               >
@@ -100,7 +123,9 @@ const Profile = () => {
               </li>
               <li className='text-2xl'>|</li>
               <li
-                className={`px-4 py-2 ${tab === '4' ? 'bg-primary text-white' : 'bg-white text-txtColor'}`}
+                className={`px-4 py-2 cursor-pointer ${
+                  tab === '4' ? 'bg-primary text-white' : 'bg-white text-txtColor'
+                }`}
                 data-value='4'
                 onClick={handleTab}
               >

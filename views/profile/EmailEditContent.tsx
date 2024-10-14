@@ -1,26 +1,57 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
+
 import SectionTitle from '@/components/common/SectionTitle'
 import InputText from '@/components/form/InputText'
 import Button from '@/components/common/Button'
 
 import { validateEmail } from '@/utils/validateUtils'
+import { toastHandler } from '@/utils/toastHander'
+import { editUserAction, getUserAction } from '@/actions/authAction'
+import { UsersType } from '@/types/userType'
 
 const EmailEditContent = () => {
+  const params = useParams()
   const [notifications, setNotifications] = useState({
-    comments: false,
-    adminAnnouncements: false,
-    directMessages: false
+    comment_not: false,
+    news_not: false,
+    dm_not: false
   })
 
   const [email, setEmail] = useState({
-    current: '',
     new: ''
   })
   const [errors, setErrors] = useState({
     new: ''
   })
+
+  const [userData, setUserData] = useState<Pick<UsersType, 'email' | 'comment_not' | 'news_not' | 'dm_not'>>({
+    email: '',
+    comment_not: '0',
+    news_not: '0',
+    dm_not: '0'
+  })
+
+  const id = params.id
+
+  useEffect(() => {
+    if (typeof id === 'string') {
+      const fetchUserData = async () => {
+        const data = await getUserAction(id)
+        setUserData(data)
+        setNotifications({
+          ...notifications,
+          comment_not: data.comment_not,
+          news_not: data.news_not,
+          dm_not: data.dm_not
+        })
+      }
+
+      fetchUserData()
+    }
+  }, [id])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -43,13 +74,30 @@ const EmailEditContent = () => {
     }
   }
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target
     setNotifications(prev => ({ ...prev, [name]: checked }))
-    console.log(`${name}: ${checked}`)
+    if (name === 'comment_not') {
+      const res = await editUserAction({ comment_not: notifications.comment_not })
+      if (typeof res === 'object' && res !== null) {
+        toastHandler(res.status, 'ユーザー情報の変更に成功しました。', 'サーバの問題でデータ取得に失敗しました。')
+      }
+    }
+    if (name === 'news_not') {
+      const res = await editUserAction({ news_not: notifications.news_not })
+      if (typeof res === 'object' && res !== null) {
+        toastHandler(res.status, 'ユーザー情報の変更に成功しました。', 'サーバの問題でデータ取得に失敗しました。')
+      }
+    }
+    if (name === 'dm_not') {
+      const res = await editUserAction({ dm_not: notifications.dm_not })
+      if (typeof res === 'object' && res !== null) {
+        toastHandler(res.status, 'ユーザー情報の変更に成功しました。', 'サーバの問題でデータ取得に失敗しました。')
+      }
+    }
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!email.new || !validateEmail(email.new)) {
       setErrors(prev => ({
@@ -58,7 +106,10 @@ const EmailEditContent = () => {
       }))
       return
     }
-    console.log('submit', email)
+    const res = await editUserAction({ email: email.new })
+    if (typeof res === 'object' && res !== null) {
+      toastHandler(res.status, 'ユーザー情報の変更に成功しました。', 'サーバの問題でデータ取得に失敗しました。')
+    }
   }
 
   return (
@@ -67,7 +118,7 @@ const EmailEditContent = () => {
       <form className='mt-4 flex flex-col gap-8' onSubmit={handleSubmit}>
         <label className='flex flex-col gap-2'>
           <span className='text-sm font-bold'>現在のメールアドレス</span>
-          <InputText name='current' placeholder='aaaaa@aaa.aa' disabled={true} onChange={handleChange} />
+          <InputText name='current' placeholder={userData.email} disabled={true} onChange={() => {}} />
         </label>
         <label className='flex flex-col gap-2'>
           <span className='text-sm font-bold'>変更後のメールアドレス</span>
@@ -84,9 +135,9 @@ const EmailEditContent = () => {
             <label className='inline-flex items-center cursor-pointer'>
               <input
                 type='checkbox'
-                name='comments'
+                name='comment_not'
                 className='sr-only peer'
-                checked={notifications.comments}
+                checked={notifications.comment_not}
                 onChange={handleCheckboxChange}
               />
               <div
@@ -106,9 +157,9 @@ const EmailEditContent = () => {
             <label className='inline-flex items-center cursor-pointer'>
               <input
                 type='checkbox'
-                name='adminAnnouncements'
+                name='news_not'
                 className='sr-only peer'
-                checked={notifications.adminAnnouncements}
+                checked={notifications.news_not}
                 onChange={handleCheckboxChange}
               />
               <div
@@ -128,9 +179,9 @@ const EmailEditContent = () => {
             <label className='inline-flex items-center cursor-pointer'>
               <input
                 type='checkbox'
-                name='directMessages'
+                name='dm_not'
                 className='sr-only peer'
-                checked={notifications.directMessages}
+                checked={notifications.dm_not}
                 onChange={handleCheckboxChange}
               />
               <div
