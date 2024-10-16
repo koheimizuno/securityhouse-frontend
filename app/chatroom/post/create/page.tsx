@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb'
 import SearchBar from '@/components/common/SearchBar'
 import SectionTitle from '@/components/common/SectionTitle'
@@ -8,63 +10,116 @@ import SelectText from '@/components/form/SelectText'
 import InputText from '@/components/form/InputText'
 import TextAreaText from '@/components/form/TextAreaText'
 import Button from '@/components/common/Button'
+import { createPostAction } from '@/redux-store/slices/postSlice'
 
-const roomCatOptions = [
-  { value: 'SH会', label: 'SH会' },
-  { value: '仕事', label: '仕事' },
-  { value: '交流', label: '交流' },
-  { value: '社長室', label: '社長室' }
+const postTypeOptions = [
+  { value: '0', label: '選択してください' },
+  { value: '1', label: 'SH会' },
+  { value: '2', label: '仕事' },
+  { value: '3', label: '交流' },
+  { value: '4', label: '社長室' }
 ]
 
-const category = [
+const categoryOptions = [
   {
-    value: '事務局からのご案内1',
+    value: '0',
+    label: '選択してください'
+  },
+  {
+    value: '1',
     label: '事務局からのご案内1'
   },
   {
-    value: '事務局からのご案内2',
+    value: '2',
     label: '事務局からのご案内2'
   },
   {
-    value: '事務局からのご案内3',
+    value: '3',
     label: '事務局からのご案内3'
   },
   {
-    value: '事務局からのご案内4',
+    value: '4',
     label: '事務局からのご案内4'
   }
 ]
 
-const postRange = [
+const publicationOptions = [
   {
-    value: '全体1',
+    value: '0',
+    label: '選択してください'
+  },
+  {
+    value: '1',
     label: '全体1'
   },
   {
-    value: '全体2',
+    value: '2',
     label: '全体2'
   },
   {
-    value: '全体3',
+    value: '3',
     label: '全体3'
   }
 ]
 
 const CreatePost = () => {
-  const [selectedValue, setSelectedValue] = useState('')
+  const dispatch = useDispatch()
+  const [selectedValue, setSelectedValue] = useState({
+    postType: '0',
+    category: '0',
+    publication: '0'
+  })
+  const [inputValues, setInputValues] = useState({
+    title: '',
+    content: '',
+    hashtag: ''
+  })
+  const [errors, setErrors] = useState({
+    postType: '',
+    category: '',
+    publication: '',
+    content: '',
+    hashtag: ''
+  })
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (validateForm()) {
+      const postPayload = {
+        title: inputValues.title,
+        content: inputValues.content,
+        hashtag: inputValues.hashtag,
+        type_id: selectedValue.postType,
+        category_id: selectedValue.category,
+        publication: selectedValue.publication
+      }
+      dispatch(createPostAction(postPayload))
+    }
   }
 
   const handleSelect = (name: string, value: string) => {
-    setSelectedValue(value)
-    console.log(name)
-    console.log(value)
+    setSelectedValue(prev => ({ ...prev, [name]: value }))
+    setErrors(prev => ({ ...prev, [name]: '' }))
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
+    setInputValues(prev => ({ ...prev, [name]: value }))
+    setErrors(prev => ({ ...prev, [name]: '' }))
+  }
+
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {}
+
+    if (selectedValue.postType === '0') newErrors.postType = '選択してください'
+    if (selectedValue.category === '0') newErrors.category = '選択してください'
+    if (selectedValue.publication === '0') newErrors.publication = '選択してください'
+
+    if (!inputValues.content) newErrors.content = 'この項目は必須です。'
+    if (!inputValues.hashtag) newErrors.hashtag = 'この項目は必須です。'
+
+    setErrors(prev => ({ ...prev, ...newErrors }))
+    return Object.keys(newErrors).length === 0
   }
 
   return (
@@ -78,40 +133,61 @@ const CreatePost = () => {
             className='bg-white rounded-xl mt-6 px-6 py-8 sm:px-12 sm:py-10 flex flex-col gap-6'
             onSubmit={handleSubmit}
           >
-            <label className='flex flex-col md:flex-row md:justify-between md:items-center gap-2'>
+            <label
+              className={`relative flex flex-col md:flex-row md:justify-between md:items-center gap-2 ${
+                errors.postType && 'mb-4'
+              }`}
+            >
               <span className='text-base font-bold'>投稿先</span>
               <SelectText
-                options={roomCatOptions}
-                value={selectedValue}
+                options={postTypeOptions}
+                value={selectedValue.postType}
                 onChange={handleSelect}
-                placeholder='SH会'
-                name='post_type'
+                placeholder={postTypeOptions[0].label}
+                name='postType'
                 className='w-full md:w-[480px]'
               />
+              {errors.postType && (
+                <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.postType}</span>
+              )}
             </label>
-            <label className='flex flex-col md:flex-row md:justify-between md:items-center gap-2'>
+            <label
+              className={`relative flex flex-col md:flex-row md:justify-between md:items-center gap-2 ${
+                errors.category && 'mb-4'
+              }`}
+            >
               <span className='text-base font-bold'>カテゴリ</span>
               <SelectText
-                options={category}
-                value={selectedValue}
+                options={categoryOptions}
+                value={selectedValue.category}
                 onChange={handleSelect}
-                placeholder='事務局からのご案内1'
+                placeholder={categoryOptions[0].label}
                 name='category'
                 className='w-full md:w-[480px]'
               />
+              {errors.category && (
+                <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.category}</span>
+              )}
             </label>
-            <label className='flex flex-col md:flex-row md:justify-between md:items-center gap-2'>
+            <label
+              className={`relative flex flex-col md:flex-row md:justify-between md:items-center gap-2 ${
+                errors.publication && 'mb-4'
+              }`}
+            >
               <span className='text-base font-bold'>公開範囲</span>
               <SelectText
-                options={postRange}
-                value={selectedValue}
+                options={publicationOptions}
+                value={selectedValue.publication}
                 onChange={handleSelect}
-                placeholder='全体1'
-                name='pub-range'
+                placeholder={publicationOptions[0].label}
+                name='publication'
                 className='w-full md:w-[480px]'
               />
+              {errors.publication && (
+                <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.publication}</span>
+              )}
             </label>
-            <label className='flex flex-col md:flex-row md:justify-between md:items-center gap-2'>
+            <label className='relative flex flex-col md:flex-row md:justify-between md:items-center gap-2'>
               <p className='text-base font-bold flex flex-col gap-0'>
                 <span>タイトル</span>
                 <span className='text-xs text-colorGray4'>※任意</span>
@@ -123,16 +199,27 @@ const CreatePost = () => {
                 className='w-full md:w-[480px]'
               />
             </label>
-            <label className='flex flex-col md:flex-row md:justify-between md:items-start gap-2'>
+            <label
+              className={`relative flex flex-col md:flex-row md:justify-between md:items-start gap-2 ${
+                errors.content && 'mb-4'
+              }`}
+            >
               <span className='text-base font-bold'>内容</span>
               <TextAreaText
-                name='bio'
+                name='content'
                 placeholder='自己紹介を入力'
                 onChange={handleChange}
                 className='w-full md:w-[480px]'
               />
+              {errors.content && (
+                <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.content}</span>
+              )}
             </label>
-            <label className='flex flex-col md:flex-row md:justify-between md:items-center gap-2'>
+            <label
+              className={`relative flex flex-col md:flex-row md:justify-between md:items-start gap-2 ${
+                errors.hashtag && 'mb-4'
+              }`}
+            >
               <span className='text-base font-bold'>ハッシュタグの設定</span>
               <InputText
                 name='hashtag'
@@ -140,6 +227,9 @@ const CreatePost = () => {
                 placeholder='＃テキストをご入力ください'
                 className='w-full md:w-[480px]'
               />
+              {errors.hashtag && (
+                <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.hashtag}</span>
+              )}
             </label>
             <Button
               type='submit'
