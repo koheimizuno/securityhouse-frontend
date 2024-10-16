@@ -1,12 +1,11 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams, useRouter, useParams } from 'next/navigation'
 
 import AnnounceMdCard from '@/views/announce/AnnounceMdCard'
-
 import Container from '@/components/layout/Container'
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb'
 import Button from '@/components/common/Button'

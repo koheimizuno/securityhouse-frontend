@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb'
@@ -10,6 +10,7 @@ import SelectText from '@/components/form/SelectText'
 import InputText from '@/components/form/InputText'
 import TextAreaText from '@/components/form/TextAreaText'
 import Button from '@/components/common/Button'
+
 import { createPostAction } from '@/redux-store/slices/postSlice'
 
 const postTypeOptions = [
@@ -82,6 +83,19 @@ const CreatePost = () => {
     hashtag: ''
   })
 
+  useEffect(() => {}, [])
+
+  const handleSelect = (name: string, value: string) => {
+    setSelectedValue(prev => ({ ...prev, [name]: value }))
+    setErrors(prev => ({ ...prev, [name]: '' }))
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setInputValues(prev => ({ ...prev, [name]: value }))
+    setErrors(prev => ({ ...prev, [name]: '' }))
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (validateForm()) {
@@ -97,17 +111,6 @@ const CreatePost = () => {
     }
   }
 
-  const handleSelect = (name: string, value: string) => {
-    setSelectedValue(prev => ({ ...prev, [name]: value }))
-    setErrors(prev => ({ ...prev, [name]: '' }))
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setInputValues(prev => ({ ...prev, [name]: value }))
-    setErrors(prev => ({ ...prev, [name]: '' }))
-  }
-
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {}
 
@@ -121,6 +124,8 @@ const CreatePost = () => {
     setErrors(prev => ({ ...prev, ...newErrors }))
     return Object.keys(newErrors).length === 0
   }
+
+  console.log(inputValues.content)
 
   return (
     <>
