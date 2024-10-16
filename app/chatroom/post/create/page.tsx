@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 
@@ -9,7 +9,6 @@ import SearchBar from '@/components/common/SearchBar'
 import SectionTitle from '@/components/common/SectionTitle'
 import SelectText from '@/components/form/SelectText'
 import InputText from '@/components/form/InputText'
-import TextAreaText from '@/components/form/TextAreaText'
 import Button from '@/components/common/Button'
 
 import { createPostAction } from '@/redux-store/slices/postSlice'
@@ -82,8 +81,7 @@ const CreatePost = () => {
     hashtag: '',
     attachments: {
       file: '',
-      path: '',
-      preview: '' // Add state for image preview
+      preview: ''
     }
   })
   const [errors, setErrors] = useState({
@@ -100,16 +98,15 @@ const CreatePost = () => {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { type, name, value, files } = e.target // Update to get files
+    const { type, name, value, files } = e.target
     if (type === 'file') {
-      const file = files ? files[0] : null // Get the first file
-      const imageUrl = file ? URL.createObjectURL(file) : '' // Create a URL for the image
+      const file = files ? files[0] : null
+      const imageUrl = file ? URL.createObjectURL(file) : ''
       setInputValues(prev => ({
         ...prev,
         [name]: {
           file: file,
-          path: value,
-          preview: imageUrl // Set the image preview URL
+          preview: imageUrl
         }
       }))
     } else {
