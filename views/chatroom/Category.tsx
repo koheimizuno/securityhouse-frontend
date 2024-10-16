@@ -6,7 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-import { ROOM_CATEGORY } from '@/utils/constants'
+import { POST_TYPE } from '@/utils/constants'
 import getImageAlt from '@/utils/getImageAlt'
 import postCategory from '@/mockup/postCategory.json'
 
@@ -57,7 +57,7 @@ const Category = () => {
       <div className='flex flex-col gap-4'>
         <h4 className='font-bold'>トークルーム</h4>
         <ul className='w-full md:w-auto grid grid-cols-4 grid-rows-1 gap-3 lg:grid-cols-1 lg:grid-rows-4'>
-          {ROOM_CATEGORY.map((item, index) => (
+          {POST_TYPE.map((item, index) => (
             <li
               key={index}
               className={`border flex items-center p-3 lg:px-6 lg:h-[72px] rounded-xl cursor-pointer shadow-lg transition-all duration-500 ${

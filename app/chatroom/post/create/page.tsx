@@ -9,10 +9,53 @@ import InputText from '@/components/form/InputText'
 import TextAreaText from '@/components/form/TextAreaText'
 import Button from '@/components/common/Button'
 
+const roomCatOptions = [
+  { value: 'SH会', label: 'SH会' },
+  { value: '仕事', label: '仕事' },
+  { value: '交流', label: '交流' },
+  { value: '社長室', label: '社長室' }
+]
+
+const category = [
+  {
+    value: '事務局からのご案内1',
+    label: '事務局からのご案内1'
+  },
+  {
+    value: '事務局からのご案内2',
+    label: '事務局からのご案内2'
+  },
+  {
+    value: '事務局からのご案内3',
+    label: '事務局からのご案内3'
+  },
+  {
+    value: '事務局からのご案内4',
+    label: '事務局からのご案内4'
+  }
+]
+
+const postRange = [
+  {
+    value: '全体1',
+    label: '全体1'
+  },
+  {
+    value: '全体2',
+    label: '全体2'
+  },
+  {
+    value: '全体3',
+    label: '全体3'
+  }
+]
+
 const CreatePost = () => {
   const [selectedValue, setSelectedValue] = useState('')
 
-  const handleSubmit = () => {}
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+  }
 
   const handleSelect = (name: string, value: string) => {
     setSelectedValue(value)
@@ -23,47 +66,6 @@ const CreatePost = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
   }
-
-  const roomCatOptions = [
-    { value: 'SH会', label: 'SH会' },
-    { value: '仕事', label: '仕事' },
-    { value: '交流', label: '交流' },
-    { value: '社長室', label: '社長室' }
-  ]
-
-  const category = [
-    {
-      value: '事務局からのご案内1',
-      label: '事務局からのご案内1'
-    },
-    {
-      value: '事務局からのご案内2',
-      label: '事務局からのご案内2'
-    },
-    {
-      value: '事務局からのご案内3',
-      label: '事務局からのご案内3'
-    },
-    {
-      value: '事務局からのご案内4',
-      label: '事務局からのご案内4'
-    }
-  ]
-
-  const postRange = [
-    {
-      value: '全体1',
-      label: '全体1'
-    },
-    {
-      value: '全体2',
-      label: '全体2'
-    },
-    {
-      value: '全体3',
-      label: '全体3'
-    }
-  ]
 
   return (
     <>
@@ -83,7 +85,7 @@ const CreatePost = () => {
                 value={selectedValue}
                 onChange={handleSelect}
                 placeholder='SH会'
-                name='room-cat'
+                name='post_type'
                 className='w-full md:w-[480px]'
               />
             </label>

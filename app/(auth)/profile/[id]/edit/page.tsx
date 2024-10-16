@@ -25,7 +25,7 @@ const ProfileEdit = () => {
   return (
     <Container className='py-12'>
       <PageHeader title='アカウント設定' className='text-center' />
-      <TabVertical queryKey='profile_tab' roomCat={PROFILE_TAB} gap={true}>
+      <TabVertical queryKey='profile_tab' menuList={PROFILE_TAB} gap={true}>
         <div className='w-full lg:w-[calc(100%-300px)] lg:px-10 pb-7  rounded-xl rounded-tl-none'>
           {profileTab === '1' && <ProfileEditContent />}
           {profileTab === '2' && <EmailEditContent />}

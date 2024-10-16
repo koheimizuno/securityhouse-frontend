@@ -1,4 +1,4 @@
-export const ROOM_CATEGORY = [
+export const POST_TYPE = [
   {
     icon: ['/images/sh-room-primary.svg', '/images/sh-room-white.svg'],
     title: 'SH会ルーム',

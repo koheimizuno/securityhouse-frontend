@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useParams } from 'next/navigation'
 
 import SectionTitle from '@/components/common/SectionTitle'
@@ -8,12 +9,13 @@ import InputText from '@/components/form/InputText'
 import Button from '@/components/common/Button'
 
 import { validateEmail } from '@/utils/validateUtils'
-import { toastHandler } from '@/utils/toastHander'
-import { editUserAction, getUserAction } from '@/actions/authAction'
+import { getUserAction } from '@/actions/authAction'
 import { UsersType } from '@/types/userType'
+import { editUserAction } from '@/redux-store/slices/authSlice'
 
 const EmailEditContent = () => {
   const params = useParams()
+  const dispatch = useDispatch()
   const [notifications, setNotifications] = useState({
     comment_not: false,
     news_not: false,
@@ -53,47 +55,45 @@ const EmailEditContent = () => {
     }
   }, [id])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setEmail(prev => ({ ...prev, [name]: value }))
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target
+      setEmail(prev => ({ ...prev, [name]: value }))
 
-    if (name === 'new') {
-      if (!value) {
-        setErrors(prev => ({
-          ...prev,
-          new: 'メールアドレスを入力してください'
-        }))
-      } else if (!validateEmail(value)) {
-        setErrors(prev => ({
-          ...prev,
-          new: '有効なメールアドレスを入力してください'
-        }))
-      } else {
-        setErrors(prev => ({ ...prev, new: '' }))
+      if (name === 'new') {
+        if (!value) {
+          setErrors(prev => ({
+            ...prev,
+            new: 'メールアドレスを入力してください'
+          }))
+        } else if (!validateEmail(value)) {
+          setErrors(prev => ({
+            ...prev,
+            new: '有効なメールアドレスを入力してください'
+          }))
+        } else {
+          setErrors(prev => ({ ...prev, new: '' }))
+        }
       }
-    }
-  }
+    },
+    [validateEmail]
+  )
 
   const handleCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target
     setNotifications(prev => ({ ...prev, [name]: checked }))
-    if (name === 'comment_not') {
-      const res = await editUserAction({ comment_not: notifications.comment_not })
-      if (typeof res === 'object' && res !== null) {
-        toastHandler(res.status, 'ユーザー情報の変更に成功しました。', 'サーバの問題でデータ取得に失敗しました。')
-      }
-    }
-    if (name === 'news_not') {
-      const res = await editUserAction({ news_not: notifications.news_not })
-      if (typeof res === 'object' && res !== null) {
-        toastHandler(res.status, 'ユーザー情報の変更に成功しました。', 'サーバの問題でデータ取得に失敗しました。')
-      }
-    }
-    if (name === 'dm_not') {
-      const res = await editUserAction({ dm_not: notifications.dm_not })
-      if (typeof res === 'object' && res !== null) {
-        toastHandler(res.status, 'ユーザー情報の変更に成功しました。', 'サーバの問題でデータ取得に失敗しました。')
-      }
+    switch (name) {
+      case 'comment_not':
+        dispatch(editUserAction({ comment_not: notifications.comment_not }))
+        break
+      case 'news_not':
+        dispatch(editUserAction({ news_not: notifications.news_not }))
+        break
+      case 'dm_not':
+        dispatch(editUserAction({ dm_not: notifications.dm_not }))
+        break
+      default:
+        break
     }
   }
 
@@ -106,10 +106,7 @@ const EmailEditContent = () => {
       }))
       return
     }
-    const res = await editUserAction({ email: email.new })
-    if (typeof res === 'object' && res !== null) {
-      toastHandler(res.status, 'ユーザー情報の変更に成功しました。', 'サーバの問題でデータ取得に失敗しました。')
-    }
+    dispatch(editUserAction({ email: email.new }))
   }
 
   return (

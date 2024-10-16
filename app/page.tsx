@@ -20,24 +20,24 @@ import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/module
 import { Swiper as SwiperType } from 'swiper'
 
 import roomData from '@/mockup/roomdata.json'
-import { ROOM_CATEGORY } from '@/utils/constants'
+import { POST_TYPE } from '@/utils/constants'
 
 export default function Home() {
   const searchParams = useSearchParams()
-  const [roomCat, setRoomCat] = useState('1')
+  const [postType, setPostType] = useState('1')
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    const roomCatQuery = searchParams.get('room_cat')
-    if (roomCatQuery) {
-      setRoomCat(roomCatQuery)
+    const postTypeQuery = searchParams.get('post_type')
+    if (postTypeQuery) {
+      setPostType(postTypeQuery)
     }
   }, [searchParams])
 
   let roomListTitle = '',
     roomListHref = ''
 
-  switch (roomCat) {
+  switch (postType) {
     case '1':
       roomListTitle = 'SH会トークルーム一覧へ'
       roomListHref = 'chatroom/sh-room'
@@ -67,7 +67,7 @@ export default function Home() {
         <Container>
           <SectionTitle title='トークルーム最新の投稿' icon='/images/talk-room.svg' />
           <div className='flex flex-col items-center mt-6 lg:flex-row lg:items-start'>
-            <TabVertical queryKey='room_cat' roomCat={ROOM_CATEGORY}>
+            <TabVertical queryKey='post_type' menuList={POST_TYPE}>
               <div className='w-full lg:w-[calc(100%-240px)] bg-primary py-7 px-4 lg:ps-10 shadow-lg rounded-xl rounded-tl-none'>
                 <div className='text-right pe-8 mb-6'>
                   <Link href={roomListHref} className='text-white font-bold'>

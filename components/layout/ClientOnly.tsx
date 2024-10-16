@@ -1,7 +1,9 @@
 'use client'
 
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+
+import ReduxProvider from '@/redux-store/ReduxProvider'
 
 interface ClientOnlyProps {
   children: React.ReactNode
@@ -20,7 +22,7 @@ const ClientOnly: React.FC<ClientOnlyProps> = ({ children }) => {
     return null
   }
 
-  return <>{children}</>
+  return <ReduxProvider>{children}</ReduxProvider>
 }
 
 export default ClientOnly

@@ -1,17 +1,19 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useParams } from 'next/navigation'
 
 import SectionTitle from '@/components/common/SectionTitle'
 import InputText from '@/components/form/InputText'
 import Button from '@/components/common/Button'
 
-import { editUserAction, getUserAction } from '@/actions/authAction'
-import { toastHandler } from '@/utils/toastHander'
+import { getUserAction } from '@/actions/authAction'
+import { editUserAction } from '@/redux-store/slices/authSlice'
 
 const ChangePwContent = () => {
   const params = useParams()
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     current_pw: '',
     new_pw: '',
@@ -25,11 +27,11 @@ const ChangePwContent = () => {
 
   const id = params.id
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
-    setErrors({ ...errors, [name]: '' })
-  }
+    setFormData(prevState => ({ ...prevState, [name]: value }))
+    setErrors(prevState => ({ ...prevState, [name]: '' }))
+  }, [])
 
   const validateForm = async () => {
     let isValid = true,
@@ -69,11 +71,7 @@ const ChangePwContent = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (await validateForm()) {
-      console.log('Form is valid, submit the data')
-      const res = await editUserAction({ password: formData.new_pw })
-      if (typeof res === 'object' && res !== null) {
-        toastHandler(res.status, 'ユーザー情報の変更に成功しました。', 'サーバの問題でデータ取得に失敗しました。')
-      }
+      dispatch(editUserAction({ password: formData.new_pw }))
     }
   }
 

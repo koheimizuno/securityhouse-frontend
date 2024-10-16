@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import Container from '@/components/layout/Container'
-import Input from '@/components/form/InputText'
+import InputText from '@/components/form/InputText'
 import Button from '@/components/common/Button'
 import PageHeader from '@/components/common/PageHeader'
 
@@ -16,9 +16,9 @@ export default function Setting() {
     passwordConfirm: ''
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  }, [])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -55,12 +55,12 @@ export default function Setting() {
           <p className='text-sm'>パスワードを再設定</p>
           <label className='flex flex-col gap-2'>
             <span className='text-sm font-bold'>パスワード</span>
-            <Input name='password' type='password' placeholder='パスワード' onChange={handleChange} />
+            <InputText name='password' type='password' placeholder='パスワード' onChange={handleChange} />
             {errors.password && <span className='text-danger text-sm'>{errors.password}</span>}
           </label>
           <label className='flex flex-col gap-2'>
             <span className='text-sm font-bold'>パスワード確認</span>
-            <Input name='passwordConfirm' type='password' placeholder='パスワード確認' onChange={handleChange} />
+            <InputText name='passwordConfirm' type='password' placeholder='パスワード確認' onChange={handleChange} />
             {errors.passwordConfirm && <span className='text-danger text-sm'>{errors.passwordConfirm}</span>}
           </label>
           <Button type='submit' size='lg' value='設定する' />

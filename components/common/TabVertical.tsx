@@ -8,7 +8,7 @@ import getImageAlt from '@/utils/getImageAlt'
 
 interface TabVerticalProps {
   queryKey: string
-  roomCat: {
+  menuList: {
     icon: string[]
     title: string
   }[]
@@ -16,7 +16,7 @@ interface TabVerticalProps {
   children: React.ReactNode
 }
 
-const TabVertical = ({ queryKey, roomCat, children, gap }: TabVerticalProps) => {
+const TabVertical = ({ queryKey, menuList, children, gap }: TabVerticalProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -47,7 +47,7 @@ const TabVertical = ({ queryKey, roomCat, children, gap }: TabVerticalProps) => 
   return (
     <div className={`w-full flex flex-col items-center mt-6 lg:flex-row lg:items-start ${gap && 'gap-6'}`}>
       <ul className='w-full md:w-auto grid grid-cols-4 grid-rows-1 gap-3 lg:grid-cols-1 lg:grid-rows-4'>
-        {roomCat.map((item, index) => (
+        {menuList.map((item, index) => (
           <li
             key={index}
             className={`border sm:flex sm:flex-row sm:items-center sm:gap-2  p-3 lg:px-6 lg:h-[72px] lg:gap-4 ${

@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 import Container from '@/components/layout/Container'
 import InputText from '@/components/form/InputText'
@@ -11,8 +11,7 @@ import Button from '@/components/common/Button'
 import PageHeader from '@/components/common/PageHeader'
 
 import { validateEmail } from '@/utils/validateUtils'
-import { registerAction } from '@/actions/authAction'
-import toast from 'react-hot-toast'
+import { registerAction } from '@/redux-store/slices/authSlice'
 
 const roleOptions = [
   { label: '選択してください', value: '0' },
@@ -29,7 +28,6 @@ const groupsOptions = [
 ]
 
 const Register = () => {
-  const router = useRouter()
   const [formData, setFormData] = useState({
     uid: '',
     email: '',
@@ -46,16 +44,17 @@ const Register = () => {
     password: '',
     passwordConfirm: ''
   })
+  const dispatch = useDispatch()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
     setErrors({ ...errors, [name]: '' })
-  }
+  }, [])
 
-  const handleSelect = (name: string, value: string) => {
-    setFormData({ ...formData, [name]: value })
-  }
+  const handleSelect = useCallback((name: string, value: string) => {
+    setFormData(prevFormData => ({ ...prevFormData, [name]: value }))
+  }, [])
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {}
@@ -77,16 +76,7 @@ const Register = () => {
     e.preventDefault()
     if (validateForm()) {
       const { passwordConfirm, ...refineData } = formData
-      const res: any = await registerAction(refineData)
-
-      if (res.status === 200) {
-        toast.success('ユーザー登録に成功しました。')
-        setTimeout(() => {
-          router.push('/')
-        }, 2000)
-      } else {
-        toast.error('サーバの問題でデータ取得に失敗しました。')
-      }
+      dispatch(registerAction(refineData))
     }
   }
 

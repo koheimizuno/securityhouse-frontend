@@ -1,15 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback } from 'react'
 
 import Container from '@/components/layout/Container'
 import Input from '@/components/form/InputText'
 import Button from '@/components/common/Button'
 
 const SearchBar = () => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value)
-  }
+  }, [])
 
   return (
     <section className='bg-[#f2f2f2]'>
@@ -19,7 +19,7 @@ const SearchBar = () => {
           <div className='flex items-center'>
             <Input
               name='keyword'
-              className='lg:w-[400px] rounded-l-full'
+              className='bg-white lg:w-[400px] rounded-l-full'
               placeholder='ハッシュタグ、アカウント、資料、品番検索'
               onChange={handleChange}
             />

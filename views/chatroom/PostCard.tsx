@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { memo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -36,7 +36,20 @@ const PostCard = ({
   user,
   updatedAt
 }: PostCardProps) => {
-  const pathname = usePathname()
+  const hrefHandle = () => {
+    if (category && id)
+      switch (category) {
+        case 'SH会ルーム':
+          return `/chatroom/sh-room/${id}`
+        case '仕事ルーム':
+          return `/chatroom/work-room/${id}`
+        case '交流ルーム':
+          return `/chatroom/exchange-room/${id}`
+        case '社長室ルーム':
+          return `/chatroom/boss-room/${id}`
+      }
+  }
+
   return (
     <div className='relative bg-white px-4 py-6 w-[282px] rounded-md'>
       <Image
@@ -60,7 +73,7 @@ const PostCard = ({
           />
         ))}
       </ul>
-      <Link href={`${pathname}/${id}`}>
+      <Link href={hrefHandle() || '/'}>
         <h3 className='underline truncate text-txtColor'>{title}</h3>
       </Link>
       <p className='text-sm line-clamp-3'>{description}</p>
@@ -95,4 +108,4 @@ const PostCard = ({
   )
 }
 
-export default PostCard
+export default memo(PostCard)

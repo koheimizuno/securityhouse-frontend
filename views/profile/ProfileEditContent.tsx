@@ -1,15 +1,14 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useDispatch } from 'react-redux'
 
 import SectionTitle from '@/components/common/SectionTitle'
 import InputText from '@/components/form/InputText'
 import TextAreaText from '@/components/form/TextAreaText'
 import Button from '@/components/common/Button'
 
-import { editUserAction } from '@/actions/authAction'
-import { toastHandler } from '@/utils/toastHander'
+import { editUserAction } from '@/redux-store/slices/authSlice'
 
 type editDataType = {
   avatar: string
@@ -18,7 +17,7 @@ type editDataType = {
 }
 
 const ProfileEditContent = () => {
-  const router = useRouter()
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState<editDataType>({
     avatar: '',
     name: '',
@@ -58,10 +57,7 @@ const ProfileEditContent = () => {
     e.preventDefault()
     if (validateForm()) {
       const refineData = Object.fromEntries(Object.entries(formData).filter(([key, value]) => value.trim() !== ''))
-      const res = await editUserAction(refineData)
-      if (typeof res === 'object' && res !== null) {
-        toastHandler(res.status, 'ユーザー情報の変更に成功しました。', 'サーバの問題でデータ取得に失敗しました。')
-      }
+      dispatch(editUserAction(refineData))
     }
   }
 

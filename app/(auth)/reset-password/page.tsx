@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 
 import Container from '@/components/layout/Container'
-import Input from '@/components/form/InputText'
+import InputText from '@/components/form/InputText'
 import Button from '@/components/common/Button'
 import PageHeader from '@/components/common/PageHeader'
 
@@ -15,10 +15,10 @@ const ResetPassword = () => {
     id: ''
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
-  }
+  }, [])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -39,7 +39,7 @@ const ResetPassword = () => {
           <p className='text-sm'>パスワードを再設定</p>
           <label className='flex flex-col gap-2'>
             <span className='text-sm font-bold'>ID</span>
-            <Input name='id' onChange={handleChange} placeholder='ID' />
+            <InputText name='id' onChange={handleChange} placeholder='ID' />
             {errors.id && <span className='text-danger text-sm'>{errors.id}</span>}
           </label>
           <Button type='submit' size='lg' value='送信する' />

@@ -1,15 +1,16 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams, useRouter, useParams } from 'next/navigation'
+
+import AnnounceMdCard from '@/views/announce/AnnounceMdCard'
 
 import Container from '@/components/layout/Container'
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb'
 import Button from '@/components/common/Button'
 import SectionTitle from '@/components/common/SectionTitle'
-import AnnounceMdCard from '@/views/announce/AnnounceMdCard'
 import PageHeader from '@/components/common/PageHeader'
 import SearchBar from '@/components/common/SearchBar'
 
@@ -31,14 +32,12 @@ const Profile = () => {
   const id = params.id
 
   useEffect(() => {
-    if (typeof id === 'string') {
-      const fetchUserData = async () => {
-        const data = await getUserAction(id)
-        setUserData(data)
+    const fetchUserData = async () => {
+      if (typeof id === 'string') {
+        setUserData(await getUserAction(id))
       }
-
-      fetchUserData()
     }
+    fetchUserData()
   }, [id])
 
   useEffect(() => {
