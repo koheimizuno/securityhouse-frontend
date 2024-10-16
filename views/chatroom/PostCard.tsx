@@ -50,6 +50,8 @@ const PostCard = ({
       }
   }
 
+  const handleMore = () => {}
+
   return (
     <div className='relative bg-white px-4 py-6 w-[282px] rounded-md'>
       <Image
@@ -102,7 +104,11 @@ const PostCard = ({
       </div>
       <div className='flex items-center justify-between'>
         <p className='text-sm text-colorGray4'>{updatedAt}</p>
-        <Image src='/images/more-icon.svg' alt='more-icon' width={32} height={32} />
+        <div>
+          <button onClick={handleMore}>
+            <Image src='/images/more-icon.svg' alt='more-icon' width={32} height={32} />
+          </button>
+        </div>
       </div>
     </div>
   )

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import Image from 'next/image'
 
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb'
 import SearchBar from '@/components/common/SearchBar'
@@ -12,6 +13,11 @@ import TextAreaText from '@/components/form/TextAreaText'
 import Button from '@/components/common/Button'
 
 import { createPostAction } from '@/redux-store/slices/postSlice'
+
+import dynamic from 'next/dynamic'
+const RichTextEditor = dynamic(() => import('@/components/form/RichTextEditor'), {
+  ssr: false
+})
 
 const postTypeOptions = [
   { value: '0', label: '選択してください' },
@@ -73,7 +79,12 @@ const CreatePost = () => {
   const [inputValues, setInputValues] = useState({
     title: '',
     content: '',
-    hashtag: ''
+    hashtag: '',
+    attachments: {
+      file: '',
+      path: '',
+      preview: '' // Add state for image preview
+    }
   })
   const [errors, setErrors] = useState({
     postType: '',
@@ -83,30 +94,47 @@ const CreatePost = () => {
     hashtag: ''
   })
 
-  useEffect(() => {}, [])
-
   const handleSelect = (name: string, value: string) => {
     setSelectedValue(prev => ({ ...prev, [name]: value }))
     setErrors(prev => ({ ...prev, [name]: '' }))
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setInputValues(prev => ({ ...prev, [name]: value }))
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { type, name, value, files } = e.target // Update to get files
+    if (type === 'file') {
+      const file = files ? files[0] : null // Get the first file
+      const imageUrl = file ? URL.createObjectURL(file) : '' // Create a URL for the image
+      setInputValues(prev => ({
+        ...prev,
+        [name]: {
+          file: file,
+          path: value,
+          preview: imageUrl // Set the image preview URL
+        }
+      }))
+    } else {
+      setInputValues(prev => ({ ...prev, [name]: value }))
+    }
     setErrors(prev => ({ ...prev, [name]: '' }))
+  }
+
+  const handleEditorChange = (data: string) => {
+    setInputValues(prevState => ({ ...prevState, content: data }))
+    setErrors(prev => ({ ...prev, content: '' }))
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (validateForm()) {
-      const postPayload = {
-        title: inputValues.title,
-        content: inputValues.content,
-        hashtag: inputValues.hashtag,
-        type_id: selectedValue.postType,
-        category_id: selectedValue.category,
-        publication: selectedValue.publication
-      }
+      let postPayload = new FormData()
+      postPayload.append('title', inputValues.title)
+      postPayload.append('content', inputValues.content)
+      postPayload.append('hashtag', inputValues.hashtag)
+      postPayload.append('type_id', selectedValue.postType)
+      postPayload.append('category_id', selectedValue.category)
+      postPayload.append('publication', selectedValue.publication)
+      postPayload.append('attachments', inputValues.attachments.file)
+
       dispatch(createPostAction(postPayload))
     }
   }
@@ -124,8 +152,6 @@ const CreatePost = () => {
     setErrors(prev => ({ ...prev, ...newErrors }))
     return Object.keys(newErrors).length === 0
   }
-
-  console.log(inputValues.content)
 
   return (
     <>
@@ -210,18 +236,13 @@ const CreatePost = () => {
               }`}
             >
               <span className='text-base font-bold'>内容</span>
-              <TextAreaText
-                name='content'
-                placeholder='自己紹介を入力'
-                onChange={handleChange}
-                className='w-full md:w-[480px]'
-              />
+              <RichTextEditor onChange={handleEditorChange} />
               {errors.content && (
                 <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.content}</span>
               )}
             </label>
             <label
-              className={`relative flex flex-col md:flex-row md:justify-between md:items-start gap-2 ${
+              className={`relative flex flex-col md:flex-row md:justify-between md:items-center gap-2 ${
                 errors.hashtag && 'mb-4'
               }`}
             >
@@ -236,6 +257,25 @@ const CreatePost = () => {
                 <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.hashtag}</span>
               )}
             </label>
+            <label className='relative flex flex-col md:flex-row md:justify-between md:items-center gap-2'>
+              <span className='text-sm font-bold'>プロフィール画像</span>
+              <InputText
+                name='attachments'
+                type='file'
+                className='h-fit w-full md:w-[480px]'
+                placeholder='アップ'
+                onChange={handleChange}
+              />
+            </label>
+            {inputValues.attachments.preview && (
+              <Image
+                src={inputValues.attachments.preview}
+                alt='Selected'
+                className='md:ms-[170px] lg:ms-[244px] mt-2 w-40 h-w-40'
+                width={50}
+                height={50}
+              />
+            )}
             <Button
               type='submit'
               size='lg'
