@@ -33,7 +33,11 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       if (typeof id === 'string') {
-        setUserData(await getUserByIdAction(id))
+        try {
+          setUserData(await getUserByIdAction(id))
+        } catch (error) {
+          console.error('Error fetching user:', error)
+        }
       }
     }
     fetchUserData()

@@ -31,14 +31,16 @@ const EmailEditContent = () => {
   useEffect(() => {
     if (typeof id === 'string') {
       const fetchUserData = async () => {
-        const data = await getUserByIdAction(id)
-        setUserData(data)
-
-        setCommetNot(data.comment_not === '1' ? false : true)
-        setNewsNot(data.news_not === '1' ? false : true)
-        setDmNot(data.dm_not === '1' ? false : true)
+        try {
+          const data = await getUserByIdAction(id)
+          setUserData(data)
+          setCommetNot(data.comment_not === '1' ? false : true)
+          setNewsNot(data.news_not === '1' ? false : true)
+          setDmNot(data.dm_not === '1' ? false : true)
+        } catch (error) {
+          console.error('Error fetching user:', error)
+        }
       }
-
       fetchUserData()
     }
   }, [id])
