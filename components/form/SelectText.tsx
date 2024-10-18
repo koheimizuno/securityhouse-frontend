@@ -56,15 +56,20 @@ const SelectText: React.FC<SelectTextProps> = ({ name, options, value, onChange,
       </div>
       {isOpen && (
         <div className='absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg'>
-          {options.map(option => (
-            <div
-              key={option.id}
-              className='px-4 py-3 hover:bg-gray-100 cursor-pointer'
-              onClick={() => handleOptionClick(option.id)}
-            >
-              {option.title}
-            </div>
-          ))}
+          {options.map(option => {
+            console.log(option.id)
+            console.log(value)
+
+            return (
+              <div
+                key={option.id}
+                className={`px-4 py-3 hover:bg-colorGray1 cursor-pointer ${option.id === value ? 'bg-colorGray1' : ''}`}
+                onClick={() => handleOptionClick(option.id)}
+              >
+                {option.title}
+              </div>
+            )
+          })}
         </div>
       )}
     </div>
