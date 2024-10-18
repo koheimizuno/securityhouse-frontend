@@ -13,6 +13,7 @@ import { getUserAction } from '@/actions/authAction'
 import { UsersType } from '@/types/userType'
 import { editUserAction } from '@/redux-store/slices/authSlice'
 import { useToggle } from '@uidotdev/usehooks'
+import CheckBox from '@/components/form/CheckBox'
 
 const EmailEditContent = () => {
   const params = useParams()
@@ -85,20 +86,22 @@ const EmailEditContent = () => {
 
   const handleCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target
-    setNotifications(prev => ({ ...prev, [name]: checked }))
-    switch (name) {
-      case 'comment_not':
-        dispatch(editUserAction({ comment_not: notifications.comment_not }))
-        break
-      case 'news_not':
-        dispatch(editUserAction({ news_not: notifications.news_not }))
-        break
-      case 'dm_not':
-        dispatch(editUserAction({ dm_not: notifications.dm_not }))
-        break
-      default:
-        break
-    }
+    console.log(name)
+
+    // setNotifications(prev => ({ ...prev, [name]: checked }))
+    // switch (name) {
+    //   case 'comment_not':
+    //     dispatch(editUserAction({ comment_not: notifications.comment_not }))
+    //     break
+    //   case 'news_not':
+    //     dispatch(editUserAction({ news_not: notifications.news_not }))
+    //     break
+    //   case 'dm_not':
+    //     dispatch(editUserAction({ dm_not: notifications.dm_not }))
+    //     break
+    //   default:
+    //     break
+    // }
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -133,66 +136,21 @@ const EmailEditContent = () => {
            px-6 py-3'
           >
             <span>コメント</span>
-            <label className='inline-flex items-center cursor-pointer'>
-              <input
-                type='checkbox'
-                name='comment_not'
-                className='sr-only peer'
-                checked={notifications.comment_not}
-                onChange={handleCheckboxChange}
-              />
-              <div
-                className="relative w-11 h-6 bg-gray-300 rounded-full peer 
-                              peer-checked:bg-blue-600 peer-checked:after:translate-x-full 
-                              after:content-[''] after:absolute after:top-0.5 after:left-0.5 
-                              after:bg-white after:rounded-full after:h-5 after:w-5 
-                              after:transition-all"
-              ></div>
-            </label>
+            <CheckBox on={commetNot} handleToggle={() => handleCheckboxChange} />
           </li>
           <li
             className='flex justify-between items-center gap-2 bg-colorGray1 rounded-lg
            px-6 py-3'
           >
             <span>管理者からのお知らせ</span>
-            <label className='inline-flex items-center cursor-pointer'>
-              <input
-                type='checkbox'
-                name='news_not'
-                className='sr-only peer'
-                checked={notifications.news_not}
-                onChange={handleCheckboxChange}
-              />
-              <div
-                className="relative w-11 h-6 bg-gray-300 rounded-full peer 
-                              peer-checked:bg-blue-600 peer-checked:after:translate-x-full 
-                              after:content-[''] after:absolute after:top-0.5 after:left-0.5 
-                              after:bg-white after:rounded-full after:h-5 after:w-5 
-                              after:transition-all"
-              ></div>
-            </label>
+            <CheckBox on={newsNot} handleToggle={() => handleCheckboxChange} />
           </li>
           <li
             className='flex justify-between items-center gap-2 bg-colorGray1 rounded-lg
            px-6 py-3'
           >
             <span>ダイレクトメッセージ</span>
-            <label className='inline-flex items-center cursor-pointer'>
-              <input
-                type='checkbox'
-                name='dm_not'
-                className='sr-only peer'
-                checked={notifications.dm_not}
-                onChange={handleCheckboxChange}
-              />
-              <div
-                className="relative w-11 h-6 bg-gray-300 rounded-full peer 
-                              peer-checked:bg-blue-600 peer-checked:after:translate-x-full 
-                              after:content-[''] after:absolute after:top-0.5 after:left-0.5 
-                              after:bg-white after:rounded-full after:h-5 after:w-5 
-                              after:transition-all"
-              ></div>
-            </label>
+            <CheckBox on={dmNot} handleToggle={() => handleCheckboxChange} />
           </li>
         </ul>
         <Button type='submit' size='lg' value='保存' />
