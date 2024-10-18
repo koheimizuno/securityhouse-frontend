@@ -127,7 +127,7 @@ const PostCard = ({
           {moreActive && (
             <ul className='bg-white absolute z-10 top-4 left-4 w-[150px] flex flex-col shadow-md rounded-md'>
               <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
-                <Link href='/'>編集する</Link>
+                <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
               </li>
               <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer' onClick={handleDeletePost}>
                 削除する
