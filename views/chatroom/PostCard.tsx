@@ -1,11 +1,14 @@
 'use client'
 
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+
+import { useClickAway } from '@uidotdev/usehooks'
 
 import Button from '@/components/common/Button'
-import { usePathname } from 'next/navigation'
+import formatDate from '@/utils/formatDate'
 
 interface PostCardProps {
   id: string
@@ -36,6 +39,13 @@ const PostCard = ({
   user,
   updatedAt
 }: PostCardProps) => {
+  const pathname = usePathname()
+  const [moreActive, setMoreActive] = useState<boolean>(false)
+
+  const ref = useClickAway<HTMLDivElement>(() => {
+    setMoreActive(false)
+  })
+
   const hrefHandle = () => {
     if (category && id)
       switch (category) {
@@ -49,8 +59,6 @@ const PostCard = ({
           return `/chatroom/boss-room/${id}`
       }
   }
-
-  const handleMore = () => {}
 
   return (
     <div className='relative bg-white px-4 py-6 w-[282px] rounded-md'>
@@ -103,11 +111,19 @@ const PostCard = ({
         </p>
       </div>
       <div className='flex items-center justify-between'>
-        <p className='text-sm text-colorGray4'>{updatedAt}</p>
-        <div>
-          <button onClick={handleMore}>
+        <p className='text-sm text-colorGray4'>{formatDate(updatedAt)}</p>
+        <div ref={ref} className='relative'>
+          <button onClick={() => pathname !== '/' && setMoreActive(!moreActive)}>
             <Image src='/images/more-icon.svg' alt='more-icon' width={32} height={32} />
           </button>
+          {moreActive && (
+            <ul className='bg-white absolute z-10 top-4 left-4 w-[150px] flex flex-col shadow-md rounded-md'>
+              <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
+                <Link href='/'>編集する</Link>
+              </li>
+              <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>削除する</li>
+            </ul>
+          )}
         </div>
       </div>
     </div>

@@ -19,7 +19,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules'
 import { Swiper as SwiperType } from 'swiper'
 
-import roomData from '@/mockup/roomdata.json'
+import postdata from '@/mockup/postdata.json'
 import { POST_TYPE } from '@/utils/constants'
 
 export default function Home() {
@@ -102,19 +102,19 @@ export default function Home() {
                     })
                   }}
                 >
-                  {roomData.map(room => (
-                    <SwiperSlide key={room.id}>
+                  {postdata.map(post => (
+                    <SwiperSlide key={post.id}>
                       <PostCard
-                        id={room.id}
-                        title={room.title}
-                        description={room.description}
-                        category={room.category}
-                        tag={room.tag}
-                        likeNum={room.likeNum}
-                        commentNum={room.commentNum}
-                        isLiked={room.isLiked}
-                        user={room.user}
-                        updatedAt={room.updatedAt}
+                        id={post.id}
+                        title={post.title}
+                        description={post.description}
+                        category={post.category}
+                        tag={post.tag}
+                        likeNum={post.likeNum}
+                        commentNum={post.commentNum}
+                        isLiked={post.isLiked}
+                        user={post.user}
+                        updatedAt={post.updatedAt}
                       />
                     </SwiperSlide>
                   ))}

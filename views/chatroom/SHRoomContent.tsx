@@ -7,7 +7,7 @@ import PostCard from '@/views/chatroom/PostCard'
 import Pagination from '@/views/chatroom/Pagination'
 import Button from '@/components/common/Button'
 
-import roomData from '@/mockup/roomdata.json'
+import postdata from '@/mockup/postdata.json'
 import Link from 'next/link'
 
 const SHRoomContent = () => {
@@ -30,19 +30,19 @@ const SHRoomContent = () => {
           カテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入ります
         </p>
         <div className='flex flex-wrap gap-5'>
-          {roomData.map((room, index) => (
+          {postdata.map((post, index) => (
             <PostCard
               key={index}
-              id={room.id}
-              title={room.title}
-              description={room.description}
-              category={room.category}
-              tag={room.tag}
-              likeNum={room.likeNum}
-              commentNum={room.commentNum}
-              isLiked={room.isLiked}
-              user={room.user}
-              updatedAt={room.updatedAt}
+              id={post.id}
+              title={post.title}
+              description={post.description}
+              category={post.category}
+              tag={post.tag}
+              likeNum={post.likeNum}
+              commentNum={post.commentNum}
+              isLiked={post.isLiked}
+              user={post.user}
+              updatedAt={post.updatedAt}
             />
           ))}
         </div>

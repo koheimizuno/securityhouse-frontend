@@ -12,6 +12,7 @@ import { validateEmail } from '@/utils/validateUtils'
 import { getUserAction } from '@/actions/authAction'
 import { UsersType } from '@/types/userType'
 import { editUserAction } from '@/redux-store/slices/authSlice'
+import { useToggle } from '@uidotdev/usehooks'
 
 const EmailEditContent = () => {
   const params = useParams()
@@ -21,6 +22,9 @@ const EmailEditContent = () => {
     news_not: false,
     dm_not: false
   })
+  const [commetNot, setCommetNot] = useToggle(false)
+  const [newsNot, setNewsNot] = useToggle(false)
+  const [dmNot, setDmNot] = useToggle(false)
 
   const [email, setEmail] = useState({
     new: ''
