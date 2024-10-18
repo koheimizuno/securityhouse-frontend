@@ -1,7 +1,9 @@
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
 import { CategoryType } from '@/types/categoryType'
+import { storeInitialType } from '@/types/storeInitialType'
 
 export const createCategoryAction: any = createAsyncThunk('createCategoryAction', async (payload: CategoryType) => {
   try {

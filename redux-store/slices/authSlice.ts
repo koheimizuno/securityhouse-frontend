@@ -3,6 +3,7 @@ import toast from 'react-hot-toast'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { UsersType } from '@/types/userType'
+import { storeInitialType } from '@/types/storeInitialType'
 
 export const registerAction: any = createAsyncThunk(
   'registerAction',
@@ -34,7 +35,7 @@ export const editUserAction: any = createAsyncThunk('editUserAction', async (pay
   }
 })
 
-const initialState: any = {
+const initialState: storeInitialType = {
   success: false,
   error: false,
   isLoading: false

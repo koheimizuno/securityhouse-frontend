@@ -2,6 +2,7 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
+import { storeInitialType } from '@/types/storeInitialType'
 import { PostType } from '@/types/postType'
 
 export const createPostAction: any = createAsyncThunk(
@@ -63,7 +64,7 @@ export const deletePostBookmarkAction: any = createAsyncThunk('deletePostBookmar
   }
 })
 
-const initialState: any = {
+const initialState: storeInitialType = {
   success: false,
   error: false,
   isLoading: false

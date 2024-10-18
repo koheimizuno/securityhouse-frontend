@@ -2,6 +2,7 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { PostType_Type } from '@/types/postType'
+import { storeInitialType } from '@/types/storeInitialType'
 
 export const createPostTypeAction: any = createAsyncThunk('createPostTypeAction', async (payload: PostType_Type) => {
   try {
@@ -36,7 +37,7 @@ export const deletePostTypeAction: any = createAsyncThunk('deletePostTypeAction'
   }
 })
 
-export interface initialStateTypes extends storeInitialType {
+interface initialStateTypes extends storeInitialType {
   postTypes: PostType_Type[]
 }
 
