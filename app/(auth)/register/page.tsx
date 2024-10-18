@@ -14,17 +14,17 @@ import { validateEmail } from '@/utils/validateUtils'
 import { registerAction } from '@/redux-store/slices/authSlice'
 
 const roleOptions = [
-  { label: '選択してください', value: '0' },
-  { label: '役割1', value: '1' },
-  { label: '役割2', value: '2' },
-  { label: '役割3', value: '3' }
+  { id: '0', title: '選択してください' },
+  { id: '1', title: '役割1' },
+  { id: '2', title: '役割2' },
+  { id: '3', title: '役割3' }
 ]
 
 const groupsOptions = [
-  { label: '選択してください', value: '0' },
-  { label: 'グループ1', value: '1' },
-  { label: 'グループ2', value: '2' },
-  { label: 'グループ3', value: '3' }
+  { id: '0', title: '選択してください' },
+  { id: '1', title: 'グループ1' },
+  { id: '2', title: 'グループ2' },
+  { id: '3', title: 'グループ3' }
 ]
 
 const Register = () => {
@@ -100,7 +100,7 @@ const Register = () => {
             options={roleOptions}
             value={formData.role_id}
             onChange={handleSelect}
-            placeholder={roleOptions[0].label}
+            placeholder={roleOptions[0].title}
             name='role_id'
           />
           {errors.role && <span className='text-danger text-sm'>{errors.role}</span>}
@@ -111,7 +111,7 @@ const Register = () => {
             options={groupsOptions}
             value={formData.group_id}
             onChange={handleSelect}
-            placeholder={groupsOptions[0].label}
+            placeholder={groupsOptions[0].title}
             name='group_id'
           />
           {errors.groups && <span className='text-danger text-sm'>{errors.groups}</span>}

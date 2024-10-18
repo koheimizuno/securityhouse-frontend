@@ -19,52 +19,52 @@ const RichTextEditor = dynamic(() => import('@/components/form/RichTextEditor'),
 })
 
 const postTypeOptions = [
-  { value: '0', label: '選択してください' },
-  { value: '1', label: 'SH会' },
-  { value: '2', label: '仕事' },
-  { value: '3', label: '交流' },
-  { value: '4', label: '社長室' }
+  { id: '0', title: '選択してください' },
+  { id: '1', title: 'SH会' },
+  { id: '2', title: '仕事' },
+  { id: '3', title: '交流' },
+  { id: '4', title: '社長室' }
 ]
 
 const categoryOptions = [
   {
-    value: '0',
-    label: '選択してください'
+    id: '0',
+    title: '選択してください'
   },
   {
-    value: '1',
-    label: '事務局からのご案内1'
+    id: '1',
+    title: '事務局からのご案内1'
   },
   {
-    value: '2',
-    label: '事務局からのご案内2'
+    id: '2',
+    title: '事務局からのご案内2'
   },
   {
-    value: '3',
-    label: '事務局からのご案内3'
+    id: '3',
+    title: '事務局からのご案内3'
   },
   {
-    value: '4',
-    label: '事務局からのご案内4'
+    id: '4',
+    title: '事務局からのご案内4'
   }
 ]
 
 const publicationOptions = [
   {
-    value: '0',
-    label: '選択してください'
+    id: '0',
+    title: '選択してください'
   },
   {
-    value: '1',
-    label: '全体1'
+    id: '1',
+    title: '全体1'
   },
   {
-    value: '2',
-    label: '全体2'
+    id: '2',
+    title: '全体2'
   },
   {
-    value: '3',
-    label: '全体3'
+    id: '3',
+    title: '全体3'
   }
 ]
 
@@ -171,7 +171,7 @@ const CreatePost = () => {
                 options={postTypeOptions}
                 value={selectedValue.postType}
                 onChange={handleSelect}
-                placeholder={postTypeOptions[0].label}
+                placeholder={postTypeOptions[0].title}
                 name='postType'
                 className='w-full md:w-[480px]'
               />
@@ -189,7 +189,7 @@ const CreatePost = () => {
                 options={categoryOptions}
                 value={selectedValue.category}
                 onChange={handleSelect}
-                placeholder={categoryOptions[0].label}
+                placeholder={categoryOptions[0].title}
                 name='category'
                 className='w-full md:w-[480px]'
               />
@@ -207,7 +207,7 @@ const CreatePost = () => {
                 options={publicationOptions}
                 value={selectedValue.publication}
                 onChange={handleSelect}
-                placeholder={publicationOptions[0].label}
+                placeholder={publicationOptions[0].title}
                 name='publication'
                 className='w-full md:w-[480px]'
               />

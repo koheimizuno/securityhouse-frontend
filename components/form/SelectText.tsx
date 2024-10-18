@@ -4,8 +4,8 @@ import Image from 'next/image'
 import React, { useState, useRef, useEffect } from 'react'
 
 interface Option {
-  value: string
-  label: string
+  id: string
+  title: string
 }
 
 interface SelectTextProps {
@@ -41,7 +41,7 @@ const SelectText: React.FC<SelectTextProps> = ({ name, options, value, onChange,
     }
   }, [])
 
-  const selectedOption = options.find(option => option.value === value)
+  const selectedOption = options.find(option => option.id === value)
 
   return (
     <div className='relative' ref={dropdownRef}>
@@ -49,7 +49,7 @@ const SelectText: React.FC<SelectTextProps> = ({ name, options, value, onChange,
         className={`bg-colorGray1 border border-colorGray2 h-10 md:h-12 px-5 flex items-center justify-between cursor-pointer rounded-md ${className}`}
         onClick={handleToggle}
       >
-        <span>{selectedOption ? selectedOption.label : placeholder}</span>
+        <span>{selectedOption ? selectedOption.title : placeholder}</span>
         <span>
           <Image src='/images/arrow-bottom.svg' alt='arrow-bottom' width={12} height={12} />
         </span>
@@ -58,11 +58,11 @@ const SelectText: React.FC<SelectTextProps> = ({ name, options, value, onChange,
         <div className='absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg'>
           {options.map(option => (
             <div
-              key={option.value}
+              key={option.id}
               className='px-4 py-3 hover:bg-gray-100 cursor-pointer'
-              onClick={() => handleOptionClick(option.value)}
+              onClick={() => handleOptionClick(option.id)}
             >
-              {option.label}
+              {option.title}
             </div>
           ))}
         </div>
