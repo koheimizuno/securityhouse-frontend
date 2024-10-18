@@ -17,18 +17,16 @@ import { getUserByIdAction } from '@/actions/authAction'
 import { UsersType } from '@/types/userType'
 
 const Profile = () => {
+  const { id } = useParams()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const params = useParams()
   const [tab, setTab] = useState<string>('1')
   const [userData, setUserData] = useState<Pick<UsersType, 'name' | 'uid' | 'intro'>>({
     name: '',
     uid: '',
     intro: ''
   })
-
-  const id = params.id
 
   useEffect(() => {
     const fetchUserData = async () => {

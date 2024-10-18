@@ -17,13 +17,11 @@ interface TabVerticalProps {
 }
 
 const TabVertical = ({ queryKey, menuList, children, gap }: TabVerticalProps) => {
+  const { id } = useParams()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const params = useParams()
   const [tab, setTab] = useState<string>('1')
-
-  const id = params.id
 
   useEffect(() => {
     const tab = searchParams.get(queryKey)

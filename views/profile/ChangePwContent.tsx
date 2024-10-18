@@ -12,7 +12,7 @@ import { getUserByIdAction } from '@/actions/authAction'
 import { editUserAction } from '@/redux-store/slices/authSlice'
 
 const ChangePwContent = () => {
-  const params = useParams()
+  const { id } = useParams()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     current_pw: '',
@@ -24,8 +24,6 @@ const ChangePwContent = () => {
     new_pw: '',
     new_pw_confirm: ''
   })
-
-  const id = params.id
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target

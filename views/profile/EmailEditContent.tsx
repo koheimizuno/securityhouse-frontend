@@ -16,7 +16,7 @@ import { useToggle } from '@uidotdev/usehooks'
 import CheckBox from '@/components/form/CheckBox'
 
 const EmailEditContent = () => {
-  const params = useParams()
+  const { id } = useParams()
   const dispatch = useDispatch()
 
   const [userData, setUserData] = useState<Pick<UsersType, 'email'>>({ email: '' })
@@ -25,8 +25,6 @@ const EmailEditContent = () => {
   const [commetNot, setCommetNot] = useToggle(false)
   const [newsNot, setNewsNot] = useToggle(false)
   const [dmNot, setDmNot] = useToggle(false)
-
-  const id = params.id
 
   useEffect(() => {
     if (typeof id === 'string') {
