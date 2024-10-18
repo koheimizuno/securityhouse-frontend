@@ -1,105 +1,105 @@
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { PostType_Type } from '@/types/postType'
+import { CategoryType } from '@/types/categoryType'
 
-export const createPostTypeAction: any = createAsyncThunk('createPostTypeAction', async (payload: PostType_Type) => {
+export const createCategoryAction: any = createAsyncThunk('createCategoryAction', async (payload: CategoryType) => {
   try {
-    await axios.post(`/api/post_type/`, payload)
+    await axios.post(`/api/category/`, payload)
   } catch (err) {
     return err
   }
 })
 
-export const getPostTypeAction: any = createAsyncThunk('getPostTypeAction', async () => {
+export const getCategoryAction: any = createAsyncThunk('getCategoryAction', async () => {
   try {
-    const res = await axios.get(`/api/post_type/`)
+    const res = await axios.get(`/api/category/`)
     return res.data
   } catch (err) {
     return err
   }
 })
 
-export const editPostTypeAction: any = createAsyncThunk('editPostTypeAction', async (payload: PostType_Type) => {
+export const editCategoryAction: any = createAsyncThunk('editCategoryAction', async (payload: CategoryType) => {
   try {
-    await axios.put(`/api/post_type/`, payload)
+    await axios.put(`/api/category/`, payload)
   } catch (err) {
     return err
   }
 })
 
-export const deletePostTypeAction: any = createAsyncThunk('deletePostTypeAction', async () => {
+export const deleteCategoryAction: any = createAsyncThunk('deleteCategoryAction', async () => {
   try {
-    await axios.delete(`/api/post_type/`)
+    await axios.delete(`/api/category/`)
   } catch (err) {
     return err
   }
 })
 
-export interface initialStateTypes extends storeInitialType {
-  postTypes: PostType_Type[]
+interface initialStateTypes extends storeInitialType {
+  categories: CategoryType[]
 }
 
 const initialState: initialStateTypes = {
-  postTypes: [],
+  categories: [],
   success: false,
   error: false,
   isLoading: false
 }
 
-export const postTypeSlice = createSlice({
-  name: 'postType',
+export const categorySlice = createSlice({
+  name: 'category',
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(getPostTypeAction.pending, state => {
+      .addCase(getCategoryAction.pending, state => {
         state.isLoading = true
       })
-      .addCase(getPostTypeAction.fulfilled, (state, { payload }) => {
+      .addCase(getCategoryAction.fulfilled, (state, { payload }) => {
         state.isLoading = false
         state.success = true
-        state.postTypes = payload.types
+        state.categories = payload.categories
       })
-      .addCase(getPostTypeAction.rejected, state => {
+      .addCase(getCategoryAction.rejected, state => {
         state.isLoading = false
         state.error = true
       })
-      .addCase(createPostTypeAction.pending, state => {
+      .addCase(createCategoryAction.pending, state => {
         state.isLoading = true
       })
-      .addCase(createPostTypeAction.fulfilled, state => {
+      .addCase(createCategoryAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
         toast.success('投稿タイプが正常に作成されました。')
       })
-      .addCase(createPostTypeAction.rejected, state => {
+      .addCase(createCategoryAction.rejected, state => {
         state.isLoading = false
         state.error = true
         toast.error('サーバの問題でデータ取得に失敗しました。')
       })
-      .addCase(editPostTypeAction.pending, state => {
+      .addCase(editCategoryAction.pending, state => {
         state.isLoading = true
       })
-      .addCase(editPostTypeAction.fulfilled, state => {
+      .addCase(editCategoryAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
         toast.success('投稿タイプが正常に変更されました。')
       })
-      .addCase(editPostTypeAction.rejected, state => {
+      .addCase(editCategoryAction.rejected, state => {
         state.isLoading = false
         state.error = true
         toast.error('サーバの問題でデータ取得に失敗しました。')
       })
-      .addCase(deletePostTypeAction.pending, state => {
+      .addCase(deleteCategoryAction.pending, state => {
         state.isLoading = true
       })
-      .addCase(deletePostTypeAction.fulfilled, state => {
+      .addCase(deleteCategoryAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
         toast.success('投稿タイプが正常に削除されました。')
       })
-      .addCase(deletePostTypeAction.rejected, state => {
+      .addCase(deleteCategoryAction.rejected, state => {
         state.isLoading = false
         state.error = true
         toast.error('サーバの問題でデータ取得に失敗しました。')
@@ -107,5 +107,5 @@ export const postTypeSlice = createSlice({
   }
 })
 
-export const { reducer } = postTypeSlice
-export default postTypeSlice
+export const { reducer } = categorySlice
+export default categorySlice
