@@ -1,6 +1,7 @@
 'use client'
 
 import React, { memo, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -9,6 +10,7 @@ import { useClickAway } from '@uidotdev/usehooks'
 
 import Button from '@/components/common/Button'
 import formatDate from '@/utils/formatDate'
+import { deletePostAction } from '@/redux-store/slices/postSlice'
 
 interface PostCardProps {
   id: string
@@ -40,6 +42,7 @@ const PostCard = ({
   updatedAt
 }: PostCardProps) => {
   const pathname = usePathname()
+  const dispatch = useDispatch()
   const [moreActive, setMoreActive] = useState<boolean>(false)
 
   const ref = useClickAway<HTMLDivElement>(() => {
@@ -58,6 +61,11 @@ const PostCard = ({
         case '社長室ルーム':
           return `/chatroom/boss-room/${id}`
       }
+  }
+
+  const handleDeletePost = async () => {
+    await dispatch(deletePostAction(id))
+    setMoreActive(false)
   }
 
   return (
@@ -121,7 +129,9 @@ const PostCard = ({
               <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
                 <Link href='/'>編集する</Link>
               </li>
-              <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>削除する</li>
+              <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer' onClick={handleDeletePost}>
+                削除する
+              </li>
             </ul>
           )}
         </div>
