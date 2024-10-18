@@ -19,10 +19,11 @@ const RichTextEditor = dynamic(() => import('@/components/form/RichTextEditor'),
 import { createPostAction } from '@/redux-store/slices/postSlice'
 import { getPostByIdAction } from '@/actions/postAction'
 import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
-import { getCategoryAction } from '@/redux-store/slices/categorySlice'
+import { deleteCategoryAction, editCategoryAction, getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { getTitleById } from '@/utils/getTitleById'
 import { PostType } from '@/types/postType'
 import getImageAlt from '@/utils/getImageAlt'
+import { getCategoryByIdAction } from '@/actions/categoryAction'
 
 const publicationOptions = [
   {

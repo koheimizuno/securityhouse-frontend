@@ -28,9 +28,9 @@ export const editCategoryAction: any = createAsyncThunk('editCategoryAction', as
   }
 })
 
-export const deleteCategoryAction: any = createAsyncThunk('deleteCategoryAction', async () => {
+export const deleteCategoryAction: any = createAsyncThunk('deleteCategoryAction', async (id: string) => {
   try {
-    await axios.delete(`/api/category/`)
+    await axios.delete(`/api/category/`, { params: { id: id } })
   } catch (err) {
     return err
   }
@@ -71,7 +71,7 @@ export const categorySlice = createSlice({
       .addCase(createCategoryAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
-        toast.success('投稿タイプが正常に作成されました。')
+        toast.success('カテゴリーが正常に作成されました。')
       })
       .addCase(createCategoryAction.rejected, state => {
         state.isLoading = false
@@ -84,7 +84,7 @@ export const categorySlice = createSlice({
       .addCase(editCategoryAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
-        toast.success('投稿タイプが正常に変更されました。')
+        toast.success('カテゴリーが正常に変更されました。')
       })
       .addCase(editCategoryAction.rejected, state => {
         state.isLoading = false
@@ -97,7 +97,7 @@ export const categorySlice = createSlice({
       .addCase(deleteCategoryAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
-        toast.success('投稿タイプが正常に削除されました。')
+        toast.success('カテゴリーが正常に削除されました。')
       })
       .addCase(deleteCategoryAction.rejected, state => {
         state.isLoading = false
