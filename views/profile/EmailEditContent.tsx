@@ -9,7 +9,7 @@ import InputText from '@/components/form/InputText'
 import Button from '@/components/common/Button'
 
 import { validateEmail } from '@/utils/validateUtils'
-import { getUserAction } from '@/actions/authAction'
+import { getUserByIdAction } from '@/actions/authAction'
 import { UsersType } from '@/types/userType'
 import { editUserAction } from '@/redux-store/slices/authSlice'
 import { useToggle } from '@uidotdev/usehooks'
@@ -18,42 +18,25 @@ import CheckBox from '@/components/form/CheckBox'
 const EmailEditContent = () => {
   const params = useParams()
   const dispatch = useDispatch()
-  const [notifications, setNotifications] = useState({
-    comment_not: false,
-    news_not: false,
-    dm_not: false
-  })
+
+  const [userData, setUserData] = useState<Pick<UsersType, 'email'>>({ email: '' })
+  const [email, setEmail] = useState({ new: '' })
+  const [errors, setErrors] = useState({ new: '' })
   const [commetNot, setCommetNot] = useToggle(false)
   const [newsNot, setNewsNot] = useToggle(false)
   const [dmNot, setDmNot] = useToggle(false)
-
-  const [email, setEmail] = useState({
-    new: ''
-  })
-  const [errors, setErrors] = useState({
-    new: ''
-  })
-
-  const [userData, setUserData] = useState<Pick<UsersType, 'email' | 'comment_not' | 'news_not' | 'dm_not'>>({
-    email: '',
-    comment_not: '0',
-    news_not: '0',
-    dm_not: '0'
-  })
 
   const id = params.id
 
   useEffect(() => {
     if (typeof id === 'string') {
       const fetchUserData = async () => {
-        const data = await getUserAction(id)
+        const data = await getUserByIdAction(id)
         setUserData(data)
-        setNotifications({
-          ...notifications,
-          comment_not: data.comment_not,
-          news_not: data.news_not,
-          dm_not: data.dm_not
-        })
+
+        setCommetNot(data.comment_not === '1' ? false : true)
+        setNewsNot(data.news_not === '1' ? false : true)
+        setDmNot(data.dm_not === '1' ? false : true)
       }
 
       fetchUserData()
@@ -65,20 +48,18 @@ const EmailEditContent = () => {
       const { name, value } = e.target
       setEmail(prev => ({ ...prev, [name]: value }))
 
-      if (name === 'new') {
-        if (!value) {
-          setErrors(prev => ({
-            ...prev,
-            new: 'メールアドレスを入力してください'
-          }))
-        } else if (!validateEmail(value)) {
-          setErrors(prev => ({
-            ...prev,
-            new: '有効なメールアドレスを入力してください'
-          }))
-        } else {
-          setErrors(prev => ({ ...prev, new: '' }))
-        }
+      if (!value) {
+        setErrors(prev => ({
+          ...prev,
+          new: 'メールアドレスを入力してください'
+        }))
+      } else if (!validateEmail(value)) {
+        setErrors(prev => ({
+          ...prev,
+          new: '有効なメールアドレスを入力してください'
+        }))
+      } else {
+        setErrors(prev => ({ ...prev, new: '' }))
       }
     },
     [validateEmail]
@@ -86,22 +67,25 @@ const EmailEditContent = () => {
 
   const handleCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target
-    console.log(name)
 
-    // setNotifications(prev => ({ ...prev, [name]: checked }))
-    // switch (name) {
-    //   case 'comment_not':
-    //     dispatch(editUserAction({ comment_not: notifications.comment_not }))
-    //     break
-    //   case 'news_not':
-    //     dispatch(editUserAction({ news_not: notifications.news_not }))
-    //     break
-    //   case 'dm_not':
-    //     dispatch(editUserAction({ dm_not: notifications.dm_not }))
-    //     break
-    //   default:
-    //     break
-    // }
+    const payload = checked === true ? '0' : '1'
+
+    switch (name) {
+      case 'comment_not':
+        setCommetNot(checked)
+        dispatch(editUserAction({ comment_not: payload }))
+        break
+      case 'news_not':
+        setNewsNot(checked)
+        dispatch(editUserAction({ news_not: payload }))
+        break
+      case 'dm_not':
+        setDmNot(checked)
+        dispatch(editUserAction({ dm_not: payload }))
+        break
+      default:
+        break
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -136,21 +120,21 @@ const EmailEditContent = () => {
            px-6 py-3'
           >
             <span>コメント</span>
-            <CheckBox on={commetNot} handleToggle={() => handleCheckboxChange} />
+            <CheckBox name='comment_not' on={commetNot} handleToggle={handleCheckboxChange} />
           </li>
           <li
             className='flex justify-between items-center gap-2 bg-colorGray1 rounded-lg
            px-6 py-3'
           >
             <span>管理者からのお知らせ</span>
-            <CheckBox on={newsNot} handleToggle={() => handleCheckboxChange} />
+            <CheckBox name='news_not' on={newsNot} handleToggle={handleCheckboxChange} />
           </li>
           <li
             className='flex justify-between items-center gap-2 bg-colorGray1 rounded-lg
            px-6 py-3'
           >
             <span>ダイレクトメッセージ</span>
-            <CheckBox on={dmNot} handleToggle={() => handleCheckboxChange} />
+            <CheckBox name='dm_not' on={dmNot} handleToggle={handleCheckboxChange} />
           </li>
         </ul>
         <Button type='submit' size='lg' value='保存' />

@@ -8,7 +8,7 @@ import SectionTitle from '@/components/common/SectionTitle'
 import InputText from '@/components/form/InputText'
 import Button from '@/components/common/Button'
 
-import { getUserAction } from '@/actions/authAction'
+import { getUserByIdAction } from '@/actions/authAction'
 import { editUserAction } from '@/redux-store/slices/authSlice'
 
 const ChangePwContent = () => {
@@ -46,7 +46,7 @@ const ChangePwContent = () => {
     }
 
     if (typeof id === 'string') {
-      originUserData = await getUserAction(id)
+      originUserData = await getUserByIdAction(id)
     }
 
     if (formData.current_pw !== originUserData.password) {

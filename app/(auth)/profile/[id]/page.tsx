@@ -13,7 +13,7 @@ import SectionTitle from '@/components/common/SectionTitle'
 import PageHeader from '@/components/common/PageHeader'
 import SearchBar from '@/components/common/SearchBar'
 
-import { getUserAction } from '@/actions/authAction'
+import { getUserByIdAction } from '@/actions/authAction'
 import { UsersType } from '@/types/userType'
 
 const Profile = () => {
@@ -33,7 +33,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       if (typeof id === 'string') {
-        setUserData(await getUserAction(id))
+        setUserData(await getUserByIdAction(id))
       }
     }
     fetchUserData()
