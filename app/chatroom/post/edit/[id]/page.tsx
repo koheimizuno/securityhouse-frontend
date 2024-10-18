@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
@@ -12,68 +12,39 @@ import SectionTitle from '@/components/common/SectionTitle'
 import SelectText from '@/components/form/SelectText'
 import InputText from '@/components/form/InputText'
 import Button from '@/components/common/Button'
-
-import { createPostAction } from '@/redux-store/slices/postSlice'
-import { getPostByIdAction } from '@/actions/postAction'
-import { getPostTypeAction, initialStateTypes } from '@/redux-store/slices/postTypeSlice'
-import { PostType_Type } from '@/types/postType'
-
 const RichTextEditor = dynamic(() => import('@/components/form/RichTextEditor'), {
   ssr: false
 })
 
-const postTypeOptions = [
-  { value: '0', label: '選択してください' },
-  { value: '1', label: 'SH会' },
-  { value: '2', label: '仕事' },
-  { value: '3', label: '交流' },
-  { value: '4', label: '社長室' }
-]
-
-const categoryOptions = [
-  {
-    value: '0',
-    label: '選択してください'
-  },
-  {
-    value: '1',
-    label: '事務局からのご案内1'
-  },
-  {
-    value: '2',
-    label: '事務局からのご案内2'
-  },
-  {
-    value: '3',
-    label: '事務局からのご案内3'
-  },
-  {
-    value: '4',
-    label: '事務局からのご案内4'
-  }
-]
+import { createPostAction } from '@/redux-store/slices/postSlice'
+import { getPostByIdAction } from '@/actions/postAction'
+import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
+import { getCategoryAction } from '@/redux-store/slices/categorySlice'
+import { getTitleById } from '@/utils/getTitleById'
+import { PostType } from '@/types/postType'
+import getImageAlt from '@/utils/getImageAlt'
 
 const publicationOptions = [
   {
-    value: '0',
-    label: '選択してください'
+    id: '0',
+    title: '選択してください'
   },
   {
-    value: '1',
-    label: '全体1'
+    id: '1',
+    title: '全体1'
   },
   {
-    value: '2',
-    label: '全体2'
+    id: '2',
+    title: '全体2'
   },
   {
-    value: '3',
-    label: '全体3'
+    id: '3',
+    title: '全体3'
   }
 ]
 
 const EditPost = () => {
-  const params = useParams()
+  const { id } = useParams()
   const dispatch = useDispatch()
   const [selectedValue, setSelectedValue] = useState({
     postType: '0',
@@ -96,16 +67,22 @@ const EditPost = () => {
     content: '',
     hashtag: ''
   })
-  const [postData, setPostData] = useState(null)
+  const [postData, setPostData] = useState<PostType | null>(null)
 
   const { postTypes } = useSelector((state: any) => state.post_type)
+  const { categories } = useSelector((state: any) => state.category)
 
-  console.log(postTypes)
+  const postTypeOptions = useMemo(() => {
+    return [{ id: '0', title: '選択してください' }, ...postTypes]
+  }, [postTypes])
 
-  const id = params.id
+  const categoryOptions = useMemo(() => {
+    return [{ id: '0', title: '選択してください' }, ...categories]
+  }, [categories])
 
   useEffect(() => {
     dispatch(getPostTypeAction())
+    dispatch(getCategoryAction())
   }, [])
 
   useEffect(() => {
@@ -199,9 +176,9 @@ const EditPost = () => {
               <span className='text-base font-bold'>投稿先</span>
               <SelectText
                 options={postTypeOptions}
-                value={selectedValue.postType}
+                value={(postData && postData?.type_id) || '0'}
                 onChange={handleSelect}
-                placeholder={postTypeOptions[0].label}
+                placeholder={(postData && getTitleById(postTypeOptions, postData?.type_id)) || '選択してください'}
                 name='postType'
                 className='w-full md:w-[480px]'
               />
@@ -217,9 +194,9 @@ const EditPost = () => {
               <span className='text-base font-bold'>カテゴリ</span>
               <SelectText
                 options={categoryOptions}
-                value={selectedValue.category}
+                value={(postData && postData?.category_id) || '0'}
                 onChange={handleSelect}
-                placeholder={categoryOptions[0].label}
+                placeholder={(postData && getTitleById(categoryOptions, postData?.category_id)) || '選択してください'}
                 name='category'
                 className='w-full md:w-[480px]'
               />
@@ -237,7 +214,7 @@ const EditPost = () => {
                 options={publicationOptions}
                 value={selectedValue.publication}
                 onChange={handleSelect}
-                placeholder={publicationOptions[0].label}
+                placeholder={publicationOptions[0].title}
                 name='publication'
                 className='w-full md:w-[480px]'
               />
@@ -253,7 +230,7 @@ const EditPost = () => {
               <InputText
                 name='title'
                 onChange={handleChange}
-                placeholder='タイトルをご入力ください'
+                placeholder={postData ? postData?.title : 'タイトルをご入力ください'}
                 className='w-full md:w-[480px]'
               />
             </label>
@@ -263,7 +240,10 @@ const EditPost = () => {
               }`}
             >
               <span className='text-base font-bold'>内容</span>
-              <RichTextEditor onChange={handleEditorChange} />
+              <RichTextEditor
+                initialData={postData ? postData.content : 'ご入力ください。'}
+                onChange={handleEditorChange}
+              />
               {errors.content && (
                 <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.content}</span>
               )}
@@ -277,7 +257,7 @@ const EditPost = () => {
               <InputText
                 name='hashtag'
                 onChange={handleChange}
-                placeholder='＃テキストをご入力ください'
+                placeholder={postData ? postData?.hashtag : '＃テキストをご入力ください'}
                 className='w-full md:w-[480px]'
               />
               {errors.hashtag && (
@@ -294,11 +274,11 @@ const EditPost = () => {
                 onChange={handleChange}
               />
             </label>
-            {inputValues.attachments.preview && (
+            {(inputValues.attachments.preview || postData?.attachments) && (
               <Image
-                src={inputValues.attachments.preview}
-                alt='Selected'
-                className='md:ms-[170px] lg:ms-[244px] mt-2 w-40 h-w-40'
+                src={inputValues.attachments.preview || postData?.attachments || ''}
+                alt={getImageAlt(inputValues.attachments.preview || postData?.attachments || '') || ''}
+                className={`md:ms-[170px] lg:ms-[244px] mt-2 w-40 h-40`}
                 width={50}
                 height={50}
               />

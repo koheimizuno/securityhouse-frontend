@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
 
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb'
 import SearchBar from '@/components/common/SearchBar'
@@ -10,44 +11,14 @@ import SectionTitle from '@/components/common/SectionTitle'
 import SelectText from '@/components/form/SelectText'
 import InputText from '@/components/form/InputText'
 import Button from '@/components/common/Button'
-
-import { createPostAction } from '@/redux-store/slices/postSlice'
-
-import dynamic from 'next/dynamic'
 const RichTextEditor = dynamic(() => import('@/components/form/RichTextEditor'), {
   ssr: false
 })
 
-const postTypeOptions = [
-  { id: '0', title: '選択してください' },
-  { id: '1', title: 'SH会' },
-  { id: '2', title: '仕事' },
-  { id: '3', title: '交流' },
-  { id: '4', title: '社長室' }
-]
+import { createPostAction } from '@/redux-store/slices/postSlice'
 
-const categoryOptions = [
-  {
-    id: '0',
-    title: '選択してください'
-  },
-  {
-    id: '1',
-    title: '事務局からのご案内1'
-  },
-  {
-    id: '2',
-    title: '事務局からのご案内2'
-  },
-  {
-    id: '3',
-    title: '事務局からのご案内3'
-  },
-  {
-    id: '4',
-    title: '事務局からのご案内4'
-  }
-]
+import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
+import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 
 const publicationOptions = [
   {
@@ -91,6 +62,22 @@ const CreatePost = () => {
     content: '',
     hashtag: ''
   })
+
+  const { postTypes } = useSelector((state: any) => state.post_type)
+  const { categories } = useSelector((state: any) => state.category)
+
+  const postTypeOptions = useMemo(() => {
+    return [{ id: '0', title: '選択してください' }, ...postTypes]
+  }, [postTypes])
+
+  const categoryOptions = useMemo(() => {
+    return [{ id: '0', title: '選択してください' }, ...categories]
+  }, [categories])
+
+  useEffect(() => {
+    dispatch(getPostTypeAction())
+    dispatch(getCategoryAction())
+  }, [])
 
   const handleSelect = (name: string, value: string) => {
     setSelectedValue(prev => ({ ...prev, [name]: value }))
