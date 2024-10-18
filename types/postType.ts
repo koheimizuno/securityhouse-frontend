@@ -10,3 +10,9 @@ export type PostType = {
   user_id: string
   attachments: string
 }
+
+export type PostType_Type = {
+  id: string
+  title: string
+  group_id: string
+}

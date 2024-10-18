@@ -1,6 +1,7 @@
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { PostType_Type } from '@/types/postType'
 
 export const createPostTypeAction: any = createAsyncThunk('createPostTypeAction', async payload => {
   try {
@@ -35,7 +36,11 @@ export const deletePostTypeAction: any = createAsyncThunk('deletePostTypeAction'
   }
 })
 
-const initialState: any = {
+export interface initialStateTypes extends storeInitialType {
+  postTypes: PostType_Type[]
+}
+
+const initialState: initialStateTypes = {
   postTypes: [],
   success: false,
   error: false,
@@ -54,7 +59,7 @@ export const postTypeSlice = createSlice({
       .addCase(getPostTypeAction.fulfilled, (state, { payload }) => {
         state.isLoading = false
         state.success = true
-        state.postType = payload
+        state.postTypes = payload.types
       })
       .addCase(getPostTypeAction.rejected, state => {
         state.isLoading = false
