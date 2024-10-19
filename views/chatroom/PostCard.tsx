@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation'
 import { useClickAway } from '@uidotdev/usehooks'
 
 import Button from '@/components/common/Button'
-import formatDate from '@/utils/formatDate'
+import { formatDate } from '@/utils/formatDate'
 import { deletePostAction } from '@/redux-store/slices/postSlice'
 
 interface PostCardProps {

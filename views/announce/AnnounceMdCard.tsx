@@ -4,7 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import Button from '@/components/common/Button'
 import Link from 'next/link'
-import getImageAlt from '@/utils/getImageAlt'
+import { getImageAlt } from '@/utils/getImageAlt'
 
 interface AnnounceMdCardProps {
   id: string

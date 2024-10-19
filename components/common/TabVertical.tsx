@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-import getImageAlt from '@/utils/getImageAlt'
+import { getImageAlt } from '@/utils/getImageAlt'
 
 interface TabVerticalProps {
   queryKey: string

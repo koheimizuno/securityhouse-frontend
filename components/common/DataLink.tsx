@@ -3,7 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 
-import getImageAlt from '@/utils/getImageAlt'
+import { getImageAlt } from '@/utils/getImageAlt'
 
 type Props = {
   src: string

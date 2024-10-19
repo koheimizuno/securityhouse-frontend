@@ -1,4 +1,4 @@
-const formatDate = (input: string): string => {
+export const formatDate = (input: string): string => {
   const date = new Date(input)
 
   const year = date.getFullYear()
@@ -9,5 +9,3 @@ const formatDate = (input: string): string => {
 
   return `${year}年${month}月${day}日 ${hours}:${minutes < 10 ? '0' : ''}${minutes}`
 }
-
-export default formatDate

@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { POST_TYPE } from '@/utils/constants'
-import getImageAlt from '@/utils/getImageAlt'
+import { getImageAlt } from '@/utils/getImageAlt'
 import postCategory from '@/mockup/postCategory.json'
 
 const Category = () => {
