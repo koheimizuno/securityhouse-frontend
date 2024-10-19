@@ -72,13 +72,17 @@ const EditPost = () => {
   const { postTypes } = useSelector((state: any) => state.post_type)
   const { categories } = useSelector((state: any) => state.category)
 
-  const postTypeOptions = useMemo(() => {
-    return [{ id: '0', title: '選択してください' }, ...postTypes]
-  }, [postTypes])
+  const postTypeOptions =
+    postTypes &&
+    useMemo(() => {
+      return [{ id: '0', title: '選択してください' }, ...postTypes]
+    }, [postTypes])
 
-  const categoryOptions = useMemo(() => {
-    return [{ id: '0', title: '選択してください' }, ...categories]
-  }, [categories])
+  const categoryOptions =
+    categories &&
+    useMemo(() => {
+      return [{ id: '0', title: '選択してください' }, ...categories]
+    }, [categories])
 
   useEffect(() => {
     dispatch(getPostTypeAction())
