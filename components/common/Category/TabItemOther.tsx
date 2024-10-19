@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { getImageAlt } from '@/utils/getImageAlt'
-import { PostTabType } from '@/types/postType'
+import { PostTabType } from '../TabVertical'
 
 type TabItemOtherProps = {
   item: PostTabType

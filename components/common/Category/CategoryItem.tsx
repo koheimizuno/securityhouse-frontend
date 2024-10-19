@@ -1,9 +1,11 @@
 import { memo } from 'react'
 import Image from 'next/image'
-import { PostCategoryType } from '@/types/postType'
 
 type CategoryItemProps = {
-  item: PostCategoryType
+  item: {
+    label: string
+    segment: string
+  }
   cat: string
   handleCategory: (segment: string) => void
 }
