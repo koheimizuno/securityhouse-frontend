@@ -16,11 +16,13 @@ const RichTextEditor = dynamic(() => import('@/components/form/RichTextEditor'),
   ssr: false
 })
 
-import { createPostAction } from '@/redux-store/slices/postSlice'
+import { PostType } from '@/types/postType'
+
 import { getPostByIdAction } from '@/actions/postAction'
+import { createPostAction } from '@/redux-store/slices/postSlice'
 import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
-import { PostType } from '@/types/postType'
+
 import { getTitleById } from '@/utils/getTitleById'
 import { getImageAlt } from '@/utils/getImageAlt'
 

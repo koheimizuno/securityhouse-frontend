@@ -7,6 +7,7 @@ import categorySlice from '@/redux-store/slices/categorySlice'
 import groupSlice from '@/redux-store/slices/groupSlice'
 import commentSlice from '@/redux-store/slices/commentSlice'
 import documentSlice from '@/redux-store/slices/documentSlice'
+import messageSlice from '@/redux-store/slices/messageSlice'
 
 const rootReducer = combineReducers({
   user: authSlice.reducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   category: categorySlice.reducer,
   group: groupSlice.reducer,
   comment: commentSlice.reducer,
-  document: documentSlice.reducer
+  document: documentSlice.reducer,
+  message: messageSlice.reducer
 })
 
 const store = configureStore({
