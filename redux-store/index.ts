@@ -11,6 +11,7 @@ import messageSlice from './slices/messageSlice'
 import newsSlice from './slices/newsSlice'
 import badgeSlice from './slices/badgeSlice'
 import challengeSlice from './slices/challengeSlice'
+import rankingSlice from './slices/rankingSlice'
 
 const rootReducer = combineReducers({
   user: authSlice.reducer,
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   message: messageSlice.reducer,
   news: newsSlice.reducer,
   badge: badgeSlice.reducer,
-  challenge: challengeSlice.reducer
+  challenge: challengeSlice.reducer,
+  ranking: rankingSlice.reducer
 })
 
 const store = configureStore({
