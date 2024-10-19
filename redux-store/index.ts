@@ -5,13 +5,15 @@ import postSlice from '@/redux-store/slices/postSlice'
 import postTypeSlice from '@/redux-store/slices/postTypeSlice'
 import categorySlice from '@/redux-store/slices/categorySlice'
 import groupSlice from '@/redux-store/slices/groupSlice'
+import commentSlice from '@/redux-store/slices/commentSlice'
 
 const rootReducer = combineReducers({
   user: authSlice.reducer,
   post: postSlice.reducer,
   post_type: postTypeSlice.reducer,
   category: categorySlice.reducer,
-  group: groupSlice.reducer
+  group: groupSlice.reducer,
+  comment: commentSlice.reducer
 })
 
 const store = configureStore({

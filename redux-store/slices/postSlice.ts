@@ -109,7 +109,7 @@ export const postSlice = createSlice({
       .addCase(postLikeAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
-        toast.success('いいねを追加しました。')
+        toast.success('投稿に「いいね！」を追加しました。')
       })
       .addCase(postLikeAction.rejected, state => {
         state.isLoading = false
@@ -119,7 +119,7 @@ export const postSlice = createSlice({
       .addCase(deletePostLikeAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
-        toast.success('いいねを削除しました。')
+        toast.success('投稿から「いいね！」を削除しました。')
       })
       .addCase(deletePostLikeAction.rejected, state => {
         state.isLoading = false
