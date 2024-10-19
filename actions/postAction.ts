@@ -3,7 +3,7 @@ import axios from 'axios'
 export const getPostsAction = async () => {
   try {
     const { data } = await axios.get('/api/posts/')
-    return data
+    return data.posts
   } catch (err) {
     return 'サーバの問題でデータ取得に失敗しました。'
   }

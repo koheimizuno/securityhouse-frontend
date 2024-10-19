@@ -7,7 +7,7 @@ import { CommentType } from '@/types/commentType'
 
 export const createCommentAction: any = createAsyncThunk(
   'createCommentAction',
-  async (payload: Omit<CommentType, 'id' | 'user_id' | 'notification' | 'attachments'>) => {
+  async (payload: Pick<CommentType, 'content' | 'post_id' | 'attachment' | 'comment_id'>) => {
     try {
       await axios.post(`/api/comment/`, payload)
     } catch (err) {
