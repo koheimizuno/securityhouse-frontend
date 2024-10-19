@@ -1,15 +1,16 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
-import authSlice from '@/redux-store/slices/authSlice'
-import postSlice from '@/redux-store/slices/postSlice'
-import postTypeSlice from '@/redux-store/slices/postTypeSlice'
-import categorySlice from '@/redux-store/slices/categorySlice'
-import groupSlice from '@/redux-store/slices/groupSlice'
-import commentSlice from '@/redux-store/slices/commentSlice'
-import documentSlice from '@/redux-store/slices/documentSlice'
-import messageSlice from '@/redux-store/slices/messageSlice'
-import newsSlice from '@/redux-store/slices/newsSlice'
-import badgeSlice from '@/redux-store/slices/badgeSlice'
+import authSlice from './slices/authSlice'
+import postSlice from './slices/postSlice'
+import postTypeSlice from './slices/postTypeSlice'
+import categorySlice from './slices/categorySlice'
+import groupSlice from './slices/groupSlice'
+import commentSlice from './slices/commentSlice'
+import documentSlice from './slices/documentSlice'
+import messageSlice from './slices/messageSlice'
+import newsSlice from './slices/newsSlice'
+import badgeSlice from './slices/badgeSlice'
+import challengeSlice from './slices/challengeSlice'
 
 const rootReducer = combineReducers({
   user: authSlice.reducer,
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   document: documentSlice.reducer,
   message: messageSlice.reducer,
   news: newsSlice.reducer,
-  badge: badgeSlice.reducer
+  badge: badgeSlice.reducer,
+  challenge: challengeSlice.reducer
 })
 
 const store = configureStore({
