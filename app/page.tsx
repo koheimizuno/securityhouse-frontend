@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -34,29 +34,20 @@ export default function Home() {
     }
   }, [searchParams])
 
-  let roomListTitle = '',
-    roomListHref = ''
-
-  switch (postType) {
-    case '1':
-      roomListTitle = 'SH会トークルーム一覧へ'
-      roomListHref = 'chatroom/sh-room'
-      break
-    case '2':
-      roomListTitle = '仕事トークルーム一覧へ'
-      roomListHref = 'chatroom/work-room'
-      break
-    case '3':
-      roomListTitle = '交流トークルーム一覧へ'
-      roomListHref = 'chatroom/exchange-room'
-      break
-    case '4':
-      roomListTitle = '社長室トークルーム一覧へ'
-      roomListHref = 'chatroom/boss-room'
-      break
-    default:
-      break
-  }
+  const { roomListTitle, roomListHref } = useMemo(() => {
+    switch (postType) {
+      case '1':
+        return { roomListTitle: 'SH会トークルーム一覧へ', roomListHref: 'chatroom/sh-room' }
+      case '2':
+        return { roomListTitle: '仕事トークルーム一覧へ', roomListHref: 'chatroom/work-room' }
+      case '3':
+        return { roomListTitle: '交流トークルーム一覧へ', roomListHref: 'chatroom/exchange-room' }
+      case '4':
+        return { roomListTitle: '社長室トークルーム一覧へ', roomListHref: 'chatroom/boss-room' }
+      default:
+        return { roomListTitle: '', roomListHref: '' }
+    }
+  }, [postType])
 
   return (
     <>
