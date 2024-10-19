@@ -9,6 +9,7 @@ import commentSlice from '@/redux-store/slices/commentSlice'
 import documentSlice from '@/redux-store/slices/documentSlice'
 import messageSlice from '@/redux-store/slices/messageSlice'
 import newsSlice from '@/redux-store/slices/newsSlice'
+import badgeSlice from '@/redux-store/slices/badgeSlice'
 
 const rootReducer = combineReducers({
   user: authSlice.reducer,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   comment: commentSlice.reducer,
   document: documentSlice.reducer,
   message: messageSlice.reducer,
-  news: newsSlice.reducer
+  news: newsSlice.reducer,
+  badge: badgeSlice.reducer
 })
 
 const store = configureStore({
