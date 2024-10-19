@@ -1,6 +1,6 @@
 'use client'
 
-import Breadcrumb from '@/components/breadcrumb/Breadcrumb'
+import Breadcrumb from '@/components/breadcrumb'
 import Category from '@/components/common/Category'
 import SearchBar from '@/components/common/SearchBar'
 import Container from '@/components/layout/Container'

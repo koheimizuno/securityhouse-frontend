@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 
-import Breadcrumb from '@/components/breadcrumb/Breadcrumb'
+import Breadcrumb from '@/components/breadcrumb'
 import SearchBar from '@/components/common/SearchBar'
 import SectionTitle from '@/components/common/SectionTitle'
 import SelectText from '@/components/form/SelectText'

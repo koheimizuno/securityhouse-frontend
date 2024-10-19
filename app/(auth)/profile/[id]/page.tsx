@@ -7,7 +7,7 @@ import { usePathname, useSearchParams, useRouter, useParams } from 'next/navigat
 
 import AnnounceMdCard from '@/views/announce/AnnounceMdCard'
 import Container from '@/components/layout/Container'
-import Breadcrumb from '@/components/breadcrumb/Breadcrumb'
+import Breadcrumb from '@/components/breadcrumb'
 import Button from '@/components/common/Button'
 import SectionTitle from '@/components/common/SectionTitle'
 import PageHeader from '@/components/common/PageHeader'

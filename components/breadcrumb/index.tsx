@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation'
 
 import Container from '@/components/layout/Container'
 import { getBreadcrumbs } from '@/utils/getBreadcrumbs'
+import BreadcrumbItem from './BreadcrumbItem'
 
 const Breadcrumb = () => {
   const pathName = usePathname()
@@ -21,22 +22,7 @@ const Breadcrumb = () => {
           <span>TOP</span>
         </Link>
         {memorizedPathName.map((item, index) => (
-          <div key={index} className='flex items-center gap-2'>
-            <Image
-              src='/images/arrow-right-gray.svg'
-              alt='arrow-right-gray'
-              className='w-[10px] h-[10px]'
-              width={4}
-              height={8}
-            />
-            {item.validSlug ? (
-              <Link href={item.href} key={index}>
-                {item.label}
-              </Link>
-            ) : (
-              <span>{item.label}</span>
-            )}
-          </div>
+          <BreadcrumbItem key={index} item={item} />
         ))}
       </div>
     </Container>
