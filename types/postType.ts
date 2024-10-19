@@ -16,3 +16,14 @@ export type PostType_Type = {
   title: string
   group_id: string
 }
+
+export type PostCategoryType = {
+  label: string
+  segment: string
+}
+
+export type PostTabType = {
+  title: string
+  href: string
+  icon: string[]
+}

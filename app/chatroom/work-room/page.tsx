@@ -1,9 +1,9 @@
 'use client'
 
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb'
+import Category from '@/components/common/Category'
 import SearchBar from '@/components/common/SearchBar'
 import Container from '@/components/layout/Container'
-import Category from '@/views/chatroom/Category'
 import WorkRoomContent from '@/views/chatroom/WorkRoomContent'
 
 const WorkRoom = () => {
