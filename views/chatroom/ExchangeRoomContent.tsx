@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import PostCard from '@/views/chatroom/PostCard'
-import Pagination from '@/views/chatroom/Pagination'
+import { Pagination } from '@nextui-org/react'
 
 import postdata from '@/mockup/postdata.json'
 
@@ -38,7 +38,7 @@ const ExchangeRoomContent = () => {
             />
           ))}
         </div>
-        <Pagination currentPage={2} perPage={3} totalItems={30} baseUrl={pathname} />
+        <Pagination total={10} initialPage={1} className='gap-2 m-auto' showControls />
       </div>
     </div>
   )
