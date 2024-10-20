@@ -8,7 +8,7 @@ import postCategory from '@/mockup/postCategory.json'
 import CategoryItem from './CategoryItem'
 import TabItemOther from './TabItemOther'
 
-const Category = ({ menuClear }: { menuClear: () => void }) => {
+const Category = ({ toggleMenu }: { toggleMenu: () => void }) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -33,7 +33,7 @@ const Category = ({ menuClear }: { menuClear: () => void }) => {
         <h4 className='font-bold'>カテゴリ</h4>
         <ul className='flex flex-col gap-2'>
           {postCategory.map((item, index) => (
-            <CategoryItem key={index} item={item} cat={cat} handleCategory={handleCategory} menuClear={menuClear} />
+            <CategoryItem key={index} item={item} cat={cat} handleCategory={handleCategory} toggleMenu={toggleMenu} />
           ))}
         </ul>
       </div>

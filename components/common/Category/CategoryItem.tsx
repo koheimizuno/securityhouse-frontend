@@ -8,13 +8,13 @@ type CategoryItemProps = {
   }
   cat: string
   handleCategory: (segment: string) => void
-  menuClear: () => void
+  toggleMenu: () => void
 }
 
-const CategoryItem = ({ item, cat, handleCategory, menuClear }: CategoryItemProps) => {
+const CategoryItem = ({ item, cat, handleCategory, toggleMenu }: CategoryItemProps) => {
   const handleClick = () => {
     handleCategory(item.segment)
-    menuClear()
+    toggleMenu()
   }
   return (
     <li
