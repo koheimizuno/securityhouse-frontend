@@ -1,10 +1,7 @@
 import type { Metadata } from 'next'
-import ClientOnly from '@/components/layout/ClientOnly'
+import Providers from '@/components/layout/providers'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-
-import ReduxProvider from '@/redux-store/ReduxProvider'
-import ToasterProvider from '@/providers/ToasterProvider'
 
 import '@/app/globals.css'
 
@@ -21,14 +18,11 @@ export default function RootLayout({
   return (
     <html lang='ja'>
       <body>
-        <ClientOnly>
-          <ReduxProvider>
-            <ToasterProvider />
-            <Header />
-            <main className='mt-[300px] sm:mt-[145px] md:mt-[123px]'>{children}</main>
-            <Footer />
-          </ReduxProvider>
-        </ClientOnly>
+        <Providers>
+          <Header />
+          <main className='mt-[300px] sm:mt-[145px] md:mt-[123px]'>{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   )
