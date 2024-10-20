@@ -1,0 +1,52 @@
+[
+  {
+    "label": "新規登録",
+    "slug": "register",
+    "validSlug": true
+  },
+  {
+    "label": "ログイン",
+    "slug": "login",
+    "validSlug": true
+  },
+  {
+    "label": "アカウント設定",
+    "slug": "profile",
+    "validSlug": false
+  },
+  {
+    "label": "トークルーム",
+    "slug": "chatroom",
+    "validSlug": false
+  },
+  {
+    "label": "SH会トークルーム",
+    "slug": "sh-room",
+    "validSlug": true
+  },
+  {
+    "label": "仕事トークルーム",
+    "slug": "work-room",
+    "validSlug": true
+  },
+  {
+    "label": "交流トークルーム",
+    "slug": "exchange-room",
+    "validSlug": true
+  },
+  {
+    "label": "社長室トークルーム",
+    "slug": "boss-room",
+    "validSlug": true
+  },
+  {
+    "label": "投稿",
+    "slug": "post",
+    "validSlug": false
+  },
+  {
+    "label": "作成",
+    "slug": "create",
+    "validSlug": true
+  }
+]

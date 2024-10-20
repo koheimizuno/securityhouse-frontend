@@ -4,7 +4,7 @@ import { memo } from 'react'
 
 type BreadcrumbItemProps = {
   label: string
-  href: string
+  slug: string
   validSlug: boolean
 }
 
@@ -18,7 +18,7 @@ const BreadcrumbItem = ({ item }: { item: BreadcrumbItemProps }) => {
         width={4}
         height={8}
       />
-      {item.validSlug ? <Link href={item.href}>{item.label}</Link> : <span>{item.label}</span>}
+      {item.validSlug ? <Link href={item.slug}>{item.label}</Link> : <span>{item.label}</span>}
     </div>
   )
 }
