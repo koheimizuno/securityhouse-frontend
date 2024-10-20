@@ -13,7 +13,7 @@ type TabItemOtherProps = {
 const TabItemOther = ({ item, pathname }: TabItemOtherProps) => {
   return (
     <li
-      className={`border flex items-center p-3 lg:px-6 lg:h-[72px] rounded-xl cursor-pointer shadow-lg transition-all duration-500 ${
+      className={`border flex items-center p-3 lg:px-6 lg:h-[72px] rounded-xl cursor-pointer shadow-lg transition-all duration-300 ${
         pathname.includes(item.href)
           ? 'bg-primary border-primary text-white'
           : 'bg-white border-colorGray1 hover:bg-hoverPrimary hover:border-hoverPrimary'

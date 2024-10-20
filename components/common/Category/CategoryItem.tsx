@@ -8,15 +8,20 @@ type CategoryItemProps = {
   }
   cat: string
   handleCategory: (segment: string) => void
+  menuClear: () => void
 }
 
-const CategoryItem = ({ item, cat, handleCategory }: CategoryItemProps) => {
+const CategoryItem = ({ item, cat, handleCategory, menuClear }: CategoryItemProps) => {
+  const handleClick = () => {
+    handleCategory(item.segment)
+    menuClear()
+  }
   return (
     <li
-      className={`flex items-center gap-2 text-sm rounded-full ps-5 pe-2 py-2 cursor-pointer ${
+      className={`flex items-center gap-2 text-sm rounded-full ps-5 pe-2 py-2 cursor-pointer hover:bg-hoverPrimary transition-all duration-300 ${
         cat === item.segment && 'bg-primary text-white'
       }`}
-      onClick={() => handleCategory(item.segment)}
+      onClick={handleClick}
     >
       <Image
         src={cat === item.segment ? '/images/arrow-right-white.svg' : '/images/arrow-right.svg'}

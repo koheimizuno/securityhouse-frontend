@@ -16,12 +16,12 @@ const WorkRoomContent = () => {
         <Image src='/images/sh-room-primary.svg' alt='sh-room-primary' width={25} height={25} />
         <h1 className='text-xl font-bold'>仕事トークルーム</h1>
       </div>
-      <div className='bg-bgSemiblue p-8 flex flex-col gap-6 rounded-2xl'>
+      <div className='bg-bgSemiblue px-4 py-8 md:p-8 flex flex-col gap-6 rounded-2xl'>
         <h2 className='text-[32px] font-bold'>すべて</h2>
         <p>
           カテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入ります
         </p>
-        <div className='flex flex-wrap gap-5'>
+        <div className='flex flex-col items-center sm:flex-row sm:flex-wrap gap-5'>
           {postdata.map((post, index) => (
             <PostCard
               key={index}
