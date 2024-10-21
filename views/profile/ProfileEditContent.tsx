@@ -5,11 +5,9 @@ import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 
 import SectionTitle from '@/components/common/SectionTitle'
-import InputText from '@/components/form/InputText'
-import TextAreaText from '@/components/form/TextAreaText'
-import Button from '@/components/common/Button'
 
 import { editUserAction } from '@/redux-store/slices/authSlice'
+import { Button, Input, Textarea } from '@nextui-org/react'
 
 type editDataType = {
   thumbnail: {
@@ -54,7 +52,7 @@ const ProfileEditContent = () => {
     setErrors({ ...errors, [name]: '' })
   }
 
-  const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
     setErrors({ ...errors, [name]: '' })
@@ -64,12 +62,20 @@ const ProfileEditContent = () => {
     let isValid = true
     const newErrors = { ...errors }
 
+    if (!formData.thumbnail.file) {
+      newErrors.thumbnail = 'プロフィール画像は必須です'
+      isValid = false
+    }
+
     if (!formData.name.trim()) {
       newErrors.name = '表示名は必須です'
       isValid = false
     }
 
-    if (formData.intro.length > 500) {
+    if (!formData.intro.trim()) {
+      newErrors.intro = '自己紹介は必須です'
+      isValid = false
+    } else if (formData.intro.length > 500) {
       newErrors.intro = '自己紹介は500文字以内で入力してください'
       isValid = false
     }
@@ -95,31 +101,63 @@ const ProfileEditContent = () => {
     <>
       <SectionTitle title='プロフィール編集' />
       <form className='mt-4 flex flex-col gap-8' onSubmit={handleSubmit}>
-        <label className='flex flex-col gap-2'>
-          <span className='text-sm font-bold'>プロフィール画像</span>
-          <InputText name='thumbnail' type='file' className='h-fit' placeholder='アップ' onChange={handleChange} />
-          {errors.thumbnail && <span className='text-danger text-sm'>{errors.thumbnail}</span>}
-          {formData.thumbnail.preview && (
-            <Image
-              src={formData.thumbnail.preview}
-              alt='Selected'
-              className='mt-2 w-32 h-w-32 rounded-full'
-              width={50}
-              height={50}
-            />
-          )}
-        </label>
-        <label className='flex flex-col gap-2'>
-          <span className='text-sm font-bold'>表示名</span>
-          <InputText name='name' placeholder='山田太郎' onChange={handleChange} />
-          {errors.name && <span className='text-danger text-sm'>{errors.name}</span>}
-        </label>
-        <label className='flex flex-col gap-2'>
+        <Input
+          type='file'
+          name='thumbnail'
+          label='プロフィール画像'
+          placeholder='アップ'
+          labelPlacement='outside'
+          isInvalid={errors.thumbnail ? true : false}
+          color={errors.thumbnail ? 'danger' : 'default'}
+          errorMessage={errors.thumbnail}
+          onChange={handleChange}
+          size='lg'
+          isRequired
+        />
+        {formData.thumbnail.preview && (
+          <Image
+            src={formData.thumbnail.preview}
+            alt='Selected'
+            className='mt-2 w-32 h-w-32 rounded-full'
+            width={50}
+            height={50}
+          />
+        )}
+        <Input
+          type='text'
+          name='name'
+          label='表示名'
+          placeholder='山田太郎'
+          className='font-bold'
+          labelPlacement='outside'
+          isInvalid={errors.name ? true : false}
+          color={errors.name ? 'danger' : 'default'}
+          errorMessage={errors.name}
+          onChange={handleChange}
+          size='lg'
+          isRequired
+        />
+        {/* <label className='flex flex-col gap-2'>
           <span className='text-sm font-bold'>自己紹介</span>
           <TextAreaText name='intro' placeholder='自己紹介を入力' onChange={handleTextAreaChange} />
           {errors.intro && <span className='text-danger text-sm'>{errors.intro}</span>}
-        </label>
-        <Button type='submit' size='lg' value='保存' />
+        </label> */}
+        <Textarea
+          name='intro'
+          label='自己紹介'
+          placeholder='自己紹介を入力してください。'
+          className='font-bold'
+          labelPlacement='outside'
+          isInvalid={errors.intro ? true : false}
+          color={errors.intro ? 'danger' : 'default'}
+          errorMessage={errors.intro}
+          onChange={handleChange}
+          size='lg'
+          isRequired
+        />
+        <Button type='submit' size='lg' color='primary' className='rounded-full'>
+          保存
+        </Button>
       </form>
     </>
   )

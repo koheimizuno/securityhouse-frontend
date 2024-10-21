@@ -8,13 +8,13 @@ import { usePathname, useSearchParams, useRouter, useParams } from 'next/navigat
 import AnnounceMdCard from '@/views/announce/AnnounceMdCard'
 import Container from '@/components/layout/Container'
 import Breadcrumb from '@/components/breadcrumb'
-import Button from '@/components/common/Button'
 import SectionTitle from '@/components/common/SectionTitle'
 import PageHeader from '@/components/common/PageHeader'
 import SearchBar from '@/components/common/SearchBar'
 
 import { getUserByIdAction } from '@/actions/authAction'
 import { UsersType } from '@/types/userType'
+import { Button } from '@nextui-org/react'
 
 const Profile = () => {
   const { id } = useParams()
@@ -80,7 +80,9 @@ const Profile = () => {
                   <p className='text-xs'>@{userData.uid}</p>
                 </div>
                 <Link href={`/profile/${id}/edit`}>
-                  <Button value='アカウント設定' />
+                  <Button color='primary' className='rounded-full'>
+                    アカウント設定
+                  </Button>
                 </Link>
               </div>
               <p>{userData.intro}</p>

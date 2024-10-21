@@ -1,7 +1,8 @@
-import Button from '@/components/common/Button'
 import SectionTitle from '@/components/common/SectionTitle'
 import Container from '@/components/layout/Container'
 import AnnounceSmCard from '../announce/AnnounceSmCard'
+import { Button } from '@nextui-org/react'
+import Image from 'next/image'
 
 const NewsSection = () => {
   return (
@@ -10,12 +11,21 @@ const NewsSection = () => {
         <div className='flex flex-col justify-center items-start md:items-center gap-2 md:gap-6 w-full md:w-auto'>
           <SectionTitle title='新着情報' icon='/images/info-icon.svg' />
           <Button
-            value='一覧を見る'
-            onClick={() => {}}
             size='lg'
-            subIcon='/images/arrow-circle-right-outline.svg'
-            className='hidden md:block h-14 hrounded-full border border-primary'
-          />
+            color='primary'
+            className='h-14 px-12 rounded-full font-bold'
+            endContent={
+              <Image
+                src='/images/arrow-circle-right-outline.svg'
+                alt='arrow-circle-right-outline'
+                width={20}
+                height={20}
+                className={`w-6 h-6`}
+              />
+            }
+          >
+            一覧を見る
+          </Button>
         </div>
         <div className='w-full md:hidden text-right'>
           <a href='#' className='underline font-bold'>

@@ -2,9 +2,9 @@
 
 import React from 'react'
 import Image from 'next/image'
-import Button from '@/components/common/Button'
 import Link from 'next/link'
 import { getImageAlt } from '@/utils/getImageAlt'
+import { Button } from '@nextui-org/react'
 
 interface AnnounceMdCardProps {
   id: string
@@ -40,7 +40,9 @@ const AnnounceMdCard = ({
             </p>
             <p className='text-xs text-colorGray3'>{updatedAt}</p>
           </div>
-          <Button size='sm' value='事務局からのご案内' />
+          <Button size='sm' color='primary' className='rounded-full text-xs px-2 py-0 h-6'>
+            事務局からのご案内
+          </Button>
         </div>
         <Link className='' href={`/announce/${id}`}>
           <Image src='/images/more-vertical.svg' alt='more-vertical' width={20} height={20} />

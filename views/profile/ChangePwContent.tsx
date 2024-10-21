@@ -5,11 +5,11 @@ import { useDispatch } from 'react-redux'
 import { useParams } from 'next/navigation'
 
 import SectionTitle from '@/components/common/SectionTitle'
-import InputText from '@/components/form/InputText'
-import Button from '@/components/common/Button'
 
 import { getUserByIdAction } from '@/actions/authAction'
 import { editUserAction } from '@/redux-store/slices/authSlice'
+import { Button, Input } from '@nextui-org/react'
+import InputPasswordEye from '@/components/form/InputPasswordEye'
 
 const ChangePwContent = () => {
   const { id } = useParams()
@@ -24,12 +24,21 @@ const ChangePwContent = () => {
     new_pw: '',
     new_pw_confirm: ''
   })
+  const [isVisible, setIsVisible] = useState({
+    currentPw: false,
+    newPw: false,
+    newPwConfirm: false
+  })
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData(prevState => ({ ...prevState, [name]: value }))
     setErrors(prevState => ({ ...prevState, [name]: '' }))
   }, [])
+
+  const toggleVisible = (name: string, value: boolean) => {
+    setIsVisible(prev => ({ ...prev, [name]: !value }))
+  }
 
   const validateForm = async () => {
     let isValid = true,
@@ -77,27 +86,59 @@ const ChangePwContent = () => {
     <>
       <SectionTitle title='アカウント設定' />
       <form className='mt-4 flex flex-col gap-8' onSubmit={handleSubmit}>
-        <label className='flex flex-col gap-2'>
-          <span className='text-sm font-bold'>現在のパスワード</span>
-          <InputText type='password' name='current_pw' placeholder='現在のパスワードを入力' onChange={handleChange} />
-          {errors.current_pw && <span className='text-danger text-sm'>{errors.current_pw}</span>}
-        </label>
-        <label className='flex flex-col gap-2'>
-          <span className='text-sm font-bold'>変更後のパスワード</span>
-          <InputText type='password' name='new_pw' placeholder='変更後のパスワードを入力' onChange={handleChange} />
-          {errors.new_pw && <span className='text-danger text-sm'>{errors.new_pw}</span>}
-        </label>
-        <label className='flex flex-col gap-2'>
-          <span className='text-sm font-bold'>変更後のパスワード（確認）</span>
-          <InputText
-            type='password'
-            name='new_pw_confirm'
-            placeholder='変更後のパスワード（確認）を入力'
-            onChange={handleChange}
-          />
-          {errors.new_pw_confirm && <span className='text-danger text-sm'>{errors.new_pw_confirm}</span>}
-        </label>
-        <Button type='submit' size='lg' value='保存する' />
+        <Input
+          type={isVisible.currentPw ? 'text' : 'password'}
+          name='current_pw'
+          label='現在のパスワード'
+          placeholder='現在のパスワードを入力してください。'
+          className='font-bold'
+          labelPlacement='outside'
+          isInvalid={errors.current_pw ? true : false}
+          color={errors.current_pw ? 'danger' : 'default'}
+          errorMessage={errors.current_pw}
+          onChange={handleChange}
+          size='lg'
+          isRequired
+          endContent={
+            <InputPasswordEye name='currentPw' isVisible={isVisible.currentPw} toggleVisible={toggleVisible} />
+          }
+        />
+        <Input
+          type={isVisible.newPw ? 'text' : 'password'}
+          name='new_pw'
+          label='変更後のパスワード'
+          placeholder='変更後のパスワードを入力してください。'
+          className='font-bold'
+          labelPlacement='outside'
+          isInvalid={errors.new_pw ? true : false}
+          color={errors.new_pw ? 'danger' : 'default'}
+          errorMessage={errors.new_pw}
+          onChange={handleChange}
+          size='lg'
+          isRequired
+          endContent={<InputPasswordEye name='newPw' isVisible={isVisible.newPw} toggleVisible={toggleVisible} />}
+        />
+
+        <Input
+          type={isVisible.newPwConfirm ? 'text' : 'password'}
+          name='new_pw_confirm'
+          label='変更後のパスワード（確認）'
+          placeholder='変更後のパスワード（確認）を入力してください。'
+          className='font-bold'
+          labelPlacement='outside'
+          isInvalid={errors.new_pw_confirm ? true : false}
+          color={errors.new_pw_confirm ? 'danger' : 'default'}
+          errorMessage={errors.new_pw_confirm}
+          onChange={handleChange}
+          size='lg'
+          isRequired
+          endContent={
+            <InputPasswordEye name='newPwConfirm' isVisible={isVisible.newPwConfirm} toggleVisible={toggleVisible} />
+          }
+        />
+        <Button type='submit' size='lg' color='primary' className='rounded-full'>
+          保存する
+        </Button>
       </form>
     </>
   )

@@ -5,10 +5,9 @@ import { useDispatch } from 'react-redux'
 import Link from 'next/link'
 
 import Container from '@/components/layout/Container'
-import InputText from '@/components/form/InputText'
-import SelectText from '@/components/form/SelectText'
-import Button from '@/components/common/Button'
 import PageHeader from '@/components/common/PageHeader'
+import InputPasswordEye from '@/components/form/InputPasswordEye'
+import { Button, Input, Select, SelectItem } from '@nextui-org/react'
 
 import { validateEmail } from '@/utils/validateUtils'
 import { registerAction } from '@/redux-store/slices/authSlice'
@@ -28,6 +27,7 @@ const groupsOptions = [
 ]
 
 const Register = () => {
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     uid: '',
     email: '',
@@ -44,17 +44,25 @@ const Register = () => {
     password: '',
     passwordConfirm: ''
   })
-  const dispatch = useDispatch()
+  const [isVisible, setIsVisible] = useState({
+    password: false,
+    passwordConfirm: false
+  })
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
     setErrors({ ...errors, [name]: '' })
   }, [])
 
-  const handleSelect = useCallback((name: string, value: string) => {
+  const toggleVisible = (name: string, value: boolean) => {
+    setIsVisible(prev => ({ ...prev, [name]: !value }))
+  }
+
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target
     setFormData(prevFormData => ({ ...prevFormData, [name]: value }))
-  }, [])
+  }
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {}
@@ -66,7 +74,10 @@ const Register = () => {
     if (formData.group_id === '0') newErrors.groups = '選択してください'
     if (!formData.password) newErrors.password = 'パスワードは必須です'
     else if (formData.password.length < 8) newErrors.password = 'パスワードは8文字以上である必要があります'
-    if (formData.password !== formData.passwordConfirm) newErrors.passwordConfirm = 'パスワードが一致しません'
+    if (formData.password !== formData.passwordConfirm) {
+      newErrors.password = ''
+      newErrors.passwordConfirm = 'パスワードが一致しません'
+    }
 
     setErrors(prevErrors => ({ ...prevErrors, ...newErrors }))
     return Object.keys(newErrors).length === 0
@@ -84,49 +95,107 @@ const Register = () => {
     <Container className='py-20'>
       <form className='flex flex-col gap-8 max-w-[450px] m-auto' onSubmit={handleSubmit}>
         <PageHeader title='新規登録' className='text-center' />
-        <label className='flex flex-col gap-2'>
-          <span className='text-sm font-bold'>ID</span>
-          <InputText name='uid' onChange={handleChange} placeholder='ID' />
-          {errors.uid && <span className='text-danger text-sm'>{errors.uid}</span>}
-        </label>
-        <label className='flex flex-col gap-2'>
-          <span className='text-sm font-bold'>メールアドレス</span>
-          <InputText name='email' onChange={handleChange} placeholder='メールアドレス' />
-          {errors.email && <span className='text-danger text-sm'>{errors.email}</span>}
-        </label>
-        <label className='flex flex-col gap-2'>
-          <span className='text-base font-bold'>役割</span>
-          <SelectText
-            options={roleOptions}
-            value={formData.role_id}
-            onChange={handleSelect}
-            placeholder={roleOptions[0].title}
-            name='role_id'
-          />
-          {errors.role && <span className='text-danger text-sm'>{errors.role}</span>}
-        </label>
-        <label className='flex flex-col gap-2'>
-          <span className='text-base font-bold'>グループ</span>
-          <SelectText
-            options={groupsOptions}
-            value={formData.group_id}
-            onChange={handleSelect}
-            placeholder={groupsOptions[0].title}
-            name='group_id'
-          />
-          {errors.groups && <span className='text-danger text-sm'>{errors.groups}</span>}
-        </label>
-        <label className='flex flex-col gap-2'>
-          <span className='text-sm font-bold'>パスワード</span>
-          <InputText name='password' type='password' onChange={handleChange} placeholder='パスワード' />
-          {errors.password && <span className='text-danger text-sm'>{errors.password}</span>}
-        </label>
-        <label className='flex flex-col gap-2'>
-          <span className='text-sm font-bold'>パスワード確認</span>
-          <InputText name='passwordConfirm' type='password' onChange={handleChange} placeholder='パスワード確認' />
-          {errors.passwordConfirm && <span className='text-danger text-sm'>{errors.passwordConfirm}</span>}
-        </label>
-        <Button type='submit' size='lg' value='登録' />
+        <Input
+          type='text'
+          name='uid'
+          label='ID'
+          placeholder='IDを入力してください。'
+          className='font-bold'
+          labelPlacement='outside'
+          isInvalid={errors.uid ? true : false}
+          color={errors.uid ? 'danger' : 'default'}
+          errorMessage={errors.uid}
+          onChange={handleInput}
+          size='lg'
+          isRequired
+        />
+        <Input
+          type='email'
+          name='email'
+          label='メールアドレス'
+          placeholder='メールアドレスを入力してください。'
+          className='font-bold'
+          labelPlacement='outside'
+          isInvalid={errors.email ? true : false}
+          color={errors.email ? 'danger' : 'default'}
+          errorMessage={errors.email}
+          onChange={handleInput}
+          size='lg'
+          isRequired
+        />
+        <Select
+          label='役割'
+          name='role_id'
+          placeholder='選択してください'
+          labelPlacement='outside'
+          className='font-bold'
+          selectedKeys={formData.role_id}
+          errorMessage={errors.role}
+          isInvalid={errors.role ? true : false}
+          onChange={handleSelect}
+          size='lg'
+          isRequired
+        >
+          {roleOptions.map((role, key) => (
+            <SelectItem key={key}>{role.title}</SelectItem>
+          ))}
+        </Select>
+        <Select
+          label='グループ'
+          name='group_id'
+          placeholder='選択してください'
+          labelPlacement='outside'
+          className='font-bold'
+          selectedKeys={formData.group_id}
+          errorMessage={errors.groups}
+          isInvalid={errors.groups ? true : false}
+          onChange={handleSelect}
+          size='lg'
+          isRequired
+        >
+          {roleOptions.map((role, key) => (
+            <SelectItem key={key}>{role.title}</SelectItem>
+          ))}
+        </Select>
+        <Input
+          type={isVisible ? 'text' : 'password'}
+          name='password'
+          label='パスワード'
+          placeholder='パスワードを入力してください。'
+          className='font-bold'
+          labelPlacement='outside'
+          isInvalid={errors.password ? true : false}
+          color={errors.password ? 'danger' : 'default'}
+          errorMessage={errors.password}
+          onChange={handleInput}
+          size='lg'
+          isRequired
+          endContent={<InputPasswordEye name='password' isVisible={isVisible.password} toggleVisible={toggleVisible} />}
+        />
+        <Input
+          type={isVisible ? 'text' : 'password'}
+          name='passwordConfirm'
+          label='パスワード確認'
+          placeholder='パスワードを入力してください。'
+          className='font-bold'
+          labelPlacement='outside'
+          isInvalid={errors.passwordConfirm ? true : false}
+          color={errors.passwordConfirm ? 'danger' : 'default'}
+          errorMessage={errors.passwordConfirm}
+          onChange={handleInput}
+          size='lg'
+          isRequired
+          endContent={
+            <InputPasswordEye
+              name='passwordConfirm'
+              isVisible={isVisible.passwordConfirm}
+              toggleVisible={toggleVisible}
+            />
+          }
+        />
+        <Button type='submit' size='lg' color='primary' className='rounded-full'>
+          登録
+        </Button>
         <p className='text-sm text-center'>
           アカウントをお持ちの場合は
           <Link href='/login' className='underline'>

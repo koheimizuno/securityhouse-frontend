@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
-import Button from '@/components/common/Button'
+import { Button } from '@nextui-org/react'
 
 interface AnnounceSmCardProps {
   userName: string
@@ -37,8 +37,11 @@ const AnnounceSmCard = ({
           <Button
             value='事務局からのご案内'
             size='sm'
-            className='text-sm font-bold bg-primary text-white px-2 py-1 rounded-full w-fit'
-          />
+            color='primary'
+            className='text-xs px-2 py-0 h-6 rounded-full w-fit'
+          >
+            事務局からのご案内
+          </Button>
         </div>
         <div className='flex justify-between items-center'>
           <span className='text-xs text-colorGray4 md:hidden'>{updatedAt}</span>

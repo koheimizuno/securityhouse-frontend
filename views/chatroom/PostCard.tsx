@@ -8,9 +8,9 @@ import { usePathname } from 'next/navigation'
 
 import { useClickAway } from '@uidotdev/usehooks'
 
-import Button from '@/components/common/Button'
 import { formatDate } from '@/utils/formatDate'
 import { deletePostAction } from '@/redux-store/slices/postSlice'
+import { Button } from '@nextui-org/react'
 
 interface PostCardProps {
   id: string
@@ -83,12 +83,9 @@ const PostCard = ({
       </p>
       <ul className='mb-5 flex items-center flex-wrap gap-2'>
         {tag.map((tag, id) => (
-          <Button
-            key={id}
-            value={tag}
-            size='sm'
-            className='text-sm font-bold bg-primary text-white px-2 py-1 rounded-full w-fit'
-          />
+          <Button key={id} size='sm' color='primary' className='text-xs px-2 py-0 h-6 rounded-full w-fit'>
+            {tag}
+          </Button>
         ))}
       </ul>
       <Link href={hrefHandle() || '/'}>

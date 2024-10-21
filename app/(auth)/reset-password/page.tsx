@@ -3,9 +3,8 @@
 import React, { useCallback, useState } from 'react'
 
 import Container from '@/components/layout/Container'
-import InputText from '@/components/form/InputText'
-import Button from '@/components/common/Button'
 import PageHeader from '@/components/common/PageHeader'
+import { Button, Input } from '@nextui-org/react'
 
 const ResetPassword = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +17,7 @@ const ResetPassword = () => {
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
+    setErrors({ ...errors, [name]: '' })
   }, [])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,12 +37,23 @@ const ResetPassword = () => {
         <PageHeader title='パスワードを忘れた方へ' className='text-center' />
         <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
           <p className='text-sm'>パスワードを再設定</p>
-          <label className='flex flex-col gap-2'>
-            <span className='text-sm font-bold'>ID</span>
-            <InputText name='id' onChange={handleChange} placeholder='ID' />
-            {errors.id && <span className='text-danger text-sm'>{errors.id}</span>}
-          </label>
-          <Button type='submit' size='lg' value='送信する' />
+          <Input
+            type='text'
+            name='id'
+            label='ID'
+            placeholder='IDを入力してください。'
+            className='font-bold'
+            labelPlacement='outside'
+            isInvalid={errors.id ? true : false}
+            color={errors.id ? 'danger' : 'default'}
+            errorMessage={errors.id}
+            onChange={handleChange}
+            size='lg'
+            isRequired
+          />
+          <Button type='submit' size='lg' color='primary' className='rounded-full'>
+            送信する
+          </Button>
         </form>
       </div>
     </Container>

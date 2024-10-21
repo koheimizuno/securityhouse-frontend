@@ -4,8 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import PostCard from '@/views/chatroom/PostCard'
-import Button from '@/components/common/Button'
-import { Pagination } from '@nextui-org/react'
+import { Button, Pagination } from '@nextui-org/react'
 
 type RoomPageContentProps = {
   title: string
@@ -23,7 +22,15 @@ const RoomPageContent = ({ title, category, categoryBio, postData }: RoomPageCon
           <h1 className='md:text-xl font-bold'>{title}</h1>
         </div>
         <Link href='create'>
-          <Button icon='/images/edit-white.svg' className='rounded-md' value='投稿する' />
+          <Button
+            className='rounded-full'
+            color='primary'
+            startContent={
+              <Image src='/images/edit-white.svg' alt='edit-white' className='w-5 h-5' width={16} height={16} />
+            }
+          >
+            投稿する
+          </Button>
         </Link>
       </div>
       <div className='bg-bgSemiblue px-4 py-8 md:p-8 flex flex-col gap-6 rounded-2xl'>

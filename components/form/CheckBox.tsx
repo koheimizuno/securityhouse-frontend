@@ -1,3 +1,5 @@
+import { Checkbox } from '@nextui-org/react'
+
 type CheckBoxProps = {
   name: string
   on: boolean

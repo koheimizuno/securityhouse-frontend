@@ -5,8 +5,6 @@ import { useDispatch } from 'react-redux'
 import { useParams } from 'next/navigation'
 
 import SectionTitle from '@/components/common/SectionTitle'
-import InputText from '@/components/form/InputText'
-import Button from '@/components/common/Button'
 
 import { validateEmail } from '@/utils/validateUtils'
 import { getUserByIdAction } from '@/actions/authAction'
@@ -14,6 +12,7 @@ import { UsersType } from '@/types/userType'
 import { editUserAction } from '@/redux-store/slices/authSlice'
 import { useToggle } from '@uidotdev/usehooks'
 import CheckBox from '@/components/form/CheckBox'
+import { Button, Input } from '@nextui-org/react'
 
 const EmailEditContent = () => {
   const { id } = useParams()
@@ -43,27 +42,11 @@ const EmailEditContent = () => {
     }
   }, [id])
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target
-      setEmail(prev => ({ ...prev, [name]: value }))
-
-      if (!value) {
-        setErrors(prev => ({
-          ...prev,
-          new: 'メールアドレスを入力してください'
-        }))
-      } else if (!validateEmail(value)) {
-        setErrors(prev => ({
-          ...prev,
-          new: '有効なメールアドレスを入力してください'
-        }))
-      } else {
-        setErrors(prev => ({ ...prev, new: '' }))
-      }
-    },
-    [validateEmail]
-  )
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setEmail(prev => ({ ...prev, [name]: value }))
+    setErrors(prev => ({ ...prev, [name]: '' }))
+  }, [])
 
   const handleCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target
@@ -104,15 +87,30 @@ const EmailEditContent = () => {
     <>
       <SectionTitle title='メールアドレス変更' />
       <form className='mt-4 flex flex-col gap-8' onSubmit={handleSubmit}>
-        <label className='flex flex-col gap-2'>
-          <span className='text-sm font-bold'>現在のメールアドレス</span>
-          <InputText name='current' placeholder={userData.email} disabled={true} onChange={() => {}} />
-        </label>
-        <label className='flex flex-col gap-2'>
-          <span className='text-sm font-bold'>変更後のメールアドレス</span>
-          <InputText name='new' placeholder='aaaaa@aaa.aa' onChange={handleChange} />
-          {errors.new && <span className='text-danger text-sm'>{errors.new}</span>}
-        </label>
+        <Input
+          type='email'
+          name='current'
+          label='現在のメールアドレス'
+          placeholder={userData.email}
+          className='font-bold'
+          labelPlacement='outside'
+          disabled
+          size='lg'
+          isRequired
+        />
+        <Input
+          name='new'
+          label='変更後のメールアドレス'
+          placeholder='aaaaa@aaa.aa'
+          className='font-bold'
+          labelPlacement='outside'
+          isInvalid={errors.new ? true : false}
+          color={errors.new ? 'danger' : 'default'}
+          errorMessage={errors.new}
+          onChange={handleChange}
+          size='lg'
+          isRequired
+        />
         <SectionTitle title='メール通知' />
         <ul className='flex flex-col gap-2'>
           <li
@@ -137,7 +135,9 @@ const EmailEditContent = () => {
             <CheckBox name='dm_not' on={dmNot} handleToggle={handleCheckboxChange} />
           </li>
         </ul>
-        <Button type='submit' size='lg' value='保存' />
+        <Button type='submit' size='lg' color='primary' className='rounded-full'>
+          保存
+        </Button>
       </form>
     </>
   )

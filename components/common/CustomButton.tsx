@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 import { getImageAlt } from '@/utils/getImageAlt'
 
-interface ButtonProps {
+interface CustomButtonProps {
   type?: 'button' | 'submit' | 'reset'
   value: string
   className?: string
@@ -17,7 +17,7 @@ interface ButtonProps {
   onClick?: () => void
 }
 
-const Button: React.FC<ButtonProps> = ({
+const CustomButton: React.FC<CustomButtonProps> = ({
   type,
   onClick,
   className,
@@ -72,4 +72,4 @@ const Button: React.FC<ButtonProps> = ({
   )
 }
 
-export default Button
+export default CustomButton

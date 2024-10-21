@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import Button from '@/components/common/Button'
+import { Button } from '@nextui-org/react'
 
 const Header = () => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false)
@@ -28,21 +28,30 @@ const Header = () => {
             }`}
           >
             <Button
-              onClick={() => {}}
-              value='ブックマーク'
-              outline={true}
-              className='w-[200px] h-10'
-              icon='/images/bookmark-icon-black.svg'
-            />
-            <a href='/profile/1'>
+              className='rounded-full w-[200px]'
+              startContent={
+                <Image
+                  src='/images/bookmark-icon-black.svg'
+                  alt='bookmark-icon-black'
+                  className='w-5 h-5'
+                  width={16}
+                  height={16}
+                />
+              }
+            >
+              ブックマーク
+            </Button>
+            <Link href='/profile/1'>
               <Button
-                onClick={() => {}}
-                value='マイページ'
-                outline={false}
-                className='w-[200px] h-10'
-                icon='/images/user-icon.svg'
-              />
-            </a>
+                color='primary'
+                className='rounded-full w-[200px]'
+                startContent={
+                  <Image src='/images/user-icon.svg' alt='user-icon' className='w-5 h-5' width={16} height={16} />
+                }
+              >
+                マイページ
+              </Button>
+            </Link>
           </div>
           <div className={`${isHamburgerOpen ? 'change' : ''} sm:hidden`} onClick={handleHamburger}>
             <div className='bar1'></div>
