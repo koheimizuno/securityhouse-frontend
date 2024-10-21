@@ -5,20 +5,22 @@ import Link from 'next/link'
 
 import PostCard from '@/views/chatroom/PostCard'
 import { Button, Pagination } from '@nextui-org/react'
+import { getImageAlt } from '@/utils/getImageAlt'
 
 type RoomPageContentProps = {
   title: string
+  icon: string
   category: string
   categoryBio: string
   postData: any
 }
 
-const RoomPageContent = ({ title, category, categoryBio, postData }: RoomPageContentProps) => {
+const RoomPageContent = ({ title, icon, category, categoryBio, postData }: RoomPageContentProps) => {
   return (
     <div className='md:w-[calc(100%-246px)]'>
       <div className='mb-4 flex justify-between items-center'>
         <div className='flex items-center gap-3'>
-          <Image src='/images/sh-room-primary.svg' alt='sh-room-primary' width={25} height={25} />
+          <Image src={icon} alt={getImageAlt(icon) || ''} width={25} height={25} />
           <h1 className='md:text-xl font-bold'>{title}</h1>
         </div>
         <Link href='create'>
