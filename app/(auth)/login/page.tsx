@@ -72,7 +72,7 @@ const Login = () => {
           isRequired
         />
         <Input
-          type={isVisible ? 'text' : 'password'}
+          type={isVisible.password ? 'text' : 'password'}
           name='password'
           label='パスワード'
           placeholder='パスワードを入力してください。'

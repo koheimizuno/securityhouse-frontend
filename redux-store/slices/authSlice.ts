@@ -20,7 +20,8 @@ export const loginAction: any = createAsyncThunk(
   'loginAction',
   async (payload: Pick<UsersType, 'email' | 'password'>) => {
     try {
-      return await axios.post(`/api/login/`, payload)
+      const { data } = await axios.post(`/api/login/`, payload)
+      return data
     } catch (err: any) {
       console.error('Error logining user:', err)
     }
@@ -63,10 +64,14 @@ export const authSlice = createSlice({
       .addCase(loginAction.pending, state => {
         state.isLoading = true
       })
-      .addCase(loginAction.fulfilled, state => {
+      .addCase(loginAction.fulfilled, (state, { payload }) => {
         state.isLoading = false
         state.success = true
+        localStorage.setItem('token', JSON.stringify(payload.token))
         toast.success('ログインに成功しました。')
+        setTimeout(() => {
+          window.location.href = '/'
+        }, 2000)
       })
       .addCase(loginAction.rejected, state => {
         state.isLoading = false
