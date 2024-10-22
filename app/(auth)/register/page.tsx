@@ -110,7 +110,7 @@ const Register = () => {
           isRequired
         />
         <Input
-          type='email'
+          type='text'
           name='email'
           label='メールアドレス'
           placeholder='メールアドレスを入力してください。'
@@ -158,7 +158,7 @@ const Register = () => {
           ))}
         </Select>
         <Input
-          type={isVisible ? 'text' : 'password'}
+          type={isVisible.password ? 'text' : 'password'}
           name='password'
           label='パスワード'
           placeholder='パスワードを入力してください。'
@@ -173,7 +173,7 @@ const Register = () => {
           endContent={<InputPasswordEye name='password' isVisible={isVisible.password} toggleVisible={toggleVisible} />}
         />
         <Input
-          type={isVisible ? 'text' : 'password'}
+          type={isVisible.passwordConfirm ? 'text' : 'password'}
           name='passwordConfirm'
           label='パスワード確認'
           placeholder='パスワードを入力してください。'

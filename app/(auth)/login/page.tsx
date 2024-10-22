@@ -58,7 +58,7 @@ const Login = () => {
       <form className='flex flex-col gap-8 max-w-[450px] m-auto' onSubmit={handleSubmit}>
         <PageHeader title='ログイン' className='text-center' />
         <Input
-          type='email'
+          type='text'
           name='email'
           label='メールアドレス'
           placeholder='メールアドレスを入力してください。'
@@ -91,7 +91,7 @@ const Login = () => {
         </Button>
         <p className='text-sm text-center'>
           パスワードを忘れた場合は
-          <Link href='/reset-password' className='underline'>
+          <Link href='/forgot-password' className='underline'>
             こちら
           </Link>
         </p>

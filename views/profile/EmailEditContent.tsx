@@ -88,7 +88,7 @@ const EmailEditContent = () => {
       <SectionTitle title='メールアドレス変更' />
       <form className='mt-4 flex flex-col gap-8' onSubmit={handleSubmit}>
         <Input
-          type='email'
+          type='text'
           name='current'
           label='現在のメールアドレス'
           placeholder={userData.email}
