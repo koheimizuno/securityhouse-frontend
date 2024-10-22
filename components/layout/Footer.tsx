@@ -17,7 +17,7 @@ const Footer = () => {
         <div className='flex justify-between items-center gap-8 lg:gap-[148px]'>
           <div className='flex flex-col items-start gap-0'>
             <Image
-              src='/images/logo.svg'
+              src='/images/icons/logo.svg'
               alt='Logo'
               className='w-[125px] h-[24px] lg:w-[250px] lg:h-[47px]'
               width={250}
@@ -32,7 +32,7 @@ const Footer = () => {
                 <a href='#' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
                   <span className='text-[15px] font-bold'>TOP</span>
                   <Image
-                    src='/images/arrow-right.svg'
+                    src='/images/icons/arrow-right.svg'
                     alt='arrow-right'
                     className='w-[5px] h-[10px]'
                     width={5}
@@ -44,7 +44,7 @@ const Footer = () => {
                 <a href='#' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
                   <span className='text-[15px] font-bold'>トークルーム</span>
                   <Image
-                    src='/images/arrow-right.svg'
+                    src='/images/icons/arrow-right.svg'
                     alt='arrow-right'
                     className='w-[5px] h-[10px]'
                     width={5}
@@ -56,7 +56,7 @@ const Footer = () => {
                 <a href='#' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
                   <span className='text-[15px] font-bold'>SH会情報</span>
                   <Image
-                    src='/images/arrow-right.svg'
+                    src='/images/icons/arrow-right.svg'
                     alt='arrow-right'
                     className='w-[5px] h-[10px]'
                     width={5}
@@ -68,7 +68,7 @@ const Footer = () => {
                 <a href='#' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
                   <span className='text-[15px] font-bold'>お知らせ</span>
                   <Image
-                    src='/images/arrow-right.svg'
+                    src='/images/icons/arrow-right.svg'
                     alt='arrow-right'
                     className='w-[5px] h-[10px]'
                     width={5}
@@ -80,7 +80,7 @@ const Footer = () => {
                 <a href='#' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
                   <span className='text-[15px] font-bold'>資料集</span>
                   <Image
-                    src='/images/arrow-right.svg'
+                    src='/images/icons/arrow-right.svg'
                     alt='arrow-right'
                     className='w-[5px] h-[10px]'
                     width={5}
@@ -95,7 +95,7 @@ const Footer = () => {
               outline={false}
               spTxtHidden={true}
               size='lg'
-              icon='/images/user-icon.svg'
+              icon='/images/icons/user-icon.svg'
               className='px-8 py-3 md:w-[200px] md:h-[56px]'
             />
           </div>
@@ -109,7 +109,7 @@ const Footer = () => {
         </div>
       </div>
       <div className='absolute bottom-20 right-10 cursor-pointer' onClick={handleMoveTop}>
-        <Image src='/images/page-top.svg' alt='page-top' width={40} height={40} />
+        <Image src='/images/icons/page-top.svg' alt='page-top' width={40} height={40} />
       </div>
     </footer>
   )

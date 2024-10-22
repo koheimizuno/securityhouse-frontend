@@ -8,12 +8,13 @@ import { getImageAlt } from '@/utils/getImageAlt'
 interface SectionTitleProps {
   title: string
   icon?: string
+  wrapperClass?: string
   className?: string
 }
 
-const SectionTitle = ({ title, icon, className }: SectionTitleProps) => {
+const SectionTitle = ({ title, icon, wrapperClass, className }: SectionTitleProps) => {
   return (
-    <div className='w-full flex items-center gap-2'>
+    <div className={`w-full flex items-center gap-2 ${wrapperClass}`}>
       {icon && (
         <Image
           src={icon}

@@ -153,8 +153,8 @@ const Register = () => {
           size='lg'
           isRequired
         >
-          {roleOptions.map((role, key) => (
-            <SelectItem key={key}>{role.title}</SelectItem>
+          {groupsOptions.map((group, key) => (
+            <SelectItem key={key}>{group.title}</SelectItem>
           ))}
         </Select>
         <Input

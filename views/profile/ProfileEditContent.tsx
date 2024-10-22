@@ -52,12 +52,6 @@ const ProfileEditContent = () => {
     setErrors({ ...errors, [name]: '' })
   }
 
-  const handleTextAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
-    setErrors({ ...errors, [name]: '' })
-  }
-
   const validateForm = () => {
     let isValid = true
     const newErrors = { ...errors }
@@ -106,6 +100,7 @@ const ProfileEditContent = () => {
           name='thumbnail'
           label='プロフィール画像'
           placeholder='アップ'
+          className='font-bold'
           labelPlacement='outside'
           isInvalid={errors.thumbnail ? true : false}
           color={errors.thumbnail ? 'danger' : 'default'}
@@ -137,11 +132,6 @@ const ProfileEditContent = () => {
           size='lg'
           isRequired
         />
-        {/* <label className='flex flex-col gap-2'>
-          <span className='text-sm font-bold'>自己紹介</span>
-          <TextAreaText name='intro' placeholder='自己紹介を入力' onChange={handleTextAreaChange} />
-          {errors.intro && <span className='text-danger text-sm'>{errors.intro}</span>}
-        </label> */}
         <Textarea
           name='intro'
           label='自己紹介'

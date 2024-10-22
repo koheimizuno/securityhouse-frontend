@@ -7,7 +7,7 @@ const BossRoomContent = () => {
   return (
     <RoomPageContent
       title='社長室トークルーム'
-      icon='/images/boss-room-primary.svg'
+      icon='/images/icons/boss-room-primary.svg'
       category='すべて'
       categoryBio='カテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入りますカテゴリの説明が入ります'
       postData={postdata}

@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { getImageAlt } from '@/utils/getImageAlt'
 import { Button } from '@nextui-org/react'
 
-interface AnnounceMdCardProps {
+interface AnnounceMdItemProps {
   id: string
   userName: string
   userCompany: string
@@ -18,7 +18,7 @@ interface AnnounceMdCardProps {
   updatedAt: string
 }
 
-const AnnounceMdCard = ({
+const AnnounceMdItem = ({
   id,
   userName,
   userCompany,
@@ -28,7 +28,7 @@ const AnnounceMdCard = ({
   isBookmarked,
   onClickBookmark,
   updatedAt
-}: AnnounceMdCardProps) => {
+}: AnnounceMdItemProps) => {
   return (
     <li className='border border-colorGray2 rounded-lg px-9 py-6 w-full shadow-md'>
       <div className='flex justify-between items-center'>
@@ -45,7 +45,7 @@ const AnnounceMdCard = ({
           </Button>
         </div>
         <Link className='' href={`/announce/${id}`}>
-          <Image src='/images/more-vertical.svg' alt='more-vertical' width={20} height={20} />
+          <Image src='/images/icons/more-vertical.svg' alt='more-vertical' width={20} height={20} />
         </Link>
       </div>
       <a href='#'>
@@ -54,11 +54,11 @@ const AnnounceMdCard = ({
       <p className='text-sm line-clamp-2'>{description}</p>
       <button className='text-[15px] text-colorGray3'>…もっと見る</button>
       <div className='mt-4 flex items-center gap-2'>
-        <Image src='/images/thumbs-up.svg' alt='thumb-up' width={20} height={20} />
+        <Image src='/images/icons/thumbs-up.svg' alt='thumb-up' width={20} height={20} />
         <span>44</span>
       </div>
     </li>
   )
 }
 
-export default AnnounceMdCard
+export default AnnounceMdItem

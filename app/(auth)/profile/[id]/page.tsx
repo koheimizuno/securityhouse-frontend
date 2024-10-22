@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams, useRouter, useParams } from 'next/navigation'
 
-import AnnounceMdCard from '@/views/announce/AnnounceMdCard'
+import AnnounceMdItem from '@/views/announce/AnnounceMdItem'
 import Container from '@/components/layout/Container'
 import Breadcrumb from '@/components/breadcrumb'
 import SectionTitle from '@/components/common/SectionTitle'
@@ -65,7 +65,7 @@ const Profile = () => {
           <section className='bg-bgSemiblue ps-9 pe-[60px] py-12 flex justify-between gap-9 mb-[50px]'>
             <div>
               <Image
-                src='/images/user-icon00.svg'
+                src='/images/icons/user-icon00.svg'
                 alt='user-icon00'
                 className='object-contain w-[125px] h-[125px]'
                 width={125}
@@ -89,10 +89,10 @@ const Profile = () => {
             </div>
           </section>
           <section className='py-12'>
-            <SectionTitle title='アクティビティ' icon='/images/line-chart.svg' />
+            <SectionTitle title='アクティビティ' icon='/images/icons/line-chart.svg' />
           </section>
           <section className='py-12'>
-            <SectionTitle title='投稿履歴' icon='/images/talk-room.svg' />
+            <SectionTitle title='投稿履歴' icon='/images/icons/talk-room.svg' />
             <ul className='flex items-center gap-6 mt-5'>
               <li
                 className={`px-4 py-2 cursor-pointer ${
@@ -135,10 +135,10 @@ const Profile = () => {
               </li>
             </ul>
             <ul className='flex flex-col gap-6 mt-5'>
-              <AnnounceMdCard
+              <AnnounceMdItem
                 id='1'
                 userName='山田太郎'
-                avatar='/images/user-icon00.svg'
+                avatar='/images/icons/user-icon00.svg'
                 userCompany='所属名'
                 title='タイトルタイトルタイトル'
                 description='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ'

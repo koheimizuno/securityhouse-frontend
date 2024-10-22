@@ -16,7 +16,7 @@ const InputPasswordEye = ({ name, isVisible, toggleVisible }: InputPasswordEyePr
       aria-label='toggle password visibility'
     >
       <Image
-        src={isVisible ? '/images/eye-open.svg' : '/images/eye-close.svg'}
+        src={isVisible ? '/images/icons/eye-open.svg' : '/images/icons/eye-close.svg'}
         alt={isVisible ? 'eye-open' : 'eye-close'}
         width={20}
         height={20}

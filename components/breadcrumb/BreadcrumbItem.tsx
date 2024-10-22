@@ -12,7 +12,7 @@ const BreadcrumbItem = ({ item }: { item: BreadcrumbItemProps }) => {
   return (
     <div className='flex items-center gap-2'>
       <Image
-        src='/images/arrow-right-gray.svg'
+        src='/images/icons/arrow-right-gray.svg'
         alt='arrow-right-gray'
         className='w-[10px] h-[10px]'
         width={4}

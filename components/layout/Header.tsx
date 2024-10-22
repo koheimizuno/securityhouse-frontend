@@ -18,7 +18,7 @@ const Header = () => {
         <div className='flex flex-row items-center justify-between gap-3 md:gap-0'>
           <div className='flex flex-col items-start gap-0 md:flex-row md:items-center md:gap-2'>
             <Link href='/'>
-              <Image src='/images/logo.svg' className='w-[217px] h-[40px]' alt='Logo' width={217} height={40} />
+              <Image src='/images/icons/logo.svg' className='w-[217px] h-[40px]' alt='Logo' width={217} height={40} />
             </Link>
             <p className='text-[15px] font-bold text-[#333] ps-2 md:ps-0'>SH会員専用ページ</p>
           </div>
@@ -31,7 +31,7 @@ const Header = () => {
               className='rounded-full w-[200px]'
               startContent={
                 <Image
-                  src='/images/bookmark-icon-black.svg'
+                  src='/images/icons/bookmark-icon-black.svg'
                   alt='bookmark-icon-black'
                   className='w-5 h-5'
                   width={16}
@@ -46,7 +46,7 @@ const Header = () => {
                 color='primary'
                 className='rounded-full w-[200px]'
                 startContent={
-                  <Image src='/images/user-icon.svg' alt='user-icon' className='w-5 h-5' width={16} height={16} />
+                  <Image src='/images/icons/user-icon.svg' alt='user-icon' className='w-5 h-5' width={16} height={16} />
                 }
               >
                 マイページ

@@ -28,7 +28,7 @@ const RoomPageContent = ({ title, icon, category, categoryBio, postData }: RoomP
             className='rounded-full'
             color='primary'
             startContent={
-              <Image src='/images/edit-white.svg' alt='edit-white' className='w-5 h-5' width={16} height={16} />
+              <Image src='/images/icons/edit-white.svg' alt='edit-white' className='w-5 h-5' width={16} height={16} />
             }
           >
             投稿する

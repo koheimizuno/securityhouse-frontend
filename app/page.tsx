@@ -56,7 +56,7 @@ export default function Home() {
       <SearchBar />
       <section className='bg-bgSemiblue py-8'>
         <Container>
-          <SectionTitle title='トークルーム最新の投稿' icon='/images/talk-room.svg' />
+          <SectionTitle title='トークルーム最新の投稿' icon='/images/icons/talk-room.svg' />
           <div className='flex flex-col items-center mt-6 lg:flex-row lg:items-start'>
             <TabVertical queryKey='post_type' menuList={POST_TYPE}>
               <div className='w-full lg:w-[calc(100%-240px)] bg-primary py-7 px-4 lg:ps-10 shadow-lg rounded-xl rounded-tl-none'>
@@ -120,7 +120,7 @@ export default function Home() {
                     <div className='flex items-center gap-2 md:gap-4'>
                       <button className='arrow-left'>
                         <Image
-                          src='/images/arrow-circle-left-outline.svg'
+                          src='/images/icons/arrow-circle-left-outline.svg'
                           alt='arrow-left'
                           className='w-10 h-10'
                           width={40}
@@ -129,7 +129,7 @@ export default function Home() {
                       </button>
                       <button className='arrow-right'>
                         <Image
-                          src='/images/arrow-circle-right-outline.svg'
+                          src='/images/icons/arrow-circle-right-outline.svg'
                           alt='arrow-right'
                           className='w-10 h-10'
                           width={40}

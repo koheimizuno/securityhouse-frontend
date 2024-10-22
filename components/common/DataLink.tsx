@@ -20,7 +20,7 @@ const DataLink = ({ src, title }: Props) => {
         <Image src={src} alt={getImageAlt(src) || ''} className='w-6 h-6' width={25} height={25} />
         <p>{title}</p>
       </div>
-      <Image src='/images/arrow-right.svg' alt='arrow-right w-3 h-3' width={12} height={12} />
+      <Image src='/images/icons/arrow-right.svg' alt='arrow-right w-3 h-3' width={12} height={12} />
     </a>
   )
 }

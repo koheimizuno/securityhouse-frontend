@@ -1,6 +1,6 @@
 import SectionTitle from '@/components/common/SectionTitle'
 import Container from '@/components/layout/Container'
-import AnnounceSmCard from '../announce/AnnounceSmCard'
+import AnnounceSmItem from '../announce/AnnounceSmItem'
 import { Button } from '@nextui-org/react'
 import Image from 'next/image'
 
@@ -9,14 +9,14 @@ const NewsSection = () => {
     <Container>
       <div className='flex flex-col gap-4 items-center md:flex-row md:items-start md:gap-[40px] xl:gap-[96px]'>
         <div className='flex flex-col justify-center items-start md:items-center gap-2 md:gap-6 w-full md:w-auto'>
-          <SectionTitle title='新着情報' icon='/images/info-icon.svg' />
+          <SectionTitle title='新着情報' icon='/images/icons/info-icon.svg' />
           <Button
             size='lg'
             color='primary'
             className='h-14 px-12 rounded-full font-bold'
             endContent={
               <Image
-                src='/images/arrow-circle-right-outline.svg'
+                src='/images/icons/arrow-circle-right-outline.svg'
                 alt='arrow-circle-right-outline'
                 width={20}
                 height={20}
@@ -33,7 +33,7 @@ const NewsSection = () => {
           </a>
         </div>
         <ul className='secondary-scroll flex flex-col items-center w-full h-[500px] md:h-[330px] overflow-y-scroll pr-6'>
-          <AnnounceSmCard
+          <AnnounceSmItem
             userName='山田太郎'
             userCompany='所属名'
             title='タイトルタイトルタイトル'
@@ -42,7 +42,7 @@ const NewsSection = () => {
             onClickBookmark={() => {}}
             updatedAt='2024年6月11日 14:30'
           />
-          <AnnounceSmCard
+          <AnnounceSmItem
             userName='山田太郎'
             userCompany='所属名'
             title='タイトルタイトルタイトル'
@@ -51,7 +51,7 @@ const NewsSection = () => {
             onClickBookmark={() => {}}
             updatedAt='2024年6月11日 14:30'
           />
-          <AnnounceSmCard
+          <AnnounceSmItem
             userName='山田太郎'
             userCompany='所属名'
             title='タイトルタイトルタイトル'

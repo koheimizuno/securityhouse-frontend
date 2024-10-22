@@ -36,7 +36,7 @@ const TabItemOther = ({ item, pathname }: TabItemOtherProps) => {
         >
           <span dangerouslySetInnerHTML={{ __html: item.title }}></span>
           <Image
-            src={pathname.includes(item.href) ? '/images/arrow-right-white.svg' : '/images/arrow-right.svg'}
+            src={pathname.includes(item.href) ? '/images/icons/arrow-right-white.svg' : '/images/icons/arrow-right.svg'}
             alt={pathname.includes(item.href) ? 'arrow-right-white' : 'arrow-right'}
             className='w-[6px] h-[12px] hidden lg:block'
             width={6}

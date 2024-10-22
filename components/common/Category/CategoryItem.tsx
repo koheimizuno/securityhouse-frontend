@@ -24,7 +24,7 @@ const CategoryItem = ({ item, cat, handleCategory, toggleMenu }: CategoryItemPro
       onClick={handleClick}
     >
       <Image
-        src={cat === item.segment ? '/images/arrow-right-white.svg' : '/images/arrow-right.svg'}
+        src={cat === item.segment ? '/images/icons/arrow-right-white.svg' : '/images/icons/arrow-right.svg'}
         alt={cat === item.segment ? 'arrow-right-white' : 'arrow-right'}
         className='w-[6px] h-[12px] hidden lg:block'
         width={6}

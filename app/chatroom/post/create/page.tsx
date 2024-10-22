@@ -14,7 +14,6 @@ const RichTextEditor = dynamic(() => import('@/components/form/RichTextEditor'),
 })
 
 import { createPostAction } from '@/redux-store/slices/postSlice'
-
 import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 
@@ -140,7 +139,7 @@ const CreatePost = () => {
       <SearchBar />
       <div className='bg-bgSemiblue px-4 pt-12 pb-[140px]'>
         <div className='max-w-[800px] m-auto'>
-          <SectionTitle title='トークルームに投稿する' icon='/images/edit-secondary.svg' />
+          <SectionTitle title='トークルームに投稿する' icon='/images/icons/edit-secondary.svg' />
           <form
             className='bg-white rounded-xl mt-6 px-6 py-8 sm:px-12 sm:py-10 flex flex-col gap-6'
             onSubmit={handleSubmit}
@@ -280,11 +279,17 @@ const CreatePost = () => {
               size='lg'
               className='w-[280px] m-auto rounded-full'
               startContent={
-                <Image src='/images/edit-white.svg' alt='edit-white.svg' className='w-5 h-5' width={16} height={16} />
+                <Image
+                  src='/images/icons/edit-white.svg'
+                  alt='edit-white.svg'
+                  className='w-5 h-5'
+                  width={16}
+                  height={16}
+                />
               }
               endContent={
                 <Image
-                  src='/images/arrow-circle-right-outline.svg'
+                  src='/images/icons/arrow-circle-right-outline.svg'
                   alt='arrow-circle-right-outline.svg'
                   className='w-6 h-6 absolute right-16 top-1/2 -translate-y-1/2'
                   width={20}
