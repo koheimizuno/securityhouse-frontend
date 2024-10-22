@@ -8,7 +8,7 @@ import Container from '@/components/layout/Container'
 import PageHeader from '@/components/common/PageHeader'
 import { Button, Input } from '@nextui-org/react'
 
-import { validateEmail } from '@/utils/validateUtils'
+import { validateEmail, validatePassword } from '@/utils/validateUtils'
 import { loginAction } from '@/redux-store/slices/authSlice'
 import InputPasswordEye from '@/components/form/InputPasswordEye'
 
@@ -45,8 +45,8 @@ const Login = () => {
 
     if (!formData.password) {
       newErrors.password = 'パスワードを入力してください'
-    } else if (formData.password.length < 8) {
-      newErrors.password = 'パスワードは8文字以上で入力してください'
+    } else if (!validatePassword(formData.password)) {
+      newErrors.password = 'パスワードは、英文字の大文字・小文字・数字を含む8桁以上でなければなりません'
     }
 
     setErrors(prevErrors => ({ ...prevErrors, ...newErrors }))

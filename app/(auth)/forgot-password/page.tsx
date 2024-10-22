@@ -8,7 +8,7 @@ import PageHeader from '@/components/common/PageHeader'
 import InputPasswordEye from '@/components/form/InputPasswordEye'
 import { Button, Input } from '@nextui-org/react'
 
-import { validateEmail } from '@/utils/validateUtils'
+import { validateEmail, validatePassword } from '@/utils/validateUtils'
 import { changePasswordAction, forgotPasswordAction } from '@/redux-store/slices/authSlice'
 
 const ForgotPassword = () => {
@@ -50,8 +50,9 @@ const ForgotPassword = () => {
         break
       case 'change':
         if (!password) newErrors.password = 'パスワードを入力してください'
-        if (!passwordConfirm) newErrors.passwordConfirm = 'パスワード確認を入力してください'
-        if (password !== passwordConfirm) {
+        else if (!validatePassword(password))
+          newErrors.password = 'パスワードは、英文字の大文字・小文字・数字を含む8桁以上でなければなりません'
+        else if (password !== passwordConfirm) {
           newErrors.password = ''
           newErrors.passwordConfirm = 'パスワードとパスワード確認が一致しません'
         }

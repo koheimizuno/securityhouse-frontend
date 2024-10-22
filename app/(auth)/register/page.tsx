@@ -9,7 +9,7 @@ import PageHeader from '@/components/common/PageHeader'
 import InputPasswordEye from '@/components/form/InputPasswordEye'
 import { Button, Input, Select, SelectItem } from '@nextui-org/react'
 
-import { validateEmail } from '@/utils/validateUtils'
+import { validateEmail, validatePassword } from '@/utils/validateUtils'
 import { registerAction } from '@/redux-store/slices/authSlice'
 
 const roleOptions = [
@@ -39,8 +39,8 @@ const Register = () => {
   const [errors, setErrors] = useState({
     uid: '',
     email: '',
-    role: '',
-    groups: '',
+    role_id: '',
+    group_id: '',
     password: '',
     passwordConfirm: ''
   })
@@ -52,7 +52,7 @@ const Register = () => {
   const handleInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
-    setErrors({ ...errors, [name]: '' })
+    setErrors(prev => ({ ...prev, [name]: '' }))
   }, [])
 
   const toggleVisible = (name: string, value: boolean) => {
@@ -62,19 +62,22 @@ const Register = () => {
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData(prevFormData => ({ ...prevFormData, [name]: value }))
+    setErrors(prev => ({ ...prev, [name]: '' }))
   }
 
   const validateForm = () => {
+    const { uid, email, role_id, group_id, password, passwordConfirm } = formData
     const newErrors: { [key: string]: string } = {}
 
-    if (!formData.uid) newErrors.uid = 'IDは必須です'
-    if (!formData.email) newErrors.email = 'メールアドレスは必須です'
-    else if (!validateEmail(formData.email)) newErrors.email = '有効なメールアドレスを入力してください'
-    if (formData.role_id === '0') newErrors.role = '選択してください'
-    if (formData.group_id === '0') newErrors.groups = '選択してください'
-    if (!formData.password) newErrors.password = 'パスワードは必須です'
-    else if (formData.password.length < 8) newErrors.password = 'パスワードは8文字以上である必要があります'
-    if (formData.password !== formData.passwordConfirm) {
+    if (!uid) newErrors.uid = 'IDは必須です'
+    if (!email) newErrors.email = 'メールアドレスは必須です'
+    else if (!validateEmail(email)) newErrors.email = '有効なメールアドレスを入力してください'
+    if (role_id === '0') newErrors.role_id = '選択してください'
+    if (group_id === '0') newErrors.group_id = '選択してください'
+    if (!password) newErrors.password = 'パスワードは必須です'
+    else if (!validatePassword(password)) {
+      newErrors.password = 'パスワードは、英文字の大文字・小文字・数字を含む8桁以上でなければなりません'
+    } else if (password !== passwordConfirm) {
       newErrors.password = ''
       newErrors.passwordConfirm = 'パスワードが一致しません'
     }
@@ -130,8 +133,8 @@ const Register = () => {
           labelPlacement='outside'
           className='font-bold'
           selectedKeys={formData.role_id}
-          errorMessage={errors.role}
-          isInvalid={errors.role ? true : false}
+          errorMessage={errors.role_id}
+          isInvalid={errors.role_id ? true : false}
           onChange={handleSelect}
           size='lg'
           isRequired
@@ -147,8 +150,8 @@ const Register = () => {
           labelPlacement='outside'
           className='font-bold'
           selectedKeys={formData.group_id}
-          errorMessage={errors.groups}
-          isInvalid={errors.groups ? true : false}
+          errorMessage={errors.group_id}
+          isInvalid={errors.group_id ? true : false}
           onChange={handleSelect}
           size='lg'
           isRequired
