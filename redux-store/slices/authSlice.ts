@@ -36,6 +36,28 @@ export const editUserAction: any = createAsyncThunk('editUserAction', async (pay
   }
 })
 
+export const forgotPasswordAction: any = createAsyncThunk(
+  'forgotPasswordAction',
+  async ({ email }: { email: string }) => {
+    try {
+      return await axios.post(`/api/forgot-password/`, { email })
+    } catch (err: any) {
+      console.error('Error editting user:', err)
+    }
+  }
+)
+
+export const changePasswordAction: any = createAsyncThunk(
+  'changePasswordAction',
+  async ({ email, password }: { email: string; password: string }) => {
+    try {
+      return await axios.patch(`/api/forgot-password/`, { email, password })
+    } catch (err: any) {
+      console.error('Error editting user:', err)
+    }
+  }
+)
+
 const initialState: storeInitialType = {
   success: false,
   error: false,
@@ -90,6 +112,28 @@ export const authSlice = createSlice({
         state.isLoading = false
         state.error = true
         toast.error('サーバの問題でデータ取得に失敗しました。')
+      })
+      .addCase(forgotPasswordAction.fulfilled, state => {
+        state.isLoading = false
+        state.success = true
+      })
+      .addCase(forgotPasswordAction.rejected, state => {
+        state.isLoading = false
+        state.error = true
+        toast.error('メールアドレスが登録されていません。')
+      })
+      .addCase(changePasswordAction.fulfilled, state => {
+        state.isLoading = false
+        state.success = true
+        toast.success('パスワードが成果的に変更されました。')
+        setTimeout(() => {
+          window.location.href = '/login'
+        }, 2000)
+      })
+      .addCase(changePasswordAction.rejected, state => {
+        state.isLoading = false
+        state.error = true
+        toast.error('メールアドレスが登録されていません。')
       })
   }
 })
