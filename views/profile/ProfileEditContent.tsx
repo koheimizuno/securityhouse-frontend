@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 
@@ -8,6 +8,8 @@ import SectionTitle from '@/components/common/SectionTitle'
 
 import { editUserAction } from '@/redux-store/slices/authSlice'
 import { Button, Input, Textarea } from '@nextui-org/react'
+import { UsersType } from '@/types/userType'
+import { getImageAlt } from '@/utils/getImageAlt'
 
 type editDataType = {
   thumbnail: {
@@ -18,7 +20,7 @@ type editDataType = {
   intro: string
 }
 
-const ProfileEditContent = () => {
+const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
   const dispatch = useDispatch()
   const [formData, setFormData] = useState<editDataType>({
     thumbnail: {
@@ -33,6 +35,17 @@ const ProfileEditContent = () => {
     name: '',
     intro: ''
   })
+
+  useEffect(() => {
+    if (userData) {
+      setFormData(prevState => ({
+        ...prevState,
+        thumbnail: { ...prevState.thumbnail, preview: userData.thumbnail },
+        name: userData.name,
+        intro: userData.intro
+      }))
+    }
+  }, [userData])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { type, name, value, files } = e.target
@@ -112,8 +125,8 @@ const ProfileEditContent = () => {
         {formData.thumbnail.preview && (
           <Image
             src={formData.thumbnail.preview}
-            alt='Selected'
-            className='mt-2 w-32 h-w-32 rounded-full'
+            alt={getImageAlt(formData.thumbnail.preview) || ''}
+            className='mt-2 w-32 h-w-32'
             width={50}
             height={50}
           />
@@ -128,6 +141,7 @@ const ProfileEditContent = () => {
           isInvalid={errors.name ? true : false}
           color={errors.name ? 'danger' : 'default'}
           errorMessage={errors.name}
+          value={formData.name}
           onChange={handleChange}
           size='lg'
           isRequired
@@ -141,6 +155,7 @@ const ProfileEditContent = () => {
           isInvalid={errors.intro ? true : false}
           color={errors.intro ? 'danger' : 'default'}
           errorMessage={errors.intro}
+          value={formData.intro}
           onChange={handleChange}
           size='lg'
           isRequired

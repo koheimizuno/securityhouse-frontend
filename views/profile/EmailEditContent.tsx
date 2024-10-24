@@ -2,23 +2,18 @@
 
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useParams } from 'next/navigation'
 
 import SectionTitle from '@/components/common/SectionTitle'
 
 import { validateEmail } from '@/utils/validateUtils'
-import { getUserByIdAction } from '@/actions/authAction'
 import { UsersType } from '@/types/userType'
 import { editUserAction } from '@/redux-store/slices/authSlice'
 import { useToggle } from '@uidotdev/usehooks'
 import CheckBox from '@/components/form/CheckBox'
 import { Button, Input } from '@nextui-org/react'
 
-const EmailEditContent = () => {
-  const { id } = useParams()
+const EmailEditContent = ({ userData }: { userData: UsersType | null }) => {
   const dispatch = useDispatch()
-
-  const [userData, setUserData] = useState<Pick<UsersType, 'email'>>({ email: '' })
   const [email, setEmail] = useState({ new: '' })
   const [errors, setErrors] = useState({ new: '' })
   const [commetNot, setCommetNot] = useToggle(false)
@@ -26,21 +21,12 @@ const EmailEditContent = () => {
   const [dmNot, setDmNot] = useToggle(false)
 
   useEffect(() => {
-    if (typeof id === 'string') {
-      const fetchUserData = async () => {
-        try {
-          const data = await getUserByIdAction(id)
-          setUserData(data)
-          setCommetNot(data.comment_not === '1' ? false : true)
-          setNewsNot(data.news_not === '1' ? false : true)
-          setDmNot(data.dm_not === '1' ? false : true)
-        } catch (error) {
-          console.error('Error fetching user:', error)
-        }
-      }
-      fetchUserData()
+    if (userData) {
+      setCommetNot(userData.comment_not === '1' ? false : true)
+      setNewsNot(userData.news_not === '1' ? false : true)
+      setDmNot(userData.dm_not === '1' ? false : true)
     }
-  }, [id])
+  }, [userData])
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -91,9 +77,9 @@ const EmailEditContent = () => {
           type='text'
           name='current'
           label='現在のメールアドレス'
-          placeholder={userData.email}
           className='font-bold'
           labelPlacement='outside'
+          value={userData?.email}
           disabled
           size='lg'
           isRequired
