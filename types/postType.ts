@@ -12,6 +12,9 @@ export type PostType = {
   affiliation_name: string
   type_id: string
   post_destination: string
+  like_count: string
+  bookmark_flag: string
+  comment_count: string
   created_at: string
   updated_at: string
   deleted_at: string

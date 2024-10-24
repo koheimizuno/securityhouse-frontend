@@ -19,12 +19,14 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules'
 import { Swiper as SwiperType } from 'swiper'
 
-import postdata from '@/mockup/postdata.json'
 import { POST_TYPE } from '@/utils/constants'
+import { getPostsAction } from '@/actions/postAction'
+import { PostType } from '@/types/postType'
 
 export default function Home() {
   const searchParams = useSearchParams()
   const [postType, setPostType] = useState('1')
+  const [postdata, setPostData] = useState<PostType[] | null>(null)
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
@@ -33,6 +35,12 @@ export default function Home() {
       setPostType(postTypeQuery)
     }
   }, [searchParams])
+
+  useEffect(() => {
+    getPostsAction().then(data => {
+      setPostData(data)
+    })
+  }, [])
 
   const { roomListTitle, roomListHref } = useMemo(() => {
     switch (postType) {
@@ -93,22 +101,25 @@ export default function Home() {
                     })
                   }}
                 >
-                  {postdata.map(post => (
-                    <SwiperSlide key={post.id}>
-                      <PostCard
-                        id={post.id}
-                        title={post.title}
-                        description={post.description}
-                        category={post.category}
-                        tag={post.tag}
-                        likeNum={post.likeNum}
-                        commentNum={post.commentNum}
-                        isLiked={post.isLiked}
-                        user={post.user}
-                        updatedAt={post.updatedAt}
-                      />
-                    </SwiperSlide>
-                  ))}
+                  {postdata !== null &&
+                    postdata.map((post, index) => (
+                      <SwiperSlide key={index}>
+                        <PostCard
+                          id={post.id}
+                          title={post.title}
+                          content={post.content}
+                          category_id={post.category_id}
+                          name={post.name}
+                          attachments={post.attachments}
+                          affiliation_name={post.affiliation_name}
+                          type_id={post.type_id}
+                          like_count={post.like_count}
+                          comment_count={post.comment_count}
+                          bookmark_flag={'0'}
+                          updated_at={post.updated_at}
+                        />
+                      </SwiperSlide>
+                    ))}
 
                   <div className='flex justify-end items-center gap-4 mt-4 md:mt-5 md:mr-4'>
                     <div className='w-full h-3 bg-white rounded-full p-[2px]'>
