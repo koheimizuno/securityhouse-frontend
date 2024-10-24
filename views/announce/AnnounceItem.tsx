@@ -4,7 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import { Button } from '@nextui-org/react'
 
-interface AnnounceSmItemProps {
+interface AnnounceItemProps {
   userName: string
   userCompany: string
   title: string
@@ -14,7 +14,7 @@ interface AnnounceSmItemProps {
   updatedAt: string
 }
 
-const AnnounceSmItem = ({
+const AnnounceItem = ({
   userName,
   userCompany,
   title,
@@ -22,7 +22,7 @@ const AnnounceSmItem = ({
   isBookmarked,
   onClickBookmark,
   updatedAt
-}: AnnounceSmItemProps) => {
+}: AnnounceItemProps) => {
   return (
     <li className='border-b border-colorGray2 py-4 w-full border-t md:border-t-0'>
       <div className='flex flex-col-reverse gap-4 md:flex-row md:justify-between md:items-center'>
@@ -61,4 +61,4 @@ const AnnounceSmItem = ({
   )
 }
 
-export default AnnounceSmItem
+export default AnnounceItem

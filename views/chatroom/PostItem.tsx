@@ -3,32 +3,35 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getImageAlt } from '@/utils/getImageAlt'
+
 import { Button } from '@nextui-org/react'
 
-interface AnnounceMdItemProps {
+import { getImageAlt } from '@/utils/getImageAlt'
+import { formatDate } from '@/utils/formatDate'
+
+interface PostItemProps {
   id: string
   userName: string
-  userCompany: string
+  affiliation: string
   avatar: string
   title: string
-  description: string
+  content: string
   isBookmarked: boolean
   onClickBookmark: () => void
   updatedAt: string
 }
 
-const AnnounceMdItem = ({
+const PostItem = ({
   id,
   userName,
-  userCompany,
+  affiliation,
   avatar,
   title,
-  description,
+  content,
   isBookmarked,
   onClickBookmark,
   updatedAt
-}: AnnounceMdItemProps) => {
+}: PostItemProps) => {
   return (
     <li className='border border-colorGray2 rounded-lg px-9 py-6 w-full shadow-md'>
       <div className='flex justify-between items-center'>
@@ -36,22 +39,22 @@ const AnnounceMdItem = ({
           <Image src={avatar} alt={getImageAlt(avatar) || ''} width={44} height={44} />
           <div className='flex flex-col gap-1'>
             <p className='text-[15px]'>
-              {userName}/{userCompany}
+              {userName}/{affiliation}
             </p>
-            <p className='text-xs text-colorGray3'>{updatedAt}</p>
+            <p className='text-xs text-colorGray3'>{formatDate(updatedAt)}</p>
           </div>
           <Button size='sm' color='primary' className='rounded-full text-xs px-2 py-0 h-6'>
             事務局からのご案内
           </Button>
         </div>
-        <Link className='' href={`/announce/${id}`}>
+        <Link href={`#`}>
           <Image src='/images/icons/more-vertical.svg' alt='more-vertical' width={20} height={20} />
         </Link>
       </div>
       <a href='#'>
         <h3 className='py-4 underline'>{title}</h3>
       </a>
-      <p className='text-sm line-clamp-2'>{description}</p>
+      <p className='text-sm line-clamp-2'>{content}</p>
       <button className='text-[15px] text-colorGray3'>…もっと見る</button>
       <div className='mt-4 flex items-center gap-2'>
         <Image src='/images/icons/thumbs-up.svg' alt='thumb-up' width={20} height={20} />
@@ -61,4 +64,4 @@ const AnnounceMdItem = ({
   )
 }
 
-export default AnnounceMdItem
+export default PostItem
