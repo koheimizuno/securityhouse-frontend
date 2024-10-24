@@ -69,7 +69,7 @@ const PostCard = ({
   return (
     <div className='relative bg-white px-4 py-6 w-[282px] rounded-md'>
       <Image
-        src={bookmark_flag === '1' ? '/images/icons/bookmark-on.svg' : '/images/icons/bookmark-off.svg'}
+        src={bookmark_flag === '1' ? '/images/icons/bookmark-fill.svg' : '/images/icons/bookmark-outline.svg'}
         alt={bookmark_flag === '1' ? 'bookmark-on' : 'bookmark-off'}
         className='absolute -top-1 right-4 w-8 h-8'
         width={32}

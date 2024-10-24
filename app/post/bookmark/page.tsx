@@ -25,14 +25,13 @@ const BookmarkedPost = () => {
           postData?.map((post, index) => (
             <PostItem
               id={post.id}
-              userName={post.name}
-              avatar='/images/icons/user-icon00.svg'
-              affiliation={post.attachments}
               title={post.title}
               content={post.content}
-              isBookmarked={false}
-              onClickBookmark={() => {}}
-              updatedAt={post.updated_at}
+              name={post.name}
+              affiliation_name={post.affiliation_name}
+              thumbnail='/images/icons/user-icon00.svg'
+              bookmark_flag={post.bookmark_flag}
+              updated_at={post.updated_at}
             />
           ))}
       </ul>

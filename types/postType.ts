@@ -10,6 +10,7 @@ export type PostType = {
   user_id: string
   name: string
   affiliation_name: string
+  thumbnail: string
   type_id: string
   post_destination: string
   like_count: string

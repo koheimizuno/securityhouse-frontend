@@ -22,17 +22,14 @@ const Profile = () => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [tab, setTab] = useState<string>('1')
-  const [userData, setUserData] = useState<Pick<UsersType, 'name' | 'uid' | 'intro'>>({
-    name: '',
-    uid: '',
-    intro: ''
-  })
+  const [userData, setUserData] = useState<UsersType | null>(null)
 
   useEffect(() => {
     const fetchUserData = async () => {
       if (typeof id === 'string') {
         try {
-          setUserData(await getUserByIdAction(id))
+          const data = await getUserByIdAction(id)
+          setUserData(data)
         } catch (error) {
           console.error('Error fetching user:', error)
         }
@@ -76,8 +73,8 @@ const Profile = () => {
             <div className='w-full flex flex-col gap-2'>
               <div className='flex justify-between'>
                 <div className='flex flex-col gap-2'>
-                  <h2 className='text-xl font-bold'>{userData.name}／所属名</h2>
-                  <p className='text-xs'>@{userData.uid}</p>
+                  <h2 className='text-xl font-bold'>{userData?.name}／所属名</h2>
+                  <p className='text-xs'>@{userData?.uid}</p>
                 </div>
                 <Link href={`/profile/${id}/edit`}>
                   <Button color='primary' className='rounded-full'>
@@ -85,7 +82,7 @@ const Profile = () => {
                   </Button>
                 </Link>
               </div>
-              <p>{userData.intro}</p>
+              <p>{userData?.intro}</p>
             </div>
           </section>
           <section className='py-12'>
@@ -137,14 +134,13 @@ const Profile = () => {
             <ul className='flex flex-col gap-6 mt-5'>
               <PostItem
                 id='1'
-                userName='山田太郎'
-                avatar='/images/icons/user-icon00.svg'
-                affiliation='所属名'
+                name='山田太郎'
+                thumbnail='/images/icons/user-icon00.svg'
+                affiliation_name='所属名'
                 title='タイトルタイトルタイトル'
                 content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ'
-                isBookmarked={false}
-                onClickBookmark={() => {}}
-                updatedAt='2024年6月11日 14:30'
+                bookmark_flag='1'
+                updated_at='2024年6月11日 14:30'
               />
             </ul>
           </section>

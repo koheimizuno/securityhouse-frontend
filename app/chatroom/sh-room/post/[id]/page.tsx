@@ -6,16 +6,16 @@ import { useParams, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
+import Container from '@/components/layout/Container'
+import PageHeader from '@/components/common/PageHeader'
+import SectionTitle from '@/components/common/SectionTitle'
 import Breadcrumb from '@/components/breadcrumb'
 import SearchBar from '@/components/common/SearchBar'
-import Container from '@/components/layout/Container'
-import SectionTitle from '@/components/common/SectionTitle'
+import CommentItem from '@/views/comment/CommentItem'
 import { Button, Divider, Input, Textarea } from '@nextui-org/react'
 
 import { useClickAway } from '@uidotdev/usehooks'
 import { deletePostAction } from '@/redux-store/slices/postSlice'
-import PageHeader from '@/components/common/PageHeader'
-import CommentItem from '@/views/comment/CommentItem'
 import { getPostByIdAction } from '@/actions/postAction'
 
 const SHRoomPostDetail = () => {

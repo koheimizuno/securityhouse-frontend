@@ -39,10 +39,11 @@ const NewsItem = ({ title, content, name, affiliation_name, like_count, bookmark
             <span className='text-xs text-colorGray4'>ブックマークに追加</span>
             <a href='#'>
               <Image
-                src={bookmark_flag === '1' ? '/images/icons/bookmark-on-sm.svg' : '/images/icons/bookmark-off-sm.svg'}
+                src={bookmark_flag === '1' ? '/images/icons/bookmark-fill.svg' : '/images/icons/bookmark-outline.svg'}
                 alt='bookmark-off-sm'
-                width={12}
-                height={12}
+                className='w-5 h-5'
+                width={20}
+                height={20}
               />
             </a>
           </div>

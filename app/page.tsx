@@ -115,7 +115,7 @@ export default function Home() {
                           type_id={post.type_id}
                           like_count={post.like_count}
                           comment_count={post.comment_count}
-                          bookmark_flag={'0'}
+                          bookmark_flag={post.bookmark_flag}
                           updated_at={post.updated_at}
                         />
                       </SwiperSlide>
