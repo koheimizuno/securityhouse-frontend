@@ -176,7 +176,7 @@ const EditPost = () => {
                 label: 'font-bold',
                 mainWrapper: ['w-full md:w-[480px]']
               }}
-              selectedKeys={postData?.type_id || formData.postType}
+              selectedKeys={postData?.type_id ? String(postData?.type_id) : formData.postType}
               errorMessage={errors.postType}
               isInvalid={errors.postType ? true : false}
               onChange={handleSelect}
@@ -197,7 +197,7 @@ const EditPost = () => {
                 label: 'font-bold',
                 mainWrapper: ['w-full md:w-[480px]']
               }}
-              selectedKeys={postData?.category_id || formData.category}
+              selectedKeys={postData?.category_id ? String(postData?.category_id) : formData.category}
               errorMessage={errors.category}
               isInvalid={errors.category ? true : false}
               onChange={handleSelect}
@@ -218,7 +218,7 @@ const EditPost = () => {
                 label: 'font-bold',
                 mainWrapper: ['w-full md:w-[480px]']
               }}
-              selectedKeys={postData?.publication || formData.publication}
+              selectedKeys={postData?.publication ? String(postData?.publication) : formData.publication}
               errorMessage={errors.publication}
               isInvalid={errors.publication ? true : false}
               onChange={handleSelect}

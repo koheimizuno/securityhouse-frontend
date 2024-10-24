@@ -1,10 +1,24 @@
-import SectionTitle from '@/components/common/SectionTitle'
-import Container from '@/components/layout/Container'
-import AnnounceSmItem from '../announce/AnnounceItem'
-import { Button } from '@nextui-org/react'
+'use client'
+
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 
+import Container from '@/components/layout/Container'
+import SectionTitle from '@/components/common/SectionTitle'
+import NewsItem from '@/views/news/NewsItem'
+import { Button } from '@nextui-org/react'
+import { getNewsAction } from '@/actions/newsAction'
+import { NewsType } from '@/types/newsType'
+
 const NewsSection = () => {
+  const [news, setNews] = useState<NewsType[] | null>(null)
+
+  useEffect(() => {
+    getNewsAction().then(data => {
+      setNews(data)
+    })
+  }, [])
+
   return (
     <Container>
       <div className='flex flex-col gap-4 items-center md:flex-row md:items-start md:gap-[40px] xl:gap-[96px]'>
@@ -33,33 +47,17 @@ const NewsSection = () => {
           </a>
         </div>
         <ul className='secondary-scroll flex flex-col items-center w-full h-[500px] md:h-[330px] overflow-y-scroll pr-6'>
-          <AnnounceSmItem
-            userName='山田太郎'
-            userCompany='所属名'
-            title='タイトルタイトルタイトル'
-            description='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ...'
-            isBookmarked={false}
-            onClickBookmark={() => {}}
-            updatedAt='2024年6月11日 14:30'
-          />
-          <AnnounceSmItem
-            userName='山田太郎'
-            userCompany='所属名'
-            title='タイトルタイトルタイトル'
-            description='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ...'
-            isBookmarked={false}
-            onClickBookmark={() => {}}
-            updatedAt='2024年6月11日 14:30'
-          />
-          <AnnounceSmItem
-            userName='山田太郎'
-            userCompany='所属名'
-            title='タイトルタイトルタイトル'
-            description='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ...'
-            isBookmarked={false}
-            onClickBookmark={() => {}}
-            updatedAt='2024年6月11日 14:30'
-          />
+          {news?.map(newItem => (
+            <NewsItem
+              name='山田太郎'
+              affiliation_name='所属名'
+              thumbnail=''
+              title={newItem.title}
+              content={newItem.content}
+              bookmark_flag={newItem.bookmark_flag}
+              updated_at={newItem.updated_at}
+            />
+          ))}
         </ul>
       </div>
     </Container>

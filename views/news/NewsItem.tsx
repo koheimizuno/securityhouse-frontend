@@ -3,35 +3,25 @@
 import React from 'react'
 import Image from 'next/image'
 import { Button } from '@nextui-org/react'
+import { NewsType } from '@/types/newsType'
+import { formatDate } from '@/utils/formatDate'
 
-interface AnnounceItemProps {
-  userName: string
-  userCompany: string
-  title: string
-  description: string
-  isBookmarked: boolean
-  onClickBookmark: () => void
-  updatedAt: string
+interface NewsItemProps extends Partial<NewsType> {
+  name: string
+  affiliation_name: string
+  thumbnail: string
 }
 
-const AnnounceItem = ({
-  userName,
-  userCompany,
-  title,
-  description,
-  isBookmarked,
-  onClickBookmark,
-  updatedAt
-}: AnnounceItemProps) => {
+const NewsItem = ({ title, content, name, affiliation_name, like_count, bookmark_flag, updated_at }: NewsItemProps) => {
   return (
     <li className='border-b border-colorGray2 py-4 w-full border-t md:border-t-0'>
       <div className='flex flex-col-reverse gap-4 md:flex-row md:justify-between md:items-center'>
         <div className='flex justify-between md:justify-start items-center gap-6'>
-          <span className='text-xs text-colorGray4 hidden md:block'>{updatedAt}</span>
+          <span className='text-xs text-colorGray4 hidden md:block'>{updated_at && formatDate(updated_at)}</span>
           <p className='flex items-center gap-3'>
             <Image src='/images/icons/user-icon-sm.svg' alt='user-icon-sm' width={12} height={12} />
             <span className='text-xs'>
-              {userName}／{userCompany}
+              {name}／{affiliation_name}
             </span>
           </p>
           <Button
@@ -44,11 +34,16 @@ const AnnounceItem = ({
           </Button>
         </div>
         <div className='flex justify-between items-center'>
-          <span className='text-xs text-colorGray4 md:hidden'>{updatedAt}</span>
+          <span className='text-xs text-colorGray4 md:hidden'>{updated_at && formatDate(updated_at)}</span>
           <div className='flex items-center gap-2'>
             <span className='text-xs text-colorGray4'>ブックマークに追加</span>
             <a href='#'>
-              <Image src='/images/icons/bookmark-icon-gray.svg' alt='bookmark-icon-gray' width={12} height={12} />
+              <Image
+                src={bookmark_flag === '1' ? '/images/icons/bookmark-on-sm.svg' : '/images/icons/bookmark-off-sm.svg'}
+                alt='bookmark-off-sm'
+                width={12}
+                height={12}
+              />
             </a>
           </div>
         </div>
@@ -56,9 +51,9 @@ const AnnounceItem = ({
       <a href='#'>
         <h3 className='py-4 underline'>{title}</h3>
       </a>
-      <p className='text-sm line-clamp-1'>{description}</p>
+      <p className='text-sm line-clamp-1'>{content}</p>
     </li>
   )
 }
 
-export default AnnounceItem
+export default NewsItem
