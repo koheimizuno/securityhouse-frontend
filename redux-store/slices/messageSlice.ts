@@ -5,27 +5,21 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { MessageType } from '@/types/messageType'
 import { storeInitialType } from '@/types/storeInitialType'
 
-export const createMessageAction: any = createAsyncThunk(
-  'createMessageAction',
-  async (payload: Omit<MessageType, 'id' | 'sender'>) => {
-    try {
-      await axios.post(`/api/message/`, payload)
-    } catch (err) {
-      return err
-    }
+export const createMessageAction: any = createAsyncThunk('createMessageAction', async (payload: MessageType) => {
+  try {
+    await axios.post(`/api/message/`, payload)
+  } catch (err) {
+    return err
   }
-)
+})
 
-export const editMessageAction: any = createAsyncThunk(
-  'editMessageAction',
-  async (payload: Omit<MessageType, 'sender' | 'receiver'>) => {
-    try {
-      await axios.put(`/api/message/`, payload)
-    } catch (err) {
-      return err
-    }
+export const editMessageAction: any = createAsyncThunk('editMessageAction', async (payload: MessageType) => {
+  try {
+    await axios.put(`/api/message/`, payload)
+  } catch (err) {
+    return err
   }
-)
+})
 
 export const deleteMessageAction: any = createAsyncThunk('deleteMessageAction', async (id: string) => {
   try {

@@ -53,13 +53,13 @@ const PostCard = ({
     if (category && id)
       switch (category) {
         case 'SH会ルーム':
-          return `/chatroom/sh-room/${id}`
+          return `/chatroom/sh-room/post/${id}`
         case '仕事ルーム':
-          return `/chatroom/work-room/${id}`
+          return `/chatroom/work-room/post/${id}`
         case '交流ルーム':
-          return `/chatroom/exchange-room/${id}`
+          return `/chatroom/exchange-room/post/${id}`
         case '社長室ルーム':
-          return `/chatroom/boss-room/${id}`
+          return `/chatroom/boss-room/post/${id}`
       }
   }
 

@@ -193,7 +193,7 @@ const EditPost = () => {
               placeholder={postTypeOptions[Number(postData?.category_id)]?.title || '選択してください'}
               labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
               classNames={{
-                base: ['flex flex-col gap-2 md:flex-row items-center justify-between'],
+                base: ['flex items-center justify-between'],
                 label: 'font-bold',
                 mainWrapper: ['w-full md:w-[480px]']
               }}

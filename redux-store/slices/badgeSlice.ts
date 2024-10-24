@@ -5,7 +5,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { storeInitialType } from '@/types/storeInitialType'
 import { BadgeType } from '@/types/badgeType'
 
-export const createBadgeAction: any = createAsyncThunk('createBadgeAction', async (payload: Omit<BadgeType, 'id'>) => {
+export const createBadgeAction: any = createAsyncThunk('createBadgeAction', async (payload: BadgeType) => {
   try {
     await axios.post(`/api/badge/`, payload)
   } catch (err) {

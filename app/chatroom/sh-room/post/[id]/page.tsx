@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams, usePathname } from 'next/navigation'
 import Link from 'next/link'
@@ -16,12 +16,21 @@ import { useClickAway } from '@uidotdev/usehooks'
 import { deletePostAction } from '@/redux-store/slices/postSlice'
 import PageHeader from '@/components/common/PageHeader'
 import CommentItem from '@/views/comment/CommentItem'
+import { getPostByIdAction } from '@/actions/postAction'
 
 const SHRoomPostDetail = () => {
   const { id } = useParams()
   const pathname = usePathname()
   const dispatch = useDispatch()
   const [moreActive, setMoreActive] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (typeof id === 'string') {
+      getPostByIdAction(id).then(data => {
+        console.log(data)
+      })
+    }
+  }, [])
 
   const ref = useClickAway<HTMLDivElement>(() => {
     setMoreActive(false)

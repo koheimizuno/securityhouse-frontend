@@ -1,6 +1,6 @@
 import SectionTitle from '@/components/common/SectionTitle'
 import Container from '@/components/layout/Container'
-import AnnounceSmItem from '../announce/AnnounceSmItem'
+import AnnounceSmItem from '../announce/AnnounceItem'
 import { Button } from '@nextui-org/react'
 import Image from 'next/image'
 

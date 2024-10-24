@@ -5,16 +5,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { storeInitialType } from '@/types/storeInitialType'
 import { PostType } from '@/types/postType'
 
-export const createPostAction: any = createAsyncThunk(
-  'createPostAction',
-  async (payload: Omit<PostType, 'id' | 'user_id' | 'notification' | 'attachments'>) => {
-    try {
-      await axios.post(`/api/post/`, payload)
-    } catch (err) {
-      return err
-    }
+export const createPostAction: any = createAsyncThunk('createPostAction', async (payload: PostType) => {
+  try {
+    await axios.post(`/api/post/`, payload)
+  } catch (err) {
+    return err
   }
-)
+})
 
 export const editPostAction: any = createAsyncThunk('editPostAction', async (payload: PostType) => {
   try {

@@ -5,16 +5,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { storeInitialType } from '@/types/storeInitialType'
 import { DocumentType } from '@/types/documentType'
 
-export const createDocumentAction: any = createAsyncThunk(
-  'createDocumentAction',
-  async (payload: Omit<DocumentType, 'id'>) => {
-    try {
-      await axios.post(`/api/document/`, payload)
-    } catch (err) {
-      return err
-    }
+export const createDocumentAction: any = createAsyncThunk('createDocumentAction', async (payload: DocumentType) => {
+  try {
+    await axios.post(`/api/document/`, payload)
+  } catch (err) {
+    return err
   }
-)
+})
 
 export const editDocumentAction: any = createAsyncThunk('editDocumentAction', async (payload: DocumentType) => {
   try {

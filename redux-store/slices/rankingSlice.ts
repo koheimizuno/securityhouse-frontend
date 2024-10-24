@@ -5,16 +5,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RankingType } from '@/types/rankingType'
 import { storeInitialType } from '@/types/storeInitialType'
 
-export const createRankingAction: any = createAsyncThunk(
-  'createRankingAction',
-  async (payload: Omit<RankingType, 'id'>) => {
-    try {
-      await axios.post(`/api/ranking/`, payload)
-    } catch (err) {
-      return err
-    }
+export const createRankingAction: any = createAsyncThunk('createRankingAction', async (payload: RankingType) => {
+  try {
+    await axios.post(`/api/ranking/`, payload)
+  } catch (err) {
+    return err
   }
-)
+})
 
 export const editRankingAction: any = createAsyncThunk('editRankingAction', async (payload: RankingType) => {
   try {

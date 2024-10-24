@@ -5,16 +5,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { storeInitialType } from '@/types/storeInitialType'
 import { CommentType } from '@/types/commentType'
 
-export const createCommentAction: any = createAsyncThunk(
-  'createCommentAction',
-  async (payload: Pick<CommentType, 'content' | 'post_id' | 'attachment' | 'comment_id'>) => {
-    try {
-      await axios.post(`/api/comment/`, payload)
-    } catch (err) {
-      return err
-    }
+export const createCommentAction: any = createAsyncThunk('createCommentAction', async (payload: CommentType) => {
+  try {
+    await axios.post(`/api/comment/`, payload)
+  } catch (err) {
+    return err
   }
-)
+})
 
 export const editCommentAction: any = createAsyncThunk('editCommentAction', async (payload: CommentType) => {
   try {

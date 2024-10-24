@@ -5,22 +5,19 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { UsersType } from '@/types/userType'
 import { storeInitialType } from '@/types/storeInitialType'
 
-export const registerAction: any = createAsyncThunk(
-  'registerAction',
-  async (payload: Pick<UsersType, 'uid' | 'email' | 'password' | 'role_id' | 'group_id'>) => {
-    try {
-      return await axios.post(`/api/user/`, payload)
-    } catch (err: any) {
-      console.error('Error registering user:', err)
-    }
+export const registerAction: any = createAsyncThunk('registerAction', async (payload: UsersType) => {
+  try {
+    return await axios.post(`/api/user/`, payload)
+  } catch (err: any) {
+    console.error('Error registering user:', err)
   }
-)
+})
 
 export const loginAction: any = createAsyncThunk(
   'loginAction',
-  async (payload: Pick<UsersType, 'email' | 'password'>) => {
+  async ({ email, password }: { email: string; password: string }) => {
     try {
-      const { data } = await axios.post(`/api/login/`, payload)
+      const { data } = await axios.post(`/api/login/`, { email, password })
       return data
     } catch (err: any) {
       console.error('Error logining user:', err)

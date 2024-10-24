@@ -27,20 +27,22 @@ const Header = () => {
               isHamburgerOpen ? 'max-h-[1000px] overflow-visible py-8' : 'max-h-0 overflow-hidden'
             }`}
           >
-            <Button
-              className='rounded-full w-[200px]'
-              startContent={
-                <Image
-                  src='/images/icons/bookmark-icon-black.svg'
-                  alt='bookmark-icon-black'
-                  className='w-5 h-5'
-                  width={16}
-                  height={16}
-                />
-              }
-            >
-              ブックマーク
-            </Button>
+            <Link href='/post/bookmark/'>
+              <Button
+                className='rounded-full w-[200px]'
+                startContent={
+                  <Image
+                    src='/images/icons/bookmark-icon-black.svg'
+                    alt='bookmark-icon-black'
+                    className='w-5 h-5'
+                    width={16}
+                    height={16}
+                  />
+                }
+              >
+                ブックマーク
+              </Button>
+            </Link>
             <Link href='/profile/1'>
               <Button
                 color='primary'

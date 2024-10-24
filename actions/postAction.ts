@@ -17,3 +17,12 @@ export const getPostByIdAction = async (id: string) => {
     return 'サーバの問題でデータ取得に失敗しました。'
   }
 }
+
+export const getBookmarkedPostAction = async ({ post_id, user_id }: { post_id: string; user_id: string }) => {
+  try {
+    const { data } = await axios.post(`/api/post/bookmarkList`, { post_id, user_id })
+    return data.bookmark_post
+  } catch (err) {
+    return 'サーバの問題でデータ取得に失敗しました。'
+  }
+}

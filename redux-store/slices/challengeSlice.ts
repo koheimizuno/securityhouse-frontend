@@ -7,7 +7,7 @@ import { ChallengeType } from '@/types/challengeType'
 
 export const createChallengeAction: any = createAsyncThunk(
   'createChallengeAction',
-  async (payload: Omit<ChallengeType, 'id'>) => {
+  async (payload: ChallengeType) => {
     try {
       await axios.post(`/api/challenge/`, payload)
     } catch (err) {

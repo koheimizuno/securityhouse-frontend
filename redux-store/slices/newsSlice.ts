@@ -5,18 +5,15 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { storeInitialType } from '@/types/storeInitialType'
 import { NewsType } from '@/types/newsType'
 
-export const createNewsAction: any = createAsyncThunk(
-  'createNewsAction',
-  async (payload: Omit<NewsType, 'id' | 'created_at'>) => {
-    try {
-      await axios.post(`/api/news/`, payload)
-    } catch (err) {
-      return err
-    }
+export const createNewsAction: any = createAsyncThunk('createNewsAction', async (payload: NewsType) => {
+  try {
+    await axios.post(`/api/news/`, payload)
+  } catch (err) {
+    return err
   }
-)
+})
 
-export const editNewsAction: any = createAsyncThunk('editNewsAction', async (payload: Omit<NewsType, 'created_at'>) => {
+export const editNewsAction: any = createAsyncThunk('editNewsAction', async (payload: NewsType) => {
   try {
     await axios.put(`/api/news/`, payload)
   } catch (err) {

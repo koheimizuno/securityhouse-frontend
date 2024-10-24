@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams, useRouter, useParams } from 'next/navigation'
 
-import AnnounceMdItem from '@/views/announce/AnnounceMdItem'
+import PostItem from '@/views/chatroom/PostItem'
 import Container from '@/components/layout/Container'
 import Breadcrumb from '@/components/breadcrumb'
 import SectionTitle from '@/components/common/SectionTitle'
@@ -135,13 +135,13 @@ const Profile = () => {
               </li>
             </ul>
             <ul className='flex flex-col gap-6 mt-5'>
-              <AnnounceMdItem
+              <PostItem
                 id='1'
                 userName='山田太郎'
                 avatar='/images/icons/user-icon00.svg'
-                userCompany='所属名'
+                affiliation='所属名'
                 title='タイトルタイトルタイトル'
-                description='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ'
+                content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ'
                 isBookmarked={false}
                 onClickBookmark={() => {}}
                 updatedAt='2024年6月11日 14:30'
