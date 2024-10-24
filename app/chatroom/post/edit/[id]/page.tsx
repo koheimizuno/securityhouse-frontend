@@ -64,7 +64,6 @@ const EditPost = () => {
     content: '',
     hashtag: ''
   })
-  const [postData, setPostData] = useState<PostType | null>(null)
 
   const { postTypes } = useSelector((state: any) => state.post_type)
   const { categories } = useSelector((state: any) => state.category)
@@ -79,15 +78,30 @@ const EditPost = () => {
 
   useEffect(() => {
     dispatch(getPostTypeAction())
-    dispatch(getCategoryAction())
-  }, [])
+    // if (formData.postType !== '0')
+    dispatch(
+      getCategoryAction({
+        pageFlag: '0',
+        type_id: formData.postType
+      })
+    )
+  }, [formData.postType])
 
   useEffect(() => {
     const fetchPostByIdData = async () => {
       if (typeof id === 'string') {
         try {
-          const res = await getPostByIdAction(id)
-          setPostData(res)
+          const originPost = await getPostByIdAction(id)
+          setFormData(prevState => ({
+            ...prevState,
+            // postType: originPost.type_id,
+            category: originPost.category_id,
+            publication: originPost.publication,
+            title: originPost.title,
+            content: originPost.content,
+            hashtag: originPost.hashtag,
+            attachments: { ...prevState.attachments, preview: originPost.attachments }
+          }))
         } catch (error) {
           console.error('Error fetching post:', error)
         }
@@ -169,14 +183,14 @@ const EditPost = () => {
             <Select
               label='投稿先'
               name='postType'
-              placeholder={postTypeOptions[Number(postData?.type_id)]?.title || '選択してください'}
+              placeholder={postTypeOptions[Number(formData.postType)]?.title || '選択してください'}
               labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
               classNames={{
                 base: ['flex items-center justify-between'],
                 label: 'font-bold',
                 mainWrapper: ['w-full md:w-[480px]']
               }}
-              selectedKeys={postData?.type_id ? String(postData?.type_id) : formData.postType}
+              selectedKeys={formData.postType}
               errorMessage={errors.postType}
               isInvalid={errors.postType ? true : false}
               onChange={handleSelect}
@@ -190,14 +204,14 @@ const EditPost = () => {
             <Select
               label='カテゴリ'
               name='category'
-              placeholder={postTypeOptions[Number(postData?.category_id)]?.title || '選択してください'}
+              placeholder={postTypeOptions[Number(formData.category)]?.title || '選択してください'}
               labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
               classNames={{
                 base: ['flex items-center justify-between'],
                 label: 'font-bold',
                 mainWrapper: ['w-full md:w-[480px]']
               }}
-              selectedKeys={postData?.category_id ? String(postData?.category_id) : formData.category}
+              selectedKeys={formData.category}
               errorMessage={errors.category}
               isInvalid={errors.category ? true : false}
               onChange={handleSelect}
@@ -211,14 +225,14 @@ const EditPost = () => {
             <Select
               label='公開範囲'
               name='publication'
-              placeholder={postTypeOptions[Number(postData?.publication)]?.title || '選択してください'}
+              placeholder={postTypeOptions[Number(formData?.publication)]?.title || '選択してください'}
               labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
               classNames={{
                 base: ['flex items-center justify-between'],
                 label: 'font-bold',
                 mainWrapper: ['w-full md:w-[480px]']
               }}
-              selectedKeys={postData?.publication ? String(postData?.publication) : formData.publication}
+              selectedKeys={formData?.publication}
               errorMessage={errors.publication}
               isInvalid={errors.publication ? true : false}
               onChange={handleSelect}
@@ -240,6 +254,7 @@ const EditPost = () => {
                 mainWrapper: ['w-full md:w-[480px]']
               }}
               labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
+              value={formData.title}
               onChange={handleChange}
               size='lg'
             />
@@ -249,10 +264,7 @@ const EditPost = () => {
               }`}
             >
               <span className='text-base font-bold'>内容</span>
-              <RichTextEditor
-                initialData={postData ? postData.content : 'ご入力ください。'}
-                onChange={handleEditorChange}
-              />
+              <RichTextEditor initialData={formData.content || 'ご入力ください。'} onChange={handleEditorChange} />
               {errors.content && (
                 <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.content}</span>
               )}
@@ -271,6 +283,7 @@ const EditPost = () => {
               isInvalid={errors.hashtag ? true : false}
               color={errors.hashtag ? 'danger' : 'default'}
               errorMessage={errors.hashtag}
+              value={formData.hashtag}
               onChange={handleChange}
               size='lg'
               isRequired
@@ -289,10 +302,10 @@ const EditPost = () => {
               onChange={handleChange}
               size='lg'
             />
-            {(formData.attachments.preview || postData?.attachments) && (
+            {(formData.attachments.preview || formData?.attachments?.file) && (
               <Image
-                src={formData.attachments.preview || postData?.attachments || ''}
-                alt={getImageAlt(formData.attachments.preview || postData?.attachments || '') || ''}
+                src={formData.attachments.preview || formData?.attachments?.file || ''}
+                alt={getImageAlt(formData.attachments.preview || formData?.attachments?.file || '') || ''}
                 className={`md:ms-[170px] lg:ms-[244px] mt-2 w-40 h-40`}
                 width={50}
                 height={50}

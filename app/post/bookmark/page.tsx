@@ -24,6 +24,7 @@ const BookmarkedPost = () => {
         {postData?.length !== 0 &&
           postData?.map((post, index) => (
             <PostItem
+              key={index}
               id={post.id}
               title={post.title}
               content={post.content}
