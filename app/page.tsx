@@ -37,7 +37,7 @@ export default function Home() {
   }, [searchParams])
 
   useEffect(() => {
-    getPostsAction().then(data => {
+    getPostsAction({ type_id: postType }).then(data => {
       setPostData(data)
     })
   }, [])

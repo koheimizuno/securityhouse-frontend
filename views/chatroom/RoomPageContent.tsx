@@ -6,13 +6,14 @@ import Link from 'next/link'
 import PostCard from '@/views/chatroom/PostCard'
 import { Button, Pagination } from '@nextui-org/react'
 import { getImageAlt } from '@/utils/getImageAlt'
+import { PostType } from '@/types/postType'
 
 type RoomPageContentProps = {
   title: string
   icon: string
   category: string
   categoryBio: string
-  postData: any
+  postData: PostType[] | null
 }
 
 const RoomPageContent = ({ title, icon, category, categoryBio, postData }: RoomPageContentProps) => {
@@ -39,29 +40,34 @@ const RoomPageContent = ({ title, icon, category, categoryBio, postData }: RoomP
         <h2 className='text-[32px] font-bold'>{category}</h2>
         <p>{categoryBio}</p>
         <div className='flex flex-col items-center sm:flex-row sm:flex-wrap gap-5'>
-          {postData.map((post: any, index: number) => (
-            <PostCard
-              key={index}
-              id={post.id}
-              title={post.title}
-              description={post.description}
-              category={post.category}
-              tag={post.tag}
-              likeNum={post.likeNum}
-              commentNum={post.commentNum}
-              isLiked={post.isLiked}
-              user={post.user}
-              updatedAt={post.updatedAt}
-            />
-          ))}
+          {postData &&
+            postData.map((post, index) => (
+              <PostCard
+                key={index}
+                id={post.id}
+                title={post.title}
+                content={post.content}
+                category_id={post.category_id}
+                name={post.name}
+                attachments={post.attachments}
+                affiliation_name={post.affiliation_name}
+                type_id={post.type_id}
+                like_count={post.like_count}
+                comment_count={post.comment_count}
+                bookmark_flag={post.bookmark_flag}
+                updated_at={post.updated_at}
+              />
+            ))}
         </div>
-        <Pagination
-          total={10}
-          initialPage={1}
-          className='gap-2 m-auto'
-          siblings={window.innerWidth > 425 ? 1 : 0}
-          showControls
-        />
+        {postData?.length && postData?.length > 3 && (
+          <Pagination
+            total={Math.round(postData?.length / 3)}
+            initialPage={1}
+            className='gap-2 m-auto'
+            siblings={window.innerWidth > 425 ? 1 : 0}
+            showControls
+          />
+        )}
       </div>
     </div>
   )

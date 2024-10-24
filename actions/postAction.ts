@@ -1,8 +1,10 @@
 import axios from 'axios'
 
-export const getPostsAction = async () => {
+export const getPostsAction = async ({ type_id }: { type_id: string }) => {
   try {
-    const { data } = await axios.get('/api/posts/')
+    const { data } = await axios.get('/api/posts/', {
+      params: { type_id }
+    })
     return data.posts
   } catch (err) {
     return 'サーバの問題でデータ取得に失敗しました。'
