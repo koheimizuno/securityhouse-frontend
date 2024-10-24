@@ -13,14 +13,22 @@ export const createCategoryAction: any = createAsyncThunk('createCategoryAction'
   }
 })
 
-export const getCategoryAction: any = createAsyncThunk('getCategoryAction', async () => {
-  try {
-    const res = await axios.get(`/api/category/`)
-    return res.data
-  } catch (err) {
-    return err
+export const getCategoryAction: any = createAsyncThunk(
+  'getCategoryAction',
+  async ({ pageFlag, type_id }: { pageFlag: string; type_id: string }) => {
+    try {
+      const res = await axios.get(`/api/category/`, {
+        params: {
+          pageFlag: pageFlag,
+          type_id: type_id
+        }
+      })
+      return res.data
+    } catch (err) {
+      return err
+    }
   }
-})
+)
 
 export const editCategoryAction: any = createAsyncThunk('editCategoryAction', async (payload: CategoryType) => {
   try {

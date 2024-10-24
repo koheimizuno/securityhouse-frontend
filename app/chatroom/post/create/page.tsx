@@ -71,8 +71,14 @@ const CreatePost = () => {
 
   useEffect(() => {
     dispatch(getPostTypeAction())
-    dispatch(getCategoryAction())
-  }, [])
+    if (formData.postType !== '0')
+      dispatch(
+        getCategoryAction({
+          pageFlag: '0',
+          type_id: formData.postType
+        })
+      )
+  }, [formData.postType])
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
