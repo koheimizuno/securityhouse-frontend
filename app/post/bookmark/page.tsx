@@ -1,0 +1,43 @@
+'use client'
+
+import React, { useEffect, useMemo, useState } from 'react'
+
+import Container from '@/components/layout/Container'
+import PageHeader from '@/components/common/PageHeader'
+import PostItem from '@/views/chatroom/PostItem'
+import { getBookmarkedPostAction } from '@/actions/postAction'
+import { PostType } from '@/types/postType'
+
+const BookmarkedPost = () => {
+  const [postData, setPostData] = useState<PostType[] | null>(null)
+
+  useEffect(() => {
+    getBookmarkedPostAction({ post_id: '1', user_id: 'user123' }).then(data => {
+      setPostData(data)
+    })
+  }, [])
+
+  return (
+    <Container className='py-12'>
+      <PageHeader title='ブックマーク' className='text-center' />
+      <ul className='flex flex-col gap-6 mt-5'>
+        {postData?.length !== 0 &&
+          postData?.map((post, index) => (
+            <PostItem
+              id={post.id}
+              userName={post.name}
+              avatar='/images/icons/user-icon00.svg'
+              affiliation={post.attachments}
+              title={post.title}
+              content={post.content}
+              isBookmarked={false}
+              onClickBookmark={() => {}}
+              updatedAt={post.updated_at}
+            />
+          ))}
+      </ul>
+    </Container>
+  )
+}
+
+export default BookmarkedPost
