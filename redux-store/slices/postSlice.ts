@@ -45,17 +45,41 @@ export const deletePostLikeAction: any = createAsyncThunk('deletePostLikeAction'
   }
 })
 
-export const postBookmarkAction: any = createAsyncThunk('postBookmarkAction', async (id: string) => {
-  try {
-    await axios.post(`/api/post/bookmark/${id}`)
-  } catch (err) {
-    return err
+export const postBookmarkAction: any = createAsyncThunk(
+  'postBookmarkAction',
+  async ({ post_id, user_id }: { post_id: string; user_id: string }) => {
+    try {
+      await axios.post(`/api/post/bookmark/`, {
+        params: {
+          post_id: post_id,
+          user_id: user_id
+        }
+      })
+    } catch (err) {
+      return err
+    }
   }
-})
+)
 
-export const deletePostBookmarkAction: any = createAsyncThunk('deletePostBookmarkAction', async (id: string) => {
+export const deletePostBookmarkAction: any = createAsyncThunk(
+  'deletePostBookmarkAction',
+  async ({ post_id, user_id }: { post_id: string; user_id: string }) => {
+    try {
+      await axios.delete(`/api/post/bookmark/`, {
+        params: {
+          post_id: post_id,
+          user_id: user_id
+        }
+      })
+    } catch (err) {
+      return err
+    }
+  }
+)
+
+export const postReportAction: any = createAsyncThunk('postReportAction', async (id: string) => {
   try {
-    await axios.delete(`/api/post/bookmark/${id}`)
+    await axios.post(`/api/report/`, { id })
   } catch (err) {
     return err
   }
@@ -139,6 +163,16 @@ export const postSlice = createSlice({
         toast.success('ブックマークから削除されました。')
       })
       .addCase(deletePostBookmarkAction.rejected, state => {
+        state.isLoading = false
+        state.error = true
+        toast.error('サーバの問題でデータ取得に失敗しました。')
+      })
+      .addCase(postReportAction.fulfilled, state => {
+        state.isLoading = false
+        state.success = true
+        toast.success('通報に成功しました。')
+      })
+      .addCase(postReportAction.rejected, state => {
         state.isLoading = false
         state.error = true
         toast.error('サーバの問題でデータ取得に失敗しました。')

@@ -29,6 +29,54 @@ export const deleteNewsAction: any = createAsyncThunk('deleteNewsAction', async 
   }
 })
 
+export const newsLikeAction: any = createAsyncThunk('newsLikeAction', async (id: string) => {
+  try {
+    await axios.post(`/api/news/like/${id}`)
+  } catch (err) {
+    return err
+  }
+})
+
+export const deleteNewsLikeAction: any = createAsyncThunk('deleteNewsLikeAction', async (id: string) => {
+  try {
+    await axios.delete(`/api/news/like/${id}`)
+  } catch (err) {
+    return err
+  }
+})
+
+export const newsBookmarkAction: any = createAsyncThunk(
+  'newsBookmarkAction',
+  async ({ post_id, user_id }: { post_id: string; user_id: string }) => {
+    try {
+      await axios.post(`/api/news/bookmark/`, {
+        params: {
+          post_id: post_id,
+          user_id: user_id
+        }
+      })
+    } catch (err) {
+      return err
+    }
+  }
+)
+
+export const deleteNewsBookmarkAction: any = createAsyncThunk(
+  'deleteNewsBookmarkAction',
+  async ({ post_id, user_id }: { post_id: string; user_id: string }) => {
+    try {
+      await axios.delete(`/api/news/bookmark/`, {
+        params: {
+          post_id: post_id,
+          user_id: user_id
+        }
+      })
+    } catch (err) {
+      return err
+    }
+  }
+)
+
 const initialState: storeInitialType = {
   success: false,
   error: false,
@@ -67,6 +115,46 @@ export const newsSlice = createSlice({
         toast.success('お知らせが成果として削除されました。')
       })
       .addCase(deleteNewsAction.rejected, state => {
+        state.isLoading = false
+        state.error = true
+        toast.error('サーバの問題でデータ取得に失敗しました。')
+      })
+      .addCase(newsLikeAction.fulfilled, state => {
+        state.isLoading = false
+        state.success = true
+        toast.success('お知らせに「いいね！」を追加しました。')
+      })
+      .addCase(newsLikeAction.rejected, state => {
+        state.isLoading = false
+        state.error = true
+        toast.error('サーバの問題でデータ取得に失敗しました。')
+      })
+      .addCase(deleteNewsLikeAction.fulfilled, state => {
+        state.isLoading = false
+        state.success = true
+        toast.success('お知らせから「いいね！」を削除しました。')
+      })
+      .addCase(deleteNewsLikeAction.rejected, state => {
+        state.isLoading = false
+        state.error = true
+        toast.error('サーバの問題でデータ取得に失敗しました。')
+      })
+      .addCase(newsBookmarkAction.fulfilled, state => {
+        state.isLoading = false
+        state.success = true
+        toast.success('ブックマークに追加されました。')
+      })
+      .addCase(newsBookmarkAction.rejected, state => {
+        state.isLoading = false
+        state.error = true
+        toast.error('サーバの問題でデータ取得に失敗しました。')
+      })
+      .addCase(deleteNewsBookmarkAction.fulfilled, state => {
+        state.isLoading = false
+        state.success = true
+        toast.success('ブックマークから削除されました。')
+      })
+      .addCase(deleteNewsBookmarkAction.rejected, state => {
         state.isLoading = false
         state.error = true
         toast.error('サーバの問題でデータ取得に失敗しました。')
