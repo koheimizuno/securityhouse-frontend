@@ -24,6 +24,7 @@ import { POST_TYPE } from '@/utils/constants'
 import { getPostsAction } from '@/actions/postAction'
 import { PostType } from '@/types/postType'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
+import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -32,6 +33,7 @@ export default function Home() {
   const [postData, setPostData] = useState<PostType[]>([])
   const [progress, setProgress] = useState(0)
   const { categories } = useSelector((state: any) => state.category)
+  const { postTypes } = useSelector((state: any) => state.post_type)
 
   useEffect(() => {
     const postTypeQuery = searchParams.get('type_id')
@@ -39,6 +41,10 @@ export default function Home() {
       setPostType(postTypeQuery)
     }
   }, [searchParams])
+
+  useEffect(() => {
+    dispatch(getPostTypeAction())
+  }, [])
 
   useEffect(() => {
     getPostsAction({ type_id: postType })
@@ -129,6 +135,7 @@ export default function Home() {
                           attachments={post.attachments}
                           affiliation_name={post.affiliation_name}
                           type_id={post.type_id}
+                          postTypes={postTypes}
                           like_count={post.like_count}
                           comment_count={post.comment_count}
                           bookmark_flag={post.bookmark_flag}

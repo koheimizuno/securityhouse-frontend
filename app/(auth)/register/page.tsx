@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useCallback, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
 
 import Container from '@/components/layout/Container'
@@ -9,21 +9,15 @@ import PageHeader from '@/components/common/PageHeader'
 import InputPasswordEye from '@/components/form/InputPasswordEye'
 import { Button, Input, Select, SelectItem } from '@nextui-org/react'
 
+import { GroupType } from '@/types/groupType'
 import { validateEmail, validatePassword } from '@/utils/validateUtils'
 import { registerAction } from '@/redux-store/slices/authSlice'
+import { getGroupAction } from '@/redux-store/slices/groupSlice'
 
 const roleOptions = [
-  { id: '0', title: '選択してください' },
   { id: '1', title: '役割1' },
   { id: '2', title: '役割2' },
   { id: '3', title: '役割3' }
-]
-
-const groupsOptions = [
-  { id: '0', title: '選択してください' },
-  { id: '1', title: 'グループ1' },
-  { id: '2', title: 'グループ2' },
-  { id: '3', title: 'グループ3' }
 ]
 
 const Register = () => {
@@ -31,8 +25,8 @@ const Register = () => {
   const [formData, setFormData] = useState({
     uid: '',
     email: '',
-    role_id: '0',
-    group_id: '0',
+    role_id: '',
+    group_id: '',
     password: '',
     passwordConfirm: ''
   })
@@ -48,6 +42,11 @@ const Register = () => {
     password: false,
     passwordConfirm: false
   })
+  const { groups } = useSelector((state: any) => state.group)
+
+  useEffect(() => {
+    dispatch(getGroupAction())
+  }, [])
 
   const handleInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -55,15 +54,15 @@ const Register = () => {
     setErrors(prev => ({ ...prev, [name]: '' }))
   }, [])
 
-  const toggleVisible = (name: string, value: boolean) => {
+  const toggleVisible = useCallback((name: string, value: boolean) => {
     setIsVisible(prev => ({ ...prev, [name]: !value }))
-  }
+  }, [])
 
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSelect = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData(prevFormData => ({ ...prevFormData, [name]: value }))
     setErrors(prev => ({ ...prev, [name]: '' }))
-  }
+  }, [])
 
   const validateForm = () => {
     const { uid, email, role_id, group_id, password, passwordConfirm } = formData
@@ -139,8 +138,8 @@ const Register = () => {
           size='lg'
           isRequired
         >
-          {roleOptions.map((role, key) => (
-            <SelectItem key={key}>{role.title}</SelectItem>
+          {roleOptions.map(role => (
+            <SelectItem key={role.id}>{role.title}</SelectItem>
           ))}
         </Select>
         <Select
@@ -156,8 +155,8 @@ const Register = () => {
           size='lg'
           isRequired
         >
-          {groupsOptions.map((group, key) => (
-            <SelectItem key={key}>{group.title}</SelectItem>
+          {groups.map((group: GroupType) => (
+            <SelectItem key={group.id}>{group.name}</SelectItem>
           ))}
         </Select>
         <Input

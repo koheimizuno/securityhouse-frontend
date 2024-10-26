@@ -1,6 +1,6 @@
 'use client'
 
-import Loader from '@/components/common/Loader'
+import Loader from '@/components/common/Loading'
 
 const Loading = () => {
   return <Loader />

@@ -16,6 +16,7 @@ import { CategoryType } from '@/types/categoryType'
 
 interface PostCardProps extends Partial<PostType> {
   categories: CategoryType[]
+  postTypes: PostType[]
 }
 
 const PostCard = ({
@@ -28,6 +29,7 @@ const PostCard = ({
   name,
   affiliation_name,
   type_id,
+  postTypes,
   like_count,
   comment_count,
   bookmark_flag,
@@ -35,36 +37,19 @@ const PostCard = ({
 }: PostCardProps) => {
   const pathname = usePathname()
   const dispatch = useDispatch()
-  const [category, setCategory] = useState('')
   const [moreActive, setMoreActive] = useState<boolean>(false)
+
+  const category = useMemo(() => {
+    return categories?.find(category => category.id === category_id)?.title || ''
+  }, [categories, category_id])
+
+  const postType = useMemo(() => {
+    return postTypes?.find(postType => postType.id === type_id)?.title || ''
+  }, [postTypes, type_id])
 
   const ref = useClickAway<HTMLDivElement>(() => {
     setMoreActive(false)
   })
-
-  useEffect(() => {
-    if (categories)
-      categories.map(category => {
-        if (category.id === category_id) setCategory(category.title)
-      })
-  }, [])
-
-  const hrefAndPostType = useMemo(() => {
-    if (type_id && id) {
-      switch (type_id) {
-        case '1':
-          return { href: `/chatroom/sh-room/post/${id}`, postType: 'SH会' }
-        case '2':
-          return { href: `/chatroom/work-room/post/${id}`, postType: '仕事' }
-        case '3':
-          return { href: `/chatroom/exchange-room/post/${id}`, postType: '交流' }
-        case '4':
-          return { href: `/chatroom/boss-room/post/${id}`, postType: '社長室' }
-        default:
-          return { href: '/', postType: '' }
-      }
-    }
-  }, [type_id, id])
 
   const handleDeletePost = async () => {
     await dispatch(deletePostAction(id))
@@ -82,14 +67,14 @@ const PostCard = ({
       />
       <p className='text-xs flex items-center gap-1 mb-3'>
         <span className='text-primary'>■</span>
-        <span>{hrefAndPostType?.postType}</span>
+        <span>{postType}</span>
       </p>
       <div className='mb-5 flex items-center flex-wrap gap-2'>
         <Button size='sm' color='primary' className='text-xs px-2 py-0 h-6 rounded-full w-fit'>
           {category}
         </Button>
       </div>
-      <Link href={hrefAndPostType?.href || ''}>
+      <Link href={`/chatroom/post/${id}`}>
         <h3 className='underline truncate text-txtColor'>{title}</h3>
       </Link>
       <p className='text-sm line-clamp-3'>{content}</p>

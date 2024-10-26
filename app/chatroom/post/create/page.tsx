@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
@@ -86,7 +86,7 @@ const CreatePost = () => {
     setErrors(prev => ({ ...prev, [name]: '' }))
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { type, name, value, files } = e.target
     if (type === 'file') {
       const file = files ? files[0] : null
@@ -102,14 +102,14 @@ const CreatePost = () => {
       setFormData(prev => ({ ...prev, [name]: value }))
     }
     setErrors(prev => ({ ...prev, [name]: '' }))
-  }
+  }, [])
 
   const handleEditorChange = (data: string) => {
     setFormData(prevState => ({ ...prevState, content: data }))
     setErrors(prev => ({ ...prev, content: '' }))
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (validateForm()) {
       let postPayload = new FormData()
@@ -121,7 +121,7 @@ const CreatePost = () => {
       postPayload.append('publication', formData.publication)
       postPayload.append('attachments', formData.attachments.file)
 
-      await dispatch(createPostAction(postPayload))
+      dispatch(createPostAction(postPayload))
     }
   }
 
@@ -134,6 +134,7 @@ const CreatePost = () => {
 
     if (!formData.content) newErrors.content = 'この項目は必須です。'
     if (!formData.hashtag) newErrors.hashtag = 'この項目は必須です。'
+    if (!formData.attachments.file) newErrors.attachments = 'この項目は必須です。'
 
     setErrors(prev => ({ ...prev, ...newErrors }))
     return Object.keys(newErrors).length === 0

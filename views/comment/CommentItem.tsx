@@ -1,11 +1,14 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getImageAlt } from '@/utils/getImageAlt'
+
 import { Button } from '@nextui-org/react'
+
+import { getImageAlt } from '@/utils/getImageAlt'
 import { useClickAway } from '@uidotdev/usehooks'
+import { formatDate } from '@/utils/formatDate'
 
 interface CommentItemProps {
   id?: string
@@ -23,7 +26,7 @@ const CommentItem = ({ id, userName, userCompany, avatar, comment, updatedAt }: 
     setMoreActive(false)
   })
   return (
-    <li className='border border-colorGray2 rounded-lg px-9 py-6 w-full shadow-md'>
+    <li className='px-9 py-6 w-full flex flex-col gap-5 border border-colorGray2 rounded-lg shadow-md'>
       <div className='flex justify-between items-center'>
         <div className='flex items-center gap-8'>
           <Image src={avatar} alt={getImageAlt(avatar) || ''} width={44} height={44} />
@@ -31,7 +34,7 @@ const CommentItem = ({ id, userName, userCompany, avatar, comment, updatedAt }: 
             <p className='text-[15px]'>
               {userName}/{userCompany}
             </p>
-            <p className='text-xs text-colorGray3'>{updatedAt}</p>
+            <p className='text-xs text-colorGray3'>{formatDate(updatedAt)}</p>
           </div>
           <Button size='sm' color='primary' className='rounded-full text-xs px-2 py-0 h-6'>
             事務局からのご案内
@@ -64,4 +67,4 @@ const CommentItem = ({ id, userName, userCompany, avatar, comment, updatedAt }: 
   )
 }
 
-export default CommentItem
+export default memo(CommentItem)

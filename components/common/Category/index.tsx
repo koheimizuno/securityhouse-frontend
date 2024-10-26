@@ -9,12 +9,14 @@ import { POST_TYPE } from '@/utils/constants'
 import CategoryItem from './CategoryItem'
 import TabItemOther from './TabItemOther'
 import { CategoryType } from '@/types/categoryType'
+import { useCategories } from '@/views/chatroom/RoomPage'
 
-const Category = ({ categories, toggleMenu }: { categories: CategoryType[]; toggleMenu: () => void }) => {
+const Category = ({ toggleMenu }: { toggleMenu: () => void }) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [cat, setCat] = useState('all')
+  const { categories } = useCategories()
 
   useEffect(() => {
     const catQuery = searchParams.get('cat')

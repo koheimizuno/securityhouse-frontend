@@ -10,6 +10,7 @@ import SearchBar from '@/components/common/SearchBar'
 import Category from '@/components/common/Category'
 
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
+import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
 
 const CategoriesContext = createContext<any>(null)
 
@@ -22,6 +23,7 @@ const RoomPage = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname()
   const dispatch = useDispatch()
   const { categories } = useSelector((state: any) => state.category)
+  const { postTypes } = useSelector((state: any) => state.post_type)
 
   const postType = useMemo(() => {
     if (pathname.includes('sh-room')) return '1'
@@ -29,6 +31,10 @@ const RoomPage = ({ children }: { children: React.ReactNode }) => {
     if (pathname.includes('exchange-room')) return '3'
     if (pathname.includes('boss-room')) return '4'
   }, [pathname])
+
+  useEffect(() => {
+    dispatch(getPostTypeAction())
+  }, [])
 
   useEffect(() => {
     dispatch(
@@ -44,7 +50,7 @@ const RoomPage = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <CategoriesContext.Provider value={categories}>
+    <CategoriesContext.Provider value={{ categories: categories, postTypes: postTypes }}>
       <Breadcrumb />
       <SearchBar />
       <Container className='py-12'>
@@ -59,7 +65,7 @@ const RoomPage = ({ children }: { children: React.ReactNode }) => {
               isOpen ? 'max-w-full px-4 py-6 border border-colorGray1 md:border-none' : 'max-w-0 md:max-w-none'
             }`}
           >
-            <Category categories={categories} toggleMenu={handleMenu} />
+            <Category toggleMenu={handleMenu} />
           </div>
           {children}
         </div>

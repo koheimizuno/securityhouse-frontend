@@ -9,7 +9,7 @@ import { useCategories } from './RoomPage'
 
 const WorkRoomContent = () => {
   const [postData, setPostData] = useState<PostType[]>([])
-  const categories = useCategories()
+  const { categories, postTypes } = useCategories()
 
   useEffect(() => {
     getPostsAction({ type_id: '2' }).then(data => {
@@ -22,6 +22,7 @@ const WorkRoomContent = () => {
       <RoomPageContent
         title='仕事トークルーム'
         icon='/images/icons/work-room-primary.svg'
+        postTypes={postTypes}
         categories={categories}
         postData={postData}
       />

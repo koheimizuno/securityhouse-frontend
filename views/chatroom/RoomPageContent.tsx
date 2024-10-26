@@ -14,11 +14,12 @@ import { useSearchParams } from 'next/navigation'
 type RoomPageContentProps = {
   title: string
   icon: string
+  postTypes: PostType[]
   categories: CategoryType[]
   postData: PostType[]
 }
 
-const RoomPageContent = ({ title, icon, categories, postData }: RoomPageContentProps) => {
+const RoomPageContent = ({ title, icon, postTypes, categories, postData }: RoomPageContentProps) => {
   const searchParams = useSearchParams()
   const [selectedCat, setSelectedCat] = useState({
     title: '',
@@ -35,6 +36,7 @@ const RoomPageContent = ({ title, icon, categories, postData }: RoomPageContentP
       setSelectedCat(prevState => ({ ...prevState, title: 'すべて', description: '' }))
     }
   }, [searchParams])
+
   return (
     <div className='md:w-[calc(100%-246px)]'>
       <div className='mb-4 flex justify-between items-center'>
@@ -58,24 +60,26 @@ const RoomPageContent = ({ title, icon, categories, postData }: RoomPageContentP
         <h2 className='text-[32px] font-bold'>{selectedCat.title}</h2>
         {<p>{selectedCat.description}</p>}
         <div className='flex flex-col items-center sm:flex-row sm:flex-wrap gap-5'>
-          {postData.map((post, index) => (
-            <PostCard
-              key={index}
-              id={post.id}
-              title={post.title}
-              content={post.content}
-              category_id={post.category_id}
-              categories={categories}
-              name={post.name}
-              attachments={post.attachments}
-              affiliation_name={post.affiliation_name}
-              type_id={post.type_id}
-              like_count={post.like_count}
-              comment_count={post.comment_count}
-              bookmark_flag={post.bookmark_flag}
-              updated_at={post.updated_at}
-            />
-          ))}
+          {postData &&
+            postData.map((post, index) => (
+              <PostCard
+                key={index}
+                id={post.id}
+                title={post.title}
+                content={post.content}
+                category_id={post.category_id}
+                categories={categories}
+                name={post.name}
+                attachments={post.attachments}
+                affiliation_name={post.affiliation_name}
+                type_id={post.type_id}
+                postTypes={postTypes}
+                like_count={post.like_count}
+                comment_count={post.comment_count}
+                bookmark_flag={post.bookmark_flag}
+                updated_at={post.updated_at}
+              />
+            ))}
         </div>
         {postData?.length && postData?.length > 3 && (
           <Pagination
