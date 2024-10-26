@@ -47,17 +47,18 @@ const NewsSection = () => {
           </a>
         </div>
         <ul className='secondary-scroll flex flex-col items-center w-full h-[500px] md:h-[330px] overflow-y-scroll pr-6'>
-          {news?.map(newItem => (
-            <NewsItem
-              name='山田太郎'
-              affiliation_name='所属名'
-              thumbnail=''
-              title={newItem.title}
-              content={newItem.content}
-              bookmark_flag={newItem.bookmark_flag}
-              updated_at={newItem.updated_at}
-            />
-          ))}
+          {news &&
+            news.map(newItem => (
+              <NewsItem
+                name='山田太郎'
+                affiliation_name='所属名'
+                thumbnail=''
+                title={newItem.title}
+                content={newItem.content}
+                bookmark_flag={newItem.bookmark_flag}
+                updated_at={newItem.updated_at}
+              />
+            ))}
         </ul>
       </div>
     </Container>

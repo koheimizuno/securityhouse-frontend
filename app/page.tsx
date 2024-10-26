@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useMemo, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -22,12 +23,15 @@ import { Swiper as SwiperType } from 'swiper'
 import { POST_TYPE } from '@/utils/constants'
 import { getPostsAction } from '@/actions/postAction'
 import { PostType } from '@/types/postType'
+import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 
 export default function Home() {
   const searchParams = useSearchParams()
   const [postType, setPostType] = useState('1')
   const [postdata, setPostData] = useState<PostType[] | null>(null)
   const [progress, setProgress] = useState(0)
+  const dispatch = useDispatch()
+  const { categories } = useSelector((state: any) => state.category)
 
   useEffect(() => {
     const postTypeQuery = searchParams.get('post_type')
@@ -41,6 +45,15 @@ export default function Home() {
       setPostData(data)
     })
   }, [])
+
+  useEffect(() => {
+    dispatch(
+      getCategoryAction({
+        pageFlag: '0',
+        type_id: postType
+      })
+    )
+  }, [postType])
 
   const { roomListTitle, roomListHref } = useMemo(() => {
     switch (postType) {
@@ -109,6 +122,7 @@ export default function Home() {
                           title={post.title}
                           content={post.content}
                           category_id={post.category_id}
+                          categories={categories}
                           name={post.name}
                           attachments={post.attachments}
                           affiliation_name={post.affiliation_name}

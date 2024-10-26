@@ -11,8 +11,12 @@ import { Button } from '@nextui-org/react'
 import { formatDate } from '@/utils/formatDate'
 import { useClickAway } from '@uidotdev/usehooks'
 import { deletePostAction } from '@/redux-store/slices/postSlice'
-import { getCategoryByIdAction } from '@/actions/categoryAction'
 import { PostType } from '@/types/postType'
+import { CategoryType } from '@/types/categoryType'
+
+interface PostCardProps extends Partial<PostType> {
+  categories: CategoryType[]
+}
 
 const PostCard = ({
   id,
@@ -20,6 +24,7 @@ const PostCard = ({
   content,
   attachments,
   category_id,
+  categories,
   name,
   affiliation_name,
   type_id,
@@ -27,7 +32,7 @@ const PostCard = ({
   comment_count,
   bookmark_flag,
   updated_at
-}: Partial<PostType>) => {
+}: PostCardProps) => {
   const pathname = usePathname()
   const dispatch = useDispatch()
   const [category, setCategory] = useState('')
@@ -38,11 +43,11 @@ const PostCard = ({
   })
 
   useEffect(() => {
-    if (category_id)
-      getCategoryByIdAction(category_id).then(data => {
-        setCategory(data.title)
+    if (categories)
+      categories.map(category => {
+        if (category.id === category_id) setCategory(category.title)
       })
-  }, [category_id])
+  }, [])
 
   const hrefAndPostType = useMemo(() => {
     if (type_id && id) {

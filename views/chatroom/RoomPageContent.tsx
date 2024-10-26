@@ -7,16 +7,34 @@ import PostCard from '@/views/chatroom/PostCard'
 import { Button, Pagination } from '@nextui-org/react'
 import { getImageAlt } from '@/utils/getImageAlt'
 import { PostType } from '@/types/postType'
+import { CategoryType } from '@/types/categoryType'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 type RoomPageContentProps = {
   title: string
   icon: string
-  category: string
-  categoryBio: string
-  postData: PostType[] | null
+  categories: CategoryType[]
+  postData: PostType[]
 }
 
-const RoomPageContent = ({ title, icon, category, categoryBio, postData }: RoomPageContentProps) => {
+const RoomPageContent = ({ title, icon, categories, postData }: RoomPageContentProps) => {
+  const searchParams = useSearchParams()
+  const [selectedCat, setSelectedCat] = useState({
+    title: '',
+    description: ''
+  })
+  useEffect(() => {
+    const catQuery = searchParams.get('cat')
+    if (catQuery && catQuery !== 'all') {
+      categories.map((category: CategoryType) => {
+        if (category.title === catQuery)
+          setSelectedCat(prevState => ({ ...prevState, title: category.title, description: category.description }))
+      })
+    } else {
+      setSelectedCat(prevState => ({ ...prevState, title: 'すべて', description: '' }))
+    }
+  }, [searchParams])
   return (
     <div className='md:w-[calc(100%-246px)]'>
       <div className='mb-4 flex justify-between items-center'>
@@ -37,27 +55,27 @@ const RoomPageContent = ({ title, icon, category, categoryBio, postData }: RoomP
         </Link>
       </div>
       <div className='bg-bgSemiblue px-4 py-8 md:p-8 flex flex-col gap-6 rounded-2xl'>
-        <h2 className='text-[32px] font-bold'>{category}</h2>
-        <p>{categoryBio}</p>
+        <h2 className='text-[32px] font-bold'>{selectedCat.title}</h2>
+        {<p>{selectedCat.description}</p>}
         <div className='flex flex-col items-center sm:flex-row sm:flex-wrap gap-5'>
-          {postData &&
-            postData.map((post, index) => (
-              <PostCard
-                key={index}
-                id={post.id}
-                title={post.title}
-                content={post.content}
-                category_id={post.category_id}
-                name={post.name}
-                attachments={post.attachments}
-                affiliation_name={post.affiliation_name}
-                type_id={post.type_id}
-                like_count={post.like_count}
-                comment_count={post.comment_count}
-                bookmark_flag={post.bookmark_flag}
-                updated_at={post.updated_at}
-              />
-            ))}
+          {postData.map((post, index) => (
+            <PostCard
+              key={index}
+              id={post.id}
+              title={post.title}
+              content={post.content}
+              category_id={post.category_id}
+              categories={categories}
+              name={post.name}
+              attachments={post.attachments}
+              affiliation_name={post.affiliation_name}
+              type_id={post.type_id}
+              like_count={post.like_count}
+              comment_count={post.comment_count}
+              bookmark_flag={post.bookmark_flag}
+              updated_at={post.updated_at}
+            />
+          ))}
         </div>
         {postData?.length && postData?.length > 3 && (
           <Pagination

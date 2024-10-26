@@ -1,14 +1,16 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { POST_TYPE } from '@/utils/constants'
-import postCategory from '@/mockup/postCategory.json'
 import CategoryItem from './CategoryItem'
 import TabItemOther from './TabItemOther'
+import { CategoryType } from '@/types/categoryType'
 
-const Category = ({ toggleMenu }: { toggleMenu: () => void }) => {
+const Category = ({ categories, toggleMenu }: { categories: CategoryType[]; toggleMenu: () => void }) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -30,11 +32,15 @@ const Category = ({ toggleMenu }: { toggleMenu: () => void }) => {
   return (
     <div className='w-[206px] flex flex-col gap-12'>
       <div className='flex flex-col gap-4'>
-        <h4 className='font-bold'>カテゴリ</h4>
+        <h4 className='font-bold cursor-pointer' onClick={() => handleCategory('all')}>
+          カテゴリ
+        </h4>
         <ul className='flex flex-col gap-2'>
-          {postCategory.map((item, index) => (
-            <CategoryItem key={index} item={item} cat={cat} handleCategory={handleCategory} toggleMenu={toggleMenu} />
-          ))}
+          {categories &&
+            categories.length !== 0 &&
+            categories.map((item: CategoryType, index: number) => (
+              <CategoryItem key={index} item={item} cat={cat} handleCategory={handleCategory} toggleMenu={toggleMenu} />
+            ))}
         </ul>
       </div>
       <div className='flex flex-col gap-4'>

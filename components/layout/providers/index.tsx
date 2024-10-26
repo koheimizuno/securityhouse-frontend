@@ -17,10 +17,6 @@ const Providers = ({
   const [hasMounted, setHasMounted] = useState(false)
 
   useEffect(() => {
-    setHasMounted(true)
-  }, [])
-
-  useEffect(() => {
     let tokenJSON: string | null = localStorage.getItem('token')
     if (tokenJSON) {
       let token = JSON.parse(tokenJSON)
@@ -28,6 +24,10 @@ const Providers = ({
     } else {
       delete axios.defaults.headers.common['Authorization']
     }
+  }, [])
+
+  useEffect(() => {
+    setHasMounted(true)
   }, [])
 
   if (!hasMounted) {
