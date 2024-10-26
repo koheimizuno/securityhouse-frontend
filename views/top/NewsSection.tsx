@@ -11,7 +11,7 @@ import { getNewsAction } from '@/actions/newsAction'
 import { NewsType } from '@/types/newsType'
 
 const NewsSection = () => {
-  const [news, setNews] = useState<NewsType[] | null>(null)
+  const [news, setNews] = useState<NewsType[]>()
 
   useEffect(() => {
     getNewsAction().then(data => {
@@ -48,8 +48,10 @@ const NewsSection = () => {
         </div>
         <ul className='secondary-scroll flex flex-col items-center w-full h-[500px] md:h-[330px] overflow-y-scroll pr-6'>
           {news &&
+            Array.isArray(news) &&
             news.map(newItem => (
               <NewsItem
+                key={newItem.id}
                 name='山田太郎'
                 affiliation_name='所属名'
                 thumbnail=''

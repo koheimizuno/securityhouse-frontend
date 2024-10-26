@@ -26,11 +26,11 @@ import { PostType } from '@/types/postType'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 
 export default function Home() {
+  const dispatch = useDispatch()
   const searchParams = useSearchParams()
   const [postType, setPostType] = useState('1')
-  const [postdata, setPostData] = useState<PostType[] | null>(null)
+  const [postData, setPostData] = useState<PostType[]>()
   const [progress, setProgress] = useState(0)
-  const dispatch = useDispatch()
   const { categories } = useSelector((state: any) => state.category)
 
   useEffect(() => {
@@ -42,11 +42,9 @@ export default function Home() {
 
   useEffect(() => {
     getPostsAction({ type_id: postType }).then(data => {
+      console.log({ data })
       setPostData(data)
     })
-  }, [])
-
-  useEffect(() => {
     dispatch(
       getCategoryAction({
         pageFlag: '0',
@@ -114,8 +112,9 @@ export default function Home() {
                     })
                   }}
                 >
-                  {postdata !== null &&
-                    postdata.map((post, index) => (
+                  {categories &&
+                    postData &&
+                    postData.map((post, index) => (
                       <SwiperSlide key={index}>
                         <PostCard
                           id={post.id}
