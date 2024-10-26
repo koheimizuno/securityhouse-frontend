@@ -1,7 +1,7 @@
 export const getImageAlt = (src: string) => {
-  let fileNameWithExtension: string | undefined = src.split('/').pop()
+  const fileNameWithExtension: string | undefined = src.split('/').pop()
 
-  let fileNameWithoutExtension = fileNameWithExtension
+  const fileNameWithoutExtension = fileNameWithExtension
     ? fileNameWithExtension.split('.').slice(0, -1).join('.')
     : undefined
 

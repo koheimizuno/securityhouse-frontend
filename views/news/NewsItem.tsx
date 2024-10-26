@@ -12,7 +12,7 @@ interface NewsItemProps extends Partial<NewsType> {
   thumbnail: string
 }
 
-const NewsItem = ({ title, content, name, affiliation_name, like_count, bookmark_flag, updated_at }: NewsItemProps) => {
+const NewsItem = ({ title, content, name, affiliation_name, bookmark_flag, updated_at }: NewsItemProps) => {
   return (
     <li className='border-b border-colorGray2 py-4 w-full border-t md:border-t-0'>
       <div className='flex flex-col-reverse gap-4 md:flex-row md:justify-between md:items-center'>

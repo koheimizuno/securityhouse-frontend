@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import React, { useEffect, useMemo, useState } from 'react'
@@ -14,14 +15,13 @@ const RichTextEditor = dynamic(() => import('@/components/form/RichTextEditor'),
   ssr: false
 })
 
-import { PostType } from '@/types/postType'
-
 import { getPostByIdAction } from '@/actions/postAction'
 import { editPostAction } from '@/redux-store/slices/postSlice'
 import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 
 import { getImageAlt } from '@/utils/getImageAlt'
+import { RootState } from '@/redux-store'
 
 const publicationOptions = [
   {
@@ -65,8 +65,8 @@ const EditPost = () => {
     hashtag: ''
   })
 
-  const { postTypes } = useSelector((state: any) => state.post_type)
-  const { categories } = useSelector((state: any) => state.category)
+  const { postTypes } = useSelector((state: RootState) => state.post_type)
+  const { categories } = useSelector((state: RootState) => state.category)
 
   const postTypeOptions = useMemo(() => {
     return [{ id: '0', title: '選択してください', group_id: null }, ...postTypes]
@@ -85,7 +85,7 @@ const EditPost = () => {
         type_id: formData.postType
       })
     )
-  }, [formData.postType])
+  }, [dispatch, formData.postType])
 
   useEffect(() => {
     const fetchPostByIdData = async () => {
@@ -142,7 +142,7 @@ const EditPost = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (validateForm()) {
-      let postPayload = new FormData()
+      const postPayload = new FormData()
       postPayload.append('title', formData.title)
       postPayload.append('content', formData.content)
       postPayload.append('hashtag', formData.hashtag)

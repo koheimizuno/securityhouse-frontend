@@ -8,23 +8,24 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
 import NewsSection from '@/views/top/NewsSection'
+import PostCard from '@/views/chatroom/PostCard'
 import DocumentSection from '@/views/top/DocumentSection'
 import Container from '@/components/layout/Container'
 import Breadcrumb from '@/components/breadcrumb'
 import SearchBar from '@/components/common/SearchBar'
-import PostCard from '@/views/chatroom/PostCard'
 import SectionTitle from '@/components/common/SectionTitle'
 import TabVertical from '@/components/common/TabVertical'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules'
 import { Swiper as SwiperType } from 'swiper'
+import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules'
 
 import { POST_TYPE } from '@/utils/constants'
 import { getPostsAction } from '@/actions/postAction'
 import { PostType } from '@/types/postType'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
+import { RootState } from '@/redux-store'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -32,8 +33,8 @@ export default function Home() {
   const [postType, setPostType] = useState('1')
   const [postData, setPostData] = useState<PostType[]>([])
   const [progress, setProgress] = useState(0)
-  const { categories } = useSelector((state: any) => state.category)
-  const { postTypes } = useSelector((state: any) => state.post_type)
+  const { categories } = useSelector((state: RootState) => state.category)
+  const { postTypes } = useSelector((state: RootState) => state.post_type)
 
   useEffect(() => {
     const postTypeQuery = searchParams.get('type_id')
@@ -44,7 +45,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getPostTypeAction())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     getPostsAction({ type_id: postType })
@@ -60,7 +61,7 @@ export default function Home() {
         type_id: postType
       })
     )
-  }, [postType])
+  }, [dispatch, postType])
 
   const { roomListTitle, roomListHref } = useMemo(() => {
     switch (postType) {

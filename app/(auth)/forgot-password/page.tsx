@@ -31,8 +31,8 @@ const ForgotPassword = () => {
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData(prevState => ({ ...prevState, [name]: value }))
-    setErrors({ ...errors, [name]: '' })
+    setFormData(prev => ({ ...prev, [name]: value }))
+    setErrors(prev => ({ ...prev, [name]: '' }))
   }, [])
 
   const toggleVisible = (name: string, value: boolean) => {

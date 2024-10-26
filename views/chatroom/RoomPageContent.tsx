@@ -6,7 +6,7 @@ import Link from 'next/link'
 import PostCard from '@/views/chatroom/PostCard'
 import { Button, Pagination } from '@nextui-org/react'
 import { getImageAlt } from '@/utils/getImageAlt'
-import { PostType } from '@/types/postType'
+import { PostType, PostType_Type } from '@/types/postType'
 import { CategoryType } from '@/types/categoryType'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
@@ -14,7 +14,7 @@ import { useSearchParams } from 'next/navigation'
 type RoomPageContentProps = {
   title: string
   icon: string
-  postTypes: PostType[]
+  postTypes: PostType_Type[]
   categories: CategoryType[]
   postData: PostType[]
 }
@@ -35,7 +35,7 @@ const RoomPageContent = ({ title, icon, postTypes, categories, postData }: RoomP
     } else {
       setSelectedCat(prevState => ({ ...prevState, title: 'すべて', description: '' }))
     }
-  }, [searchParams])
+  }, [categories, searchParams])
 
   return (
     <div className='md:w-[calc(100%-246px)]'>

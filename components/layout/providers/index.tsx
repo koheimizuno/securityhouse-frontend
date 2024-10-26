@@ -17,9 +17,9 @@ const Providers = ({
   const [hasMounted, setHasMounted] = useState(false)
 
   useEffect(() => {
-    let tokenJSON: string | null = localStorage.getItem('token')
+    const tokenJSON: string | null = localStorage.getItem('token')
     if (tokenJSON) {
-      let token = JSON.parse(tokenJSON)
+      const token = JSON.parse(tokenJSON)
       axios.defaults.headers.common['Authorization'] = `JWT ${token}`
     } else {
       delete axios.defaults.headers.common['Authorization']

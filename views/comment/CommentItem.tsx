@@ -11,7 +11,6 @@ import { useClickAway } from '@uidotdev/usehooks'
 import { formatDate } from '@/utils/formatDate'
 
 interface CommentItemProps {
-  id?: string
   userName: string
   userCompany: string
   avatar: string
@@ -19,7 +18,7 @@ interface CommentItemProps {
   updatedAt: string
 }
 
-const CommentItem = ({ id, userName, userCompany, avatar, comment, updatedAt }: CommentItemProps) => {
+const CommentItem = ({ userName, userCompany, avatar, comment, updatedAt }: CommentItemProps) => {
   const [moreActive, setMoreActive] = useState<boolean>(false)
 
   const ref = useClickAway<HTMLDivElement>(() => {

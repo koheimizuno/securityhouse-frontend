@@ -16,17 +16,21 @@ const EmailEditContent = ({ userData }: { userData: UsersType | null }) => {
   const dispatch = useDispatch()
   const [email, setEmail] = useState({ new: '' })
   const [errors, setErrors] = useState({ new: '' })
-  const [commetNot, setCommetNot] = useToggle(false)
+  const [commentNot, setCommentNot] = useToggle(false)
   const [newsNot, setNewsNot] = useToggle(false)
   const [dmNot, setDmNot] = useToggle(false)
 
   useEffect(() => {
     if (userData) {
-      setCommetNot(userData.comment_not === '1' ? false : true)
-      setNewsNot(userData.news_not === '1' ? false : true)
-      setDmNot(userData.dm_not === '1' ? false : true)
+      const isCommentNotified = userData.comment_not === '1' ? false : true
+      const isNewsNotified = userData.news_not === '1' ? false : true
+      const isDmNotified = userData.dm_not === '1' ? false : true
+
+      setCommentNot(isCommentNotified)
+      setNewsNot(isNewsNotified)
+      setDmNot(isDmNotified)
     }
-  }, [userData])
+  }, [setCommentNot, setDmNot, setNewsNot, userData])
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -41,7 +45,7 @@ const EmailEditContent = ({ userData }: { userData: UsersType | null }) => {
 
     switch (name) {
       case 'comment_not':
-        setCommetNot(checked)
+        setCommentNot(checked)
         dispatch(editUserAction({ comment_not: payload }))
         break
       case 'news_not':
@@ -104,7 +108,7 @@ const EmailEditContent = ({ userData }: { userData: UsersType | null }) => {
            px-6 py-3'
           >
             <span>コメント</span>
-            <CheckBox name='comment_not' on={commetNot} handleToggle={handleCheckboxChange} />
+            <CheckBox name='comment_not' on={commentNot} handleToggle={handleCheckboxChange} />
           </li>
           <li
             className='flex justify-between items-center gap-2 bg-colorGray1 rounded-lg

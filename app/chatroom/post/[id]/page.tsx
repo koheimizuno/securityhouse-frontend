@@ -25,6 +25,7 @@ import { getCommentsAction } from '@/actions/commentAction'
 import { deletePostAction } from '@/redux-store/slices/postSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { createCommentAction } from '@/redux-store/slices/commentSlice'
+import { RootState } from '@/redux-store'
 
 const SHRoomPostDetail = () => {
   const { id } = useParams()
@@ -33,7 +34,7 @@ const SHRoomPostDetail = () => {
   const [postData, setPostData] = useState<PostType | null>(null)
   const [comments, setComments] = useState<CommentType[]>()
   const [moreActive, setMoreActive] = useState<boolean>(false)
-  const { categories } = useSelector((state: any) => state.category)
+  const { categories } = useSelector((state: RootState) => state.category)
   const [newComment, setNewComment] = useState({
     content: '',
     attachment: {
@@ -48,7 +49,7 @@ const SHRoomPostDetail = () => {
 
   const category = useMemo(() => {
     return categories?.find((category: CategoryType) => category.id === postData?.category_id)?.title || ''
-  }, [postData?.category_id])
+  }, [categories, postData?.category_id])
 
   const ref = useClickAway<HTMLDivElement>(() => {
     setMoreActive(false)
@@ -72,7 +73,7 @@ const SHRoomPostDetail = () => {
         type_id: postData?.type_id
       })
     )
-  }, [postData?.type_id])
+  }, [dispatch, postData?.type_id])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { type, name, value, files } = e.target
@@ -104,7 +105,7 @@ const SHRoomPostDetail = () => {
     e.preventDefault()
 
     if (validateForm()) {
-      let commentPayload = new FormData()
+      const commentPayload = new FormData()
 
       if (typeof id === 'string') commentPayload.append('post_id', id)
       commentPayload.append('content', newComment.content)

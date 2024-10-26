@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Container from '@/components/layout/Container'
 import PageHeader from '@/components/common/PageHeader'

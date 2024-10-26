@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
@@ -11,19 +12,20 @@ import Category from '@/components/common/Category'
 
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
+import { RootState } from '@/redux-store'
 
-const CategoriesContext = createContext<any>(null)
+const RoomContext = createContext<any>(null)
 
-export const useCategories = () => {
-  return useContext(CategoriesContext)
+export const useRoom = () => {
+  return useContext(RoomContext)
 }
 
 const RoomPage = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const dispatch = useDispatch()
-  const { categories } = useSelector((state: any) => state.category)
-  const { postTypes } = useSelector((state: any) => state.post_type)
+  const { categories } = useSelector((state: RootState) => state.category)
+  const { postTypes } = useSelector((state: RootState) => state.post_type)
 
   const postType = useMemo(() => {
     if (pathname.includes('sh-room')) return '1'
@@ -34,7 +36,7 @@ const RoomPage = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     dispatch(getPostTypeAction())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(
@@ -43,14 +45,14 @@ const RoomPage = ({ children }: { children: React.ReactNode }) => {
         type_id: postType
       })
     )
-  }, [postType])
+  }, [dispatch, postType])
 
   const handleMenu = () => {
     setIsOpen(!isOpen)
   }
 
   return (
-    <CategoriesContext.Provider value={{ categories: categories, postTypes: postTypes }}>
+    <RoomContext.Provider value={{ categories: categories, postTypes: postTypes }}>
       <Breadcrumb />
       <SearchBar />
       <Container className='py-12'>
@@ -70,7 +72,7 @@ const RoomPage = ({ children }: { children: React.ReactNode }) => {
           {children}
         </div>
       </Container>
-    </CategoriesContext.Provider>
+    </RoomContext.Provider>
   )
 }
 

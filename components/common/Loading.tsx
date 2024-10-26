@@ -17,7 +17,7 @@ const Loading = ({ flag = '0', className }: { flag?: string; className?: string 
       default:
         break
     }
-  }, [])
+  }, [flag])
   return (
     <div className={`flex flex-col justify-center items-center ${style}`}>
       <div className={`w-20 h-20 border-t-2 border-b-2 border-primary rounded-full animate-spin ${className}`}></div>

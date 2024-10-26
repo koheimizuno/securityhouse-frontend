@@ -1,13 +1,13 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import TabItem from './TabItem'
 
 export type PostTabType = {
   title: string
-  href?: string
+  href: string
   icon: string[]
 }
 
@@ -30,20 +30,23 @@ const TabVertical = ({ queryKey, menuList, children, gap }: TabVerticalProps) =>
     if (tab) {
       setTab(tab)
     }
-  }, [searchParams, id])
+  }, [queryKey, searchParams, id])
 
-  const handleTab = (e: React.MouseEvent<HTMLLIElement>, title: string, index: number) => {
-    if (title === 'ログアウト') {
-      setTab((index + 1).toString())
-      router.push(pathname)
-      // Logout Action
-    } else {
-      const value = e.currentTarget.getAttribute('data-value')
-      if (value) {
-        router.push(`${pathname}?${queryKey}=${value}`)
+  const handleTab = useCallback(
+    (e: React.MouseEvent<HTMLLIElement>, title: string, index: number) => {
+      if (title === 'ログアウト') {
+        setTab((index + 1).toString())
+        router.push(pathname)
+        // Logout Action
+      } else {
+        const value = e.currentTarget.getAttribute('data-value')
+        if (value) {
+          router.push(`${pathname}?${queryKey}=${value}`)
+        }
       }
-    }
-  }
+    },
+    [pathname, queryKey, router]
+  )
   return (
     <div className={`w-full flex flex-col items-center mt-6 lg:flex-row lg:items-start ${gap && 'gap-6'}`}>
       <ul className='w-full md:w-auto grid grid-cols-4 grid-rows-1 gap-3 lg:grid-cols-1 lg:grid-rows-4'>

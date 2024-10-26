@@ -1,7 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
@@ -9,14 +8,14 @@ import { POST_TYPE } from '@/utils/constants'
 import CategoryItem from './CategoryItem'
 import TabItemOther from './TabItemOther'
 import { CategoryType } from '@/types/categoryType'
-import { useCategories } from '@/views/chatroom/RoomPage'
+import { useRoom } from '@/views/chatroom/RoomPage'
 
 const Category = ({ toggleMenu }: { toggleMenu: () => void }) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [cat, setCat] = useState('all')
-  const { categories } = useCategories()
+  const { categories } = useRoom()
 
   useEffect(() => {
     const catQuery = searchParams.get('cat')

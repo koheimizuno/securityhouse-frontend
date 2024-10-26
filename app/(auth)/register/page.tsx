@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import React, { useCallback, useEffect, useState } from 'react'
@@ -13,6 +14,7 @@ import { GroupType } from '@/types/groupType'
 import { validateEmail, validatePassword } from '@/utils/validateUtils'
 import { registerAction } from '@/redux-store/slices/authSlice'
 import { getGroupAction } from '@/redux-store/slices/groupSlice'
+import { RootState } from '@/redux-store'
 
 const roleOptions = [
   { id: '1', title: '役割1' },
@@ -42,11 +44,11 @@ const Register = () => {
     password: false,
     passwordConfirm: false
   })
-  const { groups } = useSelector((state: any) => state.group)
+  const { groups } = useSelector((state: RootState) => state.group)
 
   useEffect(() => {
     dispatch(getGroupAction())
-  }, [])
+  }, [dispatch])
 
   const handleInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target

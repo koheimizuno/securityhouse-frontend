@@ -1,6 +1,6 @@
 'use client'
 
-import React, { memo, useEffect, useMemo, useState } from 'react'
+import React, { memo, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -11,12 +11,12 @@ import { Button } from '@nextui-org/react'
 import { formatDate } from '@/utils/formatDate'
 import { useClickAway } from '@uidotdev/usehooks'
 import { deletePostAction } from '@/redux-store/slices/postSlice'
-import { PostType } from '@/types/postType'
+import { PostType, PostType_Type } from '@/types/postType'
 import { CategoryType } from '@/types/categoryType'
 
 interface PostCardProps extends Partial<PostType> {
   categories: CategoryType[]
-  postTypes: PostType[]
+  postTypes: PostType_Type[]
 }
 
 const PostCard = ({

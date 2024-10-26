@@ -1,4 +1,4 @@
-import { Checkbox } from '@nextui-org/react'
+'use client'
 
 type CheckBoxProps = {
   name: string

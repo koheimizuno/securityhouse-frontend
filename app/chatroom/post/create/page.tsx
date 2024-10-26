@@ -16,6 +16,7 @@ const RichTextEditor = dynamic(() => import('@/components/form/RichTextEditor'),
 import { createPostAction } from '@/redux-store/slices/postSlice'
 import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
+import { RootState } from '@/redux-store'
 
 const publicationOptions = [
   {
@@ -58,8 +59,8 @@ const CreatePost = () => {
     hashtag: ''
   })
 
-  const { postTypes } = useSelector((state: any) => state.post_type)
-  const { categories } = useSelector((state: any) => state.category)
+  const { postTypes } = useSelector((state: RootState) => state.post_type)
+  const { categories } = useSelector((state: RootState) => state.category)
 
   const postTypeOptions = useMemo(() => {
     return [{ id: '0', title: '選択してください', group_id: null }, ...postTypes]
@@ -78,7 +79,7 @@ const CreatePost = () => {
           type_id: formData.postType
         })
       )
-  }, [formData.postType])
+  }, [dispatch, formData.postType])
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -112,7 +113,7 @@ const CreatePost = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (validateForm()) {
-      let postPayload = new FormData()
+      const postPayload = new FormData()
       postPayload.append('title', formData.title)
       postPayload.append('content', formData.content)
       postPayload.append('hashtag', formData.hashtag)

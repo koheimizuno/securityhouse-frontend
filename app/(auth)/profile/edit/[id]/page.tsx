@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
 import PageHeader from '@/components/common/PageHeader'
 import Container from '@/components/layout/Container'

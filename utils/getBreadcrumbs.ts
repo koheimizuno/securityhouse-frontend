@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import slugData from '@/data/slugData.json'
 
 export const getBreadcrumbs = (pathname: string) => {
