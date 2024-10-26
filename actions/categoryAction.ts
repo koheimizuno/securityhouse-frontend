@@ -9,6 +9,7 @@ export const getCategoryByIdAction = async (id: string, pageFlag: string = '0') 
     })
     return data
   } catch (err) {
-    return 'サーバの問題でデータ取得に失敗しました。'
+    console.error(err)
+    throw err
   }
 }

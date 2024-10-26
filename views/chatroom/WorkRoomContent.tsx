@@ -8,7 +8,7 @@ import { getPostsAction } from '@/actions/postAction'
 import { useCategories } from './RoomPage'
 
 const WorkRoomContent = () => {
-  const [postData, setPostData] = useState<PostType[]>()
+  const [postData, setPostData] = useState<PostType[]>([])
   const categories = useCategories()
 
   useEffect(() => {

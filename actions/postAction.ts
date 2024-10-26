@@ -7,7 +7,8 @@ export const getPostsAction = async ({ type_id }: { type_id: string }) => {
     })
     return data.posts
   } catch (err) {
-    return 'サーバの問題でデータ取得に失敗しました。'
+    console.error(err)
+    throw err
   }
 }
 
@@ -16,7 +17,8 @@ export const getPostByIdAction = async (id: string) => {
     const { data } = await axios.get(`/api/post/${id}`)
     return data
   } catch (err) {
-    return 'サーバの問題でデータ取得に失敗しました。'
+    console.error(err)
+    throw err
   }
 }
 
@@ -25,6 +27,7 @@ export const getBookmarkedPostAction = async ({ post_id, user_id }: { post_id: s
     const { data } = await axios.post(`/api/post/bookmarkList`, { post_id, user_id })
     return data.bookmark_post
   } catch (err) {
-    return 'サーバの問題でデータ取得に失敗しました。'
+    console.error(err)
+    throw err
   }
 }

@@ -5,6 +5,7 @@ export const getMessageAction = async () => {
     const { data } = await axios.get(`/api/message/`)
     return data.messages
   } catch (err) {
-    return 'サーバの問題でデータ取得に失敗しました。'
+    console.error(err)
+    throw err
   }
 }

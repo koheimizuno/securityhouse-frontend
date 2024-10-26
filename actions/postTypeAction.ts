@@ -5,6 +5,7 @@ export const getPostTypeByIdAction = async (id: string) => {
     const { data } = await axios.get(`/api/post_type/${id}`)
     return data
   } catch (err) {
-    return 'サーバの問題でデータ取得に失敗しました。'
+    console.error(err)
+    throw err
   }
 }

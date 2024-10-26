@@ -5,7 +5,8 @@ export const getNewsAction = async () => {
     const { data } = await axios.get(`/api/news/`)
     return data.news
   } catch (err) {
-    return 'サーバの問題でデータ取得に失敗しました。'
+    console.error(err)
+    throw err
   }
 }
 
@@ -14,6 +15,7 @@ export const getNewsByIdAction = async (id: string) => {
     const { data } = await axios.get(`/api/news/${id}`)
     return data
   } catch (err) {
-    return 'サーバの問題でデータ取得に失敗しました。'
+    console.error(err)
+    throw err
   }
 }

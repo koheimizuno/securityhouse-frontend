@@ -11,7 +11,7 @@ import { getNewsAction } from '@/actions/newsAction'
 import { NewsType } from '@/types/newsType'
 
 const NewsSection = () => {
-  const [news, setNews] = useState<NewsType[]>()
+  const [news, setNews] = useState<NewsType[]>([])
 
   useEffect(() => {
     getNewsAction().then(data => {

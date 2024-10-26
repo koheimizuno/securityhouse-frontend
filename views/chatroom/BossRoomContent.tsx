@@ -8,7 +8,7 @@ import { PostType } from '@/types/postType'
 import { useCategories } from './RoomPage'
 
 const BossRoomContent = () => {
-  const [postData, setPostData] = useState<PostType[]>()
+  const [postData, setPostData] = useState<PostType[]>([])
   const categories = useCategories()
 
   useEffect(() => {

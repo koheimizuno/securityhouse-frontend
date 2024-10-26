@@ -29,22 +29,25 @@ export default function Home() {
   const dispatch = useDispatch()
   const searchParams = useSearchParams()
   const [postType, setPostType] = useState('1')
-  const [postData, setPostData] = useState<PostType[]>()
+  const [postData, setPostData] = useState<PostType[]>([])
   const [progress, setProgress] = useState(0)
   const { categories } = useSelector((state: any) => state.category)
 
   useEffect(() => {
-    const postTypeQuery = searchParams.get('post_type')
+    const postTypeQuery = searchParams.get('type_id')
     if (postTypeQuery) {
       setPostType(postTypeQuery)
     }
   }, [searchParams])
 
   useEffect(() => {
-    getPostsAction({ type_id: postType }).then(data => {
-      console.log({ data })
-      setPostData(data)
-    })
+    getPostsAction({ type_id: postType })
+      .then(data => {
+        setPostData(data)
+      })
+      .catch(err => {
+        console.error(err)
+      })
     dispatch(
       getCategoryAction({
         pageFlag: '0',
@@ -77,7 +80,7 @@ export default function Home() {
         <Container>
           <SectionTitle title='トークルーム最新の投稿' icon='/images/icons/talk-room.svg' />
           <div className='flex flex-col items-center mt-6 lg:flex-row lg:items-start'>
-            <TabVertical queryKey='post_type' menuList={POST_TYPE}>
+            <TabVertical queryKey='type_id' menuList={POST_TYPE}>
               <div className='w-full lg:w-[calc(100%-240px)] bg-primary py-7 px-4 lg:ps-10 shadow-lg rounded-xl rounded-tl-none'>
                 <div className='text-right pe-8 mb-6'>
                   <Link href={roomListHref} className='text-white font-bold'>
@@ -112,8 +115,8 @@ export default function Home() {
                     })
                   }}
                 >
-                  {categories &&
-                    postData &&
+                  {postData &&
+                    categories &&
                     postData.map((post, index) => (
                       <SwiperSlide key={index}>
                         <PostCard

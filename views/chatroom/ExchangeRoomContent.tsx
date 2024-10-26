@@ -8,7 +8,7 @@ import { PostType } from '@/types/postType'
 import { useCategories } from './RoomPage'
 
 const ExchangeRoomContent = () => {
-  const [postData, setPostData] = useState<PostType[]>()
+  const [postData, setPostData] = useState<PostType[]>([])
   const categories = useCategories()
 
   useEffect(() => {

@@ -5,7 +5,8 @@ export const getCommentsAction = async ({ post_id }: { post_id: string }) => {
     const { data } = await axios.get(`/api/comment/`, { params: { post_id } })
     return data.comments
   } catch (err) {
-    return 'サーバの問題でデータ取得に失敗しました。'
+    console.error(err)
+    throw err
   }
 }
 
@@ -14,6 +15,7 @@ export const getCommentByIdAction = async (id: string) => {
     const { data } = await axios.get(`/api/comment/${id}`)
     return data
   } catch (err) {
-    return 'サーバの問題でデータ取得に失敗しました。'
+    console.error(err)
+    throw err
   }
 }

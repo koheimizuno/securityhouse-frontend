@@ -5,7 +5,8 @@ export const getChallengeAction = async () => {
     const { data } = await axios.get(`/api/challenge/`)
     return data.challenges
   } catch (err) {
-    return 'サーバの問題でデータ取得に失敗しました。'
+    console.error(err)
+    throw err
   }
 }
 
@@ -14,6 +15,7 @@ export const getChallengeByIdAction = async (id: string) => {
     const { data } = await axios.get(`/api/badge/${id}`)
     return data
   } catch (err) {
-    return 'サーバの問題でデータ取得に失敗しました。'
+    console.error(err)
+    throw err
   }
 }
