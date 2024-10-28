@@ -141,28 +141,34 @@ const SHRoomPostDetail = () => {
       <Container>
         <section className='py-12'>
           <PageHeader title='SH会トークルーム' />
-          <div className='mt-5 flex flex-col gap-8 bg-bgSemiblue px-16 py-10 rounded-2xl'>
+          <div className='mt-5 flex flex-col gap-4 md:gap-8 bg-bgSemiblue px-6  md:px-16 py-10 rounded-2xl'>
+            <Button size='sm' color='primary' disabled className='md:hidden text-xs px-2 py-0 h-6 rounded-full w-fit'>
+              {category && category}
+            </Button>
             <div className='flex flex-row justify-between items-center'>
               <div className='flex flex-row gap-6'>
-                <div className='flex items-center gap-2 mt-4 mb-3'>
+                <div className='flex items-center gap-2 mt-4 mb-3 text-sm md:text-base'>
                   <Image src='/images/icons/user-icon00.svg' alt='user-icon00 w-11 h-11' width={44} height={44} />
                   <div>
                     <p className='text-sm'>{postData.name}／所属名</p>
                     <p>0000年00月00日00:00</p>
                   </div>
                 </div>
-                <div className='flex items-center flex-wrap gap-2'>
-                  <Button size='sm' color='primary' disabled className='text-xs px-2 py-0 h-6 rounded-full w-fit'>
-                    {category && category}
-                  </Button>
-                </div>
+                <Button
+                  size='sm'
+                  color='primary'
+                  disabled
+                  className='hidden md:block text-xs px-2 py-0 h-6 rounded-full w-fit'
+                >
+                  {category && category}
+                </Button>
               </div>
               <div ref={ref} className='relative'>
                 <button onClick={() => pathname !== '/' && setMoreActive(!moreActive)}>
                   <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
                 </button>
                 {moreActive && (
-                  <ul className='bg-white absolute z-10 top-4 left-4 w-[150px] flex flex-col shadow-md rounded-md'>
+                  <ul className='bg-white absolute z-10 top-4 right-4 md:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
                     <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
                       <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
                     </li>
