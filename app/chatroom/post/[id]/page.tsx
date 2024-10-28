@@ -146,7 +146,7 @@ const SHRoomPostDetail = () => {
               {category && category}
             </Button>
             <div className='flex flex-row justify-between items-center'>
-              <div className='flex flex-row gap-6'>
+              <div className='flex flex-row items-center gap-6'>
                 <div className='flex items-center gap-2 mt-4 mb-3 text-sm md:text-base'>
                   <Image src='/images/icons/user-icon00.svg' alt='user-icon00 w-11 h-11' width={44} height={44} />
                   <div>

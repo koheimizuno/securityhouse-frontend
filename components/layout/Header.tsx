@@ -64,36 +64,36 @@ const Header = () => {
       </nav>
       <ul className='sm:grid sm:grid-cols-4 bg-primary'>
         <li className='border-b sm:border-r border-colorGray1'>
-          <a
-            href='#'
+          <Link
+            href='/'
             className='flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]'
           >
             トークルーム
-          </a>
+          </Link>
         </li>
         <li className='border-b sm:border-r border-colorGray1'>
-          <a
-            href='#'
+          <Link
+            href='/news'
             className='flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]'
           >
             お知らせ
-          </a>
+          </Link>
         </li>
         <li className='border-b sm:border-r border-colorGray1'>
-          <a
+          <Link
             href='#'
             className='flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]'
           >
             資料集
-          </a>
+          </Link>
         </li>
         <li>
-          <a
+          <Link
             href='#'
             className='flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]'
           >
             SH会情報
-          </a>
+          </Link>
         </li>
       </ul>
     </header>
