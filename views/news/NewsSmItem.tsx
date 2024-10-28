@@ -1,18 +1,18 @@
 'use client'
 
-import React from 'react'
+import React, { memo } from 'react'
 import Image from 'next/image'
 import { Button } from '@nextui-org/react'
 import { NewsType } from '@/types/newsType'
 import { formatDate } from '@/utils/formatDate'
 
-interface NewsItemProps extends Partial<NewsType> {
+interface NewsSmItemProps extends Partial<NewsType> {
   name: string
   affiliation_name: string
   thumbnail: string
 }
 
-const NewsItem = ({ title, content, name, affiliation_name, bookmark_flag, updated_at }: NewsItemProps) => {
+const NewsSmItem = ({ title, content, name, affiliation_name, bookmark_flag, updated_at }: NewsSmItemProps) => {
   return (
     <li className='border-b border-colorGray2 py-4 w-full border-t md:border-t-0'>
       <div className='flex flex-col-reverse gap-4 md:flex-row md:justify-between md:items-center'>
@@ -57,4 +57,4 @@ const NewsItem = ({ title, content, name, affiliation_name, bookmark_flag, updat
   )
 }
 
-export default NewsItem
+export default memo(NewsSmItem)

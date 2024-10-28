@@ -26,10 +26,16 @@ const PostItem = ({
   const pathname = usePathname()
   const dispatch = useDispatch()
   const [moreActive, setMoreActive] = useState<boolean>(false)
+  const [contentMore, setContentMore] = useState<boolean>(false)
 
   const ref = useClickAway<HTMLDivElement>(() => {
     setMoreActive(false)
   })
+
+  const newsFlag = useMemo(() => {
+    return pathname.includes('news') ? true : false
+  }, [pathname])
+
   const imgData = useMemo(() => {
     if (thumbnail) {
       return { src: thumbnail, alt: getImageAlt(thumbnail) }
@@ -44,9 +50,18 @@ const PostItem = ({
   }
 
   return (
-    <li className='border border-colorGray2 rounded-lg px-9 py-6 w-full shadow-md'>
+    <li
+      className={`${
+        newsFlag ? 'bg-white' : ''
+      } flex flex-col gap-5 border border-colorGray2 rounded-2xl px-6 md:px-9 py-6 w-full shadow-md`}
+    >
+      <div>
+        <Button size='sm' color='primary' className='md:hidden rounded-full text-xs px-2 py-0 h-6'>
+          事務局からのご案内
+        </Button>
+      </div>
       <div className='flex justify-between items-center'>
-        <div className='flex items-center gap-8'>
+        <div className='flex items-center gap-4 md:gap-8'>
           <Image src={imgData.src} alt={imgData.alt || ''} width={44} height={44} />
           <div className='flex flex-col gap-1'>
             <p className='text-[15px]'>
@@ -54,7 +69,7 @@ const PostItem = ({
             </p>
             <p className='text-xs text-colorGray3'>{(updated_at && updated_at) || ''}</p>
           </div>
-          <Button size='sm' color='primary' className='rounded-full text-xs px-2 py-0 h-6'>
+          <Button size='sm' color='primary' className='hidden md:block rounded-full text-xs px-2 py-0 h-6'>
             事務局からのご案内
           </Button>
         </div>
@@ -63,7 +78,7 @@ const PostItem = ({
             <Image src='/images/icons/more-vertical.svg' alt='more-vertical' width={20} height={20} />
           </button>
           {moreActive && (
-            <ul className='bg-white absolute z-10 top-4 left-4 w-[150px] flex flex-col shadow-md rounded-md'>
+            <ul className='bg-white absolute z-10 top-4 right-4 xl:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
               <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
                 <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
               </li>
@@ -74,11 +89,13 @@ const PostItem = ({
           )}
         </div>
       </div>
-      <Link href='#'>
-        <h3 className='py-4 underline'>{title}</h3>
+      <Link href={`/${newsFlag ? 'news' : 'chatroom/post'}/${id}`}>
+        <h3 className='underline'>{title}</h3>
       </Link>
-      <p className='text-sm line-clamp-2'>{content}</p>
-      <button className='text-[15px] text-colorGray3'>…もっと見る</button>
+      <p className={`text-sm ${!contentMore && 'line-clamp-2'}`}>{content}</p>
+      <button className='text-left text-[15px] text-colorGray3' onClick={() => setContentMore(prevState => !prevState)}>
+        {!contentMore ? '…もっと見る' : '…表示を少なくする'}
+      </button>
       <div className='mt-4 flex items-center gap-2'>
         <div className='flex items-center gap-2'>
           <Image src='/images/icons/thumbs-up.svg' alt='thumb-up' width={20} height={20} />

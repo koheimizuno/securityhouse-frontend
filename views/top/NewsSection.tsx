@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import Container from '@/components/layout/Container'
 import SectionTitle from '@/components/common/SectionTitle'
-import NewsItem from '@/views/news/NewsItem'
+import NewsSmItem from '@/views/news/NewsSmItem'
 import { Button } from '@nextui-org/react'
 import { getNewsAction } from '@/actions/newsAction'
 import { NewsType } from '@/types/newsType'
@@ -14,9 +15,7 @@ const NewsSection = () => {
   const [news, setNews] = useState<NewsType[]>([])
 
   useEffect(() => {
-    getNewsAction().then(data => {
-      setNews(data)
-    })
+    getNewsAction().then(data => setNews(data))
   }, [])
 
   return (
@@ -27,7 +26,7 @@ const NewsSection = () => {
           <Button
             size='lg'
             color='primary'
-            className='h-14 px-12 rounded-full font-bold'
+            className='hidden md:flex h-14 px-12 rounded-full font-bold'
             endContent={
               <Image
                 src='/images/icons/arrow-circle-right-outline.svg'
@@ -38,19 +37,19 @@ const NewsSection = () => {
               />
             }
           >
-            一覧を見る
+            <Link href='/news'>一覧を見る</Link>
           </Button>
         </div>
         <div className='w-full md:hidden text-right'>
-          <a href='#' className='underline font-bold'>
+          <Link href='/news' className='underline font-bold'>
             一覧を見る
-          </a>
+          </Link>
         </div>
         <ul className='secondary-scroll flex flex-col items-center w-full h-[500px] md:h-[330px] overflow-y-scroll pr-6'>
           {news &&
             Array.isArray(news) &&
             news.map(newItem => (
-              <NewsItem
+              <NewsSmItem
                 key={newItem.id}
                 name='山田太郎'
                 affiliation_name='所属名'
@@ -58,7 +57,7 @@ const NewsSection = () => {
                 title={newItem.title}
                 content={newItem.content}
                 bookmark_flag={newItem.bookmark_flag}
-                updated_at={newItem.updated_at}
+                updated_at={newItem.created_at}
               />
             ))}
         </ul>

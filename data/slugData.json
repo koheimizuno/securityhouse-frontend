@@ -48,5 +48,15 @@
     "label": "作成",
     "slug": "create",
     "validSlug": true
+  },
+  {
+    "label": "編集",
+    "slug": "edit",
+    "validSlug": true
+  },
+  {
+    "label": "新着情報",
+    "slug": "news",
+    "validSlug": true
   }
 ]

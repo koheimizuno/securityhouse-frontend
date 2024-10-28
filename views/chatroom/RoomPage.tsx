@@ -67,7 +67,7 @@ const RoomPage = ({ children }: { children: React.ReactNode }) => {
               isOpen ? 'max-w-full px-4 py-6 border border-colorGray1 md:border-none' : 'max-w-0 md:max-w-none'
             }`}
           >
-            <Category toggleMenu={handleMenu} />
+            <Category categories={categories} toggleMenu={handleMenu} />
           </div>
           {children}
         </div>

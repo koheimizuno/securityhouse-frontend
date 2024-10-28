@@ -31,7 +31,7 @@ export default function Home() {
   const dispatch = useDispatch()
   const searchParams = useSearchParams()
   const [postType, setPostType] = useState('1')
-  const [postData, setPostData] = useState<PostType[]>([])
+  const [posts, setPosts] = useState<PostType[]>([])
   const [progress, setProgress] = useState(0)
   const { categories } = useSelector((state: RootState) => state.category)
   const { postTypes } = useSelector((state: RootState) => state.post_type)
@@ -50,7 +50,7 @@ export default function Home() {
   useEffect(() => {
     getPostsAction({ type_id: postType })
       .then(data => {
-        setPostData(data)
+        setPosts(data)
       })
       .catch(err => {
         console.error(err)
@@ -80,7 +80,6 @@ export default function Home() {
 
   return (
     <>
-      <h1 className='text-center text-2xl font-bold hidden'>Security House</h1>
       <Breadcrumb />
       <SearchBar />
       <section className='bg-bgSemiblue py-8'>
@@ -122,9 +121,9 @@ export default function Home() {
                     })
                   }}
                 >
-                  {postData &&
+                  {posts &&
                     categories &&
-                    postData.map((post, index) => (
+                    posts.map((post, index) => (
                       <SwiperSlide key={index}>
                         <PostCard
                           id={post.id}

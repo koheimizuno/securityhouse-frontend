@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
@@ -8,14 +8,17 @@ import { POST_TYPE } from '@/utils/constants'
 import CategoryItem from './CategoryItem'
 import TabItemOther from './TabItemOther'
 import { CategoryType } from '@/types/categoryType'
-import { useRoom } from '@/views/chatroom/RoomPage'
 
-const Category = ({ toggleMenu }: { toggleMenu: () => void }) => {
+type CategoryProps = {
+  categories: CategoryType[]
+  toggleMenu: () => void
+}
+
+const Category = ({ categories, toggleMenu }: CategoryProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [cat, setCat] = useState('all')
-  const { categories } = useRoom()
 
   useEffect(() => {
     const catQuery = searchParams.get('cat')
@@ -23,6 +26,10 @@ const Category = ({ toggleMenu }: { toggleMenu: () => void }) => {
       setCat(catQuery)
     }
   }, [searchParams])
+
+  const roomFlag = useMemo(() => {
+    return pathname.includes('chatroom') ? true : false
+  }, [pathname])
 
   const handleCategory = (segment: string) => {
     const newSearchParams = new URLSearchParams(searchParams.toString())
@@ -44,14 +51,16 @@ const Category = ({ toggleMenu }: { toggleMenu: () => void }) => {
             ))}
         </ul>
       </div>
-      <div className='flex flex-col gap-4'>
-        <h4 className='font-bold'>トークルーム</h4>
-        <ul className='w-full md:w-auto grid grid-cols-1 grid-rows-4 gap-3'>
-          {POST_TYPE.map((item, index) => (
-            <TabItemOther key={index} item={item} pathname={pathname} />
-          ))}
-        </ul>
-      </div>
+      {roomFlag && (
+        <div className='flex flex-col gap-4'>
+          <h4 className='font-bold'>トークルーム</h4>
+          <ul className='w-full md:w-auto grid grid-cols-1 grid-rows-4 gap-3'>
+            {POST_TYPE.map((item, index) => (
+              <TabItemOther key={index} item={item} pathname={pathname} />
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }

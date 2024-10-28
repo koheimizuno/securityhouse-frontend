@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 import Container from '@/components/layout/Container'
 import PageHeader from '@/components/common/PageHeader'
-import PostItem from '@/views/chatroom/PostItem'
+import MainItem from '@/components/common/MainItem'
 import { getBookmarkedPostAction } from '@/actions/postAction'
 import { PostType } from '@/types/postType'
 
@@ -21,9 +21,9 @@ const BookmarkedPost = () => {
     <Container className='py-12'>
       <PageHeader title='ブックマーク' className='text-center' />
       <ul className='flex flex-col gap-6 mt-5'>
-        {postData?.length !== 0 &&
+        {postData &&
           postData?.map((post, index) => (
-            <PostItem
+            <MainItem
               key={index}
               id={post.id}
               title={post.title}

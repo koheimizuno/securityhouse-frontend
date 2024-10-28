@@ -25,6 +25,7 @@ const RoomPageContent = ({ title, icon, postTypes, categories, postData }: RoomP
     title: '',
     description: ''
   })
+
   useEffect(() => {
     const catQuery = searchParams.get('cat')
     if (catQuery && catQuery !== 'all') {
@@ -80,7 +81,7 @@ const RoomPageContent = ({ title, icon, postTypes, categories, postData }: RoomP
               />
             ))}
         </div>
-        {postData?.length && postData?.length > 3 && (
+        {postData && postData?.length > 3 && (
           <Pagination
             total={Math.round(postData?.length / 3)}
             initialPage={1}

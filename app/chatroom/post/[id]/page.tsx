@@ -168,7 +168,7 @@ const SHRoomPostDetail = () => {
                   <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
                 </button>
                 {moreActive && (
-                  <ul className='bg-white absolute z-10 top-4 right-4 md:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
+                  <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
                     <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
                       <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
                     </li>

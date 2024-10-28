@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams, useRouter, useParams } from 'next/navigation'
 
-import PostItem from '@/views/chatroom/PostItem'
+import MainItem from '@/components/common/MainItem'
 import Container from '@/components/layout/Container'
 import Breadcrumb from '@/components/breadcrumb'
 import SectionTitle from '@/components/common/SectionTitle'
@@ -132,7 +132,7 @@ const Profile = () => {
               </li>
             </ul>
             <ul className='flex flex-col gap-6 mt-5'>
-              <PostItem
+              <MainItem
                 id='1'
                 name='山田太郎'
                 thumbnail='/images/icons/user-icon00.svg'
