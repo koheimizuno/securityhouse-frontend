@@ -130,8 +130,7 @@ export default function Home() {
                           id={post.id}
                           title={post.title}
                           content={post.content}
-                          category_id={post.category_id}
-                          categories={categories}
+                          category_name={post.category_name}
                           name={post.name}
                           attachments={post.attachments}
                           affiliation_name={post.affiliation_name}

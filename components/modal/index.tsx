@@ -1,55 +1,32 @@
 'use client'
 
-import {
-  Modal as NextUIModal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  useDisclosure
-} from '@nextui-org/react'
+import { Modal as NextUIModal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from '@nextui-org/react'
 
-const DeleteModal = () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+type ModalProps = {
+  title: string
+  body?: string
+  isOpen: boolean
+  onClose: () => void
+  onSubmit: () => void
+}
+
+const Modal = ({ title, body, isOpen, onClose, onSubmit }: ModalProps) => {
   return (
-    <>
-      <Button onPress={onOpen}>Open Modal</Button>
-      <NextUIModal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          {onClose => (
-            <>
-              <ModalHeader className='flex flex-col gap-1'>Modal Title</ModalHeader>
-              <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus non risus hendrerit
-                  venenatis. Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus non risus hendrerit
-                  venenatis. Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit dolor adipisicing. Mollit
-                  dolor eiusmod sunt ex incididunt cillum quis. Velit duis sit officia eiusmod Lorem aliqua enim laboris
-                  do dolor eiusmod. Et mollit incididunt nisi consectetur esse laborum eiusmod pariatur proident Lorem
-                  eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
-              </ModalBody>
-              <ModalFooter>
-                <Button color='danger' variant='light' onPress={onClose}>
-                  Close
-                </Button>
-                <Button color='primary' onPress={onClose}>
-                  Action
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </NextUIModal>
-    </>
+    <NextUIModal isOpen={isOpen} onOpenChange={onClose}>
+      <ModalContent>
+        <ModalHeader className='flex flex-col gap-1'>{title || 'Are you sure?'}</ModalHeader>
+        <ModalBody>{body}</ModalBody>
+        <ModalFooter>
+          <Button color='danger' variant='light' onPress={onClose}>
+            いいえ
+          </Button>
+          <Button color='primary' onPress={onSubmit}>
+            はい
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </NextUIModal>
   )
 }
 
-export default DeleteModal
+export default Modal

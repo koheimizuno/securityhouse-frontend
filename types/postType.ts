@@ -6,6 +6,7 @@ export type PostType = {
   attachments: string
   notification: string
   category_id: string
+  category_name: string
   publication: string
   user_id: string
   name: string

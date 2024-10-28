@@ -78,7 +78,6 @@ const EditPost = () => {
 
   useEffect(() => {
     dispatch(getPostTypeAction())
-    // if (formData.postType !== '0')
     dispatch(
       getCategoryAction({
         pageFlag: '0',

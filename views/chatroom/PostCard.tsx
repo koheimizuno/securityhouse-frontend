@@ -1,6 +1,6 @@
 'use client'
 
-import React, { memo, useMemo, useState } from 'react'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -12,10 +12,9 @@ import { formatDate } from '@/utils/formatDate'
 import { useClickAway } from '@uidotdev/usehooks'
 import { deletePostAction } from '@/redux-store/slices/postSlice'
 import { PostType, PostType_Type } from '@/types/postType'
-import { CategoryType } from '@/types/categoryType'
+import DeletePostModal from '@/components/modal/DeletePostModal'
 
 interface PostCardProps extends Partial<PostType> {
-  categories: CategoryType[]
   postTypes: PostType_Type[]
 }
 
@@ -24,8 +23,7 @@ const PostCard = ({
   title,
   content,
   attachments,
-  category_id,
-  categories,
+  category_name,
   name,
   affiliation_name,
   type_id,
@@ -38,10 +36,10 @@ const PostCard = ({
   const pathname = usePathname()
   const dispatch = useDispatch()
   const [moreActive, setMoreActive] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
-  const category = useMemo(() => {
-    return categories?.find(category => category.id === category_id)?.title || ''
-  }, [categories, category_id])
+  const openModal = () => setIsOpen(true)
+  const closeModal = useCallback(() => setIsOpen(false), [])
 
   const postType = useMemo(() => {
     return postTypes?.find(postType => postType.id === type_id)?.title || ''
@@ -51,10 +49,11 @@ const PostCard = ({
     setMoreActive(false)
   })
 
-  const handleDeletePost = async () => {
+  const handleDeletePost = useCallback(async () => {
     await dispatch(deletePostAction(id))
     setMoreActive(false)
-  }
+    closeModal()
+  }, [dispatch, id, closeModal])
 
   return (
     <div className='relative bg-white px-4 py-6 w-[282px] rounded-md'>
@@ -71,7 +70,7 @@ const PostCard = ({
       </p>
       <div className='mb-5 flex items-center flex-wrap gap-2'>
         <Button size='sm' color='primary' className='text-xs px-2 py-0 h-6 rounded-full w-fit'>
-          {category}
+          {category_name}
         </Button>
       </div>
       <Link href={`/chatroom/post/${id}`}>
@@ -117,13 +116,14 @@ const PostCard = ({
               <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
                 <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
               </li>
-              <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer' onClick={handleDeletePost}>
-                削除する
+              <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
+                <button onClick={openModal}>削除する</button>
               </li>
             </ul>
           )}
         </div>
       </div>
+      <DeletePostModal isOpen={isOpen} onClose={closeModal} onSubmit={handleDeletePost} />
     </div>
   )
 }

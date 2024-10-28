@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, usePathname } from 'next/navigation'
 import Link from 'next/link'
@@ -26,6 +26,7 @@ import { deletePostAction } from '@/redux-store/slices/postSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { createCommentAction } from '@/redux-store/slices/commentSlice'
 import { RootState } from '@/redux-store'
+import DeletePostModal from '@/components/modal/DeletePostModal'
 
 const SHRoomPostDetail = () => {
   const { id } = useParams()
@@ -46,6 +47,10 @@ const SHRoomPostDetail = () => {
     content: '',
     attachment: ''
   })
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+
+  const openModal = () => setIsOpen(true)
+  const closeModal = useCallback(() => setIsOpen(false), [])
 
   const category = useMemo(() => {
     return categories?.find((category: CategoryType) => category.id === postData?.category_id)?.title || ''
@@ -161,8 +166,8 @@ const SHRoomPostDetail = () => {
                     <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
                       <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
                     </li>
-                    <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer' onClick={handleDeletePost}>
-                      削除する
+                    <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
+                      <button onClick={openModal}>削除する</button>
                     </li>
                   </ul>
                 )}
@@ -265,6 +270,7 @@ const SHRoomPostDetail = () => {
             <Loading flag='2' />
           )}
         </section>
+        <DeletePostModal isOpen={isOpen} onClose={closeModal} onSubmit={handleDeletePost} />
       </Container>
     </>
   )
