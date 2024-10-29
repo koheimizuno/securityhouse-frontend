@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'next/navigation'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 
@@ -13,11 +14,13 @@ const RichTextEditor = dynamic(() => import('@/components/form/RichTextEditor'),
   ssr: false
 })
 
-import { createNewsAction } from '@/redux-store/slices/newsSlice'
+import { editNewsAction } from '@/redux-store/slices/newsSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { RootState } from '@/redux-store'
+import { getNewsByIdAction } from '@/actions/newsAction'
 
-const CreateNew = () => {
+const EditNew = () => {
+  const { id } = useParams()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     title: '',
@@ -40,6 +43,22 @@ const CreateNew = () => {
   const categoryOptions = useMemo(() => {
     return [{ id: '0', title: '選択してください', group_id: null }, ...categories]
   }, [categories])
+
+  useEffect(() => {
+    if (typeof id === 'string')
+      getNewsByIdAction(id).then(data => {
+        setFormData(prevState => ({
+          ...prevState,
+          title: data.title,
+          content: data.content,
+          category: data.category_id,
+          attachments: {
+            ...prevState.attachments,
+            preview: data.attachments
+          }
+        }))
+      })
+  }, [id])
 
   useEffect(() => {
     dispatch(
@@ -83,12 +102,13 @@ const CreateNew = () => {
     e.preventDefault()
     if (validateForm()) {
       const postPayload = new FormData()
+      if (typeof id === 'string') postPayload.append('id', id)
       postPayload.append('title', formData.title)
       postPayload.append('content', formData.content)
       postPayload.append('category_id', formData.category)
       postPayload.append('attachments', formData.attachments.file)
 
-      dispatch(createNewsAction(postPayload))
+      dispatch(editNewsAction(postPayload))
     }
   }
 
@@ -150,6 +170,7 @@ const CreateNew = () => {
               isInvalid={errors.title ? true : false}
               color={errors.title ? 'danger' : 'default'}
               errorMessage={errors.title}
+              value={formData.title}
               labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
               onChange={handleChange}
               size='lg'
@@ -161,7 +182,7 @@ const CreateNew = () => {
               }`}
             >
               <span className='text-base font-bold after:content-["*"] after:text-danger'>内容</span>
-              <RichTextEditor onChange={handleEditorChange} />
+              <RichTextEditor initialData={formData.content || 'ご入力ください。'} onChange={handleEditorChange} />
               {errors.content && (
                 <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.content}</span>
               )}
@@ -226,4 +247,4 @@ const CreateNew = () => {
   )
 }
 
-export default CreateNew
+export default EditNew
