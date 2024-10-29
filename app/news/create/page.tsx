@@ -13,74 +13,42 @@ const RichTextEditor = dynamic(() => import('@/components/form/RichTextEditor'),
   ssr: false
 })
 
-import { createPostAction } from '@/redux-store/slices/postSlice'
-import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
+import { createNewsAction } from '@/redux-store/slices/newsSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { RootState } from '@/redux-store'
 
-const publicationOptions = [
-  {
-    id: '0',
-    title: '選択してください'
-  },
-  {
-    id: '1',
-    title: '全体1'
-  },
-  {
-    id: '2',
-    title: '全体2'
-  },
-  {
-    id: '3',
-    title: '全体3'
-  }
-]
-
-const CreatePost = () => {
+const CreateNew = () => {
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     title: '',
     content: '',
-    hashtag: '',
-    postType: '0',
     category: '0',
-    publication: '0',
     attachments: {
       file: '',
       preview: ''
     }
   })
   const [errors, setErrors] = useState({
-    postType: '',
     category: '',
-    publication: '',
+    title: '',
     content: '',
-    hashtag: '',
     attachments: ''
   })
 
-  const { postTypes } = useSelector((state: RootState) => state.post_type)
   const { categories } = useSelector((state: RootState) => state.category)
-
-  const postTypeOptions = useMemo(() => {
-    return [{ id: '0', title: '選択してください', group_id: null }, ...postTypes]
-  }, [postTypes])
 
   const categoryOptions = useMemo(() => {
     return [{ id: '0', title: '選択してください', group_id: null }, ...categories]
   }, [categories])
 
   useEffect(() => {
-    dispatch(getPostTypeAction())
-    if (formData.postType !== '0')
-      dispatch(
-        getCategoryAction({
-          pageFlag: '0',
-          type_id: formData.postType
-        })
-      )
-  }, [dispatch, formData.postType])
+    dispatch(
+      getCategoryAction({
+        pageFlag: '0',
+        type_id: '5'
+      })
+    )
+  }, [dispatch])
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -117,25 +85,20 @@ const CreatePost = () => {
       const postPayload = new FormData()
       postPayload.append('title', formData.title)
       postPayload.append('content', formData.content)
-      postPayload.append('hashtag', formData.hashtag)
-      postPayload.append('type_id', formData.postType)
       postPayload.append('category_id', formData.category)
-      postPayload.append('publication', formData.publication)
       postPayload.append('attachments', formData.attachments.file)
 
-      dispatch(createPostAction(postPayload))
+      dispatch(createNewsAction(postPayload))
     }
   }
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {}
 
-    if (formData.postType === '0') newErrors.postType = '選択してください'
     if (formData.category === '0') newErrors.category = '選択してください'
-    if (formData.publication === '0') newErrors.publication = '選択してください'
 
+    if (!formData.title) newErrors.title = 'この項目は必須です。'
     if (!formData.content) newErrors.content = 'この項目は必須です。'
-    if (!formData.hashtag) newErrors.hashtag = 'この項目は必須です。'
     if (!formData.attachments.file) newErrors.attachments = 'この項目は必須です。'
 
     setErrors(prev => ({ ...prev, ...newErrors }))
@@ -148,32 +111,11 @@ const CreatePost = () => {
       <SearchBar />
       <div className='bg-bgSemiblue px-4 pt-12 pb-[140px]'>
         <div className='max-w-[800px] m-auto'>
-          <SectionTitle title='トークルームに投稿する' icon='/images/icons/edit-secondary.svg' />
+          <SectionTitle title='お知らせ登録' icon='/images/icons/edit-secondary.svg' />
           <form
             className='bg-white rounded-xl mt-6 px-6 py-8 sm:px-12 sm:py-10 flex flex-col gap-6'
             onSubmit={handleSubmit}
           >
-            <Select
-              label='投稿先'
-              name='postType'
-              placeholder='選択してください'
-              labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
-              classNames={{
-                base: ['flex items-center justify-between'],
-                label: 'font-bold',
-                mainWrapper: ['w-full md:w-[480px]']
-              }}
-              selectedKeys={formData.postType}
-              errorMessage={errors.postType}
-              isInvalid={errors.postType ? true : false}
-              onChange={handleSelect}
-              size='lg'
-              isRequired
-            >
-              {postTypeOptions.map((postType, key) => (
-                <SelectItem key={key}>{postType.title}</SelectItem>
-              ))}
-            </Select>
             <Select
               label='カテゴリ'
               name='category'
@@ -195,27 +137,6 @@ const CreatePost = () => {
                 <SelectItem key={key}>{category.title}</SelectItem>
               ))}
             </Select>
-            <Select
-              label='公開範囲'
-              name='publication'
-              placeholder='選択してください'
-              labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
-              classNames={{
-                base: ['flex items-center justify-between'],
-                label: 'font-bold',
-                mainWrapper: ['w-full md:w-[480px]']
-              }}
-              selectedKeys={formData.publication}
-              errorMessage={errors.publication}
-              isInvalid={errors.publication ? true : false}
-              onChange={handleSelect}
-              size='lg'
-              isRequired
-            >
-              {publicationOptions.map((publication, key) => (
-                <SelectItem key={key}>{publication.title}</SelectItem>
-              ))}
-            </Select>
             <Input
               type='text'
               name='title'
@@ -226,9 +147,13 @@ const CreatePost = () => {
                 label: 'font-bold p-0',
                 mainWrapper: ['w-full md:w-[480px]']
               }}
+              isInvalid={errors.title ? true : false}
+              color={errors.title ? 'danger' : 'default'}
+              errorMessage={errors.title}
               labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
               onChange={handleChange}
               size='lg'
+              isRequired
             />
             <label
               className={`relative flex flex-col md:flex-row md:justify-between md:items-start gap-2 ${
@@ -241,24 +166,6 @@ const CreatePost = () => {
                 <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.content}</span>
               )}
             </label>
-            <Input
-              type='text'
-              name='hashtag'
-              label='ハッシュタグの設定'
-              placeholder='＃テキストをご入力ください'
-              classNames={{
-                base: ['flex items-center justify-between'],
-                label: 'font-bold',
-                mainWrapper: ['w-full md:w-[480px]']
-              }}
-              labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
-              isInvalid={errors.hashtag ? true : false}
-              color={errors.hashtag ? 'danger' : 'default'}
-              errorMessage={errors.hashtag}
-              onChange={handleChange}
-              size='lg'
-              isRequired
-            />
             <Input
               type='file'
               name='attachments'
@@ -275,6 +182,7 @@ const CreatePost = () => {
               labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
               onChange={handleChange}
               size='lg'
+              isRequired
             />
             {formData.attachments.preview && (
               <Image
@@ -309,7 +217,7 @@ const CreatePost = () => {
                 />
               }
             >
-              投稿する
+              登録する
             </Button>
           </form>
         </div>
@@ -318,4 +226,4 @@ const CreatePost = () => {
   )
 }
 
-export default CreatePost
+export default CreateNew

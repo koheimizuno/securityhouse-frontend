@@ -74,7 +74,7 @@ const News = () => {
       <SearchBar />
       <Container className='py-12 flex flex-col gap-8'>
         <SectionTitle title='お知らせ一覧' icon='/images/icons/info-icon.svg' />
-        <Link href='create' className='text-right'>
+        <Link href='/news/create' className='text-right'>
           <Button
             className='rounded-full'
             color='primary'
@@ -82,7 +82,7 @@ const News = () => {
               <Image src='/images/icons/edit-white.svg' alt='edit-white' className='w-5 h-5' width={16} height={16} />
             }
           >
-            投稿する
+            登録
           </Button>
         </Link>
         <div className={`inline-block md:hidden ${isOpen && 'change'}`} onClick={handleMenu}>
