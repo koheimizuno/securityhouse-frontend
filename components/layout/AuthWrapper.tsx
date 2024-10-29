@@ -4,8 +4,6 @@ import { useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 
 import isPublicPage from '@/utils/isPublicPage'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/redux-store'
 import axios from 'axios'
 
 const AuthWrapper = ({
@@ -16,18 +14,17 @@ const AuthWrapper = ({
   const pathname = usePathname()
   const router = useRouter()
   const isPublic = isPublicPage(pathname)
-  const { isAuthenticated } = useSelector((state: RootState) => state.user)
+  const token: string | null = localStorage.getItem('token')
+
+  const isAuthenticated = !!token
 
   useEffect(() => {
-    const tokenJSON: string | null = localStorage.getItem('token')
-    if (tokenJSON) {
-      const token = JSON.parse(tokenJSON)
-      axios.defaults.headers.common['Authorization'] = `JWT ${token}`
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `JWT ${JSON.parse(token)}`
     } else {
       delete axios.defaults.headers.common['Authorization']
-      router.push('/login')
     }
-  }, [pathname, router])
+  }, [pathname, router, token])
 
   useEffect(() => {
     if (!isPublic && !isAuthenticated) {

@@ -56,15 +56,10 @@ export const changePasswordAction: any = createAsyncThunk(
   }
 )
 
-interface authStoreTypes extends storeInitialType {
-  isAuthenticated: boolean
-}
-
-const initialState: authStoreTypes = {
+const initialState: storeInitialType = {
   success: false,
   error: false,
-  isLoading: false,
-  isAuthenticated: false
+  isLoading: false
 }
 
 export const authSlice = createSlice({
@@ -92,7 +87,6 @@ export const authSlice = createSlice({
       .addCase(loginAction.fulfilled, (state, { payload }) => {
         state.isLoading = false
         state.success = true
-        state.isAuthenticated = true
         localStorage.setItem('token', JSON.stringify(payload.token))
         toast.success('ログインに成功しました。')
         setTimeout(() => {

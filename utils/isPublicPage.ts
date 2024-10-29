@@ -1,7 +1,6 @@
-import publicPaths from '@/data/publicPaths'
-
-const isPublicPage = (pathname: string): boolean => {
-  return publicPaths.includes(pathname)
+const isPublicPage = (pathname: string) => {
+  const publicPaths = [/^\/login$/, /^\/register$/, /^\/forgot-password$/, /^\/profile\/\d+$/]
+  return publicPaths.some(pattern => pattern.test(pathname))
 }
 
 export default isPublicPage
