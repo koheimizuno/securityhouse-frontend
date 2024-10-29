@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
-import Providers from '@/components/layout/providers'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
+import LayoutClient from '@/components/layout/LayoutClient'
 
 import '@/app/globals.css'
 
@@ -18,11 +16,7 @@ export default function RootLayout({
   return (
     <html lang='ja'>
       <body>
-        <Providers>
-          <Header />
-          <main className='mt-[300px] sm:mt-[145px] md:mt-[123px]'>{children}</main>
-          <Footer />
-        </Providers>
+        <LayoutClient>{children}</LayoutClient>
       </body>
     </html>
   )

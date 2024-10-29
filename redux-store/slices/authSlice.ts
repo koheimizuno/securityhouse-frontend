@@ -87,7 +87,7 @@ export const authSlice = createSlice({
       .addCase(loginAction.fulfilled, (state, { payload }) => {
         state.isLoading = false
         state.success = true
-        localStorage.setItem('token', JSON.stringify(payload.token))
+        if (payload.token) localStorage.setItem('token', JSON.stringify(payload.token))
         toast.success('ログインに成功しました。')
         setTimeout(() => {
           window.location.href = '/'

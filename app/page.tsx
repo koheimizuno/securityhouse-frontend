@@ -11,8 +11,6 @@ import NewsSection from '@/views/top/NewsSection'
 import PostCard from '@/views/chatroom/PostCard'
 import DocumentSection from '@/views/top/DocumentSection'
 import Container from '@/components/layout/Container'
-import Breadcrumb from '@/components/breadcrumb'
-import SearchBar from '@/components/common/SearchBar'
 import SectionTitle from '@/components/common/SectionTitle'
 import TabVertical from '@/components/common/TabVertical'
 
@@ -80,8 +78,6 @@ export default function Home() {
 
   return (
     <>
-      <Breadcrumb />
-      <SearchBar />
       <section className='bg-bgSemiblue py-8'>
         <Container>
           <SectionTitle title='トークルーム最新の投稿' icon='/images/icons/talk-room.svg' />

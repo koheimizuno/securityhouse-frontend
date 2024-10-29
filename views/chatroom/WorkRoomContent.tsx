@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import RoomPageContent from './RoomPageContent'
 import { PostType } from '@/types/postType'
 import { getPostsAction } from '@/actions/postAction'
-import { useRoom } from './RoomPage'
+import { useRoom } from '@/hooks/RoomContext'
 
 const WorkRoomContent = () => {
   const [postData, setPostData] = useState<PostType[]>([])

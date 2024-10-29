@@ -4,6 +4,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import Container from '@/components/layout/Container'
 import PageHeader from '@/components/common/PageHeader'
@@ -12,6 +13,7 @@ import { Button, Input, Select, SelectItem } from '@nextui-org/react'
 
 import { GroupType } from '@/types/groupType'
 import { validateEmail, validatePassword } from '@/utils/validateUtils'
+import { useAuthentication } from '@/hooks/AuthContext'
 import { registerAction } from '@/redux-store/slices/authSlice'
 import { getGroupAction } from '@/redux-store/slices/groupSlice'
 import { RootState } from '@/redux-store'
@@ -23,6 +25,7 @@ const roleOptions = [
 ]
 
 const Register = () => {
+  const router = useRouter()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     uid: '',
@@ -45,6 +48,11 @@ const Register = () => {
     passwordConfirm: false
   })
   const { groups } = useSelector((state: RootState) => state.group)
+  const isAuthenticated = useAuthentication()
+
+  useEffect(() => {
+    if (isAuthenticated) router.push('/')
+  }, [isAuthenticated, router])
 
   useEffect(() => {
     dispatch(getGroupAction())

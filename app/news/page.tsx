@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { createContext, useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Link from 'next/link'
@@ -9,8 +9,6 @@ import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 
 import Container from '@/components/layout/Container'
-import Breadcrumb from '@/components/breadcrumb'
-import SearchBar from '@/components/common/SearchBar'
 import SectionTitle from '@/components/common/SectionTitle'
 import Category from '@/components/common/Category'
 import MainItem from '@/components/common/MainItem'
@@ -21,12 +19,7 @@ import { RootState } from '@/redux-store'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { CategoryType } from '@/types/categoryType'
 import { getNewsAction } from '@/actions/newsAction'
-
-const NewsContext = createContext<any>(null)
-
-export const useNews = () => {
-  return useContext(NewsContext)
-}
+import { NewsContext } from '@/hooks/NewsContext'
 
 const News = () => {
   const dispatch = useDispatch()
@@ -70,8 +63,6 @@ const News = () => {
 
   return (
     <NewsContext.Provider value={{ categories: categories }}>
-      <Breadcrumb />
-      <SearchBar />
       <Container className='py-12 flex flex-col gap-8'>
         <SectionTitle title='お知らせ一覧' icon='/images/icons/info-icon.svg' />
         <Link href='/news/create' className='text-right'>

@@ -1,24 +1,32 @@
 'use client'
 
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import Container from '@/components/layout/Container'
 import PageHeader from '@/components/common/PageHeader'
+import InputPasswordEye from '@/components/form/InputPasswordEye'
 import { Button, Input } from '@nextui-org/react'
 
 import { validateEmail, validatePassword } from '@/utils/validateUtils'
 import { loginAction } from '@/redux-store/slices/authSlice'
-import InputPasswordEye from '@/components/form/InputPasswordEye'
+import { useAuthentication } from '@/hooks/AuthContext'
 
 const Login = () => {
+  const router = useRouter()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [errors, setErrors] = useState({ email: '', password: '' })
   const [isVisible, setIsVisible] = useState({
     password: false
   })
+  const isAuthenticated = useAuthentication()
+
+  useEffect(() => {
+    if (isAuthenticated) router.push('/')
+  }, [isAuthenticated, router])
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target

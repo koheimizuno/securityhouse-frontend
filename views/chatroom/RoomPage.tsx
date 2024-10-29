@@ -1,24 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { usePathname } from 'next/navigation'
 
 import Container from '@/components/layout/Container'
-import Breadcrumb from '@/components/breadcrumb'
-import SearchBar from '@/components/common/SearchBar'
 import Category from '@/components/common/Category'
 
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
 import { RootState } from '@/redux-store'
-
-const RoomContext = createContext<any>(null)
-
-export const useRoom = () => {
-  return useContext(RoomContext)
-}
+import { RoomContext } from '@/hooks/RoomContext'
 
 const RoomPage = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -53,8 +46,6 @@ const RoomPage = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <RoomContext.Provider value={{ categories: categories, postTypes: postTypes }}>
-      <Breadcrumb />
-      <SearchBar />
       <Container className='py-12'>
         <div className={`inline-block md:hidden ${isOpen && 'change'}`} onClick={handleMenu}>
           <div className='bar1'></div>

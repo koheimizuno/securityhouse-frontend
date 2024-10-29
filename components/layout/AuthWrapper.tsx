@@ -3,7 +3,8 @@
 import { useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 
-import isPublicPage from '@/utils/isPublicPage'
+import { isPublicPage } from '@/utils/isPublicPage'
+import { AuthContext } from '@/hooks/AuthContext'
 import axios from 'axios'
 
 const AuthWrapper = ({
@@ -32,7 +33,7 @@ const AuthWrapper = ({
     }
   }, [isAuthenticated, isPublic, router, pathname])
 
-  return <>{children}</>
+  return <AuthContext.Provider value={isAuthenticated}>{children}</AuthContext.Provider>
 }
 
 export default AuthWrapper

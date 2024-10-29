@@ -3,11 +3,15 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import { Button } from '@nextui-org/react'
+import { isDisplayHeaderPage } from '@/utils/isPublicPage'
 
 const Header = () => {
+  const pathname = usePathname()
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false)
+  const isDisplayHeader = isDisplayHeaderPage(pathname)
 
   const handleHamburger = () => {
     setIsHamburgerOpen(!isHamburgerOpen)
@@ -62,40 +66,42 @@ const Header = () => {
           </div>
         </div>
       </nav>
-      <ul className='sm:grid sm:grid-cols-4 bg-primary'>
-        <li className='border-b sm:border-r border-colorGray1'>
-          <Link
-            href='/'
-            className='flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]'
-          >
-            トークルーム
-          </Link>
-        </li>
-        <li className='border-b sm:border-r border-colorGray1'>
-          <Link
-            href='/news'
-            className='flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]'
-          >
-            お知らせ
-          </Link>
-        </li>
-        <li className='border-b sm:border-r border-colorGray1'>
-          <Link
-            href='#'
-            className='flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]'
-          >
-            資料集
-          </Link>
-        </li>
-        <li>
-          <Link
-            href='#'
-            className='flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]'
-          >
-            SH会情報
-          </Link>
-        </li>
-      </ul>
+      {isDisplayHeader && (
+        <ul className='sm:grid sm:grid-cols-4 bg-primary'>
+          <li className='border-b sm:border-r border-colorGray1'>
+            <Link
+              href='/'
+              className='flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]'
+            >
+              トークルーム
+            </Link>
+          </li>
+          <li className='border-b sm:border-r border-colorGray1'>
+            <Link
+              href='/news'
+              className='flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]'
+            >
+              お知らせ
+            </Link>
+          </li>
+          <li className='border-b sm:border-r border-colorGray1'>
+            <Link
+              href='#'
+              className='flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]'
+            >
+              資料集
+            </Link>
+          </li>
+          <li>
+            <Link
+              href='#'
+              className='flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]'
+            >
+              SH会情報
+            </Link>
+          </li>
+        </ul>
+      )}
     </header>
   )
 }

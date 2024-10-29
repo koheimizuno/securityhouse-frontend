@@ -6,8 +6,6 @@ import { useParams } from 'next/navigation'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 
-import Breadcrumb from '@/components/breadcrumb'
-import SearchBar from '@/components/common/SearchBar'
 import SectionTitle from '@/components/common/SectionTitle'
 import { Button, Input, Select, SelectItem } from '@nextui-org/react'
 const RichTextEditor = dynamic(() => import('@/components/form/RichTextEditor'), {
@@ -126,124 +124,120 @@ const EditNew = () => {
   }
 
   return (
-    <>
-      <Breadcrumb />
-      <SearchBar />
-      <div className='bg-bgSemiblue px-4 pt-12 pb-[140px]'>
-        <div className='max-w-[800px] m-auto'>
-          <SectionTitle title='お知らせ登録' icon='/images/icons/edit-secondary.svg' />
-          <form
-            className='bg-white rounded-xl mt-6 px-6 py-8 sm:px-12 sm:py-10 flex flex-col gap-6'
-            onSubmit={handleSubmit}
+    <div className='bg-bgSemiblue px-4 pt-12 pb-[140px]'>
+      <div className='max-w-[800px] m-auto'>
+        <SectionTitle title='お知らせ登録' icon='/images/icons/edit-secondary.svg' />
+        <form
+          className='bg-white rounded-xl mt-6 px-6 py-8 sm:px-12 sm:py-10 flex flex-col gap-6'
+          onSubmit={handleSubmit}
+        >
+          <Select
+            label='カテゴリ'
+            name='category'
+            placeholder='選択してください'
+            labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
+            classNames={{
+              base: ['flex flex-col gap-2 md:flex-row items-center justify-between'],
+              label: 'font-bold',
+              mainWrapper: ['w-full md:w-[480px]']
+            }}
+            selectedKeys={formData.category}
+            errorMessage={errors.category}
+            isInvalid={errors.category ? true : false}
+            onChange={handleSelect}
+            size='lg'
+            isRequired
           >
-            <Select
-              label='カテゴリ'
-              name='category'
-              placeholder='選択してください'
-              labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
-              classNames={{
-                base: ['flex flex-col gap-2 md:flex-row items-center justify-between'],
-                label: 'font-bold',
-                mainWrapper: ['w-full md:w-[480px]']
-              }}
-              selectedKeys={formData.category}
-              errorMessage={errors.category}
-              isInvalid={errors.category ? true : false}
-              onChange={handleSelect}
-              size='lg'
-              isRequired
-            >
-              {categoryOptions.map((category, key) => (
-                <SelectItem key={key}>{category.title}</SelectItem>
-              ))}
-            </Select>
-            <Input
-              type='text'
-              name='title'
-              label='タイトル'
-              placeholder='タイトルをご入力ください'
-              classNames={{
-                base: ['flex items-center justify-between'],
-                label: 'font-bold p-0',
-                mainWrapper: ['w-full md:w-[480px]']
-              }}
-              isInvalid={errors.title ? true : false}
-              color={errors.title ? 'danger' : 'default'}
-              errorMessage={errors.title}
-              value={formData.title}
-              labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
-              onChange={handleChange}
-              size='lg'
-              isRequired
-            />
-            <label
-              className={`relative flex flex-col md:flex-row md:justify-between md:items-start gap-2 ${
-                errors.content && 'mb-4'
-              }`}
-            >
-              <span className='text-base font-bold after:content-["*"] after:text-danger'>内容</span>
-              <RichTextEditor initialData={formData.content || 'ご入力ください。'} onChange={handleEditorChange} />
-              {errors.content && (
-                <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.content}</span>
-              )}
-            </label>
-            <Input
-              type='file'
-              name='attachments'
-              label='プロフィール画像'
-              placeholder='アップ'
-              classNames={{
-                base: ['flex items-center justify-between'],
-                label: 'font-bold',
-                mainWrapper: ['w-full md:w-[480px]']
-              }}
-              isInvalid={errors.attachments ? true : false}
-              color={errors.attachments ? 'danger' : 'default'}
-              errorMessage={errors.attachments}
-              labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
-              onChange={handleChange}
-              size='lg'
-              isRequired
-            />
-            {formData.attachments.preview && (
-              <Image
-                src={formData.attachments.preview}
-                alt='Selected'
-                className='md:ms-[170px] lg:ms-[244px] mt-2 w-40 h-w-40'
-                width={50}
-                height={50}
-              />
+            {categoryOptions.map((category, key) => (
+              <SelectItem key={key}>{category.title}</SelectItem>
+            ))}
+          </Select>
+          <Input
+            type='text'
+            name='title'
+            label='タイトル'
+            placeholder='タイトルをご入力ください'
+            classNames={{
+              base: ['flex items-center justify-between'],
+              label: 'font-bold p-0',
+              mainWrapper: ['w-full md:w-[480px]']
+            }}
+            isInvalid={errors.title ? true : false}
+            color={errors.title ? 'danger' : 'default'}
+            errorMessage={errors.title}
+            value={formData.title}
+            labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
+            onChange={handleChange}
+            size='lg'
+            isRequired
+          />
+          <label
+            className={`relative flex flex-col md:flex-row md:justify-between md:items-start gap-2 ${
+              errors.content && 'mb-4'
+            }`}
+          >
+            <span className='text-base font-bold after:content-["*"] after:text-danger'>内容</span>
+            <RichTextEditor initialData={formData.content || 'ご入力ください。'} onChange={handleEditorChange} />
+            {errors.content && (
+              <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.content}</span>
             )}
-            <Button
-              type='submit'
-              color='primary'
-              size='lg'
-              className='w-[280px] m-auto rounded-full'
-              startContent={
-                <Image
-                  src='/images/icons/edit-white.svg'
-                  alt='edit-white.svg'
-                  className='w-5 h-5'
-                  width={16}
-                  height={16}
-                />
-              }
-              endContent={
-                <Image
-                  src='/images/icons/arrow-circle-right-outline.svg'
-                  alt='arrow-circle-right-outline.svg'
-                  className='w-6 h-6 absolute right-16 top-1/2 -translate-y-1/2'
-                  width={20}
-                  height={20}
-                />
-              }
-            >
-              登録する
-            </Button>
-          </form>
-        </div>
+          </label>
+          <Input
+            type='file'
+            name='attachments'
+            label='プロフィール画像'
+            placeholder='アップ'
+            classNames={{
+              base: ['flex items-center justify-between'],
+              label: 'font-bold',
+              mainWrapper: ['w-full md:w-[480px]']
+            }}
+            isInvalid={errors.attachments ? true : false}
+            color={errors.attachments ? 'danger' : 'default'}
+            errorMessage={errors.attachments}
+            labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
+            onChange={handleChange}
+            size='lg'
+            isRequired
+          />
+          {formData.attachments.preview && (
+            <Image
+              src={formData.attachments.preview}
+              alt='Selected'
+              className='md:ms-[170px] lg:ms-[244px] mt-2 w-40 h-w-40'
+              width={50}
+              height={50}
+            />
+          )}
+          <Button
+            type='submit'
+            color='primary'
+            size='lg'
+            className='w-[280px] m-auto rounded-full'
+            startContent={
+              <Image
+                src='/images/icons/edit-white.svg'
+                alt='edit-white.svg'
+                className='w-5 h-5'
+                width={16}
+                height={16}
+              />
+            }
+            endContent={
+              <Image
+                src='/images/icons/arrow-circle-right-outline.svg'
+                alt='arrow-circle-right-outline.svg'
+                className='w-6 h-6 absolute right-16 top-1/2 -translate-y-1/2'
+                width={20}
+                height={20}
+              />
+            }
+          >
+            登録する
+          </Button>
+        </form>
       </div>
-    </>
+    </div>
   )
 }
 
