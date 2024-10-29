@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import slugData from '@/data/slugData.json'
+import slugData from '@/config/slugData.json'
 
 export const getBreadcrumbs = (pathname: string) => {
   let slugArr: any[] = pathname.split('/')
