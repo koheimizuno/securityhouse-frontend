@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -11,7 +11,9 @@ import { Button } from '@nextui-org/react'
 import { getImageAlt } from '@/utils/getImageAlt'
 import { PostType } from '@/types/postType'
 import { useClickAway } from '@uidotdev/usehooks'
-import { deletePostAction } from '@/redux-store/slices/postSlice'
+import DeletePostModal from '../modal/DeletePostModal'
+import { deleteNewsAction } from '@/redux-store/slices/newsSlice'
+import { NewsType } from '@/types/newsType'
 
 const PostItem = ({
   id,
@@ -22,11 +24,15 @@ const PostItem = ({
   thumbnail,
   bookmark_flag,
   updated_at
-}: Partial<PostType>) => {
+}: Partial<PostType | NewsType>) => {
   const pathname = usePathname()
   const dispatch = useDispatch()
   const [moreActive, setMoreActive] = useState<boolean>(false)
   const [contentMore, setContentMore] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+
+  const openModal = () => setIsOpen(true)
+  const closeModal = useCallback(() => setIsOpen(false), [])
 
   const ref = useClickAway<HTMLDivElement>(() => {
     setMoreActive(false)
@@ -44,10 +50,11 @@ const PostItem = ({
     }
   }, [thumbnail])
 
-  const handleDeletePost = async () => {
-    await dispatch(deletePostAction(id))
+  const handleDeletePost = useCallback(async () => {
+    await dispatch(deleteNewsAction(id))
     setMoreActive(false)
-  }
+    closeModal()
+  }, [dispatch, id, closeModal])
 
   return (
     <li
@@ -82,8 +89,8 @@ const PostItem = ({
               <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
                 <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
               </li>
-              <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer' onClick={handleDeletePost}>
-                削除する
+              <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
+                <button onClick={openModal}>削除する</button>
               </li>
             </ul>
           )}
@@ -108,6 +115,7 @@ const PostItem = ({
           height={32}
         />
       </div>
+      <DeletePostModal isOpen={isOpen} onClose={closeModal} onSubmit={handleDeletePost} />
     </li>
   )
 }

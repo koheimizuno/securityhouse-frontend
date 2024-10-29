@@ -7,6 +7,8 @@ export type NewsType = {
   category_name: string
   name: string
   affiliation_name: string
+  thumbnail: string
   bookmark_flag: string
   created_at: string
+  updated_at: string
 }
