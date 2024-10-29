@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams, usePathname } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -30,6 +30,7 @@ import DeletePostModal from '@/components/modal/DeletePostModal'
 
 const SHRoomPostDetail = () => {
   const { id } = useParams()
+  const router = useRouter()
   const pathname = usePathname()
   const dispatch = useDispatch()
   const [postData, setPostData] = useState<PostType | null>(null)
@@ -98,10 +99,13 @@ const SHRoomPostDetail = () => {
     setErrors(prev => ({ ...prev, [name]: '' }))
   }
 
-  const handleDeletePost = async () => {
+  const handleDeletePost = useCallback(async () => {
     await dispatch(deletePostAction(id))
     setMoreActive(false)
-  }
+    setTimeout(() => {
+      router.push('/chatroom/sh-room')
+    }, 2000)
+  }, [dispatch, router, id])
 
   const handleLike = () => {}
   const handleBookmark = () => {}

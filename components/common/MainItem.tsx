@@ -14,6 +14,7 @@ import { useClickAway } from '@uidotdev/usehooks'
 import DeletePostModal from '../modal/DeletePostModal'
 import { deleteNewsAction } from '@/redux-store/slices/newsSlice'
 import { NewsType } from '@/types/newsType'
+import { deletePostAction } from '@/redux-store/slices/postSlice'
 
 const PostItem = ({
   id,
@@ -51,6 +52,12 @@ const PostItem = ({
   }, [thumbnail])
 
   const handleDeletePost = useCallback(async () => {
+    await dispatch(deletePostAction(id))
+    setMoreActive(false)
+    closeModal()
+  }, [dispatch, id, closeModal])
+
+  const handleDeleteNew = useCallback(async () => {
     await dispatch(deleteNewsAction(id))
     setMoreActive(false)
     closeModal()
@@ -87,7 +94,7 @@ const PostItem = ({
           {moreActive && (
             <ul className='bg-white absolute z-10 top-4 right-4 xl:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
               <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
-                <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
+                <Link href={`${newsFlag ? `/news/${id}` : `/chatroom/post/edit/${id}`}`}>編集する</Link>
               </li>
               <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
                 <button onClick={openModal}>削除する</button>
@@ -115,7 +122,7 @@ const PostItem = ({
           height={32}
         />
       </div>
-      <DeletePostModal isOpen={isOpen} onClose={closeModal} onSubmit={handleDeletePost} />
+      <DeletePostModal isOpen={isOpen} onClose={closeModal} onSubmit={newsFlag ? handleDeleteNew : handleDeletePost} />
     </li>
   )
 }

@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams, usePathname } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -25,6 +25,7 @@ import { CategoryType } from '@/types/categoryType'
 
 const NewDetail = () => {
   const { id } = useParams()
+  const router = useRouter()
   const pathname = usePathname()
   const dispatch = useDispatch()
   const [newData, setNewData] = useState<NewsType | null>(null)
@@ -66,13 +67,14 @@ const NewDetail = () => {
   const handleDeletePost = useCallback(async () => {
     await dispatch(deleteNewsAction(id))
     setMoreActive(false)
-  }, [dispatch, id])
+    setTimeout(() => {
+      router.push('/news')
+    }, 2000)
+  }, [dispatch, router, id])
 
   if (!newData) {
     return <Loading flag='1' />
   }
-
-  console.log(newData)
 
   return (
     <>
