@@ -24,11 +24,11 @@ const CategoryItem = ({ item, cat, handleCategory, toggleMenu }: CategoryItemPro
       <Image
         src={cat === item.title ? '/images/icons/arrow-right-white.svg' : '/images/icons/arrow-right.svg'}
         alt={cat === item.title ? 'arrow-right-white' : 'arrow-right'}
-        className='w-[6px] h-[12px] hidden lg:block'
+        className='w-[6px] h-[12px]'
         width={6}
         height={12}
       />
-      <span>{item.title}</span>
+      <span className='underline'>{item.title}</span>
     </li>
   )
 }

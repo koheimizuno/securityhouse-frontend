@@ -14,9 +14,9 @@ import { RootState } from '@/redux-store'
 import { RoomContext } from '@/hooks/RoomContext'
 
 const RoomPage = ({ children }: { children: React.ReactNode }) => {
-  const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const dispatch = useDispatch()
+  const [isOpen, setIsOpen] = useState(false)
   const { categories } = useSelector((state: RootState) => state.category)
   const { postTypes } = useSelector((state: RootState) => state.post_type)
 

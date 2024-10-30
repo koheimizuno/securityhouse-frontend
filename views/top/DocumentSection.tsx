@@ -8,21 +8,21 @@ const DocumentSection = () => {
       <SectionTitle title='資料集' icon='/images/icons/data-icon.svg' />
       <div className='mt-6'>
         <h3>営業・事務</h3>
-        <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-3'>
-          <DataLink src='/images/icons/note-icon.svg' title='チラシ・提案書' />
-          <DataLink src='/images/icons/video-icon.svg' title='動画' />
-          <DataLink src='/images/icons/pr-icon.svg' title='販促物' />
-          <DataLink src='/images/icons/doc-icon.svg' title='書類関係' />
-        </div>
+        <ul className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-3'>
+          <DataLink title='チラシ・提案書' href='/' img='/images/icons/note-icon.svg' className='xl:w-[288px]' />
+          <DataLink title='動画' href='/' img='/images/icons/video-icon.svg' className='xl:w-[288px]' />
+          <DataLink title='販促物' href='/' img='/images/icons/pr-icon.svg' className='xl:w-[288px]' />
+          <DataLink title='書類関係' href='/' img='/images/icons/doc-icon.svg' className='xl:w-[288px]' />
+        </ul>
       </div>
       <div className='mt-6'>
         <h3>商品・技術</h3>
-        <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-3'>
-          <DataLink src='/images/icons/brand-icon.svg' title='SHブランド' />
-          <DataLink src='/images/icons/takex-icon.svg' title='TAKEXブランド' />
-          <DataLink src='/images/icons/security-icon.svg' title='セキュリネット' />
-          <DataLink src='/images/icons/inext-icon.svg' title='i-NEXT' />
-        </div>
+        <ul className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-3'>
+          <DataLink title='SHブランド' href='/' img='/images/icons/brand-icon.svg' className='xl:w-[288px]' />
+          <DataLink title='TAKEXブランド' href='/' img='/images/icons/takex-icon.svg' className='xl:w-[288px]' />
+          <DataLink title='セキュリネット' href='/' img='/images/icons/security-icon.svg' className='xl:w-[288px]' />
+          <DataLink title='i-NEXT' href='/' img='/images/icons/inext-icon.svg' className='xl:w-[288px]' />
+        </ul>
       </div>
     </Container>
   )

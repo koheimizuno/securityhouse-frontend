@@ -21,7 +21,7 @@ type RoomPageContentProps = {
 
 const RoomPageContent = ({ title, icon, postTypes, categories, postData }: RoomPageContentProps) => {
   const searchParams = useSearchParams()
-  const [selectedCat, setSelectedCat] = useState({
+  const [selectedCat, setSelectedCat] = useState<CategoryType>({
     title: '',
     description: ''
   })
@@ -31,7 +31,7 @@ const RoomPageContent = ({ title, icon, postTypes, categories, postData }: RoomP
     if (catQuery && catQuery !== 'all') {
       categories.map((category: CategoryType) => {
         if (category.title === catQuery)
-          setSelectedCat(prevState => ({ ...prevState, title: category.title, description: category.description }))
+          setSelectedCat(prevState => ({ ...prevState, title: category.title, description: category?.description }))
       })
     } else {
       setSelectedCat(prevState => ({ ...prevState, title: 'すべて', description: '' }))

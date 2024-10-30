@@ -4,12 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import TabItem from './TabItem'
-
-export type PostTabType = {
-  title: string
-  href?: string
-  icon: string[]
-}
+import PostTabType from '@/types/postTabType'
 
 interface TabVerticalProps {
   queryKey: string

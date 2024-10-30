@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import Image from 'next/image'
 
 import { getImageAlt } from '@/utils/getImageAlt'
-import { PostTabType } from '../TabVertical'
+import PostTabType from '@/types/postTabType'
 
 type TabItemProps = {
   item: PostTabType

@@ -108,7 +108,7 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
 
   return (
     <div className='flex flex-col gap-8'>
-      <SectionTitle title='プロフィール編集' bar />
+      <SectionTitle title='プロフィール編集' bar={true} />
       <form className='mt-4 flex flex-col gap-8' onSubmit={handleSubmit}>
         <Input
           type='file'

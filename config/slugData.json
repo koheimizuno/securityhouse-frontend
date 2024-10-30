@@ -58,5 +58,20 @@
     "label": "新着情報",
     "slug": "news",
     "validSlug": true
+  },
+  {
+    "label": "資料集",
+    "slug": "document",
+    "validSlug": true
+  },
+  {
+    "label": "営業・事務",
+    "slug": "salesoffice",
+    "validSlug": true
+  },
+  {
+    "label": "チラシ・提案書",
+    "slug": "proposal",
+    "validSlug": true
   }
 ]

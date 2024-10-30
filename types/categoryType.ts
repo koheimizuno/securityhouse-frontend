@@ -1,9 +1,9 @@
 export type CategoryType = {
-  id: string
+  id?: string
   title: string
-  description: string
-  type_id: string
-  created_at: string
-  updated_at: string
-  deleted_at: string
+  description?: string
+  type_id?: string
+  created_at?: string
+  updated_at?: string
+  deleted_at?: string
 }
