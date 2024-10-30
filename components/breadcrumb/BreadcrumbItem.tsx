@@ -6,9 +6,10 @@ type BreadcrumbItemProps = {
   label: string
   slug: string
   validSlug: boolean
+  last: boolean
 }
 
-const BreadcrumbItem = ({ item }: { item: BreadcrumbItemProps }) => {
+const BreadcrumbItem = ({ label, slug, validSlug, last }: BreadcrumbItemProps) => {
   return (
     <div className='flex items-center gap-2'>
       <Image
@@ -18,7 +19,13 @@ const BreadcrumbItem = ({ item }: { item: BreadcrumbItemProps }) => {
         width={4}
         height={8}
       />
-      {item.validSlug ? <Link href={item.slug}>{item.label}</Link> : <span>{item.label}</span>}
+      {validSlug && !last ? (
+        <Link href={slug} className='text-primary underline'>
+          {label}
+        </Link>
+      ) : (
+        <span>{label}</span>
+      )}
     </div>
   )
 }

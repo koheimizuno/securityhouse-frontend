@@ -66,12 +66,17 @@
   },
   {
     "label": "営業・事務",
-    "slug": "salesoffice",
+    "slug": "sales-office",
     "validSlug": true
   },
   {
     "label": "チラシ・提案書",
     "slug": "proposal",
+    "validSlug": true
+  },
+  {
+    "label": "事務所向け・店舗向け",
+    "slug": "office-store",
     "validSlug": true
   }
 ]

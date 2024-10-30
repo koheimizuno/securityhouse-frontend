@@ -9,7 +9,12 @@ const DocumentSection = () => {
       <div className='mt-6'>
         <h3>営業・事務</h3>
         <ul className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-3'>
-          <DataLink title='チラシ・提案書' href='/' img='/images/icons/note-icon.svg' className='xl:w-[288px]' />
+          <DataLink
+            title='チラシ・提案書'
+            href='/document/sales-office/proposal'
+            img='/images/icons/note-icon.svg'
+            className='xl:w-[288px]'
+          />
           <DataLink title='動画' href='/' img='/images/icons/video-icon.svg' className='xl:w-[288px]' />
           <DataLink title='販促物' href='/' img='/images/icons/pr-icon.svg' className='xl:w-[288px]' />
           <DataLink title='書類関係' href='/' img='/images/icons/doc-icon.svg' className='xl:w-[288px]' />

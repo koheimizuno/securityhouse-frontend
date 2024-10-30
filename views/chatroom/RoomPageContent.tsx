@@ -45,7 +45,7 @@ const RoomPageContent = ({ title, icon, postTypes, categories, postData }: RoomP
           <Image src={icon} alt={getImageAlt(icon) || ''} width={25} height={25} />
           <h1 className='md:text-xl font-bold'>{title}</h1>
         </div>
-        <Link href='create'>
+        <Link href='post/create'>
           <Button
             className='rounded-full'
             color='primary'
