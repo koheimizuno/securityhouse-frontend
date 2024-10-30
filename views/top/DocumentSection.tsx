@@ -15,7 +15,12 @@ const DocumentSection = () => {
             img='/images/icons/note-icon.svg'
             className='xl:w-[288px]'
           />
-          <DataLink title='動画' href='/' img='/images/icons/video-icon.svg' className='xl:w-[288px]' />
+          <DataLink
+            title='動画'
+            href='/document/sales-office/video'
+            img='/images/icons/video-icon.svg'
+            className='xl:w-[288px]'
+          />
           <DataLink title='販促物' href='/' img='/images/icons/pr-icon.svg' className='xl:w-[288px]' />
           <DataLink title='書類関係' href='/' img='/images/icons/doc-icon.svg' className='xl:w-[288px]' />
         </ul>
