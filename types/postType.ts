@@ -14,6 +14,7 @@ export type PostType = {
   thumbnail: string
   type_id: string
   post_destination: string
+  nice_flag: string
   like_count: string
   bookmark_flag: string
   comment_count: string

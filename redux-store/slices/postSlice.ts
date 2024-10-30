@@ -158,6 +158,11 @@ export const postSlice = createSlice({
         state.error = true
         toast.error('サーバの問題でデータ取得に失敗しました。')
       })
+      .addCase(deletePostBookmarkAction.pending, state => {
+        state.isLoading = true
+        state.success = true
+        toast.success('ブックマークから削除されました。')
+      })
       .addCase(deletePostBookmarkAction.fulfilled, state => {
         state.isLoading = false
         state.success = true

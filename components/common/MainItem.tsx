@@ -7,14 +7,14 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { Button } from '@nextui-org/react'
+import DeletePostModal from '@/components/modal/DeletePostModal'
 
 import { getImageAlt } from '@/utils/getImageAlt'
 import { PostType } from '@/types/postType'
 import { useClickAway } from '@uidotdev/usehooks'
-import DeletePostModal from '../modal/DeletePostModal'
-import { deleteNewsAction } from '@/redux-store/slices/newsSlice'
 import { NewsType } from '@/types/newsType'
-import { deletePostAction } from '@/redux-store/slices/postSlice'
+import { deleteNewsAction, deleteNewsLikeAction, newsLikeAction } from '@/redux-store/slices/newsSlice'
+import { deletePostAction, deletePostLikeAction, postLikeAction } from '@/redux-store/slices/postSlice'
 
 const PostItem = ({
   id,
@@ -23,6 +23,7 @@ const PostItem = ({
   name,
   affiliation_name,
   thumbnail,
+  nice_flag,
   bookmark_flag,
   updated_at
 }: Partial<PostType | NewsType>) => {
@@ -62,6 +63,16 @@ const PostItem = ({
     setMoreActive(false)
     closeModal()
   }, [dispatch, id, closeModal])
+
+  const handleLikePost = () => {
+    if (nice_flag === '0') dispatch(postLikeAction(id))
+    else if (nice_flag === '1') dispatch(deletePostLikeAction(id))
+  }
+
+  const handleLikeNew = () => {
+    if (nice_flag === '0') dispatch(newsLikeAction(id))
+    else if (nice_flag === '1') dispatch(deleteNewsLikeAction(id))
+  }
 
   return (
     <li
@@ -111,9 +122,14 @@ const PostItem = ({
         {!contentMore ? '…もっと見る' : '…表示を少なくする'}
       </button>
       <div className='mt-4 flex items-center gap-2'>
-        <div className='flex items-center gap-2'>
-          <Image src='/images/icons/thumbs-up.svg' alt='thumb-up' width={20} height={20} />
-          <span>44</span>
+        <div className='flex items-center gap-1'>
+          <Image src='/images/icons/thumbs-up.svg' alt='thumbs-up' className='w-5 h-5' width={20} height={20} />
+          <p className='text-sm font-bold text-colorGray4 flex items-center gap-1'>
+            <button className='underline' onClick={newsFlag ? handleLikeNew : handleLikePost}>
+              いいね！{' '}
+            </button>
+            <span>44件</span>
+          </p>
         </div>
         <Image
           src={bookmark_flag === '1' ? '/images/icons/bookmark-fill.svg' : '/images/icons/bookmark-outline.svg'}

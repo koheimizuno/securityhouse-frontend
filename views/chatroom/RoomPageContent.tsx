@@ -74,6 +74,7 @@ const RoomPageContent = ({ title, icon, postTypes, categories, postData }: RoomP
                 affiliation_name={post.affiliation_name}
                 type_id={post.type_id}
                 postTypes={postTypes}
+                nice_flag={post.nice_flag}
                 like_count={post.like_count}
                 comment_count={post.comment_count}
                 bookmark_flag={post.bookmark_flag}

@@ -10,7 +10,7 @@ import { Button } from '@nextui-org/react'
 
 import { formatDate } from '@/utils/formatDate'
 import { useClickAway } from '@uidotdev/usehooks'
-import { deletePostAction } from '@/redux-store/slices/postSlice'
+import { deletePostAction, deletePostLikeAction, postLikeAction } from '@/redux-store/slices/postSlice'
 import { PostType, PostType_Type } from '@/types/postType'
 import DeletePostModal from '@/components/modal/DeletePostModal'
 
@@ -28,6 +28,7 @@ const PostCard = ({
   affiliation_name,
   type_id,
   postTypes,
+  nice_flag,
   like_count,
   comment_count,
   bookmark_flag,
@@ -55,6 +56,11 @@ const PostCard = ({
     closeModal()
   }, [dispatch, id, closeModal])
 
+  const handleLike = () => {
+    if (nice_flag === '0') dispatch(postLikeAction(id))
+    else if (nice_flag === '1') dispatch(deletePostLikeAction(id))
+  }
+
   return (
     <div className='relative bg-white px-4 py-6 w-[282px] rounded-md'>
       <Image
@@ -80,15 +86,17 @@ const PostCard = ({
       <div className='grid grid-cols-2 gap-4 mt-[22px] mb-4'>
         <div className='flex items-center gap-1'>
           <Image src='/images/icons/thumbs-up.svg' alt='thumbs-up' className='w-5 h-5' width={20} height={20} />
-          <p className='text-sm font-bold text-colorGray4'>
-            <a href='#'>いいね！ </a>
+          <p className='text-sm font-bold text-colorGray4 flex items-center gap-1'>
+            <button className='underline' onClick={handleLike}>
+              いいね！{' '}
+            </button>
             <span>{like_count}件</span>
           </p>
         </div>
         <div className='flex items-center gap-1'>
           <Image src='/images/icons/comment-icon.svg' alt='comment' className='w-5 h-5' width={20} height={20} />
-          <p className='text-sm font-bold text-colorGray4'>
-            <a href='#'>コメント </a>
+          <p className='text-sm font-bold text-colorGray4 flex items-center gap-1'>
+            <span>コメント </span>
             <span>{comment_count}件</span>
           </p>
         </div>

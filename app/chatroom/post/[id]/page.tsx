@@ -7,7 +7,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import Container from '@/components/layout/Container'
-import PageHeader from '@/components/common/PageHeader'
 import SectionTitle from '@/components/common/SectionTitle'
 import CommentItem from '@/views/comment/CommentItem'
 import Loading from '@/components/common/Loading'
@@ -20,7 +19,13 @@ import { useClickAway } from '@uidotdev/usehooks'
 import { getImageAlt } from '@/utils/getImageAlt'
 import { getPostByIdAction } from '@/actions/postAction'
 import { getCommentsAction } from '@/actions/commentAction'
-import { deletePostAction } from '@/redux-store/slices/postSlice'
+import {
+  deletePostAction,
+  deletePostBookmarkAction,
+  deletePostLikeAction,
+  postBookmarkAction,
+  postLikeAction
+} from '@/redux-store/slices/postSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { createCommentAction } from '@/redux-store/slices/commentSlice'
 import { RootState } from '@/redux-store'
@@ -35,6 +40,7 @@ const SHRoomPostDetail = () => {
   const [comments, setComments] = useState<CommentType[]>()
   const [moreActive, setMoreActive] = useState<boolean>(false)
   const { categories } = useSelector((state: RootState) => state.category)
+  const { isLoading } = useSelector((state: RootState) => state.post)
   const [newComment, setNewComment] = useState({
     content: '',
     attachment: {
@@ -68,7 +74,7 @@ const SHRoomPostDetail = () => {
         setComments(data)
       })
     }
-  }, [id])
+  }, [id, isLoading])
 
   useEffect(() => {
     dispatch(
@@ -105,10 +111,31 @@ const SHRoomPostDetail = () => {
     }, 2000)
   }, [dispatch, router, id])
 
-  const handleLike = () => {}
-  const handleBookmark = () => {}
+  const handleLike = () => {
+    if (typeof id === 'string') {
+      if (postData?.nice_flag === '0') dispatch(postLikeAction(id))
+      else if (postData?.nice_flag === '1') dispatch(deletePostLikeAction(id))
+    }
+  }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleBookmark = () => {
+    if (postData?.bookmark_flag === '0')
+      dispatch(
+        postBookmarkAction({
+          post_id: id,
+          user_id: postData.user_id
+        })
+      )
+    else if (postData?.bookmark_flag === '1')
+      dispatch(
+        deletePostBookmarkAction({
+          post_id: id,
+          user_id: postData.user_id
+        })
+      )
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (validateForm()) {
@@ -118,7 +145,10 @@ const SHRoomPostDetail = () => {
       commentPayload.append('content', newComment.content)
       commentPayload.append('attachment', newComment.attachment.file)
 
-      dispatch(createCommentAction(commentPayload))
+      await dispatch(createCommentAction(commentPayload))
+      setTimeout(() => {
+        router.push('/chatroom/sh-room')
+      }, 2000)
     }
   }
 

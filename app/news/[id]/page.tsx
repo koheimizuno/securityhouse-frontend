@@ -16,7 +16,13 @@ import { NewsType } from '@/types/newsType'
 import { useClickAway } from '@uidotdev/usehooks'
 import { getImageAlt } from '@/utils/getImageAlt'
 import { getNewsByIdAction } from '@/actions/newsAction'
-import { deleteNewsAction } from '@/redux-store/slices/newsSlice'
+import {
+  deleteNewsAction,
+  deleteNewsBookmarkAction,
+  deleteNewsLikeAction,
+  newsBookmarkAction,
+  newsLikeAction
+} from '@/redux-store/slices/newsSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { RootState } from '@/redux-store'
 import { CategoryType } from '@/types/categoryType'
@@ -59,8 +65,29 @@ const NewDetail = () => {
     )
   }, [dispatch])
 
-  const handleLike = () => {}
-  const handleBookmark = () => {}
+  const handleLike = () => {
+    if (typeof id === 'string') {
+      if (newData?.nice_flag === '0') dispatch(newsLikeAction(id))
+      else if (newData?.nice_flag === '1') dispatch(deleteNewsLikeAction(id))
+    }
+  }
+
+  const handleBookmark = () => {
+    if (newData?.bookmark_flag === '0')
+      dispatch(
+        newsBookmarkAction({
+          post_id: id,
+          user_id: newData.user_id
+        })
+      )
+    else if (newData?.bookmark_flag === '1')
+      dispatch(
+        deleteNewsBookmarkAction({
+          post_id: id,
+          user_id: newData.user_id
+        })
+      )
+  }
 
   const handleDeletePost = useCallback(async () => {
     await dispatch(deleteNewsAction(id))
