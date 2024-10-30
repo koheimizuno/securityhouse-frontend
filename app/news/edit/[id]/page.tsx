@@ -17,7 +17,7 @@ import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { RootState } from '@/redux-store'
 import { getNewsByIdAction } from '@/actions/newsAction'
 
-const EditNew = () => {
+const EditNewPage = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
@@ -241,4 +241,4 @@ const EditNew = () => {
   )
 }
 
-export default EditNew
+export default EditNewPage

@@ -3,7 +3,7 @@
 import RoomPage from '@/views/chatroom/RoomPage'
 import BossRoomContent from '@/views/chatroom/BossRoomContent'
 
-const BossRoom = () => {
+const BossRoomPage = () => {
   return (
     <RoomPage>
       <BossRoomContent />
@@ -11,4 +11,4 @@ const BossRoom = () => {
   )
 }
 
-export default BossRoom
+export default BossRoomPage

@@ -21,12 +21,12 @@ import { CategoryType } from '@/types/categoryType'
 import { getNewsAction } from '@/actions/newsAction'
 import { NewsContext } from '@/hooks/NewsContext'
 
-const News = () => {
+const NewsPage = () => {
   const dispatch = useDispatch()
   const [news, setNews] = useState<NewsType[]>([])
   const [isOpen, setIsOpen] = useState(false)
   const searchParams = useSearchParams()
-  const [selectedCat, setSelectedCat] = useState({
+  const [selectedCat, setSelectedCat] = useState<CategoryType>({
     title: '',
     description: ''
   })
@@ -125,4 +125,4 @@ const News = () => {
   )
 }
 
-export default News
+export default NewsPage

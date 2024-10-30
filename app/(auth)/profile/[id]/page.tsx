@@ -14,7 +14,7 @@ import { getUserByIdAction } from '@/actions/authAction'
 import { UsersType } from '@/types/userType'
 import { Button } from '@nextui-org/react'
 
-const Profile = () => {
+const ProfilePage = () => {
   const { id } = useParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -134,4 +134,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default ProfilePage

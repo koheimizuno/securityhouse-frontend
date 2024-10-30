@@ -3,7 +3,7 @@
 import RoomPage from '@/views/chatroom/RoomPage'
 import ExchangeRoomContent from '@/views/chatroom/ExchangeRoomContent'
 
-const ExchangeRoom = () => {
+const ExchangeRoomPage = () => {
   return (
     <RoomPage>
       <ExchangeRoomContent />
@@ -11,4 +11,4 @@ const ExchangeRoom = () => {
   )
 }
 
-export default ExchangeRoom
+export default ExchangeRoomPage

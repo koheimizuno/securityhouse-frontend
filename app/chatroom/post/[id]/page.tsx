@@ -31,7 +31,7 @@ import { createCommentAction } from '@/redux-store/slices/commentSlice'
 import { RootState } from '@/redux-store'
 import DeletePostModal from '@/components/modal/DeletePostModal'
 
-const SHRoomPostDetail = () => {
+const SHRoomPostDetailPage = () => {
   const { id } = useParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -310,4 +310,4 @@ const SHRoomPostDetail = () => {
   )
 }
 
-export default SHRoomPostDetail
+export default SHRoomPostDetailPage

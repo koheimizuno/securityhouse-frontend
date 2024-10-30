@@ -14,7 +14,7 @@ import { validateEmail, validatePassword } from '@/utils/validateUtils'
 import { loginAction } from '@/redux-store/slices/authSlice'
 import { useAuthentication } from '@/hooks/AuthContext'
 
-const Login = () => {
+const LoginPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({ email: '', password: '' })
@@ -108,4 +108,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default LoginPage

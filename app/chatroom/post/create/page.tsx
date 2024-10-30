@@ -35,7 +35,7 @@ const publicationOptions = [
   }
 ]
 
-const CreatePost = () => {
+const CreatePostPage = () => {
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     title: '',
@@ -312,4 +312,4 @@ const CreatePost = () => {
   )
 }
 
-export default CreatePost
+export default CreatePostPage

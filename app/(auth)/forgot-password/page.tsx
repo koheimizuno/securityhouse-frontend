@@ -11,7 +11,7 @@ import { Button, Input } from '@nextui-org/react'
 import { validateEmail, validatePassword } from '@/utils/validateUtils'
 import { changePasswordAction, forgotPasswordAction } from '@/redux-store/slices/authSlice'
 
-const ForgotPassword = () => {
+const ForgotPasswordPage = () => {
   const dispatch = useDispatch()
   const [step, setStep] = useState('forgot')
   const [formData, setFormData] = useState({
@@ -165,4 +165,4 @@ const ForgotPassword = () => {
   )
 }
 
-export default ForgotPassword
+export default ForgotPasswordPage

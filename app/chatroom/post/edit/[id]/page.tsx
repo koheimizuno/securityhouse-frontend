@@ -40,7 +40,7 @@ const publicationOptions = [
   }
 ]
 
-const EditPost = () => {
+const EditPostPage = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
@@ -337,4 +337,4 @@ const EditPost = () => {
   )
 }
 
-export default EditPost
+export default EditPostPage

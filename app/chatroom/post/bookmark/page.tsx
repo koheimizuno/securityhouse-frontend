@@ -8,7 +8,7 @@ import MainItem from '@/components/common/MainItem'
 import { getBookmarkedPostAction } from '@/actions/postAction'
 import { PostType } from '@/types/postType'
 
-const BookmarkedPost = () => {
+const BookmarkedPostPage = () => {
   const [postData, setPostData] = useState<PostType[] | null>(null)
 
   useEffect(() => {
@@ -40,4 +40,4 @@ const BookmarkedPost = () => {
   )
 }
 
-export default BookmarkedPost
+export default BookmarkedPostPage

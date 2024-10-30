@@ -15,7 +15,7 @@ import { createNewsAction } from '@/redux-store/slices/newsSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { RootState } from '@/redux-store'
 
-const CreateNew = () => {
+const CreateNewPage = () => {
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     title: '',
@@ -220,4 +220,4 @@ const CreateNew = () => {
   )
 }
 
-export default CreateNew
+export default CreateNewPage

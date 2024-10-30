@@ -46,7 +46,7 @@ const categories = [
   }
 ]
 
-const DocumentProposal = () => {
+const DocumentProposalPage = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleMenu = () => {
@@ -123,4 +123,4 @@ const DocumentProposal = () => {
   )
 }
 
-export default DocumentProposal
+export default DocumentProposalPage

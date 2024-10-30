@@ -24,7 +24,7 @@ const roleOptions = [
   { id: '3', title: '役割3' }
 ]
 
-const Register = () => {
+const RegisterPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
@@ -219,4 +219,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default RegisterPage

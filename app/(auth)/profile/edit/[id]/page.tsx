@@ -13,7 +13,7 @@ import { PROFILE_TAB } from '@/utils/constants'
 import { getUserByIdAction } from '@/actions/authAction'
 import { UsersType } from '@/types/userType'
 
-const ProfileEdit = () => {
+const ProfileEditPage = () => {
   const { id } = useParams()
   const searchParams = useSearchParams()
   const [profileTab, setProfileTab] = useState<string>('1')
@@ -48,4 +48,4 @@ const ProfileEdit = () => {
   )
 }
 
-export default ProfileEdit
+export default ProfileEditPage

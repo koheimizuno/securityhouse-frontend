@@ -27,7 +27,7 @@ import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { RootState } from '@/redux-store'
 import { CategoryType } from '@/types/categoryType'
 
-const NewDetail = () => {
+const NewDetailPage = () => {
   const { id } = useParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -183,4 +183,4 @@ const NewDetail = () => {
   )
 }
 
-export default NewDetail
+export default NewDetailPage
