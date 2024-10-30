@@ -10,7 +10,7 @@ const DocumentPromotion = () => {
       <PageHeader title='営業・事務' subtitle='資料集' />
       <ul className='grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6'>
         <DataLink title='ロゴ／イラスト／バナー／ステッカー画像' href='promotion/images' />
-        <DataLink title='販促注文書／パネル' href='promotion/order-form' />
+        <DataLink title='販促注文書／パネル' href='promotion/panels' />
         <DataLink title='設置写真' href='promotion/photos' />
         <DataLink title='川口能活素材集' href='promotion/materials' />
       </ul>
