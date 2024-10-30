@@ -83,5 +83,30 @@
     "label": "動画",
     "slug": "video",
     "validSlug": true
+  },
+  {
+    "label": "販促物",
+    "slug": "promotion",
+    "validSlug": true
+  },
+  {
+    "label": "ロゴ／イラスト／バナー／ステッカー画像",
+    "slug": "images",
+    "validSlug": true
+  },
+  {
+    "label": "販促注文書／パネル",
+    "slug": "order-form",
+    "validSlug": true
+  },
+  {
+    "label": "設置写真",
+    "slug": "photos",
+    "validSlug": true
+  },
+  {
+    "label": "川口能活素材集",
+    "slug": "materials",
+    "validSlug": true
   }
 ]

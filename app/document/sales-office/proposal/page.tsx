@@ -55,7 +55,7 @@ const DocumentProposalPage = () => {
 
   return (
     <Container className='py-16 flex flex-col gap-8'>
-      <PageHeader title='営業・事務' subtitle='資料集' />
+      <PageHeader title='チラシ・提案書' subtitle='資料集' />
       <section className='flex flex-col gap-8'>
         <SectionTitle title='商品展示会' bar={true} divider={true} />
         <div className={`inline-block md:hidden ${isOpen && 'change'}`} onClick={handleMenu}>

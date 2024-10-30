@@ -10,7 +10,7 @@ interface PageHeaderProps {
 
 const PageHeader = ({ title, subtitle, className }: PageHeaderProps) => {
   return (
-    <div className={`flex flex-col`}>
+    <div className={`flex flex-col gap-1`}>
       <span className={`text-primary font-extrabold`}>{subtitle}</span>
       <h1 className={`text-2xl sm:text-[32px] font-bold ${className}`}>{title}</h1>
     </div>

@@ -8,7 +8,7 @@ import DocCardButton from '@/views/document/DocCardButton'
 const DocumentVideoPage = () => {
   return (
     <Container className='py-16 flex flex-col gap-20'>
-      <PageHeader title='営業・事務' subtitle='資料集' />
+      <PageHeader title='動画' subtitle='資料集' />
       <section className='flex flex-col gap-6'>
         <SectionTitle title='動画について' bar={true} divider={true} />
         <ul>

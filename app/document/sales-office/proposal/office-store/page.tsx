@@ -60,7 +60,7 @@ const DocummentOfficeStorePage = () => {
           </li>
         </ul>
         <div className='w-full md:w-[calc(100%-246px)] flex flex-col gap-8'>
-          <PageHeader title='営業・事務' subtitle='資料集' />
+          <PageHeader title='事務所向け・店舗向け' subtitle='資料集' />
           <section className='flex flex-col gap-6' ref={officeRef}>
             <SectionTitle title='事務所向け' bar={true} divider={true} />
             <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
