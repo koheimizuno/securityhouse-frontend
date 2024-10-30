@@ -8,8 +8,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 
+import PageHeader from '@/components/common/PageHeader'
 import Container from '@/components/layout/Container'
-import SectionTitle from '@/components/common/SectionTitle'
 import Category from '@/components/common/Category'
 import MainItem from '@/components/common/MainItem'
 import { Button, Pagination } from '@nextui-org/react'
@@ -64,7 +64,7 @@ const News = () => {
   return (
     <NewsContext.Provider value={{ categories: categories }}>
       <Container className='py-12 flex flex-col gap-8'>
-        <SectionTitle title='お知らせ一覧' icon='/images/icons/info-icon.svg' />
+        <PageHeader title='お知らせ一覧' className='text-center' />
         <Link href='/news/create' className='text-right'>
           <Button
             className='rounded-full'

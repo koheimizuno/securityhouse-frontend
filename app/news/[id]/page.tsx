@@ -75,9 +75,9 @@ const NewDetail = () => {
   }
 
   return (
-    <Container className='py-12'>
-      <PageHeader title='お知らせ' />
-      <div className='mt-5 flex flex-col gap-4 md:gap-8 bg-bgSemiblue px-6  md:px-16 py-10 rounded-2xl'>
+    <Container className='py-12 flex flex-col gap-8'>
+      <PageHeader title='お知らせ詳細' subtitle='お知らせ' />
+      <div className='flex flex-col gap-4 md:gap-8 bg-bgSemiblue px-6  md:px-16 py-10 rounded-2xl'>
         <Button size='sm' color='primary' disabled className='md:hidden text-xs px-2 py-0 h-6 rounded-full w-fit'>
           {category && category}
         </Button>

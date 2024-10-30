@@ -83,8 +83,8 @@ const ChangePwContent = () => {
   }
 
   return (
-    <>
-      <SectionTitle title='アカウント設定' />
+    <div className='flex flex-col gap-8'>
+      <SectionTitle title='アカウント設定' bar />
       <form className='mt-4 flex flex-col gap-8' onSubmit={handleSubmit}>
         <Input
           type={isVisible.currentPw ? 'text' : 'password'}
@@ -140,7 +140,7 @@ const ChangePwContent = () => {
           保存する
         </Button>
       </form>
-    </>
+    </div>
   )
 }
 

@@ -35,7 +35,7 @@ const ProfileEdit = () => {
   }, [id])
 
   return (
-    <Container className='py-12'>
+    <Container className='py-16 flex flex-col gap-8'>
       <PageHeader title='アカウント設定' className='text-center' />
       <TabVertical queryKey='profile_tab' menuList={PROFILE_TAB} gap={true}>
         <div className='w-full lg:w-[calc(100%-300px)] lg:px-10 pb-7  rounded-xl rounded-tl-none'>

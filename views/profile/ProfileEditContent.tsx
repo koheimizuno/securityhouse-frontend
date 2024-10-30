@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 
+import PageHeader from '@/components/common/PageHeader'
 import SectionTitle from '@/components/common/SectionTitle'
 
 import { editUserAction } from '@/redux-store/slices/authSlice'
@@ -106,8 +107,8 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
   }
 
   return (
-    <>
-      <SectionTitle title='プロフィール編集' />
+    <div className='flex flex-col gap-8'>
+      <SectionTitle title='プロフィール編集' bar />
       <form className='mt-4 flex flex-col gap-8' onSubmit={handleSubmit}>
         <Input
           type='file'
@@ -125,7 +126,7 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
         />
         {formData.thumbnail.preview && (
           <Image
-            src={formData.thumbnail.preview}
+            src={`/${formData.thumbnail.preview}`}
             alt={getImageAlt(formData.thumbnail.preview) || ''}
             className='mt-2 w-32 h-w-32'
             width={50}
@@ -165,7 +166,7 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
           保存
         </Button>
       </form>
-    </>
+    </div>
   )
 }
 

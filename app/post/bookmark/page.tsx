@@ -18,9 +18,9 @@ const BookmarkedPost = () => {
   }, [])
 
   return (
-    <Container className='py-12'>
+    <Container className='py-16 flex flex-col gap-8'>
       <PageHeader title='ブックマーク' className='text-center' />
-      <ul className='flex flex-col gap-6 mt-5'>
+      <ul className='flex flex-col gap-6'>
         {postData &&
           postData?.map((post, index) => (
             <MainItem

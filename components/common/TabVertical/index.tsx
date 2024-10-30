@@ -7,7 +7,7 @@ import TabItem from './TabItem'
 
 export type PostTabType = {
   title: string
-  href: string
+  href?: string
   icon: string[]
 }
 

@@ -137,10 +137,10 @@ const SHRoomPostDetail = () => {
   }
 
   return (
-    <Container>
-      <section className='py-12'>
-        <PageHeader title='SH会トークルーム' />
-        <div className='mt-5 flex flex-col gap-4 md:gap-8 bg-bgSemiblue px-6  md:px-16 py-10 rounded-2xl'>
+    <Container className='py-12 flex flex-col gap-12'>
+      <section className='flex flex-col gap-8'>
+        <SectionTitle title='SH会トークルーム' icon='/images/icons/sh-room-secondary.svg' />
+        <div className='flex flex-col gap-4 md:gap-8 bg-bgSemiblue px-6  md:px-16 py-10 rounded-2xl'>
           <Button size='sm' color='primary' disabled className='md:hidden text-xs px-2 py-0 h-6 rounded-full w-fit'>
             {category && category}
           </Button>
@@ -256,10 +256,10 @@ const SHRoomPostDetail = () => {
           </form>
         </div>
       </section>
-      <section className='py-12'>
-        <PageHeader title='コメント' />
+      <section className='flex flex-col gap-8'>
+        <SectionTitle title='コメント' icon='/images/icons/comment-icon-secondary.svg' />
         {comments ? (
-          <ul className='flex flex-col gap-10'>
+          <ul className='flex flex-col gap-8'>
             {comments.map(comment => (
               <CommentItem
                 key={comment.id}

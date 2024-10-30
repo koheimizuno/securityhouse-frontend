@@ -74,8 +74,8 @@ const EmailEditContent = ({ userData }: { userData: UsersType | null }) => {
   }
 
   return (
-    <>
-      <SectionTitle title='メールアドレス変更' />
+    <div className='flex flex-col gap-8'>
+      <SectionTitle title='メールアドレス変更' bar />
       <form className='mt-4 flex flex-col gap-8' onSubmit={handleSubmit}>
         <Input
           type='text'
@@ -129,7 +129,7 @@ const EmailEditContent = ({ userData }: { userData: UsersType | null }) => {
           保存
         </Button>
       </form>
-    </>
+    </div>
   )
 }
 
