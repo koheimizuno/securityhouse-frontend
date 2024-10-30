@@ -31,7 +31,7 @@ const Header = () => {
               isHamburgerOpen ? 'max-h-[1000px] overflow-visible py-8' : 'max-h-0 overflow-hidden'
             }`}
           >
-            <Link href='/post/bookmark/'>
+            <Link href='/chatroom/post/bookmark/'>
               <Button
                 className='rounded-full w-[200px]'
                 startContent={
