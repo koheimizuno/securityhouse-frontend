@@ -115,13 +115,38 @@
     "validSlug": true
   },
   {
-    "label": "書類関係",
-    "slug": "document-system",
+    "label": "書類",
+    "slug": "documentation",
     "validSlug": true
   },
   {
-    "label": "書類関係",
-    "slug": "document-system",
+    "label": "報告書フォーマット",
+    "slug": "report-formats",
+    "validSlug": true
+  },
+  {
+    "label": "商品・技術",
+    "slug": "product-tech",
+    "validSlug": false
+  },
+  {
+    "label": "SHブランド",
+    "slug": "sh-brand",
+    "validSlug": true
+  },
+  {
+    "label": "TAKEXブランド",
+    "slug": "takex-brand",
+    "validSlug": true
+  },
+  {
+    "label": "セキュリティネット",
+    "slug": "security-net",
+    "validSlug": true
+  },
+  {
+    "label": "i-NEXT",
+    "slug": "i-next",
     "validSlug": true
   }
 ]
