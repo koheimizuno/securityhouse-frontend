@@ -86,7 +86,7 @@ const DocummentOfficeStorePage = () => {
             <SectionTitle title='提案書' bar={true} divider={true} />
             <div className='flex justify-between flex-wrap gap-8'>
               <h4 className='md:py-4 md:max-w-[220px]'>KDDI様向けi-NEXTのご提案</h4>
-              <div className='flex flex-col gap-2 w-[480px]'>
+              <div className='flex flex-col gap-2 md:w-[480px]'>
                 <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' size='sm' />
                 <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
                 <DocCardButton
@@ -100,7 +100,7 @@ const DocummentOfficeStorePage = () => {
             <Divider />
             <div className='flex justify-between flex-wrap gap-8'>
               <h4 className='md:py-4 md:max-w-[220px]'>チェーン店様向けセキュリティシステムのご提案</h4>
-              <div className='flex flex-col gap-2 w-[480px]'>
+              <div className='flex flex-col gap-2 md:w-[480px]'>
                 <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' size='sm' />
                 <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
                 <DocCardButton
@@ -114,7 +114,7 @@ const DocummentOfficeStorePage = () => {
             <Divider />
             <div className='flex justify-between flex-wrap gap-8'>
               <h4 className='md:py-4 md:max-w-[220px]'>店舗向けWDR-H401提案書</h4>
-              <div className='flex flex-col gap-2 w-[480px]'>
+              <div className='flex flex-col gap-2 md:w-[480px]'>
                 <DocCardButton title='店舗向けWDR-H401提案書.pdf(000KB)' size='sm' />
                 <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
                 <DocCardButton
@@ -128,7 +128,7 @@ const DocummentOfficeStorePage = () => {
             <Divider />
             <div className='flex justify-between flex-wrap gap-8'>
               <h4 className='md:py-4 md:max-w-[220px]'>コンビニ向け提案書</h4>
-              <div className='flex flex-col gap-2 w-[480px]'>
+              <div className='flex flex-col gap-2 md:w-[480px]'>
                 <DocCardButton title='コンビニ向け提案書.pdf(000KB)' size='sm' />
                 <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
                 <DocCardButton
@@ -142,7 +142,7 @@ const DocummentOfficeStorePage = () => {
             <Divider />
             <div className='flex justify-between flex-wrap gap-8'>
               <h4 className='md:py-4 md:max-w-[220px]'>薬局向け セキュリティシステムご提案書</h4>
-              <div className='flex flex-col gap-2 w-[480px]'>
+              <div className='flex flex-col gap-2 md:w-[480px]'>
                 <DocCardButton title='薬局向けセキュリティシステムご提案書.pdf(000KB)' size='sm' />
                 <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
                 <DocCardButton
@@ -156,7 +156,7 @@ const DocummentOfficeStorePage = () => {
             <Divider />
             <div className='flex justify-between flex-wrap gap-8'>
               <h4 className='md:py-4 md:max-w-[220px]'>auショップ様向けご提案書【WJ-700SH＋フォグガード】</h4>
-              <div className='flex flex-col gap-2 w-[480px]'>
+              <div className='flex flex-col gap-2 md:w-[480px]'>
                 <DocCardButton title='auショップ様向けご提案書.pdf(000KB)' size='sm' />
                 <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
                 <DocCardButton
@@ -170,7 +170,7 @@ const DocummentOfficeStorePage = () => {
             <Divider />
             <div className='flex justify-between flex-wrap gap-8'>
               <h4 className='md:py-4 md:max-w-[220px]'>ドコモショップ様向けご提案書 【見える防犯＋フォグガード】</h4>
-              <div className='flex flex-col gap-2 w-[480px]'>
+              <div className='flex flex-col gap-2 md:w-[480px]'>
                 <DocCardButton title='ドコモショップ様向けご提案書.pdf(000KB)' size='sm' />
                 <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
                 <DocCardButton
@@ -184,7 +184,7 @@ const DocummentOfficeStorePage = () => {
             <Divider />
             <div className='flex justify-between flex-wrap gap-8'>
               <h4 className='md:py-4 md:max-w-[220px]'>霧噴射装置（フォグガード） ＦＧ－Ｓ販売提案</h4>
-              <div className='flex flex-col gap-2 w-[480px]'>
+              <div className='flex flex-col gap-2 md:w-[480px]'>
                 <DocCardButton title='霧噴射装置（フォグガード）ＦＧ－Ｓ販売提案.pdf(000KB)' size='sm' />
                 <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
                 <DocCardButton
@@ -198,7 +198,7 @@ const DocummentOfficeStorePage = () => {
             <Divider />
             <div className='flex justify-between flex-wrap gap-8'>
               <h4 className='md:py-4 md:max-w-[220px]'>犯行を諦めさせる フォグガードご提案書</h4>
-              <div className='flex flex-col gap-2 w-[480px]'>
+              <div className='flex flex-col gap-2 md:w-[480px]'>
                 <DocCardButton title='犯行を諦めさせるフォグガードご提案書.pdf(000KB)' size='sm' />
                 <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
                 <DocCardButton
@@ -212,7 +212,7 @@ const DocummentOfficeStorePage = () => {
             <Divider />
             <div className='flex justify-between flex-wrap gap-8'>
               <h4 className='md:py-4 md:max-w-[220px]'>金融機関向け提案書</h4>
-              <div className='flex flex-col gap-2 w-[480px]'>
+              <div className='flex flex-col gap-2 md:w-[480px]'>
                 <DocCardButton title='金融機関向け提案書.pdf(000KB)' size='sm' />
                 <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
                 <DocCardButton
@@ -226,7 +226,7 @@ const DocummentOfficeStorePage = () => {
             <Divider />
             <div className='flex justify-between flex-wrap gap-8'>
               <h4 className='md:py-4 md:max-w-[220px]'>食品加工工場様向けご提案書</h4>
-              <div className='flex flex-col gap-2 w-[480px]'>
+              <div className='flex flex-col gap-2 md:w-[480px]'>
                 <DocCardButton title='薬局向けセキュリティシステムご提案書.pdf(000KB)' size='sm' />
                 <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
                 <DocCardButton
@@ -240,7 +240,7 @@ const DocummentOfficeStorePage = () => {
             <Divider />
             <div className='flex justify-between flex-wrap gap-8'>
               <h4 className='md:py-4 md:max-w-[220px]'>盗難防止システムのご提案書 （窃盗対策）</h4>
-              <div className='flex flex-col gap-2 w-[480px]'>
+              <div className='flex flex-col gap-2 md:w-[480px]'>
                 <DocCardButton title='盗難防止システムのご提案書（窃盗対策）.pdf(000KB)' size='sm' />
                 <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
                 <DocCardButton
