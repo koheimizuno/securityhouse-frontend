@@ -145,6 +145,16 @@
     "validSlug": true
   },
   {
+    "label": "J-810SH",
+    "slug": "J-810SH",
+    "validSlug": true
+  },
+  {
+    "label": "WJ-700SH/WJ-750SH",
+    "slug": "WJ-700SHWJ-750SH",
+    "validSlug": true
+  },
+  {
     "label": "i-NEXT",
     "slug": "i-next",
     "validSlug": true
