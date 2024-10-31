@@ -62,12 +62,12 @@
   {
     "label": "資料集",
     "slug": "document",
-    "validSlug": true
+    "validSlug": false
   },
   {
     "label": "営業・事務",
     "slug": "sales-office",
-    "validSlug": true
+    "validSlug": false
   },
   {
     "label": "チラシ・提案書",

@@ -35,7 +35,7 @@ const DocumentVideoPhotosPage = () => {
         <p className='bg-bgSemiblue min-h-[300px] flex justify-center items-center'>貸出規約</p>
       </section>
       <Link href='photos/panel' className='text-center'>
-        <Button color='primary' className='rounded-full' size='lg'>
+        <Button color='primary' className='w-[280px] rounded-full' size='lg'>
           パネル一覧
         </Button>
       </Link>

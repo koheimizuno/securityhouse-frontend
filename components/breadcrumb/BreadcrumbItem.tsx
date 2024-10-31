@@ -20,7 +20,7 @@ const BreadcrumbItem = ({ label, slug, validSlug, last }: BreadcrumbItemProps) =
         height={8}
       />
       {validSlug && !last ? (
-        <Link href={slug} className='text-primary underline'>
+        <Link href={`${slug}`} className='text-primary underline'>
           {label}
         </Link>
       ) : (

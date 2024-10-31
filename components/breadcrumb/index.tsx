@@ -25,7 +25,7 @@ const Breadcrumb = () => {
             width={10}
             height={10}
           />
-          <span>TOP</span>
+          <span className='underline text-primary'>TOP</span>
         </Link>
         {memorizedPathName.map((item, index, arr) => (
           <BreadcrumbItem
