@@ -108,5 +108,20 @@
     "label": "川口能活素材集",
     "slug": "materials",
     "validSlug": true
+  },
+  {
+    "label": "書類関係",
+    "slug": "document-system",
+    "validSlug": true
+  },
+  {
+    "label": "書類関係",
+    "slug": "document-system",
+    "validSlug": true
+  },
+  {
+    "label": "書類関係",
+    "slug": "document-system",
+    "validSlug": true
   }
 ]

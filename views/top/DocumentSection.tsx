@@ -27,7 +27,12 @@ const DocumentSection = () => {
             img='/images/icons/pr-icon.svg'
             className='xl:w-[288px]'
           />
-          <DataLink title='書類関係' href='/' img='/images/icons/doc-icon.svg' className='xl:w-[288px]' />
+          <DataLink
+            title='書類関係'
+            href='/document/sales-office/document-system'
+            img='/images/icons/doc-icon.svg'
+            className='xl:w-[288px]'
+          />
         </ul>
       </div>
       <div className='mt-6'>
