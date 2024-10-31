@@ -71,7 +71,7 @@
   },
   {
     "label": "チラシ・提案書",
-    "slug": "proposal",
+    "slug": "flyer-proposal",
     "validSlug": true
   },
   {
@@ -157,6 +157,31 @@
   {
     "label": "i-NEXT",
     "slug": "i-next",
+    "validSlug": true
+  },
+  {
+    "label": "契約書関係書類",
+    "slug": "contract-doc",
+    "validSlug": true
+  },
+  {
+    "label": "チラシ／掲載事例",
+    "slug": "flyer-casestudy",
+    "validSlug": true
+  },
+  {
+    "label": "提案書／動画",
+    "slug": "proposal-video",
+    "validSlug": true
+  },
+  {
+    "label": "登録関係",
+    "slug": "registration",
+    "validSlug": true
+  },
+  {
+    "label": "技術資料",
+    "slug": "tech-doc",
     "validSlug": true
   }
 ]
