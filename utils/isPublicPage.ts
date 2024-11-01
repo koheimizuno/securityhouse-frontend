@@ -4,6 +4,6 @@ export const isPublicPage = (pathname: string) => {
 }
 
 export const isDisplayHeaderPage = (pathname: string) => {
-  const publicPaths = [/^\/login$/, /^\/register$/, /^\/forgot-password$/]
+  const publicPaths = [/^\/login$/, /^\/register$/, /^\/forgot-password$/, /^\/dm$/]
   return !publicPaths.some(pattern => pattern.test(pathname))
 }

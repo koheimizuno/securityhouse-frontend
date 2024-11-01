@@ -30,6 +30,11 @@
     "validSlug": true
   },
   {
+    "label": "DM",
+    "slug": "dm",
+    "validSlug": true
+  },
+  {
     "label": "トークルーム",
     "slug": "chatroom",
     "validSlug": false
