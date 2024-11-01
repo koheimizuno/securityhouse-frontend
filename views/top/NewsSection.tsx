@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 import Container from '@/components/layout/Container'
 import SectionTitle from '@/components/common/SectionTitle'
-import NewsSmItem from '@/views/news/NewsSmItem'
+import NewsItem from '@/views/news/NewsItem'
 import { Button } from '@nextui-org/react'
 import { getNewsAction } from '@/actions/newsAction'
 import { NewsType } from '@/types/newsType'
@@ -49,7 +49,7 @@ const NewsSection = () => {
           {news &&
             Array.isArray(news) &&
             news.map(newItem => (
-              <NewsSmItem
+              <NewsItem
                 key={newItem.id}
                 name='山田太郎'
                 affiliation_name='所属名'

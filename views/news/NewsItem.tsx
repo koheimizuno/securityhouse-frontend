@@ -6,13 +6,13 @@ import { Button } from '@nextui-org/react'
 import { NewsType } from '@/types/newsType'
 import { formatDate } from '@/utils/formatDate'
 
-interface NewsSmItemProps extends Partial<NewsType> {
+interface NewsItemProps extends Partial<NewsType> {
   name: string
   affiliation_name: string
   thumbnail: string
 }
 
-const NewsSmItem = ({ title, content, name, affiliation_name, bookmark_flag, updated_at }: NewsSmItemProps) => {
+const NewsItem = ({ title, content, name, affiliation_name, bookmark_flag, updated_at }: NewsItemProps) => {
   return (
     <li className='border-b border-colorGray2 py-4 w-full border-t md:border-t-0'>
       <div className='flex flex-col-reverse gap-4 md:flex-row md:justify-between md:items-center'>
@@ -57,4 +57,4 @@ const NewsSmItem = ({ title, content, name, affiliation_name, bookmark_flag, upd
   )
 }
 
-export default memo(NewsSmItem)
+export default memo(NewsItem)

@@ -33,7 +33,7 @@ const DirectMessagePage = () => {
 
   return (
     <Container className='pb-8 flex flex-col gap-8'>
-      <PageHeader title='DM' subtitle='Top' />
+      <PageHeader title='DM' subtitle='トップ' />
       <div className='p-6 pl-0 w-full mx-auto space-y-4 mb-4 max-h-96 overflow-y-auto secondary-scroll flex flex-col gap-8'>
         {messages.length > 0 ? (
           messages.map(message => (

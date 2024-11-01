@@ -16,7 +16,7 @@ import { NewsType } from '@/types/newsType'
 import { deleteNewsAction, deleteNewsLikeAction, newsLikeAction } from '@/redux-store/slices/newsSlice'
 import { deletePostAction, deletePostLikeAction, postLikeAction } from '@/redux-store/slices/postSlice'
 
-const PostItem = ({
+const MainItem = ({
   id,
   title,
   content,
@@ -143,4 +143,4 @@ const PostItem = ({
   )
 }
 
-export default PostItem
+export default MainItem
