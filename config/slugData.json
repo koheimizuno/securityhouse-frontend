@@ -15,6 +15,11 @@
     "validSlug": false
   },
   {
+    "label": "SH会情報",
+    "slug": "sh-club",
+    "validSlug": true
+  },
+  {
     "label": "トークルーム",
     "slug": "chatroom",
     "validSlug": false

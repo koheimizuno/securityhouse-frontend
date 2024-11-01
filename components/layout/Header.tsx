@@ -24,7 +24,9 @@ const Header = () => {
             <Link href='/'>
               <Image src='/images/icons/logo.svg' className='w-[217px] h-[40px]' alt='Logo' width={217} height={40} />
             </Link>
-            <p className='text-[15px] font-bold text-[#333] ps-2 md:ps-0'>SH会員専用ページ</p>
+            <Link href='/sh-club' className='text-[15px] font-bold text-[#333] ps-2 md:ps-0'>
+              SH会員専用ページ
+            </Link>
           </div>
           <div
             className={`absolute top-[95.5px] right-0 z-20 w-full bg-white shadow-md flex-col gap-6 sm:static sm:shadow-none sm:top-0 sm:right-0 sm:w-auto sm:max-h-full flex sm:flex-row items-center sm:gap-2 transition-all duration-300 ease-in-out ${
