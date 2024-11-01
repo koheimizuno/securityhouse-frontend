@@ -88,7 +88,7 @@ const Header = () => {
           </li>
           <li className='border-b sm:border-r border-colorGray1'>
             <Link
-              href='/document/sales-office/proposal'
+              href='/document/sales-office/flyer-proposal'
               className='flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]'
             >
               資料集
@@ -96,7 +96,7 @@ const Header = () => {
           </li>
           <li>
             <Link
-              href='#'
+              href='/sh-club'
               className='flex justify-center items-center py-[13px] font-bold text-colorGray1 hover:bg-[#003d8a]'
             >
               SH会情報

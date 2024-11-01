@@ -1,8 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-import React from 'react'
-import CustomButton from '../common/CustomButton'
+import Link from 'next/link'
+
+import CustomButton from '@/components/common/CustomButton'
 
 const Footer = () => {
   const handleMoveTop = () => {
@@ -29,7 +30,7 @@ const Footer = () => {
           <div className='flex flex-row justify-between items-center gap-10'>
             <ul className='hidden md:flex flex-row flex-wrap items-start gap-10'>
               <li>
-                <a href='#' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
+                <Link href='/' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
                   <span className='text-[15px] font-bold'>TOP</span>
                   <Image
                     src='/images/icons/arrow-right.svg'
@@ -38,10 +39,10 @@ const Footer = () => {
                     width={5}
                     height={10}
                   />
-                </a>
+                </Link>
               </li>
               <li>
-                <a href='#' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
+                <Link href='/chatroom/sh-room' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
                   <span className='text-[15px] font-bold'>トークルーム</span>
                   <Image
                     src='/images/icons/arrow-right.svg'
@@ -50,10 +51,10 @@ const Footer = () => {
                     width={5}
                     height={10}
                   />
-                </a>
+                </Link>
               </li>
               <li>
-                <a href='#' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
+                <Link href='/sh-club' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
                   <span className='text-[15px] font-bold'>SH会情報</span>
                   <Image
                     src='/images/icons/arrow-right.svg'
@@ -62,10 +63,10 @@ const Footer = () => {
                     width={5}
                     height={10}
                   />
-                </a>
+                </Link>
               </li>
               <li>
-                <a href='#' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
+                <Link href='/news' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
                   <span className='text-[15px] font-bold'>お知らせ</span>
                   <Image
                     src='/images/icons/arrow-right.svg'
@@ -74,10 +75,13 @@ const Footer = () => {
                     width={5}
                     height={10}
                   />
-                </a>
+                </Link>
               </li>
               <li>
-                <a href='#' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
+                <Link
+                  href='/document/sales-office/flyer-proposal'
+                  className='flex flex-row justify-between items-center gap-2 w-[120px]'
+                >
                   <span className='text-[15px] font-bold'>資料集</span>
                   <Image
                     src='/images/icons/arrow-right.svg'
@@ -86,26 +90,27 @@ const Footer = () => {
                     width={5}
                     height={10}
                   />
-                </a>
+                </Link>
               </li>
             </ul>
-            <CustomButton
-              onClick={() => {}}
-              value='マイページ'
-              outline={false}
-              spTxtHidden={true}
-              size='lg'
-              icon='/images/icons/user-icon.svg'
-              className='px-8 py-3 md:w-[200px] md:h-[56px]'
-            />
+            <Link href={`/profile/1`}>
+              <CustomButton
+                value='マイページ'
+                outline={false}
+                spTxtHidden={true}
+                size='lg'
+                icon='/images/icons/user-icon.svg'
+                className='px-8 py-3 md:w-[200px] md:h-[56px]'
+              />
+            </Link>
           </div>
         </div>
         <hr className='my-6' />
         <div className='flex flex-col items-center sm:flex-row sm:justify-between gap-4'>
           <p className='text-[12px] text-[#333]'>©Security House Center Co.,LTD. All rights reserved.</p>
-          <a href='' className='text-[14px] font-bold underline whitespace-nowrap'>
+          <Link href='/sitemap' className='text-[14px] font-bold underline whitespace-nowrap'>
             サイトマップ
-          </a>
+          </Link>
         </div>
       </div>
       <div className='absolute bottom-20 right-10 cursor-pointer' onClick={handleMoveTop}>
