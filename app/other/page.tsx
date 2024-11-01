@@ -8,7 +8,7 @@ import DocCardButton from '@/views/document/DocCardButton'
 const OtherPage = () => {
   return (
     <Container className='py-16 flex flex-col gap-16'>
-      <PageHeader title='その他' subtitle='資料集' />
+      <PageHeader title='その他' subtitle='トップ' />
       <section className='flex flex-col gap-8'>
         <SectionTitle title='代理店／サポートショップ' bar={true} divider={true} />
         <div className='flex flex-col gap-4'>
