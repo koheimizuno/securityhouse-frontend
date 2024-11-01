@@ -38,10 +38,30 @@ const DocumentSection = () => {
       <div className='mt-6'>
         <h3>商品・技術</h3>
         <ul className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-3'>
-          <DataLink title='SHブランド' href='/' img='/images/icons/brand-icon.svg' className='xl:w-[288px]' />
-          <DataLink title='TAKEXブランド' href='/' img='/images/icons/takex-icon.svg' className='xl:w-[288px]' />
-          <DataLink title='セキュリネット' href='/' img='/images/icons/security-icon.svg' className='xl:w-[288px]' />
-          <DataLink title='i-NEXT' href='/' img='/images/icons/inext-icon.svg' className='xl:w-[288px]' />
+          <DataLink
+            title='SHブランド'
+            href='/document/product-tech/sh-brand'
+            img='/images/icons/brand-icon.svg'
+            className='xl:w-[288px]'
+          />
+          <DataLink
+            title='TAKEXブランド'
+            href='/document/product-tech/takex-brand'
+            img='/images/icons/takex-icon.svg'
+            className='xl:w-[288px]'
+          />
+          <DataLink
+            title='セキュリネット'
+            href='/document/product-tech/security-net'
+            img='/images/icons/security-icon.svg'
+            className='xl:w-[288px]'
+          />
+          <DataLink
+            title='i-NEXT'
+            href='/document/product-tech/i-next'
+            img='/images/icons/inext-icon.svg'
+            className='xl:w-[288px]'
+          />
         </ul>
       </div>
     </Container>
