@@ -65,7 +65,7 @@ const SHClubPagePage = () => {
   return (
     <Container className='py-16 flex flex-col gap-8'>
       <PageHeader title='セキュリティハウス会専用ページ／SH会情報' subtitle='トップ' />
-      <section className='flex flex-col gap-8'>
+      <section className='flex flex-col gap-8' id='minutes'>
         <SectionTitle title='議事録' bar={true} divider={true} />
         <div className={`inline-block md:hidden ${isOpen && 'change'}`} onClick={handleMenu}>
           <div className='bar1'></div>
@@ -96,7 +96,7 @@ const SHClubPagePage = () => {
           </div>
         </div>
       </section>
-      <section className='flex flex-col gap-8'>
+      <section className='flex flex-col gap-8' id='rules'>
         <SectionTitle title='SH会会則' bar={true} divider={true} />
         <DocCardButton title='SH会会則' size='lg' />
       </section>

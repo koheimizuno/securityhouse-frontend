@@ -25,6 +25,11 @@
     "validSlug": true
   },
   {
+    "label": "サイトマップ",
+    "slug": "sitemap",
+    "validSlug": true
+  },
+  {
     "label": "トークルーム",
     "slug": "chatroom",
     "validSlug": false
