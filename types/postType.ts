@@ -1,5 +1,5 @@
 export type PostType = {
-  id: string
+  id: number
   title: string
   content: string
   hashtag: string
@@ -8,23 +8,20 @@ export type PostType = {
   category_id: string
   category_name: string
   publication: string
-  user_id: string
   name: string
+  user_name: string
   affiliation_name: string
   thumbnail: string
-  type_id: string
-  post_destination: string
-  nice_flag: string
-  like_count: string
-  bookmark_flag: string
-  comment_count: string
+  type_id: number
+  nice_flag: boolean
+  like_count: number
+  bookmark_flag: boolean
+  comment_count: number
   created_at: string
-  updated_at: string
-  deleted_at: string
 }
 
 export type PostType_Type = {
-  id: string
+  id: number
   title: string
   group_id: string
 }

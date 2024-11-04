@@ -1,8 +1,10 @@
 import axios from 'axios'
 
-export const getNewsAction = async () => {
+export const getNewsAction = async (user_id: string) => {
   try {
-    const { data } = await axios.get(`/api/news/`)
+    const { data } = await axios.get(`/api/news/`, {
+      params: { user_id }
+    })
     return data.news
   } catch (err) {
     console.error(err)

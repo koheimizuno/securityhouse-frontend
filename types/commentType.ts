@@ -1,12 +1,12 @@
 export type CommentType = {
-  id: string
+  id: number
   content: string
-  hidden: string
-  post_id: string
-  user_id: string
   attachment: string
-  comment_id: string
+  hidden: string
+  post_id: number
+  user_name: string
+  affiliation_name: string
+  thumbnail: string
+  comment_id: number
   created_at: string
-  updated_at: string
-  deleted_at: string
 }
