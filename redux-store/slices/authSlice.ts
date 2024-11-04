@@ -10,7 +10,7 @@ export const registerAction: any = createAsyncThunk('registerAction', async (pay
   try {
     return await axios.post(`/api/user/`, payload)
   } catch (err: any) {
-    console.error('Error registering user:', err)
+    return err.response.data
   }
 })
 
@@ -21,7 +21,7 @@ export const loginAction: any = createAsyncThunk(
       const { data } = await axios.post(`/api/login/`, { email, password })
       return data
     } catch (err: any) {
-      console.error('Error logining user:', err)
+      return err.response.data
     }
   }
 )
@@ -30,7 +30,7 @@ export const editUserAction: any = createAsyncThunk('editUserAction', async (pay
   try {
     return await axios.put(`/api/user/`, payload)
   } catch (err: any) {
-    console.error('Error editting user:', err)
+    return err.response.data
   }
 })
 
@@ -38,25 +38,31 @@ export const forgotPasswordAction: any = createAsyncThunk(
   'forgotPasswordAction',
   async ({ email }: { email: string }) => {
     try {
-      return await axios.post(`/api/forgot-password/`, { email })
+      const { data } = await axios.post(`/api/forgot-password/`, { email })
+      return data
     } catch (err: any) {
-      console.error('Error editting user:', err)
+      return err.response.data
     }
   }
 )
 
 export const changePasswordAction: any = createAsyncThunk(
   'changePasswordAction',
-  async ({ email, password }: { email: string; password: string }) => {
+  async ({ id, password }: { id: number; password: string }) => {
     try {
-      return await axios.patch(`/api/forgot-password/`, { email, password })
+      return await axios.patch(`/api/forgot-password/`, { id, password })
     } catch (err: any) {
-      console.error('Error editting user:', err)
+      return err.response.data
     }
   }
 )
 
-const initialState: storeInitialType = {
+interface AuthTypes extends storeInitialType {
+  user_id: number | null
+}
+
+const initialState: AuthTypes = {
+  user_id: null,
   success: false,
   error: false,
   isLoading: false
@@ -76,10 +82,10 @@ export const authSlice = createSlice({
         state.success = true
         toast.success('ユーザー登録に成功しました。')
       })
-      .addCase(registerAction.rejected, state => {
+      .addCase(registerAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(loginAction.pending, state => {
         state.isLoading = true
@@ -93,10 +99,10 @@ export const authSlice = createSlice({
           window.location.href = '/'
         }, 2000)
       })
-      .addCase(loginAction.rejected, state => {
+      .addCase(loginAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(editUserAction.pending, state => {
         state.isLoading = true
@@ -106,19 +112,20 @@ export const authSlice = createSlice({
         state.success = true
         toast.success('ユーザー情報の変更に成功しました。')
       })
-      .addCase(editUserAction.rejected, state => {
+      .addCase(editUserAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
-      .addCase(forgotPasswordAction.fulfilled, state => {
+      .addCase(forgotPasswordAction.fulfilled, (state, { payload }) => {
         state.isLoading = false
         state.success = true
+        state.user_id = payload.user_id
       })
-      .addCase(forgotPasswordAction.rejected, state => {
+      .addCase(forgotPasswordAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('メールアドレスが登録されていません。')
+        toast.error(payload.message)
       })
       .addCase(changePasswordAction.fulfilled, state => {
         state.isLoading = false
@@ -128,10 +135,10 @@ export const authSlice = createSlice({
           window.location.href = '/login'
         }, 2000)
       })
-      .addCase(changePasswordAction.rejected, state => {
+      .addCase(changePasswordAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('メールアドレスが登録されていません。')
+        toast.error(payload.message)
       })
   }
 })
