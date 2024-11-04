@@ -22,7 +22,6 @@ import { getPostsAction } from '@/actions/postAction'
 import { RootState } from '@/redux-store'
 import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
-import { useAuthentication } from '@/hooks/AuthContext'
 
 const PostSection = () => {
   const dispatch = useDispatch()
@@ -30,7 +29,6 @@ const PostSection = () => {
   const [posts, setPosts] = useState<PostType[]>([])
   const [postType, setPostType] = useState('1')
   const [progress, setProgress] = useState(0)
-  const { user_id } = useAuthentication()
   const { categories } = useSelector((state: RootState) => state.category)
 
   useEffect(() => {
@@ -45,7 +43,7 @@ const PostSection = () => {
   }, [dispatch])
 
   useEffect(() => {
-    getPostsAction({ user_id, type_id: postType, category_id: '0' })
+    getPostsAction({ type_id: postType, category_id: '0' })
       .then(data => {
         setPosts(data)
       })
@@ -58,7 +56,7 @@ const PostSection = () => {
         type_id: postType
       })
     )
-  }, [dispatch, postType, user_id])
+  }, [dispatch, postType])
 
   const { roomListTitle, roomListHref } = useMemo(() => {
     switch (postType) {

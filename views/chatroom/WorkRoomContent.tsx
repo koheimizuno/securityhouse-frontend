@@ -7,14 +7,12 @@ import RoomPageContent from './RoomPageContent'
 import { PostType } from '@/types/postType'
 import { getPostsAction } from '@/actions/postAction'
 import { useRoom } from '@/hooks/RoomContext'
-import { useAuthentication } from '@/hooks/AuthContext'
 import { CategoryType } from '@/types/categoryType'
 
 const WorkRoomContent = () => {
   const searchParams = useSearchParams()
   const [postData, setPostData] = useState<PostType[]>([])
   const { categories } = useRoom()
-  const { user_id } = useAuthentication()
   const category_id = searchParams.get('cat') || '0'
 
   const [selectedCat, setSelectedCat] = useState<CategoryType>({
@@ -34,10 +32,10 @@ const WorkRoomContent = () => {
   }, [categories, searchParams, category_id])
 
   useEffect(() => {
-    getPostsAction({ user_id, type_id: '2', category_id }).then(data => {
+    getPostsAction({ type_id: '2', category_id }).then(data => {
       setPostData(data)
     })
-  }, [user_id, category_id])
+  }, [category_id])
 
   return (
     postData && (

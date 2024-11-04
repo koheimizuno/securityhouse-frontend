@@ -5,7 +5,7 @@ export const getPostsAction = async ({
   type_id,
   category_id
 }: {
-  user_id: string
+  user_id?: string
   type_id: string
   category_id: string
 }) => {
