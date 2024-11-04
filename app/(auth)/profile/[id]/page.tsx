@@ -119,14 +119,14 @@ const ProfilePage = () => {
         </ul>
         <ul className='flex flex-col gap-6 mt-5'>
           <MainItem
-            id='1'
+            id={1}
             name='山田太郎'
             thumbnail='/images/icons/user-icon00.svg'
             affiliation_name='所属名'
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ'
-            bookmark_flag='1'
-            updated_at='2024年6月11日 14:30'
+            bookmark_flag={true}
+            created_at='2024年6月11日 14:30'
           />
         </ul>
       </section>

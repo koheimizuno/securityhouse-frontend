@@ -15,10 +15,10 @@ interface CommentItemProps {
   userCompany: string
   avatar: string
   comment: string
-  updatedAt: string
+  created_at: string
 }
 
-const CommentItem = ({ userName, userCompany, avatar, comment, updatedAt }: CommentItemProps) => {
+const CommentItem = ({ userName, userCompany, avatar, comment, created_at }: CommentItemProps) => {
   const [moreActive, setMoreActive] = useState<boolean>(false)
 
   const ref = useClickAway<HTMLDivElement>(() => {
@@ -38,7 +38,7 @@ const CommentItem = ({ userName, userCompany, avatar, comment, updatedAt }: Comm
             <p className='text-[15px]'>
               {userName}/{userCompany}
             </p>
-            <p className='text-xs text-colorGray3'>{formatDate(updatedAt)}</p>
+            <p className='text-xs text-colorGray3'>{formatDate(created_at)}</p>
           </div>
           <Button size='sm' color='primary' className='hidden md:block rounded-full text-xs px-2 py-0 h-6'>
             事務局からのご案内

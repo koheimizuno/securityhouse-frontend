@@ -1,6 +1,6 @@
 'use client'
 
-import React, { memo, useCallback, useState } from 'react'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -14,6 +14,7 @@ import { deletePostAction, deletePostLikeAction, postLikeAction } from '@/redux-
 import { PostType } from '@/types/postType'
 import DeletePostModal from '@/components/modal/DeletePostModal'
 import getPostTypeById from '@/utils/getPostTypeByID'
+import { getImageAlt } from '@/utils/getImageAlt'
 
 const PostCard = ({
   id,
@@ -28,7 +29,7 @@ const PostCard = ({
   like_count,
   comment_count,
   bookmark_flag,
-  updated_at
+  created_at
 }: Partial<PostType>) => {
   const pathname = usePathname()
   const dispatch = useDispatch()
@@ -42,6 +43,14 @@ const PostCard = ({
     setMoreActive(false)
   })
 
+  const imgData = useMemo(() => {
+    if (thumbnail) {
+      return { src: '/' + thumbnail, alt: getImageAlt(thumbnail) }
+    } else {
+      return { src: '/images/icons/user-icon00.svg', alt: getImageAlt('/images/icons/user-icon00.svg') }
+    }
+  }, [thumbnail])
+
   const handleDeletePost = useCallback(async () => {
     await dispatch(deletePostAction(id))
     setMoreActive(false)
@@ -49,15 +58,15 @@ const PostCard = ({
   }, [dispatch, id, closeModal])
 
   const handleLike = () => {
-    if (nice_flag === '0') dispatch(postLikeAction(id))
-    else if (nice_flag === '1') dispatch(deletePostLikeAction(id))
+    if (nice_flag) dispatch(postLikeAction(id))
+    else if (nice_flag) dispatch(deletePostLikeAction(id))
   }
 
   return (
     <div className='relative bg-white px-4 py-6 w-[282px] rounded-md'>
       <Image
-        src={bookmark_flag === '1' ? '/images/icons/bookmark-fill.svg' : '/images/icons/bookmark-fill-gray.svg'}
-        alt={bookmark_flag === '1' ? 'bookmark-on' : 'bookmark-off'}
+        src={bookmark_flag ? '/images/icons/bookmark-fill.svg' : '/images/icons/bookmark-fill-gray.svg'}
+        alt={bookmark_flag ? 'bookmark-on' : 'bookmark-off'}
         className='absolute -top-1 right-3 w-8 h-8'
         width={32}
         height={32}
@@ -95,18 +104,13 @@ const PostCard = ({
       </div>
       <hr className='border-b border-colorGray4' />
       <div className='flex items-center gap-2 mt-4 mb-3'>
-        <Image
-          src={`${thumbnail ? '/' + thumbnail : '/images/icons/user-icon00.svg'}`}
-          alt='user-icon00'
-          width={24}
-          height={24}
-        />
+        <Image src={imgData.src} alt={imgData.alt || ''} width={24} height={24} />
         <p className='text-sm'>
           {name}/{affiliation_name}
         </p>
       </div>
       <div className='flex items-center justify-between'>
-        <p className='text-sm text-colorGray4'>{updated_at && formatDate(updated_at)}</p>
+        <p className='text-sm text-colorGray4'>{created_at && formatDate(created_at)}</p>
         <div ref={ref} className='relative'>
           <button onClick={() => pathname !== '/' && setMoreActive(!moreActive)}>
             <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />

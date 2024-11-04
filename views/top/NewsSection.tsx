@@ -10,13 +10,15 @@ import NewsItem from '@/views/news/NewsItem'
 import { Button } from '@nextui-org/react'
 import { getNewsAction } from '@/actions/newsAction'
 import { NewsType } from '@/types/newsType'
+import { useAuthentication } from '@/hooks/AuthContext'
 
 const NewsSection = () => {
   const [news, setNews] = useState<NewsType[]>([])
+  const { user_id } = useAuthentication()
 
   useEffect(() => {
-    getNewsAction().then(data => setNews(data))
-  }, [])
+    getNewsAction(user_id).then(data => setNews(data))
+  }, [user_id])
 
   return (
     <Container>
@@ -47,19 +49,20 @@ const NewsSection = () => {
         </div>
         <ul className='secondary-scroll flex flex-col items-center w-full h-[500px] md:h-[330px] overflow-y-scroll pr-6'>
           {news &&
-            Array.isArray(news) &&
-            news.map(newItem => (
-              <NewsItem
-                key={newItem.id}
-                name='山田太郎'
-                affiliation_name='所属名'
-                thumbnail=''
-                title={newItem.title}
-                content={newItem.content}
-                bookmark_flag={newItem.bookmark_flag}
-                updated_at={newItem.created_at}
-              />
-            ))}
+            news
+              .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+              .map(newItem => (
+                <NewsItem
+                  key={newItem.id}
+                  name='山田太郎'
+                  affiliation_name='所属名'
+                  thumbnail=''
+                  title={newItem.title}
+                  content={newItem.content}
+                  bookmark_flag={newItem.bookmark_flag}
+                  updated_at={newItem.created_at}
+                />
+              ))}
         </ul>
       </div>
     </Container>

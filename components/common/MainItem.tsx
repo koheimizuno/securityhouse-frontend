@@ -10,8 +10,9 @@ import { Button } from '@nextui-org/react'
 import DeletePostModal from '@/components/modal/DeletePostModal'
 
 import { getImageAlt } from '@/utils/getImageAlt'
-import { PostType } from '@/types/postType'
+import { formatDate } from '@/utils/formatDate'
 import { useClickAway } from '@uidotdev/usehooks'
+import { PostType } from '@/types/postType'
 import { NewsType } from '@/types/newsType'
 import { deleteNewsAction, deleteNewsLikeAction, newsLikeAction } from '@/redux-store/slices/newsSlice'
 import { deletePostAction, deletePostLikeAction, postLikeAction } from '@/redux-store/slices/postSlice'
@@ -20,12 +21,14 @@ const MainItem = ({
   id,
   title,
   content,
-  name,
+  category_name,
+  user_name,
   affiliation_name,
   thumbnail,
   nice_flag,
+  like_count,
   bookmark_flag,
-  updated_at
+  created_at
 }: Partial<PostType | NewsType>) => {
   const pathname = usePathname()
   const dispatch = useDispatch()
@@ -65,13 +68,13 @@ const MainItem = ({
   }, [dispatch, id, closeModal])
 
   const handleLikePost = () => {
-    if (nice_flag === '0') dispatch(postLikeAction(id))
-    else if (nice_flag === '1') dispatch(deletePostLikeAction(id))
+    if (!nice_flag) dispatch(postLikeAction(id))
+    else if (nice_flag) dispatch(deletePostLikeAction(id))
   }
 
   const handleLikeNew = () => {
-    if (nice_flag === '0') dispatch(newsLikeAction(id))
-    else if (nice_flag === '1') dispatch(deleteNewsLikeAction(id))
+    if (!nice_flag) dispatch(newsLikeAction(id))
+    else if (nice_flag) dispatch(deleteNewsLikeAction(id))
   }
 
   return (
@@ -82,7 +85,7 @@ const MainItem = ({
     >
       <div>
         <Button size='sm' color='primary' className='md:hidden rounded-full text-xs px-2 py-0 h-6'>
-          事務局からのご案内
+          {category_name}
         </Button>
       </div>
       <div className='flex justify-between items-center'>
@@ -90,12 +93,12 @@ const MainItem = ({
           <Image src={imgData.src} alt={imgData.alt || ''} width={44} height={44} />
           <div className='flex flex-col gap-1'>
             <p className='text-[15px]'>
-              {name}/{affiliation_name}
+              {user_name}/{affiliation_name}
             </p>
-            <p className='text-xs text-colorGray3'>{(updated_at && updated_at) || ''}</p>
+            {created_at && <p className='text-xs text-colorGray3'>{formatDate(created_at)}</p>}
           </div>
           <Button size='sm' color='primary' className='hidden md:block rounded-full text-xs px-2 py-0 h-6'>
-            事務局からのご案内
+            {category_name}
           </Button>
         </div>
         <div ref={ref} className='relative'>
@@ -128,12 +131,12 @@ const MainItem = ({
             <button className='underline' onClick={newsFlag ? handleLikeNew : handleLikePost}>
               いいね！{' '}
             </button>
-            <span>44件</span>
+            <span>{like_count}件</span>
           </p>
         </div>
         <Image
-          src={bookmark_flag === '1' ? '/images/icons/bookmark-fill.svg' : '/images/icons/bookmark-outline.svg'}
-          alt={bookmark_flag === '1' ? 'bookmark-fill' : 'bookmark-outline'}
+          src={bookmark_flag ? '/images/icons/bookmark-fill.svg' : '/images/icons/bookmark-outline.svg'}
+          alt={bookmark_flag ? 'bookmark-fill' : 'bookmark-outline'}
           width={32}
           height={32}
         />

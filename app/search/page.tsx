@@ -21,8 +21,8 @@ const SearchPage = () => {
             thumbnail=''
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
-            bookmark_flag='1'
-            updated_at='2015-07-20T15:49:04-07:00'
+            bookmark_flag={true}
+            created_at='2015-07-20T15:49:04-07:00'
           />
           <NewsItem
             name='山田太郎'
@@ -30,8 +30,8 @@ const SearchPage = () => {
             thumbnail=''
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
-            bookmark_flag='1'
-            updated_at='2015-07-20T15:49:04-07:00'
+            bookmark_flag={true}
+            created_at='2015-07-20T15:49:04-07:00'
           />
           <NewsItem
             name='山田太郎'
@@ -39,8 +39,8 @@ const SearchPage = () => {
             thumbnail=''
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
-            bookmark_flag='1'
-            updated_at='2015-07-20T15:49:04-07:00'
+            bookmark_flag={true}
+            created_at='2015-07-20T15:49:04-07:00'
           />
         </ul>
       </section>
@@ -53,8 +53,8 @@ const SearchPage = () => {
             thumbnail=''
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
-            bookmark_flag='1'
-            updated_at='2015-07-20T15:49:04-07:00'
+            bookmark_flag={true}
+            created_at='2015-07-20T15:49:04-07:00'
           />
           <NewsItem
             name='山田太郎'
@@ -62,8 +62,8 @@ const SearchPage = () => {
             thumbnail=''
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
-            bookmark_flag='1'
-            updated_at='2015-07-20T15:49:04-07:00'
+            bookmark_flag={true}
+            created_at='2015-07-20T15:49:04-07:00'
           />
           <NewsItem
             name='山田太郎'
@@ -71,8 +71,8 @@ const SearchPage = () => {
             thumbnail=''
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
-            bookmark_flag='1'
-            updated_at='2015-07-20T15:49:04-07:00'
+            bookmark_flag={true}
+            created_at='2015-07-20T15:49:04-07:00'
           />
         </ul>
       </section>
@@ -80,34 +80,34 @@ const SearchPage = () => {
         <SectionTitle title='ユーザー' bar={true} divider={true} />
         <div className='flex flex-col gap-4'>
           <MainItem
-            id='1'
+            id={1}
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
             name='山田太郎'
             affiliation_name='所属名'
             thumbnail='/images/icons/user-icon00.svg'
-            bookmark_flag='1'
-            updated_at='2015-07-20T15:49:04-07:00'
+            bookmark_flag={true}
+            created_at='2015-07-20T15:49:04-07:00'
           />
           <MainItem
-            id='1'
+            id={1}
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
             name='山田太郎'
             affiliation_name='所属名'
             thumbnail='/images/icons/user-icon00.svg'
-            bookmark_flag='1'
-            updated_at='2015-07-20T15:49:04-07:00'
+            bookmark_flag={true}
+            created_at='2015-07-20T15:49:04-07:00'
           />
           <MainItem
-            id='1'
+            id={1}
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
             name='山田太郎'
             affiliation_name='所属名'
             thumbnail='/images/icons/user-icon00.svg'
-            bookmark_flag='1'
-            updated_at='2015-07-20T15:49:04-07:00'
+            bookmark_flag={true}
+            created_at='2015-07-20T15:49:04-07:00'
           />
         </div>
       </section>

@@ -30,6 +30,7 @@ import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { createCommentAction } from '@/redux-store/slices/commentSlice'
 import { RootState } from '@/redux-store'
 import DeletePostModal from '@/components/modal/DeletePostModal'
+import { useAuthentication } from '@/hooks/AuthContext'
 
 const SHRoomPostDetailPage = () => {
   const { id } = useParams()
@@ -53,12 +54,13 @@ const SHRoomPostDetailPage = () => {
     attachment: ''
   })
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const { user_id } = useAuthentication()
 
   const openModal = () => setIsOpen(true)
   const closeModal = useCallback(() => setIsOpen(false), [])
 
   const category = useMemo(() => {
-    return categories?.find((category: CategoryType) => category.id === postData?.category_id)?.title || ''
+    return categories?.find((category: CategoryType) => category.category_id === postData?.category_id)?.title || ''
   }, [categories, postData?.category_id])
 
   const ref = useClickAway<HTMLDivElement>(() => {
@@ -113,24 +115,24 @@ const SHRoomPostDetailPage = () => {
 
   const handleLike = () => {
     if (typeof id === 'string') {
-      if (postData?.nice_flag === '0') dispatch(postLikeAction(id))
-      else if (postData?.nice_flag === '1') dispatch(deletePostLikeAction(id))
+      if (postData?.nice_flag) dispatch(postLikeAction(id))
+      else if (postData?.nice_flag) dispatch(deletePostLikeAction(id))
     }
   }
 
   const handleBookmark = () => {
-    if (postData?.bookmark_flag === '0')
+    if (postData?.bookmark_flag)
       dispatch(
         postBookmarkAction({
           post_id: id,
-          user_id: postData.user_id
+          user_id: user_id
         })
       )
-    else if (postData?.bookmark_flag === '1')
+    else if (postData?.bookmark_flag)
       dispatch(
         deletePostBookmarkAction({
           post_id: id,
-          user_id: postData.user_id
+          user_id: user_id
         })
       )
   }
@@ -230,11 +232,9 @@ const SHRoomPostDetailPage = () => {
             <button onClick={handleBookmark}>
               <Image
                 src={
-                  postData.bookmark_flag === '1'
-                    ? '/images/icons/bookmark-fill.svg'
-                    : '/images/icons/bookmark-icon-black.svg'
+                  postData.bookmark_flag ? '/images/icons/bookmark-fill.svg' : '/images/icons/bookmark-icon-black.svg'
                 }
-                alt={postData.bookmark_flag === '1' ? 'bookmark-fill.svg' : 'bookmark-icon-black.svg'}
+                alt={postData.bookmark_flag ? 'bookmark-fill.svg' : 'bookmark-icon-black.svg'}
                 className='w-8 h-8'
                 width={32}
                 height={32}
@@ -297,7 +297,7 @@ const SHRoomPostDetailPage = () => {
                 userCompany='所属名'
                 avatar='/images/icons/user-icon00.svg'
                 comment={comment.content}
-                updatedAt={comment.updated_at}
+                created_at={comment.created_at}
               />
             ))}
           </ul>

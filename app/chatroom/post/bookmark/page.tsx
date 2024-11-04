@@ -32,7 +32,7 @@ const BookmarkedPostPage = () => {
               affiliation_name={post.affiliation_name}
               thumbnail='/images/icons/user-icon00.svg'
               bookmark_flag={post.bookmark_flag}
-              updated_at={post.updated_at}
+              created_at={post.created_at}
             />
           ))}
       </ul>

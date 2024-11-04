@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
@@ -20,12 +19,14 @@ import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { CategoryType } from '@/types/categoryType'
 import { getNewsAction } from '@/actions/newsAction'
 import { NewsContext } from '@/hooks/NewsContext'
+import { useAuthentication } from '@/hooks/AuthContext'
 
 const NewsPage = () => {
   const dispatch = useDispatch()
+  const searchParams = useSearchParams()
   const [news, setNews] = useState<NewsType[]>([])
   const [isOpen, setIsOpen] = useState(false)
-  const searchParams = useSearchParams()
+  const { user_id } = useAuthentication()
   const [selectedCat, setSelectedCat] = useState<CategoryType>({
     title: '',
     description: ''
@@ -33,8 +34,8 @@ const NewsPage = () => {
   const { categories } = useSelector((state: RootState) => state.category)
 
   useEffect(() => {
-    getNewsAction().then(data => setNews(data))
-  }, [])
+    getNewsAction(user_id).then(data => setNews(data))
+  }, [user_id])
 
   useEffect(() => {
     dispatch(
@@ -97,15 +98,17 @@ const NewsPage = () => {
                 news.map(newItem => (
                   <MainItem
                     key={newItem.id}
-                    id='1'
-                    name='山田太郎'
-                    thumbnail='/images/icons/user-icon00.svg'
-                    affiliation_name='所属名'
-                    title='タイトルタイトルタイトル'
-                    content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投テ'
+                    id={newItem.id}
+                    title={newItem.title}
+                    content={newItem.content}
+                    category_name={newItem.category_name}
+                    user_name={newItem.user_name}
+                    affiliation_name={newItem.affiliation_name}
+                    thumbnail={newItem.thumbnail}
                     nice_flag='1'
-                    bookmark_flag='1'
-                    updated_at='2024年6月11日 14:30'
+                    like_count={newItem.like_count}
+                    bookmark_flag={newItem.bookmark_flag}
+                    created_at={newItem.created_at}
                   />
                 ))}
             </ul>

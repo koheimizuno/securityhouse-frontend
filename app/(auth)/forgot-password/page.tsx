@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useCallback, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation'
 
 import Container from '@/components/layout/Container'
 import PageHeader from '@/components/common/PageHeader'
@@ -10,8 +11,11 @@ import { Button, Input } from '@nextui-org/react'
 
 import { validateEmail, validatePassword } from '@/utils/validateUtils'
 import { changePasswordAction, forgotPasswordAction } from '@/redux-store/slices/authSlice'
+import { useAuthentication } from '@/hooks/AuthContext'
+import { RootState } from '@/redux-store'
 
 const ForgotPasswordPage = () => {
+  const router = useRouter()
   const dispatch = useDispatch()
   const [step, setStep] = useState('forgot')
   const [formData, setFormData] = useState({
@@ -28,6 +32,12 @@ const ForgotPasswordPage = () => {
     password: false,
     passwordConfirm: false
   })
+  const { isAuthenticated } = useAuthentication()
+  const { user_id } = useSelector((state: RootState) => state.user)
+
+  useEffect(() => {
+    if (isAuthenticated) router.push('/')
+  }, [isAuthenticated, router])
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -80,12 +90,13 @@ const ForgotPasswordPage = () => {
           })
           break
         case 'change':
-          dispatch(
-            changePasswordAction({
-              email: email,
-              password: password
-            })
-          )
+          if (user_id)
+            dispatch(
+              changePasswordAction({
+                id: user_id,
+                password: password
+              })
+            )
           break
         default:
           break

@@ -133,7 +133,7 @@ const PostSection = () => {
                         like_count={post.like_count}
                         comment_count={post.comment_count}
                         bookmark_flag={post.bookmark_flag}
-                        updated_at={post.updated_at}
+                        created_at={post.created_at}
                       />
                     </SwiperSlide>
                   ))}

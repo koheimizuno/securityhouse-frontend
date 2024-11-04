@@ -46,7 +46,7 @@ const NewDetailPage = () => {
   })
 
   const category = useMemo(() => {
-    return categories?.find((category: CategoryType) => category.id === newData?.category_id)?.title || ''
+    return categories?.find((category: CategoryType) => category.category_id === newData?.category_id)?.title || ''
   }, [categories, newData?.category_id])
 
   useEffect(() => {
@@ -68,19 +68,19 @@ const NewDetailPage = () => {
   const handleLike = () => {
     if (typeof id === 'string') {
       if (newData?.nice_flag === '0') dispatch(newsLikeAction(id))
-      else if (newData?.nice_flag === '1') dispatch(deleteNewsLikeAction(id))
+      else if (newData?.nice_flag) dispatch(deleteNewsLikeAction(id))
     }
   }
 
   const handleBookmark = () => {
-    if (newData?.bookmark_flag === '0')
+    if (newData?.bookmark_flag)
       dispatch(
         newsBookmarkAction({
           post_id: id,
           user_id: newData.user_id
         })
       )
-    else if (newData?.bookmark_flag === '1')
+    else if (newData?.bookmark_flag)
       dispatch(
         deleteNewsBookmarkAction({
           post_id: id,
@@ -114,7 +114,7 @@ const NewDetailPage = () => {
               <Image src='/images/icons/user-icon00.svg' alt='user-icon00 w-11 h-11' width={44} height={44} />
               <div>
                 <p className='text-sm'>
-                  {newData.name}／{newData.affiliation_name}
+                  {newData.user_name}／{newData.affiliation_name}
                 </p>
                 <p>{'0000年00月00日00:00'}</p>
               </div>
@@ -165,12 +165,8 @@ const NewDetailPage = () => {
           </div>
           <button onClick={handleBookmark}>
             <Image
-              src={
-                newData.bookmark_flag === '1'
-                  ? '/images/icons/bookmark-fill.svg'
-                  : '/images/icons/bookmark-icon-black.svg'
-              }
-              alt={newData.bookmark_flag === '1' ? 'bookmark-fill.svg' : 'bookmark-icon-black.svg'}
+              src={newData.bookmark_flag ? '/images/icons/bookmark-fill.svg' : '/images/icons/bookmark-icon-black.svg'}
+              alt={newData.bookmark_flag ? 'bookmark-fill.svg' : 'bookmark-icon-black.svg'}
               className='w-8 h-8'
               width={32}
               height={32}
