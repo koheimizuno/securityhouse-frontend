@@ -1,6 +1,6 @@
 'use client'
 
-import React, { memo, useCallback, useMemo, useState } from 'react'
+import React, { memo, useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -11,29 +11,25 @@ import { Button } from '@nextui-org/react'
 import { formatDate } from '@/utils/formatDate'
 import { useClickAway } from '@uidotdev/usehooks'
 import { deletePostAction, deletePostLikeAction, postLikeAction } from '@/redux-store/slices/postSlice'
-import { PostType, PostType_Type } from '@/types/postType'
+import { PostType } from '@/types/postType'
 import DeletePostModal from '@/components/modal/DeletePostModal'
-
-interface PostCardProps extends Partial<PostType> {
-  postTypes: PostType_Type[]
-}
+import getPostTypeById from '@/utils/getPostTypeByID'
 
 const PostCard = ({
   id,
   title,
   content,
-  attachments,
   category_name,
   name,
   affiliation_name,
+  thumbnail,
   type_id,
-  postTypes,
   nice_flag,
   like_count,
   comment_count,
   bookmark_flag,
   updated_at
-}: PostCardProps) => {
+}: Partial<PostType>) => {
   const pathname = usePathname()
   const dispatch = useDispatch()
   const [moreActive, setMoreActive] = useState<boolean>(false)
@@ -41,10 +37,6 @@ const PostCard = ({
 
   const openModal = () => setIsOpen(true)
   const closeModal = useCallback(() => setIsOpen(false), [])
-
-  const postType = useMemo(() => {
-    return postTypes?.find(postType => postType.id === type_id)?.title || ''
-  }, [postTypes, type_id])
 
   const ref = useClickAway<HTMLDivElement>(() => {
     setMoreActive(false)
@@ -72,7 +64,7 @@ const PostCard = ({
       />
       <p className='text-xs flex items-center gap-1 mb-3'>
         <span className='text-primary'>■</span>
-        <span>{postType}</span>
+        {type_id && <span>{getPostTypeById(type_id)}</span>}
       </p>
       <div className='mb-5 flex items-center flex-wrap gap-2'>
         <Button size='sm' color='primary' className='text-xs px-2 py-0 h-6 rounded-full w-fit'>
@@ -104,8 +96,8 @@ const PostCard = ({
       <hr className='border-b border-colorGray4' />
       <div className='flex items-center gap-2 mt-4 mb-3'>
         <Image
-          src={attachments ? attachments : '/images/icons/user-icon00.svg'}
-          alt='user-icon00 w-6 h-6'
+          src={`${thumbnail ? '/' + thumbnail : '/images/icons/user-icon00.svg'}`}
+          alt='user-icon00'
           width={24}
           height={24}
         />

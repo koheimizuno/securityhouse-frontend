@@ -1,9 +1,17 @@
 import axios from 'axios'
 
-export const getPostsAction = async ({ type_id }: { type_id: string }) => {
+export const getPostsAction = async ({
+  user_id,
+  type_id,
+  category_id
+}: {
+  user_id: string
+  type_id: string
+  category_id?: string
+}) => {
   try {
     const { data } = await axios.get('/api/posts/', {
-      params: { type_id }
+      params: { user_id, type_id, category_id }
     })
     return data.posts
   } catch (err) {

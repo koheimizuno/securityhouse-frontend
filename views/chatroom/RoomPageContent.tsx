@@ -6,38 +6,17 @@ import Link from 'next/link'
 import PostCard from '@/views/chatroom/PostCard'
 import { Button, Pagination } from '@nextui-org/react'
 import { getImageAlt } from '@/utils/getImageAlt'
-import { PostType, PostType_Type } from '@/types/postType'
-import { CategoryType } from '@/types/categoryType'
-import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { PostType } from '@/types/postType'
 
 type RoomPageContentProps = {
   title: string
   icon: string
-  postTypes: PostType_Type[]
-  categories: CategoryType[]
+  category_title: string
+  category_description: string | undefined
   postData: PostType[]
 }
 
-const RoomPageContent = ({ title, icon, postTypes, categories, postData }: RoomPageContentProps) => {
-  const searchParams = useSearchParams()
-  const [selectedCat, setSelectedCat] = useState<CategoryType>({
-    title: '',
-    description: ''
-  })
-
-  useEffect(() => {
-    const catQuery = searchParams.get('cat')
-    if (catQuery && catQuery !== 'all') {
-      categories.map((category: CategoryType) => {
-        if (category.title === catQuery)
-          setSelectedCat(prevState => ({ ...prevState, title: category.title, description: category?.description }))
-      })
-    } else {
-      setSelectedCat(prevState => ({ ...prevState, title: 'すべて', description: '' }))
-    }
-  }, [categories, searchParams])
-
+const RoomPageContent = ({ title, icon, category_title, category_description, postData }: RoomPageContentProps) => {
   return (
     <div className='md:w-[calc(100%-246px)]'>
       <div className='mb-4 flex justify-between items-center'>
@@ -58,8 +37,8 @@ const RoomPageContent = ({ title, icon, postTypes, categories, postData }: RoomP
         </Link>
       </div>
       <div className='bg-bgSemiblue px-4 py-8 md:p-8 flex flex-col gap-6 rounded-2xl'>
-        <h2 className='text-[32px] font-bold'>{selectedCat.title}</h2>
-        {<p>{selectedCat.description}</p>}
+        <h2 className='text-[32px] font-bold'>{category_title}</h2>
+        <p>{category_description}</p>
         <div className='flex flex-col items-center sm:flex-row sm:flex-wrap gap-5'>
           {postData &&
             postData.map((post, index) => (
@@ -69,11 +48,10 @@ const RoomPageContent = ({ title, icon, postTypes, categories, postData }: RoomP
                 title={post.title}
                 content={post.content}
                 category_name={post.category_name}
-                name={post.name}
                 attachments={post.attachments}
+                name={post.name}
                 affiliation_name={post.affiliation_name}
                 type_id={post.type_id}
-                postTypes={postTypes}
                 nice_flag={post.nice_flag}
                 like_count={post.like_count}
                 comment_count={post.comment_count}

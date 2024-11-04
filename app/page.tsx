@@ -24,6 +24,7 @@ import { PostType } from '@/types/postType'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
 import { RootState } from '@/redux-store'
+import { useAuthentication } from '@/hooks/AuthContext'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -31,8 +32,8 @@ export default function Home() {
   const [postType, setPostType] = useState('1')
   const [posts, setPosts] = useState<PostType[]>([])
   const [progress, setProgress] = useState(0)
+  const { user_id } = useAuthentication()
   const { categories } = useSelector((state: RootState) => state.category)
-  const { postTypes } = useSelector((state: RootState) => state.post_type)
 
   useEffect(() => {
     const postTypeQuery = searchParams.get('type_id')
@@ -46,7 +47,7 @@ export default function Home() {
   }, [dispatch])
 
   useEffect(() => {
-    getPostsAction({ type_id: postType })
+    getPostsAction({ user_id, type_id: postType })
       .then(data => {
         setPosts(data)
       })
@@ -59,7 +60,7 @@ export default function Home() {
         type_id: postType
       })
     )
-  }, [dispatch, postType])
+  }, [dispatch, postType, user_id])
 
   const { roomListTitle, roomListHref } = useMemo(() => {
     switch (postType) {
@@ -127,10 +128,9 @@ export default function Home() {
                           content={post.content}
                           category_name={post.category_name}
                           name={post.name}
-                          attachments={post.attachments}
                           affiliation_name={post.affiliation_name}
+                          thumbnail={post.thumbnail}
                           type_id={post.type_id}
-                          postTypes={postTypes}
                           nice_flag={post.nice_flag}
                           like_count={post.like_count}
                           comment_count={post.comment_count}
