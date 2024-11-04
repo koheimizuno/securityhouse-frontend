@@ -15,7 +15,7 @@ const ExchangeRoomContent = () => {
   const [postData, setPostData] = useState<PostType[]>([])
   const { categories } = useRoom()
   const { user_id } = useAuthentication()
-  const category_id = searchParams.get('cat') || ''
+  const category_id = searchParams.get('cat') || '0'
 
   const [selectedCat, setSelectedCat] = useState<CategoryType>({
     title: '',
@@ -34,7 +34,7 @@ const ExchangeRoomContent = () => {
   }, [categories, searchParams, category_id])
 
   useEffect(() => {
-    getPostsAction({ user_id, type_id: '2', category_id }).then(data => {
+    getPostsAction({ user_id, type_id: '3', category_id }).then(data => {
       setPostData(data)
     })
   }, [user_id, category_id])

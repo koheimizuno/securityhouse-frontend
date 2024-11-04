@@ -15,7 +15,7 @@ const WorkRoomContent = () => {
   const [postData, setPostData] = useState<PostType[]>([])
   const { categories } = useRoom()
   const { user_id } = useAuthentication()
-  const category_id = searchParams.get('cat') || ''
+  const category_id = searchParams.get('cat') || '0'
 
   const [selectedCat, setSelectedCat] = useState<CategoryType>({
     title: '',

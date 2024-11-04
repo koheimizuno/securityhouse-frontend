@@ -7,7 +7,7 @@ export const getPostsAction = async ({
 }: {
   user_id: string
   type_id: string
-  category_id?: string
+  category_id: string
 }) => {
   try {
     const { data } = await axios.get('/api/posts/', {

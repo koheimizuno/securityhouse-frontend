@@ -47,7 +47,7 @@ export default function Home() {
   }, [dispatch])
 
   useEffect(() => {
-    getPostsAction({ user_id, type_id: postType })
+    getPostsAction({ user_id, type_id: postType, category_id: '0' })
       .then(data => {
         setPosts(data)
       })
