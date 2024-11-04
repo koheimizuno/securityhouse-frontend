@@ -22,7 +22,7 @@ const LoginPage = () => {
   const [isVisible, setIsVisible] = useState({
     password: false
   })
-  const isAuthenticated = useAuthentication()
+  const { isAuthenticated } = useAuthentication()
 
   useEffect(() => {
     if (isAuthenticated) router.push('/')

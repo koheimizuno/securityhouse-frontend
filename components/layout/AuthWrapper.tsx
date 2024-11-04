@@ -15,17 +15,18 @@ const AuthWrapper = ({
   const pathname = usePathname()
   const router = useRouter()
   const isPublic = isPublicPage(pathname)
-  const token: string | null = localStorage.getItem('token')
+  const loginInfoJSON: string | null = localStorage.getItem('auth')
+  const loginInfo = loginInfoJSON && JSON.parse(loginInfoJSON)
 
-  const isAuthenticated = !!token
+  const isAuthenticated = !!loginInfo?.token
 
   useEffect(() => {
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `JWT ${JSON.parse(token)}`
+    if (loginInfo?.token) {
+      axios.defaults.headers.common['Authorization'] = `JWT ${loginInfo?.token}`
     } else {
       delete axios.defaults.headers.common['Authorization']
     }
-  }, [pathname, router, token])
+  }, [pathname, router, loginInfo?.token])
 
   useEffect(() => {
     if (!isPublic && !isAuthenticated) {
@@ -33,7 +34,9 @@ const AuthWrapper = ({
     }
   }, [isAuthenticated, isPublic, router, pathname])
 
-  return <AuthContext.Provider value={isAuthenticated}>{children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, user_id: loginInfo?.user_id }}>{children}</AuthContext.Provider>
+  )
 }
 
 export default AuthWrapper

@@ -48,7 +48,7 @@ const RegisterPage = () => {
     passwordConfirm: false
   })
   const { groups } = useSelector((state: RootState) => state.group)
-  const isAuthenticated = useAuthentication()
+  const { isAuthenticated } = useAuthentication()
 
   useEffect(() => {
     if (isAuthenticated) router.push('/')
