@@ -41,24 +41,26 @@ const RoomPageContent = ({ title, icon, category_title, category_description, po
         <p>{category_description}</p>
         <div className='flex flex-col items-center sm:flex-row sm:flex-wrap gap-5'>
           {postData &&
-            postData.map((post, index) => (
-              <PostCard
-                key={index}
-                id={post.id}
-                title={post.title}
-                content={post.content}
-                category_name={post.category_name}
-                attachments={post.attachments}
-                name={post.name}
-                affiliation_name={post.affiliation_name}
-                type_id={post.type_id}
-                nice_flag={post.nice_flag}
-                like_count={post.like_count}
-                comment_count={post.comment_count}
-                bookmark_flag={post.bookmark_flag}
-                updated_at={post.updated_at}
-              />
-            ))}
+            postData
+              .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+              .map((post, index) => (
+                <PostCard
+                  key={index}
+                  id={post.id}
+                  title={post.title}
+                  content={post.content}
+                  category_name={post.category_name}
+                  attachments={post.attachments}
+                  name={post.name}
+                  affiliation_name={post.affiliation_name}
+                  type_id={post.type_id}
+                  nice_flag={post.nice_flag}
+                  like_count={post.like_count}
+                  comment_count={post.comment_count}
+                  bookmark_flag={post.bookmark_flag}
+                  updated_at={post.updated_at}
+                />
+              ))}
         </div>
         {postData && postData?.length > 3 && (
           <Pagination

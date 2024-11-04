@@ -120,25 +120,27 @@ export default function Home() {
                 >
                   {posts &&
                     categories &&
-                    posts.map((post, index) => (
-                      <SwiperSlide key={index}>
-                        <PostCard
-                          id={post.id}
-                          title={post.title}
-                          content={post.content}
-                          category_name={post.category_name}
-                          name={post.name}
-                          affiliation_name={post.affiliation_name}
-                          thumbnail={post.thumbnail}
-                          type_id={post.type_id}
-                          nice_flag={post.nice_flag}
-                          like_count={post.like_count}
-                          comment_count={post.comment_count}
-                          bookmark_flag={post.bookmark_flag}
-                          updated_at={post.updated_at}
-                        />
-                      </SwiperSlide>
-                    ))}
+                    posts
+                      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+                      .map((post, index) => (
+                        <SwiperSlide key={index}>
+                          <PostCard
+                            id={post.id}
+                            title={post.title}
+                            content={post.content}
+                            category_name={post.category_name}
+                            name={post.name}
+                            affiliation_name={post.affiliation_name}
+                            thumbnail={post.thumbnail}
+                            type_id={post.type_id}
+                            nice_flag={post.nice_flag}
+                            like_count={post.like_count}
+                            comment_count={post.comment_count}
+                            bookmark_flag={post.bookmark_flag}
+                            updated_at={post.updated_at}
+                          />
+                        </SwiperSlide>
+                      ))}
 
                   <div className='flex justify-end items-center gap-4 mt-4 md:mt-5 md:mr-4'>
                     <div className='w-full h-3 bg-white rounded-full p-[2px]'>
