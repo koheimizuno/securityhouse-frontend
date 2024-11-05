@@ -5,6 +5,7 @@ import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigat
 
 import TabItem from './TabItem'
 import PostTabType from '@/types/postTabType'
+import toast from 'react-hot-toast'
 
 interface TabVerticalProps {
   queryKey: string
@@ -31,8 +32,11 @@ const TabVertical = ({ queryKey, menuList, children, gap }: TabVerticalProps) =>
     (e: React.MouseEvent<HTMLLIElement>, title: string, index: number) => {
       if (title === 'ログアウト') {
         setTab((index + 1).toString())
-        router.push(pathname)
         localStorage.removeItem('auth')
+        toast.success('ログアウトされてしまいました。')
+        setTimeout(() => {
+          router.push('/login')
+        }, 2000)
       } else {
         const value = e.currentTarget.getAttribute('data-value')
         if (value) {
