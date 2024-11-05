@@ -40,7 +40,7 @@ const NewsPage = () => {
   useEffect(() => {
     dispatch(
       getCategoryAction({
-        pageFlag: '0',
+        pageFlag: '1',
         type_id: '5'
       })
     )

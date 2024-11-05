@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
@@ -31,11 +31,14 @@ const Category = ({ categories, toggleMenu }: CategoryProps) => {
     return pathname.includes('chatroom') ? true : false
   }, [pathname])
 
-  const handleCategory = (segment: string) => {
-    const newSearchParams = new URLSearchParams(searchParams.toString())
-    newSearchParams.set('cat', segment)
-    router.push(`${pathname}?${newSearchParams.toString()}`)
-  }
+  const handleCategory = useCallback(
+    (segment: string) => {
+      const newSearchParams = new URLSearchParams(searchParams.toString())
+      newSearchParams.set('cat', segment)
+      router.push(`${pathname}?${newSearchParams.toString()}`)
+    },
+    [pathname, router, searchParams]
+  )
 
   return (
     <div className='w-[206px] flex flex-col gap-12'>
