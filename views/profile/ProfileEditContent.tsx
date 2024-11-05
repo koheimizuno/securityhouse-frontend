@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 
-import PageHeader from '@/components/common/PageHeader'
 import SectionTitle from '@/components/common/SectionTitle'
 
 import { editUserAction } from '@/redux-store/slices/authSlice'
@@ -49,23 +48,24 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
     }
   }, [userData])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { type, name, value, files } = e.target
     if (type === 'file') {
       const file = files ? files[0] : null
       const imageUrl = file ? URL.createObjectURL(file) : ''
-      setFormData({
-        ...formData,
+      console.log(imageUrl)
+      setFormData(prev => ({
+        ...prev,
         [name]: {
           file: file,
           preview: imageUrl
         }
-      })
+      }))
     } else {
-      setFormData({ ...formData, [name]: value })
+      setFormData(prev => ({ ...prev, [name]: value }))
     }
-    setErrors({ ...errors, [name]: '' })
-  }
+    setErrors(prev => ({ ...prev, [name]: '' }))
+  }, [])
 
   const validateForm = () => {
     let isValid = true
@@ -126,7 +126,7 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
         />
         {formData.thumbnail.preview && (
           <Image
-            src={`/${formData.thumbnail.preview}`}
+            src={`${formData.thumbnail.preview}`}
             alt={getImageAlt(formData.thumbnail.preview) || ''}
             className='mt-2 w-32 h-w-32'
             width={50}

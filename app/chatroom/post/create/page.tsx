@@ -11,10 +11,11 @@ const RichTextEditor = dynamic(() => import('@/components/form/RichTextEditor'),
   ssr: false
 })
 
+import { getImageAlt } from '@/utils/getImageAlt'
+import { RootState } from '@/redux-store'
 import { createPostAction } from '@/redux-store/slices/postSlice'
 import { getPostTypeAction } from '@/redux-store/slices/postTypeSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
-import { RootState } from '@/redux-store'
 
 const publicationOptions = [
   {
@@ -62,11 +63,11 @@ const CreatePostPage = () => {
   const { categories } = useSelector((state: RootState) => state.category)
 
   const postTypeOptions = useMemo(() => {
-    return [{ id: '0', title: '選択してください', group_id: null }, ...postTypes]
+    return [{ id: 0, title: '選択してください' }, ...postTypes]
   }, [postTypes])
 
   const categoryOptions = useMemo(() => {
-    return [{ id: '0', title: '選択してください', group_id: null }, ...categories]
+    return [{ id: 0, title: '選択してください' }, ...categories]
   }, [categories])
 
   useEffect(() => {
@@ -80,11 +81,11 @@ const CreatePostPage = () => {
       )
   }, [dispatch, formData.postType])
 
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSelect = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
     setErrors(prev => ({ ...prev, [name]: '' }))
-  }
+  }, [])
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { type, name, value, files } = e.target
@@ -104,10 +105,10 @@ const CreatePostPage = () => {
     setErrors(prev => ({ ...prev, [name]: '' }))
   }, [])
 
-  const handleEditorChange = (data: string) => {
+  const handleEditorChange = useCallback((data: string) => {
     setFormData(prevState => ({ ...prevState, content: data }))
     setErrors(prev => ({ ...prev, content: '' }))
-  }
+  }, [])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -120,7 +121,6 @@ const CreatePostPage = () => {
       postPayload.append('category_id', formData.category)
       postPayload.append('publication', formData.publication)
       postPayload.append('attachments', formData.attachments.file)
-
       dispatch(createPostAction(postPayload))
     }
   }
@@ -274,7 +274,7 @@ const CreatePostPage = () => {
           {formData.attachments.preview && (
             <Image
               src={formData.attachments.preview}
-              alt='Selected'
+              alt={getImageAlt(formData.attachments.preview) || ''}
               className='md:ms-[170px] lg:ms-[244px] mt-2 w-40 h-w-40'
               width={50}
               height={50}

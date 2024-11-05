@@ -5,7 +5,7 @@ export type PostType = {
   hashtag: string
   attachments: string
   notification: string
-  category_id: string
+  category_id: number
   category_name: string
   publication: string
   name: string
@@ -23,5 +23,4 @@ export type PostType = {
 export type PostType_Type = {
   id: number
   title: string
-  group_id: string
 }

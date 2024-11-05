@@ -22,9 +22,9 @@ const EmailEditContent = ({ userData }: { userData: UsersType | null }) => {
 
   useEffect(() => {
     if (userData) {
-      const isCommentNotified = userData.comment_not === '1' ? false : true
-      const isNewsNotified = userData.news_not === '1' ? false : true
-      const isDmNotified = userData.dm_not === '1' ? false : true
+      const isCommentNotified = userData.comment_not ? false : true
+      const isNewsNotified = userData.news_not ? false : true
+      const isDmNotified = userData.dm_not ? false : true
 
       setCommentNot(isCommentNotified)
       setNewsNot(isNewsNotified)
@@ -41,7 +41,7 @@ const EmailEditContent = ({ userData }: { userData: UsersType | null }) => {
   const handleCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target
 
-    const payload = checked === true ? '0' : '1'
+    const payload = checked === true ? 0 : 1
 
     switch (name) {
       case 'comment_not':

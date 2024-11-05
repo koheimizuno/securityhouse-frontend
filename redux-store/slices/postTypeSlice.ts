@@ -61,7 +61,7 @@ export const postTypeSlice = createSlice({
       .addCase(getPostTypeAction.fulfilled, (state, { payload }) => {
         state.isLoading = false
         state.success = true
-        state.postTypes = payload.types
+        state.postTypes = payload.type
       })
       .addCase(getPostTypeAction.rejected, state => {
         state.isLoading = false

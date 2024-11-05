@@ -1,20 +1,22 @@
 export type UsersType = {
-  id: string
+  id: number
   email: string
   password: string
   uid: string
   name: string
+  company_id: number
   affiliation_name: string
   thumbnail: string
   intro: string
-  comment_not: '0' | '1'
-  news_not: '0' | '1'
-  dm_not: '0' | '1'
-  role_id: string
-  ranking_id: string
-  company_id: string
-  points: string
-  badge_id: string
+  comment_not: boolean
+  news_not: boolean
+  dm_not: boolean
+  role_id: number
+  ranking_id: number
+  ranking_name: string
+  points: number
+  point_difference: number
+  badge_id: number[]
   created_at: string
   updated_at: string
   deleted_at: string
