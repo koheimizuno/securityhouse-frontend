@@ -4,11 +4,12 @@ export type PostType = {
   content: string
   hashtag: string
   attachments: string
-  notification: string
+  notification: boolean
   category_id: number
   category_name: string
-  publication: string
+  publication: boolean
   name: string
+  user_id: number
   user_name: string
   affiliation_name: string
   thumbnail: string

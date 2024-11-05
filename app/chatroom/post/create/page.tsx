@@ -121,6 +121,7 @@ const CreatePostPage = () => {
       postPayload.append('category_id', formData.category)
       postPayload.append('publication', formData.publication)
       postPayload.append('attachments', formData.attachments.file)
+
       dispatch(createPostAction(postPayload))
     }
   }
