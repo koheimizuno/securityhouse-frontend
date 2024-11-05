@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -32,7 +32,9 @@ const MainItem = ({
 }: Partial<PostType | NewsType>) => {
   const pathname = usePathname()
   const dispatch = useDispatch()
+  const contentRef = useRef<HTMLParagraphElement | null>(null)
   const [moreActive, setMoreActive] = useState<boolean>(false)
+  const [contentHeight, setContentHeight] = useState<number>(0)
   const [contentMore, setContentMore] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
@@ -43,13 +45,19 @@ const MainItem = ({
     setMoreActive(false)
   })
 
+  useEffect(() => {
+    if (contentRef.current) {
+      setContentHeight(contentRef.current.offsetHeight)
+    }
+  }, [])
+
   const newsFlag = useMemo(() => {
     return pathname.includes('news') ? true : false
   }, [pathname])
 
   const imgData = useMemo(() => {
     if (thumbnail) {
-      return { src: thumbnail, alt: getImageAlt(thumbnail) }
+      return { src: '/' + thumbnail, alt: getImageAlt(thumbnail) }
     } else {
       return { src: '/images/icons/user-icon00.svg', alt: getImageAlt('/images/icons/user-icon00.svg') }
     }
@@ -120,10 +128,17 @@ const MainItem = ({
       <Link href={`/${newsFlag ? 'news' : 'chatroom/post'}/${id}`}>
         <h3 className='underline'>{title}</h3>
       </Link>
-      <p className={`text-sm ${!contentMore && 'line-clamp-2'}`}>{content}</p>
-      <button className='text-left text-[15px] text-colorGray3' onClick={() => setContentMore(prevState => !prevState)}>
-        {!contentMore ? '…もっと見る' : '…表示を少なくする'}
-      </button>
+      <p ref={contentRef} className={`text-sm ${contentHeight > 40 ? !contentMore && 'line-clamp-2' : ''}`}>
+        {content}
+      </p>
+      {contentHeight > 40 && (
+        <button
+          className='text-left text-[15px] text-colorGray3'
+          onClick={() => setContentMore(prevState => !prevState)}
+        >
+          {!contentMore ? '…もっと見る' : '…表示を少なくする'}
+        </button>
+      )}
       <div className='mt-4 flex items-center gap-2'>
         <div className='flex items-center gap-1'>
           <Image src='/images/icons/thumbs-up.svg' alt='thumbs-up' className='w-5 h-5' width={20} height={20} />

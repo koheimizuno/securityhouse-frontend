@@ -4,6 +4,7 @@ export type UsersType = {
   password: string
   uid: string
   name: string
+  affiliation_name: string
   thumbnail: string
   intro: string
   comment_not: '0' | '1'

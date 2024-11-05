@@ -5,14 +5,14 @@ import React, { useEffect, useState } from 'react'
 import Container from '@/components/layout/Container'
 import PageHeader from '@/components/common/PageHeader'
 import MainItem from '@/components/common/MainItem'
-import { getBookmarkedPostAction } from '@/actions/postAction'
+import { getMypageBmarkPostListAction } from '@/actions/postAction'
 import { PostType } from '@/types/postType'
 
 const BookmarkedPostPage = () => {
   const [postData, setPostData] = useState<PostType[] | null>(null)
 
   useEffect(() => {
-    getBookmarkedPostAction({ post_id: '1', user_id: 'user123' }).then(data => {
+    getMypageBmarkPostListAction().then(data => {
       setPostData(data)
     })
   }, [])
@@ -22,17 +22,20 @@ const BookmarkedPostPage = () => {
       <PageHeader title='ブックマーク' className='text-center' />
       <ul className='flex flex-col gap-6'>
         {postData &&
-          postData?.map((post, index) => (
+          postData?.map(item => (
             <MainItem
-              key={index}
-              id={post.id}
-              title={post.title}
-              content={post.content}
-              name={post.name}
-              affiliation_name={post.affiliation_name}
-              thumbnail='/images/icons/user-icon00.svg'
-              bookmark_flag={post.bookmark_flag}
-              created_at={post.created_at}
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              content={item.content}
+              category_name={item.category_name}
+              user_name={item.name}
+              affiliation_name={item.affiliation_name}
+              thumbnail={item.thumbnail}
+              nice_flag={item.nice_flag}
+              like_count={item.like_count}
+              bookmark_flag={item.bookmark_flag}
+              created_at={item.created_at}
             />
           ))}
       </ul>

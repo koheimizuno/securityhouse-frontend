@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const getUsersAction = async (id: string) => {
+export const getUsersAction = async () => {
   try {
     const { data } = await axios.get(`/api/user/`)
     return data.users

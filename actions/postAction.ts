@@ -6,8 +6,8 @@ export const getPostsAction = async ({
   category_id
 }: {
   user_id?: string
-  type_id: string
-  category_id: string
+  type_id?: string
+  category_id?: string
 }) => {
   try {
     const { data } = await axios.get('/api/posts/', {
@@ -30,10 +30,40 @@ export const getPostByIdAction = async (id: string) => {
   }
 }
 
-export const getBookmarkedPostAction = async ({ post_id, user_id }: { post_id: string; user_id: string }) => {
+export const getMypagePostListAction = async () => {
   try {
-    const { data } = await axios.post(`/api/post/bookmarkList`, { post_id, user_id })
-    return data.bookmark_post
+    const { data } = await axios.get(`/api/mypagePostList`)
+    return data.posts
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
+export const getMypageCommentPostListAction = async () => {
+  try {
+    const { data } = await axios.get(`/api/mypageCommentPostList`)
+    return data.posts
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
+export const getMypageLikePostListAction = async () => {
+  try {
+    const { data } = await axios.get(`/api/mypageLikePostList`)
+    return data.posts
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
+export const getMypageBmarkPostListAction = async () => {
+  try {
+    const { data } = await axios.post(`/api/mypageBmarkPostList`)
+    return data.posts
   } catch (err) {
     console.error(err)
     throw err
