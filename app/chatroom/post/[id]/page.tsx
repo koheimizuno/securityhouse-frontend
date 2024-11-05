@@ -38,10 +38,9 @@ const SHRoomPostDetailPage = () => {
   const pathname = usePathname()
   const dispatch = useDispatch()
   const [postData, setPostData] = useState<PostType | null>(null)
-  const [comments, setComments] = useState<CommentType[]>()
+  const [comments, setComments] = useState<CommentType[] | null>(null)
   const [moreActive, setMoreActive] = useState<boolean>(false)
   const { categories } = useSelector((state: RootState) => state.category)
-  const { isLoading } = useSelector((state: RootState) => state.post)
   const [newComment, setNewComment] = useState({
     content: '',
     attachment: {
@@ -76,7 +75,7 @@ const SHRoomPostDetailPage = () => {
         setComments(data)
       })
     }
-  }, [id, isLoading])
+  }, [id])
 
   useEffect(() => {
     dispatch(

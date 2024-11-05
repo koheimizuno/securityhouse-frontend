@@ -21,8 +21,10 @@ import {
   getMypageLikePostListAction,
   getMypagePostListAction
 } from '@/actions/postAction'
+import Loading from '@/components/common/Loading'
+import { useAuthentication } from '@/hooks/AuthContext'
 
-const MainItemContent = ({ data }: { data: PostType[] }) => {
+const MainItemContent = ({ data }: { data: PostType[] | null }) => {
   return (
     <ul className='flex flex-col gap-6 mt-5'>
       {data &&
@@ -50,10 +52,11 @@ const ProfilePage = () => {
   const { id } = useParams()
   const [userData, setUserData] = useState<UsersType | null>(null)
   const [selected, setSelected] = useState<Key>('post')
-  const [myPagePostList, setMyPagePostList] = useState<PostType[]>([])
-  const [myPageCommentPostList, setMyPageCommentPostList] = useState<PostType[]>([])
-  const [myPageLikePostList, setMyPageLikePostList] = useState<PostType[]>([])
-  const [myPageBookmarkedPost, setMyPageBookmarkedPost] = useState<PostType[]>([])
+  const [myPagePostList, setMyPagePostList] = useState<PostType[] | null>(null)
+  const [myPageCommentPostList, setMyPageCommentPostList] = useState<PostType[] | null>(null)
+  const [myPageLikePostList, setMyPageLikePostList] = useState<PostType[] | null>(null)
+  const [myPageBookmarkedPost, setMyPageBookmarkedPost] = useState<PostType[] | null>(null)
+  const { user_id } = useAuthentication()
 
   useEffect(() => {
     if (typeof id === 'string') {
@@ -64,21 +67,21 @@ const ProfilePage = () => {
   useEffect(() => {
     switch (selected) {
       case 'post':
-        getMypagePostListAction().then(data => setMyPagePostList(data))
+        getMypagePostListAction({ user_id }).then(data => setMyPagePostList(data))
         break
       case 'comment':
-        getMypageCommentPostListAction().then(data => setMyPageCommentPostList(data))
+        getMypageCommentPostListAction({ user_id }).then(data => setMyPageCommentPostList(data))
         break
       case 'likedPost':
-        getMypageLikePostListAction().then(data => setMyPageLikePostList(data))
+        getMypageLikePostListAction({ user_id }).then(data => setMyPageLikePostList(data))
         break
       case 'bookmarkedPost':
-        getMypageBmarkPostListAction().then(data => setMyPageBookmarkedPost(data))
+        getMypageBmarkPostListAction({ user_id }).then(data => setMyPageBookmarkedPost(data))
         break
       default:
         break
     }
-  }, [selected])
+  }, [selected, user_id])
 
   const handleSelectionChange = (key: Key) => {
     setSelected(key)
@@ -88,22 +91,26 @@ const ProfilePage = () => {
     {
       id: 'post',
       label: '投稿',
-      content: <MainItemContent data={myPagePostList} />
+      content: <MainItemContent data={myPagePostList} />,
+      isLoading: !myPagePostList
     },
     {
       id: 'comment',
       label: 'コメント',
-      content: <MainItemContent data={myPageCommentPostList} />
+      content: <MainItemContent data={myPageCommentPostList} />,
+      isLoading: !myPageCommentPostList
     },
     {
       id: 'likedPost',
       label: 'いいね',
-      content: <MainItemContent data={myPageLikePostList} />
+      content: <MainItemContent data={myPageLikePostList} />,
+      isLoading: !myPageLikePostList
     },
     {
       id: 'bookmarkedPost',
       label: 'ブックマーク',
-      content: <MainItemContent data={myPageBookmarkedPost} />
+      content: <MainItemContent data={myPageBookmarkedPost} />,
+      isLoading: !myPageBookmarkedPost
     }
   ]
 
@@ -150,15 +157,14 @@ const ProfilePage = () => {
           className='mt-4 bg-white'
           size='lg'
           variant='light'
-          items={tabs}
           selectedKey={selected as Key}
           onSelectionChange={handleSelectionChange}
         >
-          {item => (
+          {tabs.map(item => (
             <Tab key={item.id} title={item.label}>
-              {item.content}
+              {item.isLoading ? <Loading flag='2' /> : item.content}
             </Tab>
-          )}
+          ))}
         </Tabs>
       </section>
     </Container>

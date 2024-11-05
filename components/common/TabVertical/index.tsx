@@ -32,7 +32,7 @@ const TabVertical = ({ queryKey, menuList, children, gap }: TabVerticalProps) =>
       if (title === 'ログアウト') {
         setTab((index + 1).toString())
         router.push(pathname)
-        // Logout Action
+        localStorage.removeItem('auth')
       } else {
         const value = e.currentTarget.getAttribute('data-value')
         if (value) {
