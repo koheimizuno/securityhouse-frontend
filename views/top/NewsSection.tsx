@@ -14,11 +14,11 @@ import { useAuthentication } from '@/hooks/AuthContext'
 
 const NewsSection = () => {
   const [news, setNews] = useState<NewsType[]>([])
-  const { user_id } = useAuthentication()
+  const { session_user_id } = useAuthentication()
 
   useEffect(() => {
-    getNewsAction(user_id).then(data => setNews(data))
-  }, [user_id])
+    getNewsAction({ user_id: session_user_id }).then(data => setNews(data))
+  }, [session_user_id])
 
   return (
     <Container>
@@ -60,7 +60,7 @@ const NewsSection = () => {
                   title={newItem.title}
                   content={newItem.content}
                   bookmark_flag={newItem.bookmark_flag}
-                  updated_at={newItem.created_at}
+                  created_at={newItem.created_at}
                 />
               ))}
         </ul>

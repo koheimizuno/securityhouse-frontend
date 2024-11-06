@@ -35,7 +35,9 @@ const AuthWrapper = ({
   }, [isAuthenticated, isPublic, router, pathname])
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user_id: loginInfo?.user_id }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ isAuthenticated, session_user_id: loginInfo?.user_id }}>
+      {children}
+    </AuthContext.Provider>
   )
 }
 

@@ -123,6 +123,7 @@ const PostSection = () => {
                         title={post.title}
                         content={post.content}
                         category_name={post.category_name}
+                        user_id={post.user_id}
                         name={post.name}
                         affiliation_name={post.affiliation_name}
                         thumbnail={post.thumbnail}

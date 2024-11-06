@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const getNewsAction = async (user_id: string) => {
+export const getNewsAction = async ({ user_id }: { user_id: string }) => {
   try {
     const { data } = await axios.get(`/api/news/`, {
       params: { user_id }

@@ -51,6 +51,7 @@ const RoomPageContent = ({ title, icon, category_title, category_description, po
                   content={post.content}
                   category_name={post.category_name}
                   attachments={post.attachments}
+                  user_id={post.user_id}
                   name={post.name}
                   affiliation_name={post.affiliation_name}
                   type_id={post.type_id}

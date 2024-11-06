@@ -26,7 +26,7 @@ const NewsPage = () => {
   const searchParams = useSearchParams()
   const [news, setNews] = useState<NewsType[]>([])
   const [isOpen, setIsOpen] = useState(false)
-  const { user_id } = useAuthentication()
+  const { session_user_id } = useAuthentication()
   const [selectedCat, setSelectedCat] = useState<CategoryType>({
     title: '',
     description: ''
@@ -34,8 +34,8 @@ const NewsPage = () => {
   const { categories } = useSelector((state: RootState) => state.category)
 
   useEffect(() => {
-    getNewsAction(user_id).then(data => setNews(data))
-  }, [user_id])
+    getNewsAction({ user_id: session_user_id }).then(data => setNews(data))
+  }, [session_user_id])
 
   useEffect(() => {
     dispatch(

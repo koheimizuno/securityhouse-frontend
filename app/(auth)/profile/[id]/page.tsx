@@ -56,7 +56,7 @@ const ProfilePage = () => {
   const [myPageCommentPostList, setMyPageCommentPostList] = useState<PostType[] | null>(null)
   const [myPageLikePostList, setMyPageLikePostList] = useState<PostType[] | null>(null)
   const [myPageBookmarkedPost, setMyPageBookmarkedPost] = useState<PostType[] | null>(null)
-  const { user_id } = useAuthentication()
+  const { session_user_id } = useAuthentication()
 
   useEffect(() => {
     if (typeof id === 'string') {
@@ -67,21 +67,21 @@ const ProfilePage = () => {
   useEffect(() => {
     switch (selected) {
       case 'post':
-        getMypagePostListAction({ user_id }).then(data => setMyPagePostList(data))
+        getMypagePostListAction({ user_id: session_user_id }).then(data => setMyPagePostList(data))
         break
       case 'comment':
-        getMypageCommentPostListAction({ user_id }).then(data => setMyPageCommentPostList(data))
+        getMypageCommentPostListAction({ user_id: session_user_id }).then(data => setMyPageCommentPostList(data))
         break
       case 'likedPost':
-        getMypageLikePostListAction({ user_id }).then(data => setMyPageLikePostList(data))
+        getMypageLikePostListAction({ user_id: session_user_id }).then(data => setMyPageLikePostList(data))
         break
       case 'bookmarkedPost':
-        getMypageBmarkPostListAction({ user_id }).then(data => setMyPageBookmarkedPost(data))
+        getMypageBmarkPostListAction({ user_id: session_user_id }).then(data => setMyPageBookmarkedPost(data))
         break
       default:
         break
     }
-  }, [selected, user_id])
+  }, [selected, session_user_id])
 
   const handleSelectionChange = (key: Key) => {
     setSelected(key)
