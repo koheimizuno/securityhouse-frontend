@@ -6,7 +6,7 @@ import Image from 'next/image'
 import dynamic from 'next/dynamic'
 
 import SectionTitle from '@/components/common/SectionTitle'
-import { Button, Input, Select, SelectItem } from '@nextui-org/react'
+import { Button, Checkbox, Input, Select, SelectItem } from '@nextui-org/react'
 const RichTextEditor = dynamic(() => import('@/components/form/RichTextEditor'), {
   ssr: false
 })
@@ -45,6 +45,7 @@ const CreatePostPage = () => {
     postType: '0',
     category: '0',
     publication: '0',
+    notification: false,
     attachments: {
       file: '',
       preview: ''
@@ -110,6 +111,10 @@ const CreatePostPage = () => {
     setErrors(prev => ({ ...prev, content: '' }))
   }, [])
 
+  const handleCheck = (checked: boolean) => {
+    setFormData(prevState => ({ ...prevState, notification: checked }))
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (validateForm()) {
@@ -120,8 +125,8 @@ const CreatePostPage = () => {
       postPayload.append('type_id', formData.postType)
       postPayload.append('category_id', formData.category)
       postPayload.append('publication', formData.publication)
+      postPayload.append('notification', formData.notification ? '1' : '0')
       postPayload.append('attachments', formData.attachments.file)
-
       dispatch(createPostAction(postPayload))
     }
   }
@@ -281,6 +286,15 @@ const CreatePostPage = () => {
               height={50}
             />
           )}
+          <Checkbox
+            name='notification'
+            className='m-auto'
+            radius='full'
+            isSelected={formData.notification}
+            onValueChange={handleCheck}
+          >
+            ユーザーに通知する
+          </Checkbox>
           <Button
             type='submit'
             color='primary'

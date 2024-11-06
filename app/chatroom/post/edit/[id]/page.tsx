@@ -20,6 +20,7 @@ import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 
 import { getImageAlt } from '@/utils/getImageAlt'
 import { RootState } from '@/redux-store'
+import { useAuthentication } from '@/hooks/AuthContext'
 
 const publicationOptions = [
   {
@@ -62,16 +63,16 @@ const EditPostPage = () => {
     content: '',
     hashtag: ''
   })
-
   const { postTypes } = useSelector((state: RootState) => state.post_type)
   const { categories } = useSelector((state: RootState) => state.category)
+  const { session_user_id } = useAuthentication()
 
   const postTypeOptions = useMemo(() => {
-    return [{ id: '0', title: '選択してください', group_id: null }, ...postTypes]
+    return [{ id: '0', title: '選択してください' }, ...postTypes]
   }, [postTypes])
 
   const categoryOptions = useMemo(() => {
-    return [{ id: '0', title: '選択してください', group_id: null }, ...categories]
+    return [{ id: '0', title: '選択してください' }, ...categories]
   }, [categories])
 
   useEffect(() => {
@@ -88,10 +89,10 @@ const EditPostPage = () => {
     const fetchPostByIdData = async () => {
       if (typeof id === 'string') {
         try {
-          const originPost = await getPostByIdAction(id)
+          const originPost = await getPostByIdAction({ user_id: session_user_id, id }) // Need to fix
           setFormData(prevState => ({
             ...prevState,
-            // postType: originPost.type_id,
+            postType: String(originPost.type_id),
             category: originPost.category_id,
             publication: originPost.publication,
             title: originPost.title,
@@ -105,7 +106,7 @@ const EditPostPage = () => {
       }
     }
     fetchPostByIdData()
-  }, [id])
+  }, [id, session_user_id])
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
