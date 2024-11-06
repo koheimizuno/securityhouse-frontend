@@ -10,17 +10,24 @@ import { Button } from '@nextui-org/react'
 
 import { formatDate } from '@/utils/formatDate'
 import { useClickAway } from '@uidotdev/usehooks'
-import { deletePostAction, deletePostLikeAction, postLikeAction } from '@/redux-store/slices/postSlice'
+import {
+  deletePostAction,
+  deletePostLikeAction,
+  postLikeAction,
+  postReportAction
+} from '@/redux-store/slices/postSlice'
 import { PostType } from '@/types/postType'
 import DeletePostModal from '@/components/modal/DeletePostModal'
 import getPostTypeById from '@/utils/getPostTypeByID'
 import { getImageAlt } from '@/utils/getImageAlt'
+import { useAuthentication } from '@/hooks/AuthContext'
 
 const PostCard = ({
   id,
   title,
   content,
   category_name,
+  user_id,
   name,
   affiliation_name,
   thumbnail,
@@ -35,6 +42,7 @@ const PostCard = ({
   const dispatch = useDispatch()
   const [moreActive, setMoreActive] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const { session_user_id } = useAuthentication()
 
   const openModal = () => setIsOpen(true)
   const closeModal = useCallback(() => setIsOpen(false), [])
@@ -62,6 +70,11 @@ const PostCard = ({
     else if (nice_flag) dispatch(deletePostLikeAction(id))
   }
 
+  const handleReport = async () => {
+    await dispatch(postReportAction(id))
+    setMoreActive(false)
+  }
+
   return (
     <div className='relative bg-white px-4 py-6 w-[282px] rounded-md'>
       <Image
@@ -73,7 +86,7 @@ const PostCard = ({
       />
       <p className='text-xs flex items-center gap-1 mb-3'>
         <span className='text-primary'>■</span>
-        {type_id && <span>{getPostTypeById(type_id)}</span>}
+        {type_id && <span>{getPostTypeById(type_id)[0]}</span>}
       </p>
       <div className='mb-5 flex items-center flex-wrap gap-2'>
         <Button size='sm' color='primary' className='text-xs px-2 py-0 h-6 rounded-full w-fit'>
@@ -115,16 +128,23 @@ const PostCard = ({
           <button onClick={() => pathname !== '/' && setMoreActive(!moreActive)}>
             <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
           </button>
-          {moreActive && (
-            <ul className='bg-white absolute z-10 top-4 left-4 w-[150px] flex flex-col shadow-md rounded-md'>
-              <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
-                <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
-              </li>
-              <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
-                <button onClick={openModal}>削除する</button>
-              </li>
-            </ul>
-          )}
+          {moreActive &&
+            (user_id === session_user_id ? (
+              <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
+                <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
+                  <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
+                </li>
+                <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
+                  <button onClick={openModal}>削除する</button>
+                </li>
+              </ul>
+            ) : (
+              <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
+                <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
+                  <button onClick={handleReport}>通報する</button>
+                </li>
+              </ul>
+            ))}
         </div>
       </div>
       <DeletePostModal isOpen={isOpen} onClose={closeModal} onSubmit={handleDeletePost} />

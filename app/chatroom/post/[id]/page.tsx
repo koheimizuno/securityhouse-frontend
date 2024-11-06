@@ -23,13 +23,15 @@ import {
   deletePostBookmarkAction,
   deletePostLikeAction,
   postBookmarkAction,
-  postLikeAction
+  postLikeAction,
+  postReportAction
 } from '@/redux-store/slices/postSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { createCommentAction } from '@/redux-store/slices/commentSlice'
 import { RootState } from '@/redux-store'
 import DeletePostModal from '@/components/modal/DeletePostModal'
 import { useAuthentication } from '@/hooks/AuthContext'
+import getPostTypeById from '@/utils/getPostTypeByID'
 
 const SHRoomPostDetailPage = () => {
   const { id } = useParams()
@@ -52,7 +54,7 @@ const SHRoomPostDetailPage = () => {
     attachment: ''
   })
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const { user_id } = useAuthentication()
+  const { session_user_id } = useAuthentication()
 
   const openModal = () => setIsOpen(true)
   const closeModal = useCallback(() => setIsOpen(false), [])
@@ -63,14 +65,14 @@ const SHRoomPostDetailPage = () => {
 
   useEffect(() => {
     if (typeof id === 'string') {
-      getPostByIdAction({ user_id, id }).then(data => {
+      getPostByIdAction({ user_id: session_user_id, id }).then(data => {
         setPostData(data)
       })
       getCommentsAction({ post_id: id }).then(data => {
         setComments(data)
       })
     }
-  }, [id, user_id])
+  }, [id, session_user_id])
 
   useEffect(() => {
     dispatch(
@@ -119,16 +121,21 @@ const SHRoomPostDetailPage = () => {
       dispatch(
         postBookmarkAction({
           post_id: id,
-          user_id: user_id
+          user_id: session_user_id
         })
       )
     else if (postData?.bookmark_flag)
       dispatch(
         deletePostBookmarkAction({
           post_id: id,
-          user_id: user_id
+          user_id: session_user_id
         })
       )
+  }
+
+  const handleReport = async () => {
+    await dispatch(postReportAction(id))
+    setMoreActive(false)
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -165,7 +172,10 @@ const SHRoomPostDetailPage = () => {
   return (
     <Container className='py-12 flex flex-col gap-12'>
       <section className='flex flex-col gap-8'>
-        <SectionTitle title='SH会トークルーム' icon='/images/icons/sh-room-secondary.svg' />
+        <SectionTitle
+          title={`${getPostTypeById(postData.type_id)[0]}トークルーム`}
+          icon={`/images/icons/${getPostTypeById(postData.type_id)[1]}-room-secondary.svg`}
+        />
         <div className='flex flex-col gap-4 md:gap-8 bg-bgSemiblue px-6  md:px-16 py-10 rounded-2xl'>
           <Button size='sm' color='primary' disabled className='md:hidden text-xs px-2 py-0 h-6 rounded-full w-fit'>
             {postData.category_name && postData.category_name}
@@ -192,16 +202,23 @@ const SHRoomPostDetailPage = () => {
               <button onClick={() => pathname !== '/' && setMoreActive(!moreActive)}>
                 <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
               </button>
-              {moreActive && (
-                <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
-                  <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
-                    <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
-                  </li>
-                  <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
-                    <button onClick={openModal}>削除する</button>
-                  </li>
-                </ul>
-              )}
+              {moreActive &&
+                (postData.user_id === session_user_id ? (
+                  <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
+                    <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
+                      <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
+                    </li>
+                    <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
+                      <button onClick={openModal}>削除する</button>
+                    </li>
+                  </ul>
+                ) : (
+                  <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
+                    <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
+                      <button onClick={handleReport}>通報する</button>
+                    </li>
+                  </ul>
+                ))}
             </div>
           </div>
           <h3 className='text-xl font-bold truncate text-txtColor'>{postData?.title}</h3>
