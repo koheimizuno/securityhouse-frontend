@@ -2,8 +2,8 @@
 
 const nextConfig = {
   images: {
-    domains: ['example.com'],
-  },
-};
+    domains: ['example.com', 'picsum.photos']
+  }
+}
 
-export default nextConfig;
+export default nextConfig

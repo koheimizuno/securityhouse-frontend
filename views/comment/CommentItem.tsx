@@ -59,10 +59,10 @@ const CommentItem = ({ userName, userCompany, avatar, comment, created_at }: Com
       </div>
       <p className='text-sm line-clamp-2'>{comment}</p>
       <div className='flex justify-end items-center gap-8'>
-        <div className='flex items-center gap-2'>
+        {/* <div className='flex items-center gap-2'>
           <Image src='/images/icons/thumbs-up.svg' alt='thumb-up' width={20} height={20} />
           <span>44</span>
-        </div>
+        </div> */}
         <Button color='primary' size='sm' className='rounded-full'>
           返信する
         </Button>

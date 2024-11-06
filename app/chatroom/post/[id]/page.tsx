@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -14,7 +14,6 @@ import { Button, Divider, Input, Textarea } from '@nextui-org/react'
 
 import { PostType } from '@/types/postType'
 import { CommentType } from '@/types/commentType'
-import { CategoryType } from '@/types/categoryType'
 import { useClickAway } from '@uidotdev/usehooks'
 import { getImageAlt } from '@/utils/getImageAlt'
 import { getPostByIdAction } from '@/actions/postAction'
@@ -58,24 +57,20 @@ const SHRoomPostDetailPage = () => {
   const openModal = () => setIsOpen(true)
   const closeModal = useCallback(() => setIsOpen(false), [])
 
-  const category = useMemo(() => {
-    return categories?.find((category: CategoryType) => category.category_id === postData?.category_id)?.title || ''
-  }, [categories, postData?.category_id])
-
   const ref = useClickAway<HTMLDivElement>(() => {
     setMoreActive(false)
   })
 
   useEffect(() => {
     if (typeof id === 'string') {
-      getPostByIdAction(id).then(data => {
+      getPostByIdAction({ user_id, id }).then(data => {
         setPostData(data)
       })
       getCommentsAction({ post_id: id }).then(data => {
         setComments(data)
       })
     }
-  }, [id])
+  }, [id, user_id])
 
   useEffect(() => {
     dispatch(
@@ -86,7 +81,7 @@ const SHRoomPostDetailPage = () => {
     )
   }, [dispatch, postData?.type_id])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { type, name, value, files } = e.target
     if (type === 'file') {
       const file = files ? files[0] : null
@@ -102,7 +97,7 @@ const SHRoomPostDetailPage = () => {
       setNewComment(prev => ({ ...prev, [name]: value }))
     }
     setErrors(prev => ({ ...prev, [name]: '' }))
-  }
+  }, [])
 
   const handleDeletePost = useCallback(async () => {
     await dispatch(deletePostAction(id))
@@ -173,7 +168,7 @@ const SHRoomPostDetailPage = () => {
         <SectionTitle title='SH会トークルーム' icon='/images/icons/sh-room-secondary.svg' />
         <div className='flex flex-col gap-4 md:gap-8 bg-bgSemiblue px-6  md:px-16 py-10 rounded-2xl'>
           <Button size='sm' color='primary' disabled className='md:hidden text-xs px-2 py-0 h-6 rounded-full w-fit'>
-            {category && category}
+            {postData.category_name && postData.category_name}
           </Button>
           <div className='flex flex-row justify-between items-center'>
             <div className='flex flex-row items-center gap-6'>
@@ -190,7 +185,7 @@ const SHRoomPostDetailPage = () => {
                 disabled
                 className='hidden md:block text-xs px-2 py-0 h-6 rounded-full w-fit'
               >
-                {category && category}
+                {postData.category_name && postData.category_name}
               </Button>
             </div>
             <div ref={ref} className='relative'>
@@ -292,9 +287,9 @@ const SHRoomPostDetailPage = () => {
             {comments.map(comment => (
               <CommentItem
                 key={comment.id}
-                userName='山田太郎'
-                userCompany='所属名'
-                avatar='/images/icons/user-icon00.svg'
+                userName={comment.user_name}
+                userCompany={comment.affiliation_name}
+                avatar={comment.thumbnail}
                 comment={comment.content}
                 created_at={comment.created_at}
               />
