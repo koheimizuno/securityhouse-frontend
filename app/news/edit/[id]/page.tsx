@@ -39,7 +39,7 @@ const EditNewPage = () => {
   const { categories } = useSelector((state: RootState) => state.category)
 
   const categoryOptions = useMemo(() => {
-    return [{ id: '0', title: '選択してください', group_id: null }, ...categories]
+    return [{ id: 0, title: '選択してください' }, ...(Array.isArray(categories) ? categories : [])]
   }, [categories])
 
   useEffect(() => {

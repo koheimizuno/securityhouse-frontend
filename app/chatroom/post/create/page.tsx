@@ -64,11 +64,11 @@ const CreatePostPage = () => {
   const { categories } = useSelector((state: RootState) => state.category)
 
   const postTypeOptions = useMemo(() => {
-    return [{ id: 0, title: '選択してください' }, ...postTypes]
+    return [{ id: 0, title: '選択してください' }, ...(Array.isArray(postTypes) ? postTypes : [])]
   }, [postTypes])
 
   const categoryOptions = useMemo(() => {
-    return [{ id: 0, title: '選択してください' }, ...categories]
+    return [{ id: 0, title: '選択してください' }, ...(Array.isArray(categories) ? categories : [])]
   }, [categories])
 
   useEffect(() => {

@@ -68,11 +68,11 @@ const EditPostPage = () => {
   const { session_user_id } = useAuthentication()
 
   const postTypeOptions = useMemo(() => {
-    return [{ id: '0', title: '選択してください' }, ...postTypes]
+    return [{ id: 0, title: '選択してください' }, ...(Array.isArray(postTypes) ? postTypes : [])]
   }, [postTypes])
 
   const categoryOptions = useMemo(() => {
-    return [{ id: '0', title: '選択してください' }, ...categories]
+    return [{ id: 0, title: '選択してください' }, ...(Array.isArray(categories) ? categories : [])]
   }, [categories])
 
   useEffect(() => {
@@ -86,27 +86,29 @@ const EditPostPage = () => {
   }, [dispatch, formData.postType])
 
   useEffect(() => {
-    const fetchPostByIdData = async () => {
-      if (typeof id === 'string') {
-        try {
-          const originPost = await getPostByIdAction({ user_id: session_user_id, id }) // Need to fix
-          setFormData(prevState => ({
-            ...prevState,
-            postType: String(originPost.type_id),
-            category: originPost.category_id,
-            publication: originPost.publication,
-            title: originPost.title,
-            content: originPost.content,
-            hashtag: originPost.hashtag,
-            attachments: { ...prevState.attachments, preview: originPost.attachments }
-          }))
-        } catch (error) {
-          console.error('Error fetching post:', error)
-        }
-      }
+    if (typeof id === 'string') {
+      // Need to fix
+      getPostByIdAction({ user_id: session_user_id, id }).then(data => {
+        categories.forEach(category => {
+          // if (category.title === data.category_name) {
+          //   console.log('OK')
+          // }
+          console.log('Title: ', category.title, 'End')
+          console.log('CategoryName: ', data.category_name, 'End')
+        })
+        setFormData(prevState => ({
+          ...prevState,
+          postType: String(data.type_id),
+          category: data.category_id,
+          publication: data.publication,
+          title: data.title,
+          content: data.content,
+          hashtag: data.hashtag,
+          attachments: { ...prevState.attachments, preview: data.attachments }
+        }))
+      })
     }
-    fetchPostByIdData()
-  }, [id, session_user_id])
+  }, [id, session_user_id, categories])
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
