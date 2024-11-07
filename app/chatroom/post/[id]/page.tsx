@@ -104,10 +104,11 @@ const SHRoomPostDetailPage = () => {
   const handleDeletePost = useCallback(async () => {
     await dispatch(deletePostAction(id))
     setMoreActive(false)
+    closeModal()
     setTimeout(() => {
       router.push('/chatroom/sh-room')
     }, 2000)
-  }, [dispatch, router, id])
+  }, [dispatch, router, id, closeModal])
 
   const handleLike = () => {
     if (typeof id === 'string') {
