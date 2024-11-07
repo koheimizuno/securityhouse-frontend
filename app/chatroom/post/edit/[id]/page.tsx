@@ -68,11 +68,11 @@ const EditPostPage = () => {
   const { session_user_id } = useAuthentication()
 
   const postTypeOptions = useMemo(() => {
-    return [{ id: 0, title: '選択してください' }, ...(Array.isArray(postTypes) ? postTypes : [])]
+    return [{ id: '0', title: '選択してください' }, ...(Array.isArray(postTypes) ? postTypes : [])]
   }, [postTypes])
 
   const categoryOptions = useMemo(() => {
-    return [{ id: 0, title: '選択してください' }, ...(Array.isArray(categories) ? categories : [])]
+    return [{ id: '0', title: '選択してください' }, ...(Array.isArray(categories) ? categories : [])]
   }, [categories])
 
   useEffect(() => {
@@ -89,13 +89,6 @@ const EditPostPage = () => {
     if (typeof id === 'string') {
       // Need to fix
       getPostByIdAction({ user_id: session_user_id, id }).then(data => {
-        categories.forEach(category => {
-          // if (category.title === data.category_name) {
-          //   console.log('OK')
-          // }
-          console.log('Title: ', category.title, 'End')
-          console.log('CategoryName: ', data.category_name, 'End')
-        })
         setFormData(prevState => ({
           ...prevState,
           postType: String(data.type_id),
@@ -108,7 +101,7 @@ const EditPostPage = () => {
         }))
       })
     }
-  }, [id, session_user_id, categories])
+  }, [id, session_user_id])
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
