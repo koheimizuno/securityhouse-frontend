@@ -30,38 +30,6 @@ export const deleteNewsAction: any = createAsyncThunk('deleteNewsAction', async 
   }
 })
 
-export const newsLikeAction: any = createAsyncThunk('newsLikeAction', async (id: string) => {
-  try {
-    await axios.post(`/api/news/like/${id}`)
-  } catch (err) {
-    return err
-  }
-})
-
-export const deleteNewsLikeAction: any = createAsyncThunk('deleteNewsLikeAction', async (id: string) => {
-  try {
-    await axios.delete(`/api/news/like/${id}`)
-  } catch (err) {
-    return err
-  }
-})
-
-export const deleteNewsBookmarkAction: any = createAsyncThunk(
-  'deleteNewsBookmarkAction',
-  async ({ id, user_id }: { id: string; user_id: string }) => {
-    try {
-      await axios.delete(`/api/news/bookmark/`, {
-        params: {
-          id,
-          user_id
-        }
-      })
-    } catch (err) {
-      return err
-    }
-  }
-)
-
 const initialState: storeInitialType = {
   success: false,
   error: false,
@@ -100,26 +68,6 @@ export const newsSlice = createSlice({
         toast.success('お知らせが成果として削除されました。')
       })
       .addCase(deleteNewsAction.rejected, state => {
-        state.isLoading = false
-        state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
-      })
-      .addCase(newsLikeAction.fulfilled, state => {
-        state.isLoading = false
-        state.success = true
-        toast.success('お知らせに「いいね！」を追加しました。')
-      })
-      .addCase(newsLikeAction.rejected, state => {
-        state.isLoading = false
-        state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
-      })
-      .addCase(deleteNewsLikeAction.fulfilled, state => {
-        state.isLoading = false
-        state.success = true
-        toast.success('お知らせから「いいね！」を削除しました。')
-      })
-      .addCase(deleteNewsLikeAction.rejected, state => {
         state.isLoading = false
         state.error = true
         toast.error('サーバの問題でデータ取得に失敗しました。')

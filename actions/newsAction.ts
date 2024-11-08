@@ -13,9 +13,14 @@ export const getNewsAction = async ({ user_id }: { user_id: string }) => {
   }
 }
 
-export const getNewsByIdAction = async (id: string) => {
+export const getNewsByIdAction = async ({ id, user_id }: { id: number; user_id: string }) => {
   try {
-    const { data } = await axios.get(`/api/news/${id}`)
+    const { data } = await axios.get(`/api/news/${id}`, {
+      params: {
+        id,
+        user_id
+      }
+    })
     return data
   } catch (err) {
     console.error(err)
@@ -50,6 +55,35 @@ export const deleteNewsBookmarkAction = async ({ id, user_id }: { id: number; us
     })
     toast.success('ブックマークから削除されました。')
     return data.bookmark_flag
+  } catch (err) {
+    console.error(err)
+    toast.error('サーバの問題でデータ取得に失敗しました。')
+    throw err
+  }
+}
+
+export const newsLikeAction = async ({ id, user_id }: { id: number; user_id: string }) => {
+  try {
+    const { data } = await axios.post(`/api/news/like/`, { id, user_id })
+    toast.success('お知らせに「いいね！」を追加しました。')
+    return data
+  } catch (err) {
+    console.error(err)
+    toast.error('サーバの問題でデータ取得に失敗しました。')
+    throw err
+  }
+}
+
+export const deleteNewsLikeAction = async ({ id, user_id }: { id: number; user_id: string }) => {
+  try {
+    const { data } = await axios.delete(`/api/news/like/`, {
+      params: {
+        id,
+        user_id
+      }
+    })
+    toast.success('お知らせから「いいね！」を削除しました。')
+    return data
   } catch (err) {
     console.error(err)
     toast.error('サーバの問題でデータ取得に失敗しました。')
