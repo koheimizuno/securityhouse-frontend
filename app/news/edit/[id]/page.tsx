@@ -16,6 +16,8 @@ import { editNewsAction } from '@/redux-store/slices/newsSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { RootState } from '@/redux-store'
 import { getNewsByIdAction } from '@/actions/newsAction'
+import { useAuthentication } from '@/hooks/AuthContext'
+import { getImageAlt } from '@/utils/getImageAlt'
 
 const EditNewPage = () => {
   const { id } = useParams()
@@ -23,8 +25,11 @@ const EditNewPage = () => {
   const [formData, setFormData] = useState({
     title: '',
     content: '',
-    category: '0',
-    attachments: {
+    category: {
+      id: '0',
+      name: ''
+    },
+    attachment: {
       file: '',
       preview: ''
     }
@@ -33,9 +38,9 @@ const EditNewPage = () => {
     category: '',
     title: '',
     content: '',
-    attachments: ''
+    attachment: ''
   })
-
+  const { session_user_id } = useAuthentication()
   const { categories } = useSelector((state: RootState) => state.category)
 
   const categoryOptions = useMemo(() => {
@@ -44,19 +49,21 @@ const EditNewPage = () => {
 
   useEffect(() => {
     if (typeof id === 'string')
-      getNewsByIdAction(id).then(data => {
+      getNewsByIdAction({ id: Number(id), user_id: session_user_id }).then(data => {
         setFormData(prevState => ({
           ...prevState,
           title: data.title,
           content: data.content,
-          category: data.category_id,
-          attachments: {
-            ...prevState.attachments,
-            preview: data.attachments
+          category: { ...prevState.category, name: data.category_name },
+          attachment: {
+            ...prevState.attachment,
+            preview: data.attachment
           }
         }))
       })
   }, [id])
+
+  console.log(formData)
 
   useEffect(() => {
     dispatch(
@@ -103,8 +110,8 @@ const EditNewPage = () => {
       if (typeof id === 'string') postPayload.append('id', id)
       postPayload.append('title', formData.title)
       postPayload.append('content', formData.content)
-      postPayload.append('category_id', formData.category)
-      postPayload.append('attachments', formData.attachments.file)
+      postPayload.append('category_id', formData.category.id)
+      postPayload.append('attachments', formData.attachment.file)
 
       dispatch(editNewsAction(postPayload))
     }
@@ -113,11 +120,11 @@ const EditNewPage = () => {
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {}
 
-    if (formData.category === '0') newErrors.category = '選択してください'
+    if (formData.category.id === '0') newErrors.category = '選択してください'
 
     if (!formData.title) newErrors.title = 'この項目は必須です。'
     if (!formData.content) newErrors.content = 'この項目は必須です。'
-    if (!formData.attachments.file) newErrors.attachments = 'この項目は必須です。'
+    if (!formData.attachment.preview) newErrors.attachment = 'この項目は必須です。'
 
     setErrors(prev => ({ ...prev, ...newErrors }))
     return Object.keys(newErrors).length === 0
@@ -141,7 +148,7 @@ const EditNewPage = () => {
               label: 'font-bold',
               mainWrapper: ['w-full md:w-[480px]']
             }}
-            selectedKeys={formData.category}
+            selectedKeys={formData.category.id}
             errorMessage={errors.category}
             isInvalid={errors.category ? true : false}
             onChange={handleSelect}
@@ -192,18 +199,18 @@ const EditNewPage = () => {
               label: 'font-bold',
               mainWrapper: ['w-full md:w-[480px]']
             }}
-            isInvalid={errors.attachments ? true : false}
-            color={errors.attachments ? 'danger' : 'default'}
-            errorMessage={errors.attachments}
+            isInvalid={errors.attachment ? true : false}
+            color={errors.attachment ? 'danger' : 'default'}
+            errorMessage={errors.attachment}
             labelPlacement={window.innerWidth > 768 ? 'outside-left' : 'outside'}
             onChange={handleChange}
             size='lg'
             isRequired
           />
-          {formData.attachments.preview && (
+          {formData.attachment.preview && (
             <Image
-              src={formData.attachments.preview}
-              alt='Selected'
+              src={formData.attachment.preview}
+              alt={getImageAlt(formData.attachment.preview) || ''}
               className='md:ms-[170px] lg:ms-[244px] mt-2 w-40 h-w-40'
               width={50}
               height={50}

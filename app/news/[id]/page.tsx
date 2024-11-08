@@ -158,7 +158,7 @@ const NewDetailPage = () => {
             {moreActive && (
               <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
                 <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
-                  <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
+                  <Link href={`/news/edit/${id}`}>編集する</Link>
                 </li>
                 <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
                   <button onClick={openModal}>削除する</button>
