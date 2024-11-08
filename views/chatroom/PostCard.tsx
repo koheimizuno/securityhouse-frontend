@@ -10,17 +10,18 @@ import { Button } from '@nextui-org/react'
 
 import { formatDate } from '@/utils/formatDate'
 import { useClickAway } from '@uidotdev/usehooks'
-import {
-  deletePostAction,
-  deletePostLikeAction,
-  postLikeAction,
-  postReportAction
-} from '@/redux-store/slices/postSlice'
+import { deletePostAction, postReportAction } from '@/redux-store/slices/postSlice'
 import { PostType } from '@/types/postType'
 import DeletePostModal from '@/components/modal/DeletePostModal'
 import getPostTypeById from '@/utils/getPostTypeByID'
 import { getImageAlt } from '@/utils/getImageAlt'
 import { useAuthentication } from '@/hooks/AuthContext'
+import {
+  deletePostBookmarkAction,
+  deletePostLikeAction,
+  postBookmarkAction,
+  postLikeAction
+} from '@/actions/postAction'
 
 const PostCard = ({
   id,
@@ -42,6 +43,11 @@ const PostCard = ({
   const dispatch = useDispatch()
   const [moreActive, setMoreActive] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [niceObj, setNiceObj] = useState({
+    flag: nice_flag,
+    count: like_count
+  })
+  const [bookmark, setBookmark] = useState(bookmark_flag)
   const { session_user_id } = useAuthentication()
 
   const openModal = () => setIsOpen(true)
@@ -66,8 +72,25 @@ const PostCard = ({
   }, [dispatch, id, closeModal])
 
   const handleLike = () => {
-    if (nice_flag) dispatch(postLikeAction(id))
-    else if (nice_flag) dispatch(deletePostLikeAction(id))
+    if (niceObj.flag) {
+      if (id)
+        deletePostLikeAction({ id, user_id: session_user_id }).then(data =>
+          setNiceObj(prevState => ({ ...prevState, flag: data.like_status, count: data.like_count }))
+        )
+    } else {
+      if (id)
+        postLikeAction({ id, user_id: session_user_id }).then(data =>
+          setNiceObj(prevState => ({ ...prevState, flag: data.like_status, count: data.like_count }))
+        )
+    }
+  }
+
+  const handleBookmark = () => {
+    if (bookmark) {
+      if (id) deletePostBookmarkAction({ post_id: id, user_id: session_user_id }).then(data => setBookmark(data))
+    } else {
+      if (id) postBookmarkAction({ post_id: id, user_id: session_user_id }).then(data => setBookmark(data))
+    }
   }
 
   const handleReport = async () => {
@@ -77,16 +100,18 @@ const PostCard = ({
 
   return (
     <div className='relative bg-white px-4 py-6 w-[282px] rounded-md'>
-      <Image
-        src={bookmark_flag ? '/images/icons/bookmark-fill.svg' : '/images/icons/bookmark-fill-gray.svg'}
-        alt={bookmark_flag ? 'bookmark-on' : 'bookmark-off'}
-        className='absolute -top-1 right-3 w-8 h-8'
-        width={32}
-        height={32}
-      />
+      <button onClick={handleBookmark}>
+        <Image
+          src={bookmark ? '/images/icons/bookmark-fill.svg' : '/images/icons/bookmark-fill-gray.svg'}
+          alt={bookmark ? 'bookmark-on' : 'bookmark-off'}
+          className='absolute -top-1 right-3 w-8 h-8'
+          width={32}
+          height={32}
+        />
+      </button>
       <p className='text-xs flex items-center gap-1 mb-3'>
         <span className='text-primary'>■</span>
-        {type_id && <span>{getPostTypeById(type_id)[0]}</span>}
+        {type_id && <span>{getPostTypeById(type_id).title}</span>}
       </p>
       <div className='mb-5 flex items-center flex-wrap gap-2'>
         <Button size='sm' color='primary' className='text-xs px-2 py-0 h-6 rounded-full w-fit'>
@@ -104,7 +129,7 @@ const PostCard = ({
             <button className='underline' onClick={handleLike}>
               いいね！{' '}
             </button>
-            <span>{like_count}件</span>
+            <span>{niceObj.count}件</span>
           </p>
         </div>
         <div className='flex items-center gap-1'>

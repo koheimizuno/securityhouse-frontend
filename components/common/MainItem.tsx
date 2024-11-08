@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { Button } from '@nextui-org/react'
 import DeletePostModal from '@/components/modal/DeletePostModal'
@@ -15,7 +15,7 @@ import { useClickAway } from '@uidotdev/usehooks'
 import { PostType } from '@/types/postType'
 import { NewsType } from '@/types/newsType'
 import { deleteNewsAction } from '@/redux-store/slices/newsSlice'
-import { deletePostAction, deletePostLikeAction, postLikeAction } from '@/redux-store/slices/postSlice'
+import { deletePostAction } from '@/redux-store/slices/postSlice'
 import {
   deleteNewsBookmarkAction,
   deleteNewsLikeAction,
@@ -23,6 +23,12 @@ import {
   newsLikeAction
 } from '@/actions/newsAction'
 import { useAuthentication } from '@/hooks/AuthContext'
+import {
+  deletePostBookmarkAction,
+  deletePostLikeAction,
+  postBookmarkAction,
+  postLikeAction
+} from '@/actions/postAction'
 
 const MainItem = ({
   id,
@@ -37,6 +43,7 @@ const MainItem = ({
   bookmark_flag,
   created_at
 }: Partial<PostType | NewsType>) => {
+  const router = useRouter()
   const pathname = usePathname()
   const dispatch = useDispatch()
   const contentRef = useRef<HTMLParagraphElement | null>(null)
@@ -80,6 +87,9 @@ const MainItem = ({
     await dispatch(deletePostAction(id))
     setMoreActive(false)
     closeModal()
+    setTimeout(() => {
+      router.push('/chatroom/sh-room/')
+    }, 2000)
   }, [dispatch, id, closeModal])
 
   const handleDeleteNew = useCallback(async () => {
@@ -89,8 +99,17 @@ const MainItem = ({
   }, [dispatch, id, closeModal])
 
   const handleLikePost = () => {
-    if (!nice_flag) dispatch(postLikeAction(id))
-    else if (nice_flag) dispatch(deletePostLikeAction(id))
+    if (niceObj.flag) {
+      if (id)
+        deletePostLikeAction({ id, user_id: session_user_id }).then(data =>
+          setNiceObj(prevState => ({ ...prevState, flag: data.like_status, count: data.like_count }))
+        )
+    } else {
+      if (id)
+        postLikeAction({ id, user_id: session_user_id }).then(data =>
+          setNiceObj(prevState => ({ ...prevState, flag: data.like_status, count: data.like_count }))
+        )
+    }
   }
 
   const handleLikeNew = () => {
@@ -107,7 +126,14 @@ const MainItem = ({
     }
   }
 
-  const handleBookmarkPost = () => {}
+  const handleBookmarkPost = () => {
+    if (bookmark) {
+      if (id) deletePostBookmarkAction({ post_id: id, user_id: session_user_id }).then(data => setBookmark(data))
+    } else {
+      if (id) postBookmarkAction({ post_id: id, user_id: session_user_id }).then(data => setBookmark(data))
+    }
+  }
+
   const handleBookmarkNews = () => {
     if (bookmark) {
       if (id) deleteNewsBookmarkAction({ id, user_id: session_user_id }).then(data => setBookmark(data))

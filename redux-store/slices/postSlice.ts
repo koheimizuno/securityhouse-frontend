@@ -30,54 +30,6 @@ export const deletePostAction: any = createAsyncThunk('deletePostAction', async 
   }
 })
 
-export const postLikeAction: any = createAsyncThunk('postLikeAction', async (id: string) => {
-  try {
-    await axios.post(`/api/post/like/${id}`)
-  } catch (err) {
-    return err
-  }
-})
-
-export const deletePostLikeAction: any = createAsyncThunk('deletePostLikeAction', async (id: string) => {
-  try {
-    await axios.delete(`/api/post/like/${id}`)
-  } catch (err) {
-    return err
-  }
-})
-
-export const postBookmarkAction: any = createAsyncThunk(
-  'postBookmarkAction',
-  async ({ post_id, user_id }: { post_id: string; user_id: string }) => {
-    try {
-      await axios.post(`/api/post/bookmark/`, {
-        params: {
-          post_id: post_id,
-          user_id: user_id
-        }
-      })
-    } catch (err) {
-      return err
-    }
-  }
-)
-
-export const deletePostBookmarkAction: any = createAsyncThunk(
-  'deletePostBookmarkAction',
-  async ({ post_id, user_id }: { post_id: string; user_id: string }) => {
-    try {
-      await axios.delete(`/api/post/bookmark/`, {
-        params: {
-          post_id: post_id,
-          user_id: user_id
-        }
-      })
-    } catch (err) {
-      return err
-    }
-  }
-)
-
 export const postReportAction: any = createAsyncThunk('postReportAction', async (id: string) => {
   try {
     await axios.post(`/api/report/`, { id })
@@ -124,51 +76,6 @@ export const postSlice = createSlice({
         toast.success('投稿が正常に削除されました。')
       })
       .addCase(deletePostAction.rejected, state => {
-        state.isLoading = false
-        state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
-      })
-      .addCase(postLikeAction.fulfilled, state => {
-        state.isLoading = false
-        state.success = true
-        toast.success('投稿に「いいね！」を追加しました。')
-      })
-      .addCase(postLikeAction.rejected, state => {
-        state.isLoading = false
-        state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
-      })
-      .addCase(deletePostLikeAction.fulfilled, state => {
-        state.isLoading = false
-        state.success = true
-        toast.success('投稿から「いいね！」を削除しました。')
-      })
-      .addCase(deletePostLikeAction.rejected, state => {
-        state.isLoading = false
-        state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
-      })
-      .addCase(postBookmarkAction.fulfilled, state => {
-        state.isLoading = false
-        state.success = true
-        toast.success('ブックマークに追加されました。')
-      })
-      .addCase(postBookmarkAction.rejected, state => {
-        state.isLoading = false
-        state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
-      })
-      .addCase(deletePostBookmarkAction.pending, state => {
-        state.isLoading = true
-        state.success = true
-        toast.success('ブックマークから削除されました。')
-      })
-      .addCase(deletePostBookmarkAction.fulfilled, state => {
-        state.isLoading = false
-        state.success = true
-        toast.success('ブックマークから削除されました。')
-      })
-      .addCase(deletePostBookmarkAction.rejected, state => {
         state.isLoading = false
         state.error = true
         toast.error('サーバの問題でデータ取得に失敗しました。')

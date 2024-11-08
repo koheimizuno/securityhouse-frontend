@@ -7,12 +7,14 @@ import PageHeader from '@/components/common/PageHeader'
 import MainItem from '@/components/common/MainItem'
 import { getMypageBmarkPostListAction } from '@/actions/postAction'
 import { PostType } from '@/types/postType'
+import { useAuthentication } from '@/hooks/AuthContext'
 
 const BookmarkedPostPage = () => {
   const [postData, setPostData] = useState<PostType[] | null>(null)
+  const { session_user_id } = useAuthentication()
 
   useEffect(() => {
-    getMypageBmarkPostListAction().then(data => {
+    getMypageBmarkPostListAction({ user_id: session_user_id }).then(data => {
       setPostData(data)
     })
   }, [])

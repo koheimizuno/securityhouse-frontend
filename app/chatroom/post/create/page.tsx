@@ -236,7 +236,11 @@ const CreatePostPage = () => {
               errors.content && 'mb-4'
             }`}
           >
-            <span className='text-base font-bold after:content-["*"] after:text-danger'>内容</span>
+            <span
+              className={`text-base font-bold after:content-["*"] after:text-danger ${errors.content && 'text-danger'}`}
+            >
+              内容
+            </span>
             <RichTextEditor onChange={handleEditorChange} />
             {errors.content && (
               <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.content}</span>

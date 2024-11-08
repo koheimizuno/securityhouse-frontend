@@ -16,16 +16,15 @@ import { PostType } from '@/types/postType'
 import { CommentType } from '@/types/commentType'
 import { useClickAway } from '@uidotdev/usehooks'
 import { getImageAlt } from '@/utils/getImageAlt'
-import { getPostByIdAction } from '@/actions/postAction'
-import { getCommentsAction } from '@/actions/commentAction'
 import {
-  deletePostAction,
   deletePostBookmarkAction,
   deletePostLikeAction,
+  getPostByIdAction,
   postBookmarkAction,
-  postLikeAction,
-  postReportAction
-} from '@/redux-store/slices/postSlice'
+  postLikeAction
+} from '@/actions/postAction'
+import { getCommentsAction } from '@/actions/commentAction'
+import { deletePostAction, postReportAction } from '@/redux-store/slices/postSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { createCommentAction } from '@/redux-store/slices/commentSlice'
 import { RootState } from '@/redux-store'
@@ -112,26 +111,46 @@ const SHRoomPostDetailPage = () => {
 
   const handleLike = () => {
     if (typeof id === 'string') {
-      if (postData?.nice_flag) dispatch(postLikeAction(id))
-      else if (postData?.nice_flag) dispatch(deletePostLikeAction(id))
+      if (postData?.nice_flag) {
+        if (id)
+          deletePostLikeAction({ id: Number(id), user_id: session_user_id }).then(data => {
+            setPostData(prev => {
+              if (prev !== null) return { ...prev, like_count: data.like_count, nice_flag: data.like_status }
+              else return null
+            })
+          })
+      } else {
+        if (id)
+          postLikeAction({ id: Number(id), user_id: session_user_id }).then(data => {
+            setPostData(prev => {
+              if (prev !== null) return { ...prev, like_count: data.like_count, nice_flag: data.like_status }
+              else return null
+            })
+          })
+      }
     }
   }
 
   const handleBookmark = () => {
-    if (postData?.bookmark_flag)
-      dispatch(
-        postBookmarkAction({
-          post_id: id,
-          user_id: session_user_id
-        })
-      )
-    else if (postData?.bookmark_flag)
-      dispatch(
-        deletePostBookmarkAction({
-          post_id: id,
-          user_id: session_user_id
-        })
-      )
+    if (typeof id === 'string') {
+      if (postData?.bookmark_flag) {
+        if (id)
+          deletePostBookmarkAction({ post_id: Number(id), user_id: session_user_id }).then(data => {
+            setPostData(prev => {
+              if (prev !== null) return { ...prev, bookmark_flag: data }
+              else return null
+            })
+          })
+      } else {
+        if (id)
+          postBookmarkAction({ post_id: Number(id), user_id: session_user_id }).then(data => {
+            setPostData(prev => {
+              if (prev !== null) return { ...prev, bookmark_flag: data }
+              else return null
+            })
+          })
+      }
+    }
   }
 
   const handleReport = async () => {
@@ -174,8 +193,8 @@ const SHRoomPostDetailPage = () => {
     <Container className='py-12 flex flex-col gap-12'>
       <section className='flex flex-col gap-8'>
         <SectionTitle
-          title={`${getPostTypeById(postData.type_id)[0]}トークルーム`}
-          icon={`/images/icons/${getPostTypeById(postData.type_id)[1]}-room-secondary.svg`}
+          title={`${getPostTypeById(postData.type_id).title}トークルーム`}
+          icon={`/images/icons/${getPostTypeById(postData.type_id).slug}-room-secondary.svg`}
         />
         <div className='flex flex-col gap-4 md:gap-8 bg-bgSemiblue px-6  md:px-16 py-10 rounded-2xl'>
           <Button size='sm' color='primary' disabled className='md:hidden text-xs px-2 py-0 h-6 rounded-full w-fit'>

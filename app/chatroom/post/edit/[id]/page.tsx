@@ -87,12 +87,11 @@ const EditPostPage = () => {
 
   useEffect(() => {
     if (typeof id === 'string') {
-      // Need to fix
       getPostByIdAction({ user_id: session_user_id, id }).then(data => {
         setFormData(prevState => ({
           ...prevState,
           postType: String(data.type_id),
-          category: data.category_id,
+          category: String(data.category_id),
           publication: data.publication,
           title: data.title,
           content: data.content,

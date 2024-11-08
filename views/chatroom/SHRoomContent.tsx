@@ -21,7 +21,7 @@ const SHRoomContent = () => {
   })
 
   useEffect(() => {
-    if (category_id && category_id !== 'all') {
+    if (categories && category_id && category_id !== 'all') {
       categories.map((category: CategoryType) => {
         if (category.category_id === category_id)
           setSelectedCat(prevState => ({ ...prevState, title: category.title, description: category.description }))

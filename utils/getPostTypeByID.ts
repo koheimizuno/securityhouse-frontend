@@ -1,10 +1,10 @@
 const getPostTypeById = (id: number) => {
   const postTypeArr = [
-    ['全て', ''],
-    ['SH会', 'sh'],
-    ['仕事', 'work'],
-    ['交流', 'exchange'],
-    ['社長室', 'boss']
+    { title: '全て', slug: '' },
+    { title: 'SH会', slug: 'sh' },
+    { title: '仕事', slug: 'work' },
+    { title: '交流', slug: 'exchange' },
+    { title: '社長室', slug: 'boss' }
   ]
   return postTypeArr[id]
 }
