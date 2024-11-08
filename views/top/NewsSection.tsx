@@ -54,9 +54,11 @@ const NewsSection = () => {
               .map(newItem => (
                 <NewsItem
                   key={newItem.id}
-                  name='山田太郎'
-                  affiliation_name='所属名'
+                  id={newItem.id}
+                  user_name={newItem.user_name}
+                  affiliation_name={newItem.affiliation_name}
                   thumbnail=''
+                  category_name={newItem.category_name}
                   title={newItem.title}
                   content={newItem.content}
                   bookmark_flag={newItem.bookmark_flag}

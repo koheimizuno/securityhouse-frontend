@@ -16,27 +16,33 @@ const SearchPage = () => {
         <SectionTitle title='トークルーム' bar={true} divider={true} />
         <ul className='flex flex-col gap-4'>
           <NewsItem
-            name='山田太郎'
+            id={1}
+            user_name='山田太郎'
             affiliation_name='所属名'
             thumbnail=''
+            category_name='お知らせカテゴリー名'
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
             bookmark_flag={true}
             created_at='2015-07-20T15:49:04-07:00'
           />
           <NewsItem
-            name='山田太郎'
+            id={1}
+            user_name='山田太郎'
             affiliation_name='所属名'
             thumbnail=''
+            category_name='お知らせカテゴリー名'
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
             bookmark_flag={true}
             created_at='2015-07-20T15:49:04-07:00'
           />
           <NewsItem
-            name='山田太郎'
+            id={1}
+            user_name='山田太郎'
             affiliation_name='所属名'
             thumbnail=''
+            category_name='お知らせカテゴリー名'
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
             bookmark_flag={true}
@@ -48,27 +54,33 @@ const SearchPage = () => {
         <SectionTitle title='新着情報' bar={true} divider={true} />
         <ul className='flex flex-col gap-4'>
           <NewsItem
-            name='山田太郎'
+            id={1}
+            user_name='山田太郎'
             affiliation_name='所属名'
             thumbnail=''
+            category_name='お知らせカテゴリー名'
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
             bookmark_flag={true}
             created_at='2015-07-20T15:49:04-07:00'
           />
           <NewsItem
-            name='山田太郎'
+            id={1}
+            user_name='山田太郎'
             affiliation_name='所属名'
             thumbnail=''
+            category_name='お知らせカテゴリー名'
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
             bookmark_flag={true}
             created_at='2015-07-20T15:49:04-07:00'
           />
           <NewsItem
-            name='山田太郎'
+            id={1}
+            user_name='山田太郎'
             affiliation_name='所属名'
             thumbnail=''
+            category_name='お知らせカテゴリー名'
             title='タイトルタイトルタイトル'
             content='投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります投稿の内容が入ります'
             bookmark_flag={true}

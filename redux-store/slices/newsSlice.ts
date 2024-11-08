@@ -46,30 +46,14 @@ export const deleteNewsLikeAction: any = createAsyncThunk('deleteNewsLikeAction'
   }
 })
 
-export const newsBookmarkAction: any = createAsyncThunk(
-  'newsBookmarkAction',
-  async ({ post_id, user_id }: { post_id: string; user_id: string }) => {
-    try {
-      await axios.post(`/api/news/bookmark/`, {
-        params: {
-          post_id: post_id,
-          user_id: user_id
-        }
-      })
-    } catch (err) {
-      return err
-    }
-  }
-)
-
 export const deleteNewsBookmarkAction: any = createAsyncThunk(
   'deleteNewsBookmarkAction',
-  async ({ post_id, user_id }: { post_id: string; user_id: string }) => {
+  async ({ id, user_id }: { id: string; user_id: string }) => {
     try {
       await axios.delete(`/api/news/bookmark/`, {
         params: {
-          post_id: post_id,
-          user_id: user_id
+          id,
+          user_id
         }
       })
     } catch (err) {
@@ -136,26 +120,6 @@ export const newsSlice = createSlice({
         toast.success('お知らせから「いいね！」を削除しました。')
       })
       .addCase(deleteNewsLikeAction.rejected, state => {
-        state.isLoading = false
-        state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
-      })
-      .addCase(newsBookmarkAction.fulfilled, state => {
-        state.isLoading = false
-        state.success = true
-        toast.success('ブックマークに追加されました。')
-      })
-      .addCase(newsBookmarkAction.rejected, state => {
-        state.isLoading = false
-        state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
-      })
-      .addCase(deleteNewsBookmarkAction.fulfilled, state => {
-        state.isLoading = false
-        state.success = true
-        toast.success('ブックマークから削除されました。')
-      })
-      .addCase(deleteNewsBookmarkAction.rejected, state => {
         state.isLoading = false
         state.error = true
         toast.error('サーバの問題でデータ取得に失敗しました。')
