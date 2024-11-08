@@ -22,7 +22,11 @@ export const getPostsAction = async ({
 
 export const getPostByIdAction = async ({ user_id, id }: { user_id: string; id: string }) => {
   try {
-    const { data } = await axios.get(`/api/post/${user_id}/${id}`)
+    const { data } = await axios.get(`/api/post/${id}`, {
+      params: {
+        user_id
+      }
+    })
     return data
   } catch (err) {
     console.error(err)
