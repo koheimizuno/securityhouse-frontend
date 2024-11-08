@@ -105,7 +105,7 @@ const NewsPage = () => {
                     user_name={newItem.user_name}
                     affiliation_name={newItem.affiliation_name}
                     thumbnail={newItem.thumbnail}
-                    nice_flag='1'
+                    nice_flag={newItem.nice_flag}
                     like_count={newItem.like_count}
                     bookmark_flag={newItem.bookmark_flag}
                     created_at={newItem.created_at}

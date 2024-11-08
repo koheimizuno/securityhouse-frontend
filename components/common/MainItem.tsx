@@ -14,8 +14,15 @@ import { formatDate } from '@/utils/formatDate'
 import { useClickAway } from '@uidotdev/usehooks'
 import { PostType } from '@/types/postType'
 import { NewsType } from '@/types/newsType'
-import { deleteNewsAction, deleteNewsLikeAction, newsLikeAction } from '@/redux-store/slices/newsSlice'
+import { deleteNewsAction } from '@/redux-store/slices/newsSlice'
 import { deletePostAction, deletePostLikeAction, postLikeAction } from '@/redux-store/slices/postSlice'
+import {
+  deleteNewsBookmarkAction,
+  deleteNewsLikeAction,
+  newsBookmarkAction,
+  newsLikeAction
+} from '@/actions/newsAction'
+import { useAuthentication } from '@/hooks/AuthContext'
 
 const MainItem = ({
   id,
@@ -37,6 +44,12 @@ const MainItem = ({
   const [contentHeight, setContentHeight] = useState<number>(0)
   const [contentMore, setContentMore] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [niceObj, setNiceObj] = useState({
+    flag: nice_flag,
+    count: like_count
+  })
+  const [bookmark, setBookmark] = useState(bookmark_flag)
+  const { session_user_id } = useAuthentication()
 
   const openModal = () => setIsOpen(true)
   const closeModal = useCallback(() => setIsOpen(false), [])
@@ -81,8 +94,26 @@ const MainItem = ({
   }
 
   const handleLikeNew = () => {
-    if (!nice_flag) dispatch(newsLikeAction(id))
-    else if (nice_flag) dispatch(deleteNewsLikeAction(id))
+    if (niceObj.flag) {
+      if (id)
+        deleteNewsLikeAction({ id, user_id: session_user_id }).then(data =>
+          setNiceObj(prevState => ({ ...prevState, flag: data.like_status, count: data.like_count }))
+        )
+    } else {
+      if (id)
+        newsLikeAction({ id, user_id: session_user_id }).then(data =>
+          setNiceObj(prevState => ({ ...prevState, flag: data.like_status, count: data.like_count }))
+        )
+    }
+  }
+
+  const handleBookmarkPost = () => {}
+  const handleBookmarkNews = () => {
+    if (bookmark) {
+      if (id) deleteNewsBookmarkAction({ id, user_id: session_user_id }).then(data => setBookmark(data))
+    } else {
+      if (id) newsBookmarkAction({ id, user_id: session_user_id }).then(data => setBookmark(data))
+    }
   }
 
   return (
@@ -146,15 +177,17 @@ const MainItem = ({
             <button className='underline' onClick={newsFlag ? handleLikeNew : handleLikePost}>
               いいね！{' '}
             </button>
-            <span>{like_count}件</span>
+            <span>{niceObj.count}件</span>
           </p>
         </div>
-        <Image
-          src={bookmark_flag ? '/images/icons/bookmark-fill.svg' : '/images/icons/bookmark-outline.svg'}
-          alt={bookmark_flag ? 'bookmark-fill' : 'bookmark-outline'}
-          width={32}
-          height={32}
-        />
+        <button onClick={newsFlag ? handleBookmarkNews : handleBookmarkPost}>
+          <Image
+            src={bookmark ? '/images/icons/bookmark-fill.svg' : '/images/icons/bookmark-outline.svg'}
+            alt={bookmark ? 'bookmark-fill' : 'bookmark-outline'}
+            width={32}
+            height={32}
+          />
+        </button>
       </div>
       <DeletePostModal isOpen={isOpen} onClose={closeModal} onSubmit={newsFlag ? handleDeleteNew : handleDeletePost} />
     </li>

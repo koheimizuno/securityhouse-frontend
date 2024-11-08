@@ -63,8 +63,6 @@ const EditNewPage = () => {
       })
   }, [id])
 
-  console.log(formData)
-
   useEffect(() => {
     dispatch(
       getCategoryAction({
