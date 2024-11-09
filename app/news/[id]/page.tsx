@@ -124,6 +124,8 @@ const NewDetailPage = () => {
     return <Loading flag='1' />
   }
 
+  const handleReport = async () => {}
+
   return (
     <Container className='py-12 flex flex-col gap-8'>
       <PageHeader title='お知らせ詳細' subtitle='お知らせ' />
@@ -155,16 +157,23 @@ const NewDetailPage = () => {
             <button onClick={() => pathname !== '/' && setMoreActive(!moreActive)}>
               <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
             </button>
-            {moreActive && (
-              <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
-                <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
-                  <Link href={`/news/edit/${id}`}>編集する</Link>
-                </li>
-                <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
-                  <button onClick={openModal}>削除する</button>
-                </li>
-              </ul>
-            )}
+            {moreActive &&
+              (newData.user_id === session_user_id ? (
+                <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
+                  <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
+                    <Link href={`/news/edit/${id}`}>編集する</Link>
+                  </li>
+                  <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
+                    <button onClick={openModal}>削除する</button>
+                  </li>
+                </ul>
+              ) : (
+                <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
+                  <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
+                    <button onClick={handleReport}>通報する</button>
+                  </li>
+                </ul>
+              ))}
           </div>
         </div>
         <h3 className='text-xl font-bold truncate text-txtColor'>{newData?.title}</h3>
