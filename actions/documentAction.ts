@@ -20,3 +20,17 @@ export const getDocumentByIdAction = async (id: string) => {
     throw err
   }
 }
+
+export const getDocumentVideoAction = async ({ user_id }: { user_id: number }) => {
+  try {
+    const { data } = await axios.post(`/api/movie/`, {
+      params: {
+        user_id
+      }
+    })
+    return data.movies
+  } catch (err) {
+    toast.error('サーバの問題でデータ取得に失敗しました。')
+    throw err
+  }
+}

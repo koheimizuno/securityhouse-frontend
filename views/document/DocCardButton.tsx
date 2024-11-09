@@ -1,10 +1,12 @@
 'use client'
 
 import { getImageAlt } from '@/utils/getImageAlt'
+import { handleDownload } from '@/utils/handleDownload'
 import Image from 'next/image'
 
 type DocCardButtonProps = {
   title: string
+  file: string
   icon?: string
   subicon?: string
   className?: string
@@ -13,6 +15,7 @@ type DocCardButtonProps = {
 
 const DocCardButton = ({
   title,
+  file,
   icon = '/images/icons/pdf-icon.svg',
   subicon = '/images/icons/download-icon.svg',
   className,
@@ -39,9 +42,10 @@ const DocCardButton = ({
       <Image
         src={subicon}
         alt={getImageAlt(subicon) || ''}
-        className={`${size === 'lg' ? 'h-5' : 'h-4'}`}
+        className={`cursor-pointer ${size === 'lg' ? 'h-5' : 'h-4'}`}
         width={16}
         height={16}
+        onClick={() => handleDownload(file)}
       />
     </div>
   )
