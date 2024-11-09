@@ -10,7 +10,7 @@ import { Input, Button, User, Dropdown, DropdownTrigger, DropdownMenu, DropdownI
 
 import { getUsersAction } from '@/actions/authAction'
 import { UsersType } from '@/types/userType'
-import { createMessageAction, getMessageAction } from '@/actions/messageAction'
+import { createMessageAction, editMessageAction, getMessageAction } from '@/actions/messageAction'
 import { useAuthentication } from '@/hooks/AuthContext'
 import { MessageType } from '@/types/messageType'
 import { deleteMessageAction } from '@/redux-store/slices/messageSlice'
@@ -27,14 +27,15 @@ const DirectMessagePage = () => {
   const [fileName, setFileName] = useState<string | null>(null)
   const [isOpen, setIsOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [deleteId, setDeleteId] = useState('')
+  const [activeId, setActiveId] = useState('')
   const [editFlag, setEditFlag] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
   const { session_user_id } = useAuthentication()
   const formData = new FormData()
 
   const openModal = (id: string) => {
     setIsModalOpen(true)
-    setDeleteId(id)
+    setActiveId(id)
   }
   const closeModal = useCallback(() => setIsModalOpen(false), [])
 
@@ -66,6 +67,11 @@ const DirectMessagePage = () => {
     fileInputRef.current?.click()
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewMessage(e.target.value)
+    setErrorMsg('')
+  }
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
@@ -76,7 +82,23 @@ const DirectMessagePage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (newMessage.trim()) {
+    if (!newMessage.trim()) {
+      return setErrorMsg('メールアドレスは必須です')
+    }
+    if (editFlag) {
+      formData.append('id', activeId)
+      formData.append('content', newMessage)
+      const editMessageRes = await editMessageAction(formData)
+      setMessages(prevMessages =>
+        prevMessages.map(message =>
+          message.id === editMessageRes.id.toString()
+            ? { ...message, content: editMessageRes.content, attachment: editMessageRes.attachment }
+            : message
+        )
+      )
+      setNewMessage('')
+      setFileName('')
+    } else {
       formData.append('sender', session_user_id)
       formData.append('receiver', receiverId)
       formData.append('content', newMessage)
@@ -84,12 +106,18 @@ const DirectMessagePage = () => {
       setMessages(prev => [...prev, newMessageRes])
       setNewMessage('')
     }
+    setEditFlag(false)
   }
 
-  const handleEditMessage = () => {}
+  const handleEditMessage = (message: MessageType) => {
+    setEditFlag(true)
+    setNewMessage(message.content)
+    setActiveId(message.id)
+    setFileName(message.attachment)
+  }
 
   const handleDeletePost = async () => {
-    await dispatch(deleteMessageAction(deleteId))
+    await dispatch(deleteMessageAction(activeId))
     closeModal()
   }
 
@@ -167,7 +195,7 @@ const DirectMessagePage = () => {
                               <Image src='/images/icons/more-vertical.svg' alt='more-icon' width={20} height={20} />
                             </DropdownTrigger>
                             <DropdownMenu aria-label='Static Actions'>
-                              <DropdownItem key='edit' onClick={handleEditMessage}>
+                              <DropdownItem key='edit' onClick={() => handleEditMessage(message)}>
                                 編集する
                               </DropdownItem>
                               <DropdownItem
@@ -225,20 +253,23 @@ const DirectMessagePage = () => {
                     className='hidden'
                   />
                 </div>
-                <div className={`relative w-full ${fileName && 'pt-4'}`}>
+                <div className={`relative w-full`}>
                   {fileName && <p className='absolute left-0 -top-7'>{fileName}</p>}
                   <Input
                     fullWidth
                     placeholder='Type a message...'
                     value={newMessage}
-                    onChange={e => setNewMessage(e.target.value)}
+                    isInvalid={errorMsg ? true : false}
+                    color={errorMsg ? 'danger' : 'default'}
+                    errorMessage={errorMsg}
+                    onChange={handleChange}
                     className='flex-grow'
                     size='lg'
                   />
                 </div>
               </div>
               <Button type='submit' color='primary' className='rounded-full'>
-                送信
+                {editFlag ? '編集' : '送信'}
               </Button>
             </form>
           </div>

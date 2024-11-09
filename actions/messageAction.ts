@@ -26,3 +26,14 @@ export const getMessageAction = async ({ sender, receiver }: { sender: string; r
     throw err
   }
 }
+
+export const editMessageAction = async (payload: FormData) => {
+  try {
+    const { data } = await axios.put(`/api/message/`, payload)
+    toast.success('メッセージが成果的に変更されました。')
+    return data
+  } catch (err) {
+    toast.error('サーバの問題でデータ取得に失敗しました。')
+    throw err
+  }
+}
