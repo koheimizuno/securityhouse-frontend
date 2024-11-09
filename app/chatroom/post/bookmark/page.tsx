@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import Container from '@/components/layout/Container'
 import PageHeader from '@/components/common/PageHeader'
 import MainItem from '@/components/common/MainItem'
-import { getMypageBmarkPostListAction } from '@/actions/postAction'
+import { getBmarkPostListAction } from '@/actions/postAction'
 import { PostType } from '@/types/postType'
 import { useAuthentication } from '@/hooks/AuthContext'
 
@@ -14,14 +14,14 @@ const BookmarkedPostPage = () => {
   const { session_user_id } = useAuthentication()
 
   useEffect(() => {
-    getMypageBmarkPostListAction({ user_id: session_user_id }).then(data => {
+    getBmarkPostListAction({ user_id: session_user_id }).then(data => {
       setPostData(data)
     })
-  }, [])
+  }, [session_user_id])
 
   return (
     <Container className='py-16 flex flex-col gap-8'>
-      <PageHeader title='ブックマーク' className='text-center' />
+      <PageHeader title='ブックマーク' subtitle='マイページ' />
       <ul className='flex flex-col gap-6'>
         {postData &&
           postData?.map(item => (

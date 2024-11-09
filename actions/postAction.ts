@@ -98,6 +98,20 @@ export const deletePostLikeAction = async ({ id, user_id }: { id: number; user_i
   }
 }
 
+export const getBmarkPostListAction = async ({ user_id }: { user_id: number }) => {
+  try {
+    const { data } = await axios.get(`/api/post/bookmarkList`, {
+      params: {
+        user_id
+      }
+    })
+    return data.bookmark_posts
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
 export const getMypagePostListAction = async ({ user_id }: { user_id: number }) => {
   try {
     const { data } = await axios.get(`/api/mypagePostList`, {
