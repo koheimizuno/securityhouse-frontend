@@ -14,15 +14,25 @@ const DocumentContractDocPage = () => {
         <div className='flex flex-col gap-4'>
           <DocCardButton
             title='i-NEXT安心サポートサービス契約書（セキュリネット無　個人ユーザー）（2020.4改訂）'
+            file=''
             size='lg'
           />
           <DocCardButton
             title='i-NEXT安心サポートサービス契約書（セキュリネット有　個人ユーザー）（2020.4改訂）'
+            file=''
             size='lg'
           />
-          <DocCardButton title='i-NEXT安心サポートサービス契約書（セキュリネット無　法人）（2020.4改訂）' size='lg' />
-          <DocCardButton title='i-NEXT安心サポートサービス契約書（セキュリネット有　法人）（2020.4改訂）' size='lg' />
-          <DocCardButton title='重要　「セキュリティ請負契約書」の改訂に関して' size='lg' />
+          <DocCardButton
+            title='i-NEXT安心サポートサービス契約書（セキュリネット無　法人）（2020.4改訂）'
+            file=''
+            size='lg'
+          />
+          <DocCardButton
+            title='i-NEXT安心サポートサービス契約書（セキュリネット有　法人）（2020.4改訂）'
+            file=''
+            size='lg'
+          />
+          <DocCardButton title='重要　「セキュリティ請負契約書」の改訂に関して' file='' size='lg' />
         </div>
       </section>
     </Container>

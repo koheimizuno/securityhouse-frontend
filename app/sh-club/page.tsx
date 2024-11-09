@@ -83,22 +83,22 @@ const SHClubPagePage = () => {
           <div className='md:w-[calc(100%-246px)] flex flex-col gap-4'>
             <div className='flex flex-col gap-1'>
               <h5>2024.03.01</h5>
-              <DocCardButton title='タイトルが入ります。タイトルが入ります。' size='lg' />
+              <DocCardButton title='タイトルが入ります。タイトルが入ります。' file='' size='lg' />
             </div>
             <div className='flex flex-col gap-1'>
               <h5>2024.03.01</h5>
-              <DocCardButton title='タイトルが入ります。タイトルが入ります。' size='lg' />
+              <DocCardButton title='タイトルが入ります。タイトルが入ります。' file='' size='lg' />
             </div>
             <div className='flex flex-col gap-1'>
               <h5>2024.03.01</h5>
-              <DocCardButton title='タイトルが入ります。タイトルが入ります。' size='lg' />
+              <DocCardButton title='タイトルが入ります。タイトルが入ります。' file='' size='lg' />
             </div>
           </div>
         </div>
       </section>
       <section className='flex flex-col gap-8' id='rules'>
         <SectionTitle title='SH会会則' bar={true} divider={true} />
-        <DocCardButton title='SH会会則' size='lg' />
+        <DocCardButton title='SH会会則' file='' size='lg' />
       </section>
     </Container>
   )

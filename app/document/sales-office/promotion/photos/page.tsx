@@ -23,15 +23,15 @@ const DocumentVideoPhotosPage = () => {
       <section className='flex flex-col gap-8'>
         <SectionTitle title='FAX申込書' bar={true} divider={true} />
         <div className='flex flex-col gap-4'>
-          <DocCardButton title='パネル貸出申込書（PDF）' size='lg' />
-          <DocCardButton title='パネル貸出申込書（LZH）' size='lg' />
-          <DocCardButton title='パネル購入申込書（PDF）' size='lg' />
-          <DocCardButton title='パネル購入申込書（LZH）' size='lg' />
+          <DocCardButton title='パネル貸出申込書（PDF）' file='' size='lg' />
+          <DocCardButton title='パネル貸出申込書（LZH）' file='' size='lg' />
+          <DocCardButton title='パネル購入申込書（PDF）' file='' size='lg' />
+          <DocCardButton title='パネル購入申込書（LZH）' file='' size='lg' />
         </div>
       </section>
       <section className='flex flex-col gap-8'>
         <SectionTitle title='どこでもカメラ' bar={true} divider={true} />
-        <DocCardButton title='どこでもカメラ貸出について（販促用）' size='lg' />
+        <DocCardButton title='どこでもカメラ貸出について（販促用）' file='' size='lg' />
         <p className='bg-bgSemiblue min-h-[300px] flex justify-center items-center'>貸出規約</p>
       </section>
       <Link href='photos/panel' className='text-center'>

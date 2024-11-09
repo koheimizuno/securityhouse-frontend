@@ -82,8 +82,12 @@ const DocumentJ810SHPage = () => {
       <section className='flex flex-col gap-8'>
         <SectionTitle title='機器取扱説明書' bar={true} divider={true} />
         <div className='flex flex-col gap-4'>
-          <DocCardButton title='J-810SH PC登録器マニュアルV1029以降（セキュリネット登録編）2020.9.28更新' size='lg' />
-          <DocCardButton title='J-810SH工事マニュアル_150424' size='lg' />
+          <DocCardButton
+            title='J-810SH PC登録器マニュアルV1029以降（セキュリネット登録編）2020.9.28更新'
+            file=''
+            size='lg'
+          />
+          <DocCardButton title='J-810SH工事マニュアル_150424' file='' size='lg' />
         </div>
       </section>
     </Container>

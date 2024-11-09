@@ -12,14 +12,14 @@ const DocumentProposalVideoPage = () => {
       <section className='flex flex-col gap-8'>
         <SectionTitle title='プレゼン資料' bar={true} divider={true} />
         <div className='flex flex-col gap-4'>
-          <DocCardButton title='エンドユーザー様向けプレゼン資料' size='lg' />
+          <DocCardButton title='エンドユーザー様向けプレゼン資料' file='' size='lg' />
         </div>
       </section>
       <section className='flex flex-col gap-8'>
         <SectionTitle title='提案書' bar={true} divider={true} />
         <div className='flex flex-col gap-4'>
-          <DocCardButton title='(新)工場向け-i-NEXTご提案書' size='lg' />
-          <DocCardButton title='(新)工場向け-i-NEXTご提案書（PPT)' size='lg' />
+          <DocCardButton title='(新)工場向け-i-NEXTご提案書' file='' size='lg' />
+          <DocCardButton title='(新)工場向け-i-NEXTご提案書（PPT)' file='' size='lg' />
         </div>
       </section>
       <section className='flex flex-col gap-8'>

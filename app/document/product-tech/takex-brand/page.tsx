@@ -19,7 +19,7 @@ const DocumentTAKEXBrandPage = () => {
       </section>
       <section className='flex flex-col gap-8'>
         <SectionTitle title='感圧コードセンサ技術資料' bar={true} divider={true} />
-        <DocCardButton title='感圧コードセンサ技術資料' size='lg' />
+        <DocCardButton title='感圧コードセンサ技術資料' file='' size='lg' />
       </section>
     </Container>
   )

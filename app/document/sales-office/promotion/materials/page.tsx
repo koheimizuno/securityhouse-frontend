@@ -16,18 +16,20 @@ const DocumentVideoMaterialsPage = () => {
           <p>川口能活氏の映像には「肖像権」「著作権」があり、使用には事前承認が必要です。</p>
           <p>必ず事前にセンターまでご申請下さい。</p>
         </div>
-        <DocCardButton title='「攻撃る守備」営業展開（企業キャラクター契約概略について）' />
+        <DocCardButton title='「攻撃る守備」営業展開（企業キャラクター契約概略について）' file='' />
       </section>
       <section className='flex flex-col gap-6'>
         <SectionTitle title='動画' bar={true} divider={true} />
         <div className='flex flex-col gap-3'>
           <DocCardButton
             title='くらしを守る次世代の超防犯システム（2023）'
+            file=''
             icon='/images/icons/youtube.svg'
             subicon='/images/icons/video-icon-circle.svg'
           />
           <DocCardButton
             title='くらしを守る次世代の超防犯システム（ショート.ver）（2023）'
+            file=''
             icon='/images/icons/youtube.svg'
             subicon='/images/icons/video-icon-circle.svg'
           />

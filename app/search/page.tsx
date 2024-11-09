@@ -128,12 +128,12 @@ const SearchPage = () => {
         <div className='flex flex-col gap-4'>
           <SubSectionTitle title='代理店／サポートショップ' />
           <div className='flex flex-col gap-2'>
-            <DocCardButton title='フルコミ契約書' size='lg' />
-            <DocCardButton title='フルコミ誓約書' size='lg' />
-            <DocCardButton title='身元保証書' size='lg' />
-            <DocCardButton title='サポートショップ募集用チラシ' size='lg' />
-            <DocCardButton title='サポートショップ仲介契約書' size='lg' />
-            <DocCardButton title='個人サポートショップ用チラシ' size='lg' />
+            <DocCardButton title='フルコミ契約書' file='' size='lg' />
+            <DocCardButton title='フルコミ誓約書' file='' size='lg' />
+            <DocCardButton title='身元保証書' file='' size='lg' />
+            <DocCardButton title='サポートショップ募集用チラシ' file='' size='lg' />
+            <DocCardButton title='サポートショップ仲介契約書' file='' size='lg' />
+            <DocCardButton title='個人サポートショップ用チラシ' file='' size='lg' />
           </div>
         </div>
       </section>

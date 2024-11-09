@@ -24,7 +24,7 @@ const DocumentCard = ({ img, title }: DocumentCardProps) => {
         />
       </div>
       <p>{title}</p>
-      <DocCardButton title='ダウンロード' />
+      <DocCardButton title='ダウンロード' file=''/>
     </div>
   )
 }

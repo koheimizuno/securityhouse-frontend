@@ -12,24 +12,24 @@ const DocumentationContent = () => {
         <div className='flex justify-between flex-wrap gap-8'>
           <h4 className='md:py-4 md:max-w-[220px]'>個人　クレジット</h4>
           <div className='flex flex-col gap-2 md:w-[480px]'>
-            <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' size='sm' />
-            <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
+            <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' file='' size='sm' />
+            <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
           </div>
         </div>
         <Divider />
         <div className='flex justify-between flex-wrap gap-8'>
           <h4 className='md:py-4 md:max-w-[220px]'>個人　現金</h4>
           <div className='flex flex-col gap-2 md:w-[480px]'>
-            <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' size='sm' />
-            <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
+            <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' file='' size='sm' />
+            <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
           </div>
         </div>
         <Divider />
         <div className='flex justify-between flex-wrap gap-8'>
           <h4 className='md:py-4 md:max-w-[220px]'>個人　リース</h4>
           <div className='flex flex-col gap-2 md:w-[480px]'>
-            <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' size='sm' />
-            <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
+            <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' file='' size='sm' />
+            <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
           </div>
         </div>
       </section>
@@ -38,24 +38,24 @@ const DocumentationContent = () => {
         <div className='flex justify-between flex-wrap gap-8'>
           <h4 className='md:py-4 md:max-w-[220px]'>契約時の同意書</h4>
           <div className='flex flex-col gap-2 md:w-[480px]'>
-            <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' size='sm' />
-            <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
+            <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' file='' size='sm' />
+            <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
           </div>
         </div>
         <Divider />
         <div className='flex justify-between flex-wrap gap-8'>
           <h4 className='md:py-4 md:max-w-[220px]'>特定商取引法注意他</h4>
           <div className='flex flex-col gap-2 md:w-[480px]'>
-            <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' size='sm' />
-            <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
+            <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' file='' size='sm' />
+            <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
           </div>
         </div>
         <Divider />
         <div className='flex justify-between flex-wrap gap-8'>
           <h4 className='md:py-4 md:max-w-[220px]'>メンテナンス契約書 一般用1年以降有料</h4>
           <div className='flex flex-col gap-2 md:w-[480px]'>
-            <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' size='sm' />
-            <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
+            <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' file='' size='sm' />
+            <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
           </div>
         </div>
       </section>
@@ -64,8 +64,8 @@ const DocumentationContent = () => {
         <div className='flex justify-between flex-wrap gap-8'>
           <h4 className='md:py-4 md:max-w-[220px]'>修理サービス依頼書</h4>
           <div className='flex flex-col gap-2 md:w-[480px]'>
-            <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' size='sm' />
-            <DocCardButton title='圧縮版PDF(00KB)' size='sm' />
+            <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' file='' size='sm' />
+            <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
           </div>
         </div>
         <Divider />
