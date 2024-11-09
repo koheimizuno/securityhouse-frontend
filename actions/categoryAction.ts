@@ -1,4 +1,5 @@
 import axios from 'axios'
+import toast from 'react-hot-toast'
 
 export const getCategoryByIdAction = async (id: string, pageFlag: string = '0') => {
   try {
@@ -9,7 +10,7 @@ export const getCategoryByIdAction = async (id: string, pageFlag: string = '0') 
     })
     return data
   } catch (err) {
-    console.error(err)
+    toast.error('サーバの問題でデータ取得に失敗しました。')
     throw err
   }
 }
