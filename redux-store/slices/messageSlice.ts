@@ -6,14 +6,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { MessageType } from '@/types/messageType'
 import { storeInitialType } from '@/types/storeInitialType'
 
-export const createMessageAction: any = createAsyncThunk('createMessageAction', async (payload: MessageType) => {
-  try {
-    await axios.post(`/api/message/`, payload)
-  } catch (err) {
-    return err
-  }
-})
-
 export const editMessageAction: any = createAsyncThunk('editMessageAction', async (payload: MessageType) => {
   try {
     await axios.put(`/api/message/`, payload)
@@ -42,19 +34,6 @@ export const messageSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(createMessageAction.pending, state => {
-        state.isLoading = true
-      })
-      .addCase(createMessageAction.fulfilled, state => {
-        state.isLoading = false
-        state.success = true
-        toast.success('メッセージが成果的に送信されました。')
-      })
-      .addCase(createMessageAction.rejected, state => {
-        state.isLoading = false
-        state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
-      })
       .addCase(editMessageAction.pending, state => {
         state.isLoading = true
       })

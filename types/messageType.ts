@@ -4,4 +4,5 @@ export type MessageType = {
   receiver: string
   content: string
   attachment: string
+  created_at: string
 }
