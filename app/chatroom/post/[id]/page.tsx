@@ -23,14 +23,14 @@ import {
   postBookmarkAction,
   postLikeAction
 } from '@/actions/postAction'
-import { getCommentsAction } from '@/actions/commentAction'
+import { createCommentAction, getCommentsAction } from '@/actions/commentAction'
 import { deletePostAction, postReportAction } from '@/redux-store/slices/postSlice'
 import { getCategoryAction } from '@/redux-store/slices/categorySlice'
-import { createCommentAction } from '@/redux-store/slices/commentSlice'
 import { RootState } from '@/redux-store'
 import DeletePostModal from '@/components/modal/DeletePostModal'
 import { useAuthentication } from '@/hooks/AuthContext'
 import getPostTypeById from '@/utils/getPostTypeByID'
+import { formatDate } from '@/utils/formatDate'
 
 const SHRoomPostDetailPage = () => {
   const { id } = useParams()
@@ -158,20 +158,21 @@ const SHRoomPostDetailPage = () => {
     setMoreActive(false)
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (validateForm()) {
       const commentPayload = new FormData()
 
       if (typeof id === 'string') commentPayload.append('post_id', id)
+      commentPayload.append('user_id', session_user_id)
       commentPayload.append('content', newComment.content)
       commentPayload.append('attachment', newComment.attachment.file)
-
-      await dispatch(createCommentAction(commentPayload))
-      setTimeout(() => {
-        router.push('/chatroom/sh-room')
-      }, 2000)
+      const newCommentRes = await createCommentAction(commentPayload)
+      setComments(prev => {
+        if (prev !== null) return [...prev, newCommentRes]
+        else return null
+      })
     }
   }
 
@@ -205,8 +206,10 @@ const SHRoomPostDetailPage = () => {
               <div className='flex items-center gap-2 mt-4 mb-3 text-sm md:text-base'>
                 <Image src='/images/icons/user-icon00.svg' alt='user-icon00 w-11 h-11' width={44} height={44} />
                 <div>
-                  <p className='text-sm'>{postData.name}／所属名</p>
-                  <p>0000年00月00日00:00</p>
+                  <p className='text-sm'>
+                    {postData.name}／{postData.affiliation_name}
+                  </p>
+                  <p>{formatDate(postData.created_at)}</p>
                 </div>
               </div>
               <Button
@@ -273,7 +276,7 @@ const SHRoomPostDetailPage = () => {
             </button>
           </div>
           <Divider className='h-[2px]' />
-          <form className='flex flex-col gap-8' onSubmit={handleSubmit}>
+          <form className='flex flex-col gap-8' onSubmit={handleCommentSubmit}>
             <SectionTitle title='投稿にコメントする' icon='/images/icons/comment-icon-primary.svg' />
             <Textarea
               name='content'
@@ -321,16 +324,18 @@ const SHRoomPostDetailPage = () => {
         <SectionTitle title='コメント' icon='/images/icons/comment-icon-secondary.svg' />
         {comments ? (
           <ul className='flex flex-col gap-8'>
-            {comments.map(comment => (
-              <CommentItem
-                key={comment.id}
-                userName={comment.user_name}
-                userCompany={comment.affiliation_name}
-                avatar={comment.thumbnail}
-                comment={comment.content}
-                created_at={comment.created_at}
-              />
-            ))}
+            {comments
+              .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+              .map(comment => (
+                <CommentItem
+                  key={comment.id}
+                  userName={comment.user_name}
+                  userCompany={comment.affiliation_name}
+                  avatar={comment.thumbnail}
+                  comment={comment.content}
+                  created_at={comment.created_at}
+                />
+              ))}
           </ul>
         ) : (
           <Loading flag='2' />

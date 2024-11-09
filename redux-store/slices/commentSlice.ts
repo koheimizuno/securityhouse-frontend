@@ -6,14 +6,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { storeInitialType } from '@/types/storeInitialType'
 import { CommentType } from '@/types/commentType'
 
-export const createCommentAction: any = createAsyncThunk('createCommentAction', async (payload: CommentType) => {
-  try {
-    await axios.post(`/api/comment/`, payload)
-  } catch (err) {
-    return err
-  }
-})
-
 export const editCommentAction: any = createAsyncThunk('editCommentAction', async (payload: CommentType) => {
   try {
     await axios.put(`/api/comment/`, payload)
@@ -66,16 +58,6 @@ export const commentSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(createCommentAction.fulfilled, state => {
-        state.isLoading = false
-        state.success = true
-        toast.success('コメントが正常に作成されました。')
-      })
-      .addCase(createCommentAction.rejected, state => {
-        state.isLoading = false
-        state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
-      })
       .addCase(editCommentAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
