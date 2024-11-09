@@ -6,10 +6,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { Button } from '@nextui-org/react'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 
 import { formatDate } from '@/utils/formatDate'
-import { useClickAway } from '@uidotdev/usehooks'
 import { deletePostAction, postReportAction } from '@/redux-store/slices/postSlice'
 import { PostType } from '@/types/postType'
 import DeletePostModal from '@/components/modal/DeletePostModal'
@@ -41,7 +40,6 @@ const PostCard = ({
 }: Partial<PostType>) => {
   const pathname = usePathname()
   const dispatch = useDispatch()
-  const [moreActive, setMoreActive] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [niceObj, setNiceObj] = useState({
     flag: nice_flag,
@@ -53,10 +51,6 @@ const PostCard = ({
   const openModal = () => setIsOpen(true)
   const closeModal = useCallback(() => setIsOpen(false), [])
 
-  const ref = useClickAway<HTMLDivElement>(() => {
-    setMoreActive(false)
-  })
-
   const imgData = useMemo(() => {
     if (thumbnail) {
       return { src: '/' + thumbnail, alt: getImageAlt(thumbnail) }
@@ -67,7 +61,6 @@ const PostCard = ({
 
   const handleDeletePost = useCallback(async () => {
     await dispatch(deletePostAction(id))
-    setMoreActive(false)
     closeModal()
   }, [dispatch, id, closeModal])
 
@@ -95,7 +88,6 @@ const PostCard = ({
 
   const handleReport = async () => {
     await dispatch(postReportAction(id))
-    setMoreActive(false)
   }
 
   return (
@@ -154,28 +146,28 @@ const PostCard = ({
       </div>
       <div className='flex items-center justify-between'>
         <p className='text-sm text-colorGray4'>{created_at && formatDate(created_at)}</p>
-        <div ref={ref} className='relative'>
-          <button onClick={() => pathname !== '/' && setMoreActive(!moreActive)}>
+        <Dropdown>
+          <DropdownTrigger className='cursor-pointer'>
             <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
-          </button>
-          {moreActive &&
+          </DropdownTrigger>
+          {pathname !== '/' &&
             (user_id === session_user_id ? (
-              <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
-                <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
+              <DropdownMenu aria-label='Static Actions'>
+                <DropdownItem key='edit'>
                   <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
-                </li>
-                <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
-                  <button onClick={openModal}>削除する</button>
-                </li>
-              </ul>
+                </DropdownItem>
+                <DropdownItem key='delete' className='text-danger' color='danger' onClick={openModal}>
+                  削除する
+                </DropdownItem>
+              </DropdownMenu>
             ) : (
-              <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
-                <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
-                  <button onClick={handleReport}>通報する</button>
-                </li>
-              </ul>
+              <DropdownMenu aria-label='Static Actions'>
+                <DropdownItem key='report' onClick={handleReport}>
+                  通報する
+                </DropdownItem>
+              </DropdownMenu>
             ))}
-        </div>
+        </Dropdown>
       </div>
       <DeletePostModal isOpen={isOpen} onClose={closeModal} onSubmit={handleDeletePost} />
     </div>

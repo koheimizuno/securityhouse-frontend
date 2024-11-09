@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useParams, usePathname, useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -10,10 +10,9 @@ import Container from '@/components/layout/Container'
 import PageHeader from '@/components/common/PageHeader'
 import Loading from '@/components/common/Loading'
 import DeletePostModal from '@/components/modal/DeletePostModal'
-import { Button } from '@nextui-org/react'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 
 import { NewsType } from '@/types/newsType'
-import { useClickAway } from '@uidotdev/usehooks'
 import { getImageAlt } from '@/utils/getImageAlt'
 import {
   deleteNewsBookmarkAction,
@@ -30,20 +29,14 @@ import { formatDate } from '@/utils/formatDate'
 const NewDetailPage = () => {
   const { id } = useParams()
   const router = useRouter()
-  const pathname = usePathname()
   const dispatch = useDispatch()
   const [newData, setNewData] = useState<NewsType | null>(null)
-  const [moreActive, setMoreActive] = useState<boolean>(false)
   const { session_user_id } = useAuthentication()
 
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const openModal = () => setIsOpen(true)
   const closeModal = useCallback(() => setIsOpen(false), [])
-
-  const ref = useClickAway<HTMLDivElement>(() => {
-    setMoreActive(false)
-  })
 
   useEffect(() => {
     if (typeof id === 'string')
@@ -113,7 +106,6 @@ const NewDetailPage = () => {
 
   const handleDeletePost = useCallback(async () => {
     await dispatch(deleteNewsAction(id))
-    setMoreActive(false)
     closeModal()
     setTimeout(() => {
       router.push('/news')
@@ -123,8 +115,6 @@ const NewDetailPage = () => {
   if (!newData) {
     return <Loading flag='1' />
   }
-
-  const handleReport = async () => {}
 
   return (
     <Container className='py-12 flex flex-col gap-8'>
@@ -153,28 +143,21 @@ const NewDetailPage = () => {
               {newData.category_name && newData.category_name}
             </Button>
           </div>
-          <div ref={ref} className='relative'>
-            <button onClick={() => pathname !== '/' && setMoreActive(!moreActive)}>
-              <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
-            </button>
-            {moreActive &&
-              (newData.user_id === session_user_id ? (
-                <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
-                  <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
-                    <Link href={`/news/edit/${id}`}>編集する</Link>
-                  </li>
-                  <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
-                    <button onClick={openModal}>削除する</button>
-                  </li>
-                </ul>
-              ) : (
-                <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
-                  <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
-                    <button onClick={handleReport}>通報する</button>
-                  </li>
-                </ul>
-              ))}
-          </div>
+          {newData.user_id === session_user_id && (
+            <Dropdown>
+              <DropdownTrigger className='cursor-pointer'>
+                <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
+              </DropdownTrigger>
+              <DropdownMenu aria-label='Static Actions'>
+                <DropdownItem key='edit'>
+                  <Link href={`/news/edit/${id}`}>編集する</Link>
+                </DropdownItem>
+                <DropdownItem key='delete' className='text-danger' color='danger' onClick={openModal}>
+                  削除する
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          )}
         </div>
         <h3 className='text-xl font-bold truncate text-txtColor'>{newData?.title}</h3>
         <p>{newData?.content}</p>

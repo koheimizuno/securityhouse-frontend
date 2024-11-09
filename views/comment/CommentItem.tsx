@@ -1,13 +1,11 @@
 'use client'
 
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 
-import { Button } from '@nextui-org/react'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 
 import { getImageAlt } from '@/utils/getImageAlt'
-import { useClickAway } from '@uidotdev/usehooks'
 import { formatDate } from '@/utils/formatDate'
 
 interface CommentItemProps {
@@ -19,11 +17,8 @@ interface CommentItemProps {
 }
 
 const CommentItem = ({ userName, userCompany, avatar, comment, created_at }: CommentItemProps) => {
-  const [moreActive, setMoreActive] = useState<boolean>(false)
+  const handleReport = () => {}
 
-  const ref = useClickAway<HTMLDivElement>(() => {
-    setMoreActive(false)
-  })
   return (
     <li className='px-5 py-5 md:px-9 md:py-6 w-full flex flex-col gap-5 border border-colorGray2 rounded-lg shadow-md'>
       <div>
@@ -44,18 +39,16 @@ const CommentItem = ({ userName, userCompany, avatar, comment, created_at }: Com
             事務局からのご案内
           </Button>
         </div>
-        <div ref={ref} className='relative'>
-          <button onClick={() => setMoreActive(!moreActive)}>
+        <Dropdown>
+          <DropdownTrigger className='cursor-pointer'>
             <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
-          </button>
-          {moreActive && (
-            <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
-              <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
-                <Link href={`#`}>通報する</Link>
-              </li>
-            </ul>
-          )}
-        </div>
+          </DropdownTrigger>
+          <DropdownMenu aria-label='Static Actions'>
+            <DropdownItem key='report' onClick={handleReport}>
+              通報する
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       </div>
       <p className='text-sm line-clamp-2'>{comment}</p>
       <div className='flex justify-end items-center gap-8'>

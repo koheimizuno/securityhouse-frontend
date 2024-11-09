@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams, usePathname, useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -10,11 +10,19 @@ import Container from '@/components/layout/Container'
 import SectionTitle from '@/components/common/SectionTitle'
 import CommentItem from '@/views/comment/CommentItem'
 import Loading from '@/components/common/Loading'
-import { Button, Divider, Input, Textarea } from '@nextui-org/react'
+import {
+  Button,
+  Divider,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Input,
+  Textarea
+} from '@nextui-org/react'
 
 import { PostType } from '@/types/postType'
 import { CommentType } from '@/types/commentType'
-import { useClickAway } from '@uidotdev/usehooks'
 import { getImageAlt } from '@/utils/getImageAlt'
 import {
   deletePostBookmarkAction,
@@ -35,11 +43,9 @@ import { formatDate } from '@/utils/formatDate'
 const SHRoomPostDetailPage = () => {
   const { id } = useParams()
   const router = useRouter()
-  const pathname = usePathname()
   const dispatch = useDispatch()
   const [postData, setPostData] = useState<PostType | null>(null)
   const [comments, setComments] = useState<CommentType[] | null>(null)
-  const [moreActive, setMoreActive] = useState<boolean>(false)
   const { categories } = useSelector((state: RootState) => state.category)
   const [newComment, setNewComment] = useState({
     content: '',
@@ -57,10 +63,6 @@ const SHRoomPostDetailPage = () => {
 
   const openModal = () => setIsOpen(true)
   const closeModal = useCallback(() => setIsOpen(false), [])
-
-  const ref = useClickAway<HTMLDivElement>(() => {
-    setMoreActive(false)
-  })
 
   useEffect(() => {
     if (typeof id === 'string') {
@@ -102,7 +104,6 @@ const SHRoomPostDetailPage = () => {
 
   const handleDeletePost = useCallback(async () => {
     await dispatch(deletePostAction(id))
-    setMoreActive(false)
     closeModal()
     setTimeout(() => {
       router.push('/chatroom/sh-room')
@@ -155,7 +156,6 @@ const SHRoomPostDetailPage = () => {
 
   const handleReport = async () => {
     await dispatch(postReportAction(id))
-    setMoreActive(false)
   }
 
   const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -221,28 +221,27 @@ const SHRoomPostDetailPage = () => {
                 {postData.category_name && postData.category_name}
               </Button>
             </div>
-            <div ref={ref} className='relative'>
-              <button onClick={() => pathname !== '/' && setMoreActive(!moreActive)}>
+            <Dropdown>
+              <DropdownTrigger className='cursor-pointer'>
                 <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
-              </button>
-              {moreActive &&
-                (postData.user_id === session_user_id ? (
-                  <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
-                    <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
-                      <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
-                    </li>
-                    <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
-                      <button onClick={openModal}>削除する</button>
-                    </li>
-                  </ul>
-                ) : (
-                  <ul className='bg-white absolute z-10 top-4 right-4 lg:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
-                    <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
-                      <button onClick={handleReport}>通報する</button>
-                    </li>
-                  </ul>
-                ))}
-            </div>
+              </DropdownTrigger>
+              {postData.user_id === session_user_id ? (
+                <DropdownMenu aria-label='Static Actions'>
+                  <DropdownItem key='edit'>
+                    <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
+                  </DropdownItem>
+                  <DropdownItem key='delete' className='text-danger' color='danger' onClick={openModal}>
+                    削除する
+                  </DropdownItem>
+                </DropdownMenu>
+              ) : (
+                <DropdownMenu aria-label='Static Actions'>
+                  <DropdownItem key='report' onClick={handleReport}>
+                    通報する
+                  </DropdownItem>
+                </DropdownMenu>
+              )}
+            </Dropdown>
           </div>
           <h3 className='text-xl font-bold truncate text-txtColor'>{postData?.title}</h3>
           <p>{postData?.content}</p>

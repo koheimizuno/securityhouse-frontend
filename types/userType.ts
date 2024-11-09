@@ -1,5 +1,5 @@
 export type UsersType = {
-  id: number
+  id: string
   email: string
   password: string
   uid: string
@@ -18,6 +18,4 @@ export type UsersType = {
   point_difference: number
   badge_id: number[]
   created_at: string
-  updated_at: string
-  deleted_at: string
 }

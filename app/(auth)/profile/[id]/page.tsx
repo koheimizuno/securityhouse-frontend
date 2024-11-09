@@ -29,7 +29,7 @@ const MainItemContent = ({ data }: { data: PostType[] | null }) => {
     <ul className='flex flex-col gap-6 mt-5'>
       {data &&
         data
-          .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
+          .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
           .map(item => (
             <MainItem
               key={item.id}
@@ -37,6 +37,7 @@ const MainItemContent = ({ data }: { data: PostType[] | null }) => {
               title={item.title}
               content={item.content}
               category_name={item.category_name}
+              user_id={item.user_id}
               user_name={item.name}
               affiliation_name={item.affiliation_name}
               thumbnail={item.thumbnail}

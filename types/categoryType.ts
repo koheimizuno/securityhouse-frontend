@@ -5,6 +5,4 @@ export type CategoryType = {
   description?: string
   type_id?: string
   created_at?: string
-  updated_at?: string
-  deleted_at?: string
 }

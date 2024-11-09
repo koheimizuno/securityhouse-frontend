@@ -6,12 +6,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 
-import { Button } from '@nextui-org/react'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 import DeletePostModal from '@/components/modal/DeletePostModal'
 
 import { getImageAlt } from '@/utils/getImageAlt'
 import { formatDate } from '@/utils/formatDate'
-import { useClickAway } from '@uidotdev/usehooks'
 import { PostType } from '@/types/postType'
 import { NewsType } from '@/types/newsType'
 import { deleteNewsAction } from '@/redux-store/slices/newsSlice'
@@ -35,6 +34,7 @@ const MainItem = ({
   title,
   content,
   category_name,
+  user_id,
   user_name,
   affiliation_name,
   thumbnail,
@@ -47,7 +47,6 @@ const MainItem = ({
   const pathname = usePathname()
   const dispatch = useDispatch()
   const contentRef = useRef<HTMLParagraphElement | null>(null)
-  const [moreActive, setMoreActive] = useState<boolean>(false)
   const [contentHeight, setContentHeight] = useState<number>(0)
   const [contentMore, setContentMore] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -60,10 +59,6 @@ const MainItem = ({
 
   const openModal = () => setIsOpen(true)
   const closeModal = useCallback(() => setIsOpen(false), [])
-
-  const ref = useClickAway<HTMLDivElement>(() => {
-    setMoreActive(false)
-  })
 
   useEffect(() => {
     if (contentRef.current) {
@@ -85,7 +80,6 @@ const MainItem = ({
 
   const handleDeletePost = useCallback(async () => {
     await dispatch(deletePostAction(id))
-    setMoreActive(false)
     closeModal()
     setTimeout(() => {
       router.push('/chatroom/sh-room/')
@@ -94,7 +88,6 @@ const MainItem = ({
 
   const handleDeleteNew = useCallback(async () => {
     await dispatch(deleteNewsAction(id))
-    setMoreActive(false)
     closeModal()
   }, [dispatch, id, closeModal])
 
@@ -142,6 +135,8 @@ const MainItem = ({
     }
   }
 
+  const handleReport = () => {}
+
   return (
     <li
       className={`${
@@ -166,21 +161,27 @@ const MainItem = ({
             {category_name}
           </Button>
         </div>
-        <div ref={ref} className='relative'>
-          <button onClick={() => pathname !== '/' && setMoreActive(!moreActive)}>
-            <Image src='/images/icons/more-vertical.svg' alt='more-vertical' width={20} height={20} />
-          </button>
-          {moreActive && (
-            <ul className='bg-white absolute z-10 top-4 right-4 xl:left-4 w-[150px] flex flex-col shadow-md rounded-md'>
-              <li className='px-6 py-2 rounded-md hover:bg-colorGray1'>
+        <Dropdown>
+          <DropdownTrigger className='cursor-pointer'>
+            <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
+          </DropdownTrigger>
+          {user_id === session_user_id ? (
+            <DropdownMenu aria-label='Static Actions'>
+              <DropdownItem key='edit'>
                 <Link href={`${newsFlag ? `/news/${id}` : `/chatroom/post/edit/${id}`}`}>編集する</Link>
-              </li>
-              <li className='px-6 py-2 rounded-md hover:bg-colorGray1 cursor-pointer'>
-                <button onClick={openModal}>削除する</button>
-              </li>
-            </ul>
+              </DropdownItem>
+              <DropdownItem key='delete' className='text-danger' color='danger' onClick={openModal}>
+                削除する
+              </DropdownItem>
+            </DropdownMenu>
+          ) : (
+            <DropdownMenu aria-label='Static Actions'>
+              <DropdownItem key='report' onClick={handleReport}>
+                通報する
+              </DropdownItem>
+            </DropdownMenu>
           )}
-        </div>
+        </Dropdown>
       </div>
       <Link href={`/${newsFlag ? 'news' : 'chatroom/post'}/${id}`}>
         <h3 className='underline'>{title}</h3>
