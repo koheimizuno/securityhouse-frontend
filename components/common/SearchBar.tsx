@@ -4,8 +4,10 @@ import { useState } from 'react'
 
 import Container from '@/components/layout/Container'
 import { Button } from '@nextui-org/react'
+import { useRouter } from 'next/navigation'
 
 const SearchBar = () => {
+  const router = useRouter()
   const [keyword, setKeyword] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,7 +16,9 @@ const SearchBar = () => {
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    // Handle Search Logic
     console.log(keyword)
+    router.push('/search')
   }
 
   return (
