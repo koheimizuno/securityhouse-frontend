@@ -118,7 +118,7 @@ const NewDetailPage = () => {
     setTimeout(() => {
       router.push('/news')
     }, 2000)
-  }, [dispatch, router, id])
+  }, [dispatch, router, id, closeModal])
 
   if (!newData) {
     return <Loading flag='1' />

@@ -90,7 +90,7 @@ const MainItem = ({
     setTimeout(() => {
       router.push('/chatroom/sh-room/')
     }, 2000)
-  }, [dispatch, id, closeModal])
+  }, [dispatch, id, closeModal, router])
 
   const handleDeleteNew = useCallback(async () => {
     await dispatch(deleteNewsAction(id))

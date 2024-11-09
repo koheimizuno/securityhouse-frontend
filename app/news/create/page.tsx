@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
 
 import SectionTitle from '@/components/common/SectionTitle'
 import { Button, Input, Select, SelectItem } from '@nextui-org/react'
@@ -16,6 +17,7 @@ import { getCategoryAction } from '@/redux-store/slices/categorySlice'
 import { RootState } from '@/redux-store'
 
 const CreateNewPage = () => {
+  const router = useRouter()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     title: '',
@@ -77,7 +79,7 @@ const CreateNewPage = () => {
     setErrors(prev => ({ ...prev, content: '' }))
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (validateForm()) {
       const postPayload = new FormData()
@@ -86,7 +88,11 @@ const CreateNewPage = () => {
       postPayload.append('category_id', formData.category)
       postPayload.append('attachments', formData.attachments.file)
 
-      dispatch(createNewsAction(postPayload))
+      await dispatch(createNewsAction(postPayload))
+
+      setTimeout(() => {
+        router.push('/news')
+      }, 2000)
     }
   }
 
@@ -155,7 +161,11 @@ const CreateNewPage = () => {
               errors.content && 'mb-4'
             }`}
           >
-            <span className='text-base font-bold after:content-["*"] after:text-danger'>内容</span>
+            <span
+              className={`text-base font-bold after:content-["*"] after:text-danger ${errors.content && 'text-danger'}`}
+            >
+              内容
+            </span>
             <RichTextEditor onChange={handleEditorChange} />
             {errors.content && (
               <span className='absolute left-[244px] -bottom-6 text-danger text-sm'>{errors.content}</span>
