@@ -124,7 +124,12 @@ const PostCard = ({
       <p className='text-sm line-clamp-3'>{content}</p>
       <div className='grid grid-cols-2 gap-4 mt-[22px] mb-4'>
         <div className='flex items-center gap-1'>
-          <Image src='/images/icons/thumbs-up.svg' alt='thumbs-up' className='w-5 h-5' width={20} height={20} />
+          <Image
+            src={`${niceObj.flag ? '/images/icons/thumb-up-fill.svg' : '/images/icons/thumb-up-outline.svg'}`}
+            alt='thumb-up'
+            width={20}
+            height={20}
+          />
           <p className='text-sm font-bold text-colorGray4 flex items-center gap-1'>
             <button className='underline' onClick={handleLike}>
               いいね！{' '}

@@ -198,7 +198,12 @@ const MainItem = ({
       )}
       <div className='mt-4 flex items-center gap-2'>
         <div className='flex items-center gap-1'>
-          <Image src='/images/icons/thumbs-up.svg' alt='thumbs-up' className='w-5 h-5' width={20} height={20} />
+          <Image
+            src={`${niceObj.flag ? '/images/icons/thumb-up-fill.svg' : '/images/icons/thumb-up-outline.svg'}`}
+            alt='thumb-up'
+            width={25}
+            height={25}
+          />
           <p className='text-sm font-bold text-colorGray4 flex items-center gap-1'>
             <button className='underline' onClick={newsFlag ? handleLikeNew : handleLikePost}>
               いいね！{' '}

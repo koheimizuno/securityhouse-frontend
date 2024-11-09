@@ -187,7 +187,12 @@ const NewDetailPage = () => {
         />
         <div className='flex items-center gap-4'>
           <div className='flex items-center gap-2'>
-            <Image src='/images/icons/thumbs-up-black.svg' alt='thumbs-up' width={20} height={20} />
+            <Image
+              src={`${newData.nice_flag ? '/images/icons/thumb-up-fill.svg' : '/images/icons/thumb-up-outline.svg'}`}
+              alt='thumb-up'
+              width={25}
+              height={25}
+            />
             <p className='text-sm font-bold'>
               <button className='underline' onClick={handleLike}>
                 いいね！{' '}

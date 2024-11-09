@@ -60,7 +60,7 @@ const CommentItem = ({ userName, userCompany, avatar, comment, created_at }: Com
       <p className='text-sm line-clamp-2'>{comment}</p>
       <div className='flex justify-end items-center gap-8'>
         {/* <div className='flex items-center gap-2'>
-          <Image src='/images/icons/thumbs-up.svg' alt='thumb-up' width={20} height={20} />
+          <Image src='/images/icons/thumb-up.svg' alt='thumb-up' width={20} height={20} />
           <span>44</span>
         </div> */}
         <Button color='primary' size='sm' className='rounded-full'>
