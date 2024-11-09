@@ -49,9 +49,10 @@ const TabVertical = ({ queryKey, menuList, children, gap }: TabVerticalProps) =>
   return (
     <div className={`w-full flex flex-col items-center mt-6 lg:flex-row lg:items-start ${gap && 'gap-6'}`}>
       <ul className='w-full md:w-auto grid grid-cols-4 grid-rows-1 gap-3 lg:grid-cols-1 lg:grid-rows-4'>
-        {menuList.map((item, index) => (
-          <TabItem key={index} item={item} index={index} tab={tab} gap={gap} handleTab={handleTab} />
-        ))}
+        {menuList &&
+          menuList.map((item, index) => (
+            <TabItem key={index} item={item} index={index} tab={tab} gap={gap} handleTab={handleTab} />
+          ))}
       </ul>
       {children}
     </div>

@@ -28,22 +28,24 @@ const MainItemContent = ({ data }: { data: PostType[] | null }) => {
   return (
     <ul className='flex flex-col gap-6 mt-5'>
       {data &&
-        data.map(item => (
-          <MainItem
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            content={item.content}
-            category_name={item.category_name}
-            user_name={item.name}
-            affiliation_name={item.affiliation_name}
-            thumbnail={item.thumbnail}
-            nice_flag={item.nice_flag}
-            like_count={item.like_count}
-            bookmark_flag={item.bookmark_flag}
-            created_at={item.created_at}
-          />
-        ))}
+        data
+          .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
+          .map(item => (
+            <MainItem
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              content={item.content}
+              category_name={item.category_name}
+              user_name={item.name}
+              affiliation_name={item.affiliation_name}
+              thumbnail={item.thumbnail}
+              nice_flag={item.nice_flag}
+              like_count={item.like_count}
+              bookmark_flag={item.bookmark_flag}
+              created_at={item.created_at}
+            />
+          ))}
     </ul>
   )
 }
