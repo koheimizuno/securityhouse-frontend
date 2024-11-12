@@ -167,6 +167,7 @@ const SHRoomPostDetailPage = () => {
       if (typeof id === 'string') commentPayload.append('post_id', id)
       commentPayload.append('user_id', session_user_id)
       commentPayload.append('content', newComment.content)
+      commentPayload.append('comment_id', '0')
       commentPayload.append('attachment', newComment.attachment.file)
       const newCommentRes = await createCommentAction(commentPayload)
       setComments(prev => {
@@ -328,7 +329,7 @@ const SHRoomPostDetailPage = () => {
         <SectionTitle title='コメント' icon='/images/icons/comment-icon-secondary.svg' />
         {comments ? (
           <ul className='flex flex-col gap-8'>
-            {comments
+            {comments 
               .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
               .map(comment => (
                 <CommentItem
