@@ -16,7 +16,7 @@ import { UsersType } from '@/types/userType'
 import { PostType } from '@/types/postType'
 import { getUserByIdAction } from '@/actions/authAction'
 import {
-  getMypageBmarkPostListAction,
+  getBmarkPostListAction,
   getMypageCommentPostListAction,
   getMypageLikePostListAction,
   getMypagePostListAction
@@ -79,7 +79,7 @@ const ProfilePage = () => {
         getMypageLikePostListAction({ user_id: session_user_id }).then(data => setMyPageLikePostList(data))
         break
       case 'bookmarkedPost':
-        getMypageBmarkPostListAction({ user_id: session_user_id }).then(data => setMyPageBookmarkedPost(data))
+        getBmarkPostListAction({ user_id: session_user_id }).then(data => setMyPageBookmarkedPost(data))
         break
       default:
         break

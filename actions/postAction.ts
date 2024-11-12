@@ -145,17 +145,3 @@ export const getMypageLikePostListAction = async ({ user_id }: { user_id: number
     throw err
   }
 }
-
-export const getMypageBmarkPostListAction = async ({ user_id }: { user_id: number }) => {
-  try {
-    const { data } = await axios.get(`/api/mypageBmarkPostList`, {
-      params: {
-        user_id
-      }
-    })
-    return data.posts
-  } catch (err) {
-    toast.error('サーバの問題でデータ取得に失敗しました。')
-    throw err
-  }
-}
