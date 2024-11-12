@@ -35,6 +35,22 @@ const Header = () => {
               isHamburgerOpen ? 'max-h-[1000px] overflow-visible py-8' : 'max-h-0 overflow-hidden'
             }`}
           >
+            <Link href='/dm'>
+              <Button
+                className='rounded-full w-[200px]'
+                startContent={
+                  <Image
+                    src='/images/icons/message-icon.svg'
+                    alt='message-icon'
+                    className='w-5 h-5'
+                    width={16}
+                    height={16}
+                  />
+                }
+              >
+                メッセージ
+              </Button>
+            </Link>
             {isAuthenticated ? (
               <>
                 <Link href='/chatroom/post/bookmark/'>
