@@ -24,15 +24,7 @@ const publicationOptions = [
   },
   {
     id: '1',
-    title: '全体1'
-  },
-  {
-    id: '2',
-    title: '全体2'
-  },
-  {
-    id: '3',
-    title: '全体3'
+    title: '公開範囲'
   }
 ]
 
