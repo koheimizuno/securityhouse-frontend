@@ -6,30 +6,27 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { storeInitialType } from '@/types/storeInitialType'
 import { ChallengeType } from '@/types/challengeType'
 
-export const createChallengeAction: any = createAsyncThunk(
-  'createChallengeAction',
-  async (payload: ChallengeType) => {
-    try {
-      await axios.post(`/api/challenge/`, payload)
-    } catch (err) {
-      return err
-    }
+export const createChallengeAction: any = createAsyncThunk('createChallengeAction', async (payload: ChallengeType) => {
+  try {
+    await axios.post(`/api/challenge/`, payload)
+  } catch (err: any) {
+    return err.response.data
   }
-)
+})
 
 export const editChallengeAction: any = createAsyncThunk('editChallengeAction', async (payload: ChallengeType) => {
   try {
     await axios.put(`/api/challenge/`, payload)
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
 export const deleteChallengeAction: any = createAsyncThunk('deleteChallengeAction', async (id: string) => {
   try {
     await axios.delete(`/api/challenge/`, { params: { id } })
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
@@ -38,8 +35,8 @@ export const completeChallengeAction: any = createAsyncThunk(
   async ({ challenge_id }: { challenge_id: string }) => {
     try {
       await axios.post(`/api/challenge/complete/`, { challenge_id })
-    } catch (err) {
-      return err
+    } catch (err: any) {
+      return err.response.data
     }
   }
 )
@@ -61,40 +58,40 @@ export const challengeSlice = createSlice({
         state.success = true
         toast.success('チャレンジが成果的に登録されました。')
       })
-      .addCase(createChallengeAction.rejected, state => {
+      .addCase(createChallengeAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(editChallengeAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
         toast.success('チャレンジが成果的に変更されました。')
       })
-      .addCase(editChallengeAction.rejected, state => {
+      .addCase(editChallengeAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(deleteChallengeAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
         toast.success('チャレンジが成果的に削除されました。')
       })
-      .addCase(deleteChallengeAction.rejected, state => {
+      .addCase(deleteChallengeAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(completeChallengeAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
         toast.success('チャレンジが成果的に完了しました。')
       })
-      .addCase(completeChallengeAction.rejected, state => {
+      .addCase(completeChallengeAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
   }
 })

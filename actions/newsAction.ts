@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
@@ -7,8 +8,8 @@ export const getNewsAction = async ({ user_id }: { user_id: string }) => {
       params: { user_id }
     })
     return data.news
-  } catch (err) {
-    toast.error('サーバの問題でデータ取得に失敗しました。')
+  } catch (err: any) {
+    toast.error(err.response.data.message)
     throw err
   }
 }
@@ -22,8 +23,8 @@ export const getNewsByIdAction = async ({ id, user_id }: { id: number; user_id: 
       }
     })
     return data
-  } catch (err) {
-    toast.error('サーバの問題でデータ取得に失敗しました。')
+  } catch (err: any) {
+    toast.error(err.response.data.message)
     throw err
   }
 }
@@ -38,8 +39,8 @@ export const newsBookmarkAction = async ({ id, user_id }: { id: number; user_id:
     })
     toast.success('ブックマークに追加されました。')
     return data.bookmark_flag
-  } catch (err) {
-    toast.error('サーバの問題でデータ取得に失敗しました。')
+  } catch (err: any) {
+    toast.error(err.response.data.message)
     throw err
   }
 }
@@ -54,8 +55,8 @@ export const deleteNewsBookmarkAction = async ({ id, user_id }: { id: number; us
     })
     toast.success('ブックマークから削除されました。')
     return data.bookmark_flag
-  } catch (err) {
-    toast.error('サーバの問題でデータ取得に失敗しました。')
+  } catch (err: any) {
+    toast.error(err.response.data.message)
     throw err
   }
 }
@@ -65,8 +66,8 @@ export const newsLikeAction = async ({ id, user_id }: { id: number; user_id: str
     const { data } = await axios.post(`/api/news/like/`, { id, user_id })
     toast.success('お知らせに「いいね！」を追加しました。')
     return data
-  } catch (err) {
-    toast.error('サーバの問題でデータ取得に失敗しました。')
+  } catch (err: any) {
+    toast.error(err.response.data.message)
     throw err
   }
 }
@@ -81,8 +82,8 @@ export const deleteNewsLikeAction = async ({ id, user_id }: { id: number; user_i
     })
     toast.success('お知らせから「いいね！」を削除しました。')
     return data
-  } catch (err) {
-    toast.error('サーバの問題でデータ取得に失敗しました。')
+  } catch (err: any) {
+    toast.error(err.response.data.message)
     throw err
   }
 }

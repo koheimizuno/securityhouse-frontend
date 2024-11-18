@@ -9,32 +9,32 @@ import { PostType } from '@/types/postType'
 export const createPostAction: any = createAsyncThunk('createPostAction', async (payload: PostType) => {
   try {
     await axios.post(`/api/post/`, payload)
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
 export const editPostAction: any = createAsyncThunk('editPostAction', async (payload: PostType) => {
   try {
     await axios.put(`/api/post/`, payload)
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
 export const deletePostAction: any = createAsyncThunk('deletePostAction', async (id: string) => {
   try {
     await axios.delete(`/api/post/`, { params: { id } })
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
 export const postReportAction: any = createAsyncThunk('postReportAction', async (id: string) => {
   try {
     await axios.post(`/api/report/`, { id })
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
@@ -55,40 +55,40 @@ export const postSlice = createSlice({
         state.success = true
         toast.success('投稿が正常に作成されました。')
       })
-      .addCase(createPostAction.rejected, state => {
+      .addCase(createPostAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(editPostAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
         toast.success('投稿が正常に変更されました。')
       })
-      .addCase(editPostAction.rejected, state => {
+      .addCase(editPostAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(deletePostAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
         toast.success('投稿が正常に削除されました。')
       })
-      .addCase(deletePostAction.rejected, state => {
+      .addCase(deletePostAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(postReportAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
         toast.success('通報に成功しました。')
       })
-      .addCase(postReportAction.rejected, state => {
+      .addCase(postReportAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
   }
 })

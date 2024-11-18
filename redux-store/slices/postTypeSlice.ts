@@ -8,8 +8,8 @@ import { storeInitialType } from '@/types/storeInitialType'
 export const createPostTypeAction: any = createAsyncThunk('createPostTypeAction', async (payload: PostType_Type) => {
   try {
     await axios.post(`/api/post_type/`, payload)
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
@@ -17,24 +17,24 @@ export const getPostTypeAction: any = createAsyncThunk('getPostTypeAction', asyn
   try {
     const res = await axios.get(`/api/post_type/`)
     return res.data
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
 export const editPostTypeAction: any = createAsyncThunk('editPostTypeAction', async (payload: PostType_Type) => {
   try {
     await axios.put(`/api/post_type/`, payload)
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
 export const deletePostTypeAction: any = createAsyncThunk('deletePostTypeAction', async () => {
   try {
     await axios.delete(`/api/post_type/`)
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
@@ -75,10 +75,10 @@ export const postTypeSlice = createSlice({
         state.success = true
         toast.success('投稿タイプが正常に作成されました。')
       })
-      .addCase(createPostTypeAction.rejected, state => {
+      .addCase(createPostTypeAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(editPostTypeAction.pending, state => {
         state.isLoading = true
@@ -88,10 +88,10 @@ export const postTypeSlice = createSlice({
         state.success = true
         toast.success('投稿タイプが正常に変更されました。')
       })
-      .addCase(editPostTypeAction.rejected, state => {
+      .addCase(editPostTypeAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(deletePostTypeAction.pending, state => {
         state.isLoading = true
@@ -101,10 +101,10 @@ export const postTypeSlice = createSlice({
         state.success = true
         toast.success('投稿タイプが正常に削除されました。')
       })
-      .addCase(deletePostTypeAction.rejected, state => {
+      .addCase(deletePostTypeAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
   }
 })

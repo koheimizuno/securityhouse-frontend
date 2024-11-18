@@ -9,8 +9,8 @@ import { storeInitialType } from '@/types/storeInitialType'
 export const createGroupAction: any = createAsyncThunk('createGroupAction', async (payload: GroupType) => {
   try {
     await axios.post(`/api/group/`, payload)
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
@@ -18,24 +18,24 @@ export const getGroupAction: any = createAsyncThunk('getGroupAction', async () =
   try {
     const res = await axios.get(`/api/group/`)
     return res.data
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
 export const editGroupAction: any = createAsyncThunk('editGroupAction', async (payload: GroupType) => {
   try {
     await axios.put(`/api/group/`, payload)
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
 export const deleteGroupAction: any = createAsyncThunk('deleteGroupAction', async (id: string) => {
   try {
     await axios.delete(`/api/group/`, { params: { id: id } })
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
@@ -76,10 +76,10 @@ export const groupSlice = createSlice({
         state.success = true
         toast.success('グループが正常に作成されました。')
       })
-      .addCase(createGroupAction.rejected, state => {
+      .addCase(createGroupAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(editGroupAction.pending, state => {
         state.isLoading = true
@@ -89,10 +89,10 @@ export const groupSlice = createSlice({
         state.success = true
         toast.success('グループが正常に変更されました。')
       })
-      .addCase(editGroupAction.rejected, state => {
+      .addCase(editGroupAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(deleteGroupAction.pending, state => {
         state.isLoading = true
@@ -102,10 +102,10 @@ export const groupSlice = createSlice({
         state.success = true
         toast.success('グループが正常に削除されました。')
       })
-      .addCase(deleteGroupAction.rejected, state => {
+      .addCase(deleteGroupAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
   }
 })

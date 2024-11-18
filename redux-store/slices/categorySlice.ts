@@ -9,8 +9,8 @@ import { storeInitialType } from '@/types/storeInitialType'
 export const createCategoryAction: any = createAsyncThunk('createCategoryAction', async (payload: CategoryType) => {
   try {
     await axios.post(`/api/category/`, payload)
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
@@ -25,8 +25,8 @@ export const getCategoryAction: any = createAsyncThunk(
         }
       })
       return res.data
-    } catch (err) {
-      return err
+    } catch (err: any) {
+      return err.response.data
     }
   }
 )
@@ -34,16 +34,16 @@ export const getCategoryAction: any = createAsyncThunk(
 export const editCategoryAction: any = createAsyncThunk('editCategoryAction', async (payload: CategoryType) => {
   try {
     await axios.put(`/api/category/`, payload)
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
 export const deleteCategoryAction: any = createAsyncThunk('deleteCategoryAction', async (id: string) => {
   try {
     await axios.delete(`/api/category/`, { params: { id: id } })
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
@@ -84,10 +84,10 @@ export const categorySlice = createSlice({
         state.success = true
         toast.success('カテゴリーが正常に作成されました。')
       })
-      .addCase(createCategoryAction.rejected, state => {
+      .addCase(createCategoryAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(editCategoryAction.pending, state => {
         state.isLoading = true
@@ -97,10 +97,10 @@ export const categorySlice = createSlice({
         state.success = true
         toast.success('カテゴリーが正常に変更されました。')
       })
-      .addCase(editCategoryAction.rejected, state => {
+      .addCase(editCategoryAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(deleteCategoryAction.pending, state => {
         state.isLoading = true
@@ -110,10 +110,10 @@ export const categorySlice = createSlice({
         state.success = true
         toast.success('カテゴリーが正常に削除されました。')
       })
-      .addCase(deleteCategoryAction.rejected, state => {
+      .addCase(deleteCategoryAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
   }
 })

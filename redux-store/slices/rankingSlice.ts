@@ -9,24 +9,24 @@ import { storeInitialType } from '@/types/storeInitialType'
 export const createRankingAction: any = createAsyncThunk('createRankingAction', async (payload: RankingType) => {
   try {
     await axios.post(`/api/ranking/`, payload)
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
 export const editRankingAction: any = createAsyncThunk('editRankingAction', async (payload: RankingType) => {
   try {
     await axios.put(`/api/ranking/`, payload)
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
 export const deleteRankingAction: any = createAsyncThunk('deleteRankingAction', async (id: string) => {
   try {
     await axios.delete(`/api/ranking/`, { params: { id: id } })
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
@@ -50,10 +50,10 @@ export const rankingSlice = createSlice({
         state.success = true
         toast.success('ランキングが正常に登録されました。')
       })
-      .addCase(createRankingAction.rejected, state => {
+      .addCase(createRankingAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(editRankingAction.pending, state => {
         state.isLoading = true
@@ -63,10 +63,10 @@ export const rankingSlice = createSlice({
         state.success = true
         toast.success('ランキングが正常に変更されました。')
       })
-      .addCase(editRankingAction.rejected, state => {
+      .addCase(editRankingAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(deleteRankingAction.pending, state => {
         state.isLoading = true
@@ -76,10 +76,10 @@ export const rankingSlice = createSlice({
         state.success = true
         toast.success('ランキングが正常に削除されました。')
       })
-      .addCase(deleteRankingAction.rejected, state => {
+      .addCase(deleteRankingAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
   }
 })

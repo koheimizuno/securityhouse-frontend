@@ -10,7 +10,7 @@ export const registerAction: any = createAsyncThunk('registerAction', async (pay
   try {
     return await axios.post(`/api/user/`, payload)
   } catch (err: any) {
-    return err.response.data
+    return err.response.data.response.data
   }
 })
 
@@ -21,7 +21,7 @@ export const loginAction: any = createAsyncThunk(
       const { data } = await axios.post(`/api/login/`, { email, password })
       return data
     } catch (err: any) {
-      return err.response.data
+      return err.response.data.response.data
     }
   }
 )
@@ -30,7 +30,7 @@ export const editUserAction: any = createAsyncThunk('editUserAction', async (pay
   try {
     return await axios.put(`/api/user/`, payload)
   } catch (err: any) {
-    return err.response.data
+    return err.response.data.response.data
   }
 })
 
@@ -41,7 +41,7 @@ export const forgotPasswordAction: any = createAsyncThunk(
       const { data } = await axios.post(`/api/forgot-password/`, { email })
       return data
     } catch (err: any) {
-      return err.response.data
+      return err.response.data.response.data
     }
   }
 )
@@ -52,7 +52,7 @@ export const changePasswordAction: any = createAsyncThunk(
     try {
       return await axios.patch(`/api/forgot-password/`, { id, password })
     } catch (err: any) {
-      return err.response.data
+      return err.response.data.response.data
     }
   }
 )

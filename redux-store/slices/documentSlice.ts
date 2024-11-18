@@ -9,24 +9,24 @@ import { DocumentType } from '@/types/documentType'
 export const createDocumentAction: any = createAsyncThunk('createDocumentAction', async (payload: DocumentType) => {
   try {
     await axios.post(`/api/document/`, payload)
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
 export const editDocumentAction: any = createAsyncThunk('editDocumentAction', async (payload: DocumentType) => {
   try {
     await axios.put(`/api/document/`, payload)
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
 export const deleteDocumentAction: any = createAsyncThunk('deleteDocumentAction', async (id: string) => {
   try {
     await axios.delete(`/api/document/`, { params: { id } })
-  } catch (err) {
-    return err
+  } catch (err: any) {
+    return err.response.data
   }
 })
 
@@ -47,30 +47,30 @@ export const documentSlice = createSlice({
         state.success = true
         toast.success('資料が正常に作成されました。')
       })
-      .addCase(createDocumentAction.rejected, state => {
+      .addCase(createDocumentAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(editDocumentAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
         toast.success('資料が正常に変更されました。')
       })
-      .addCase(editDocumentAction.rejected, state => {
+      .addCase(editDocumentAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
       .addCase(deleteDocumentAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
         toast.success('資料が正常に削除されました。')
       })
-      .addCase(deleteDocumentAction.rejected, state => {
+      .addCase(deleteDocumentAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
-        toast.error('サーバの問題でデータ取得に失敗しました。')
+        toast.error(payload.message)
       })
   }
 })
