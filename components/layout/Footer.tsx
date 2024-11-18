@@ -78,10 +78,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link
-                  href='/document/sales-office/flyer-proposal'
-                  className='flex flex-row justify-between items-center gap-2 w-[120px]'
-                >
+                <Link href='/document' className='flex flex-row justify-between items-center gap-2 w-[120px]'>
                   <span className='text-[15px] font-bold'>資料集</span>
                   <Image
                     src='/images/icons/arrow-right.svg'
