@@ -34,10 +34,24 @@ const DocummentOfficeStorePage = () => {
   }
 
   useEffect(() => {
-    getDocumentsAction({ type_id: 1, category_id: 18, user_id: session_user_id }).then(data => setBusinessDocData(data))
-    getDocumentsAction({ type_id: 1, category_id: 19, user_id: session_user_id }).then(data => setStoreDocData(data))
-    getDocumentsAction({ type_id: 1, category_id: 20, user_id: session_user_id }).then(data => setRobberyDocData(data))
-    getDocumentsAction({ type_id: 1, category_id: 21, user_id: session_user_id }).then(data => setProposalDocData(data))
+    getDocumentsAction({ type_id: 1, category_id: 12, user_id: session_user_id }).then(data => {
+      setBusinessDocData(prev => {
+        if (prev) return data.filter((item: DocumentType) => item.category_id === '18')
+        else return null
+      })
+      setStoreDocData(prev => {
+        if (prev) return data.filter((item: DocumentType) => item.category_id === '19')
+        else return null
+      })
+      setRobberyDocData(prev => {
+        if (prev) return data.filter((item: DocumentType) => item.category_id === '20')
+        else return null
+      })
+      setProposalDocData(prev => {
+        if (prev) return data.filter((item: DocumentType) => item.category_id === '21')
+        else return null
+      })
+    })
   }, [session_user_id])
 
   return (
@@ -78,37 +92,49 @@ const DocummentOfficeStorePage = () => {
           <section className='flex flex-col gap-6' ref={officeRef}>
             <SectionTitle title='事務所向け' bar={true} divider={true} />
             <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
-              {businessDocData &&
+              {businessDocData && businessDocData.length !== 0 ? (
                 businessDocData.map((doc, key) => (
                   <DocumentCard key={key} title={doc.title} img={doc.image} attachment={doc.attachment} />
-                ))}
+                ))
+              ) : (
+                <p className='py-12 text-lg'>表示する資料がありません。</p>
+              )}
             </div>
           </section>
           <section className='flex flex-col gap-6' ref={storeRef}>
             <SectionTitle title='店舗向け' bar={true} divider={true} />
             <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
-              {storeDocData &&
+              {storeDocData && storeDocData.length !== 0 ? (
                 storeDocData.map((doc, key) => (
                   <DocumentCard key={key} title={doc.title} img={doc.image} attachment={doc.attachment} />
-                ))}
+                ))
+              ) : (
+                <p className='py-12 text-lg'>表示する資料がありません。</p>
+              )}
             </div>
           </section>
           <section className='flex flex-col gap-6' ref={robberyRef}>
             <SectionTitle title='強盗対策' bar={true} divider={true} />
             <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
-              {robberyDocData &&
+              {robberyDocData && robberyDocData.length !== 0 ? (
                 robberyDocData.map((doc, key) => (
                   <DocumentCard key={key} title={doc.title} img={doc.image} attachment={doc.attachment} />
-                ))}
+                ))
+              ) : (
+                <p className='py-12 text-lg'>表示する資料がありません。</p>
+              )}
             </div>
           </section>
           <section className='flex flex-col gap-6' ref={proposalRef}>
             <SectionTitle title='提案書' bar={true} divider={true} />
             <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
-              {proposalDocData &&
+              {proposalDocData && proposalDocData.length !== 0 ? (
                 proposalDocData.map((doc, key) => (
                   <DocumentCard key={key} title={doc.title} img={doc.image} attachment={doc.attachment} />
-                ))}
+                ))
+              ) : (
+                <p className='py-12 text-lg'>表示する資料がありません。</p>
+              )}
             </div>
           </section>
         </div>
