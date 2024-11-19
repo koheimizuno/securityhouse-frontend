@@ -10,21 +10,21 @@ import { getDocumentsAction } from '@/actions/documentAction'
 import { useAuthentication } from '@/hooks/AuthContext'
 import { DocumentType } from '@/types/documentType'
 
-const DocumentFactoryPage = () => {
+const DocumentHospitalPage = () => {
   const { session_user_id } = useAuthentication()
-  const [factoryDocData, setFactoryDocData] = useState<DocumentType[] | null>([])
+  const [hospitalDocData, setHospitalDocData] = useState<DocumentType[] | null>([])
 
   useEffect(() => {
-    getDocumentsAction({ type_id: 1, category_id: 10, user_id: session_user_id }).then(data => setFactoryDocData(data))
+    getDocumentsAction({ type_id: 1, category_id: 11, user_id: session_user_id }).then(data => setHospitalDocData(data))
   }, [session_user_id])
 
   return (
     <Container className='py-16 flex flex-col gap-12'>
-      <PageHeader title='工場向け' subtitle='資料集' />
+      <PageHeader title='病院・福祉・障碍者施設向け' subtitle='資料集' />
       <section className='flex flex-col gap-6'>
         <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
-          {factoryDocData &&
-            factoryDocData.map((doc, key) => (
+          {hospitalDocData &&
+            hospitalDocData.map((doc, key) => (
               <DocumentCard key={key} title={doc.title} img={doc.image} attachment={doc.attachment} />
             ))}
         </div>
@@ -33,4 +33,4 @@ const DocumentFactoryPage = () => {
   )
 }
 
-export default DocumentFactoryPage
+export default DocumentHospitalPage

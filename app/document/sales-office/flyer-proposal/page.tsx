@@ -110,7 +110,7 @@ const DocumentProposalPage = () => {
             <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5'>
               <DataLink title='一般家庭・マンション向け' href='flyer-proposal/home-apartment' />
               <DataLink title='工場向け' href='flyer-proposal/factory' />
-              <DataLink title='病院・福祉・障碍者施設向け' href='/' />
+              <DataLink title='病院・福祉・障碍者施設向け' href='flyer-proposal/hospital' />
               <DataLink title='事務所向け・店舗向け' href='flyer-proposal/office-store' />
               <DataLink title='教育施設・大学向け' href='/' />
               <DataLink title='物流・運送業向け' href='/' />
