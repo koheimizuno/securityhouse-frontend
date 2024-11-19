@@ -123,7 +123,7 @@ const DocumentProposalPage = () => {
           <div className='flex flex-col gap-4'>
             <SubSectionTitle title='提案書' />
             <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5'>
-              <DataLink title='提案書' href='/' />
+              <DataLink title='提案書' href='flyer-proposal/proposal' />
             </ul>
           </div>
           <div className='flex flex-col gap-4'>
