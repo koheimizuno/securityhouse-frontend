@@ -17,7 +17,7 @@ const DataLink = ({ img, href, title, className }: Props) => {
     <li>
       <a
         href={href}
-        className={`flex justify-between items-center gap-2 h-16 bg-white p-5 border border-primary rounded-md ${className}`}
+        className={`flex justify-between items-center gap-2 h-16 bg-white p-5 border border-primary rounded-md hover:scale-[1.02] transition-all ${className}`}
       >
         <div className='flex items-center gap-4'>
           {img && <Image src={img} alt={getImageAlt(img) || ''} className='w-6 h-6' width={25} height={25} />}
