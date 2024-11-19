@@ -112,7 +112,7 @@ const DocumentProposalPage = () => {
               <DataLink title='工場向け' href='flyer-proposal/factory' />
               <DataLink title='病院・福祉・障碍者施設向け' href='flyer-proposal/hospital' />
               <DataLink title='事務所向け・店舗向け' href='flyer-proposal/office-store' />
-              <DataLink title='教育施設・大学向け' href='/' />
+              <DataLink title='教育施設・大学向け' href='flyer-proposal/university' />
               <DataLink title='物流・運送業向け' href='/' />
             </ul>
             <Divider className='my-8' />
