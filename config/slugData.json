@@ -87,7 +87,7 @@
   {
     "label": "資料集",
     "slug": "document",
-    "validSlug": false
+    "validSlug": true
   },
   {
     "label": "営業・事務",
