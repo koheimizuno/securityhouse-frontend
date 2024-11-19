@@ -99,9 +99,9 @@ const DocumentProposalPage = () => {
           <div className='flex flex-col gap-4'>
             <SubSectionTitle title='チラシ' />
             <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5'>
-              <DataLink title='i-NEXT' href='/' />
-              <DataLink title='外周警備システム' href='/' />
-              <DataLink title='カメラシステム' href='/' />
+              <DataLink title='i-NEXT' href='flyer-proposal/i-next' />
+              <DataLink title='外周警備システム' href='flyer-proposal/security-system' />
+              <DataLink title='カメラシステム' href='flyer-proposal/camera-system' />
               <DataLink title='超防犯' href='/' />
               <DataLink title='自主機器警備システム' href='/' />
               <DataLink title='強盗対策' href='/' />
@@ -111,7 +111,7 @@ const DocumentProposalPage = () => {
               <DataLink title='一般家庭・マンション向け' href='/' />
               <DataLink title='工場向け' href='/' />
               <DataLink title='病院・福祉・障碍者施設向け' href='/' />
-              <DataLink title='事務所向け・店舗向け' href='proposal/office-store' />
+              <DataLink title='事務所向け・店舗向け' href='flyer-proposal/office-store' />
               <DataLink title='教育施設・大学向け' href='/' />
               <DataLink title='物流・運送業向け' href='/' />
             </ul>
