@@ -7,19 +7,23 @@ import PageHeader from '@/components/common/PageHeader'
 import SectionTitle from '@/components/common/SectionTitle'
 import DocCardButton from '@/views/document/DocCardButton'
 import { useAuthentication } from '@/hooks/AuthContext'
-import { getDocumentVideoAction } from '@/actions/documentAction'
-import { VideoType } from '@/types/videoType'
+import { getDocumentsAction } from '@/actions/documentAction'
+import { DocumentType } from '@/types/documentType'
 
 const DocumentVideoPage = () => {
-  const [seminarVideos, setSeminarVideos] = useState<VideoType[] | null>(null)
-  const [promotionVideos, setPromotionVideos] = useState<VideoType[] | null>(null)
+  const [seminarVideos, setSeminarVideos] = useState<DocumentType[] | null>(null)
+  const [promotionVideos, setPromotionVideos] = useState<DocumentType[] | null>(null)
   const { session_user_id } = useAuthentication()
   useEffect(() => {
-    getDocumentVideoAction({ user_id: session_user_id }).then((data: VideoType[]) => {
-      const seminarVideosRes = data.filter(movie => movie.code === 'セミナー動画')
-      const promotionVideosRes = data.filter(movie => movie.code === 'プロモーション動画')
-      setSeminarVideos(seminarVideosRes)
-      setPromotionVideos(promotionVideosRes)
+    getDocumentsAction({ type_id: 3, user_id: session_user_id }).then(data => {
+      setSeminarVideos(prev => {
+        if (prev) return data.filter((item: DocumentType) => item.category_id === '22')
+        else return null
+      })
+      setPromotionVideos(prev => {
+        if (prev) return data.filter((item: DocumentType) => item.category_id === '23')
+        else return null
+      })
     })
   }, [session_user_id])
 
@@ -40,35 +44,41 @@ const DocumentVideoPage = () => {
       <section className='flex flex-col gap-6'>
         <SectionTitle title='セミナー動画' bar={true} divider={true} />
         <div className='flex flex-col gap-4'>
-          {seminarVideos &&
+          {seminarVideos && seminarVideos.length !== 0 ? (
             seminarVideos
               .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-              .map(video => (
+              .map((video, key) => (
                 <DocCardButton
-                  key={video.id}
+                  key={key}
                   title={video.title}
-                  file={video.file}
+                  file={video.attachment}
                   icon='/images/icons/youtube.svg'
                   subicon='/images/icons/video-icon-circle.svg'
                 />
-              ))}
+              ))
+          ) : (
+            <p className='py-12 text-lg'>表示する資料がありません。</p>
+          )}
         </div>
       </section>
       <section className='flex flex-col gap-6'>
         <SectionTitle title='プロモーション 動画' bar={true} divider={true} />
         <div className='flex flex-col gap-4'>
-          {promotionVideos &&
+          {promotionVideos && promotionVideos.length !== 0 ? (
             promotionVideos
               .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-              .map(video => (
+              .map((video, key) => (
                 <DocCardButton
-                  key={video.id}
+                  key={key}
                   title={video.title}
-                  file={video.file}
+                  file={video.attachment}
                   icon='/images/icons/youtube.svg'
                   subicon='/images/icons/video-icon-circle.svg'
                 />
-              ))}
+              ))
+          ) : (
+            <p className='py-12 text-lg'>表示する資料がありません。</p>
+          )}
         </div>
       </section>
     </Container>

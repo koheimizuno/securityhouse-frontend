@@ -7,7 +7,7 @@ export const getDocumentsAction = async ({
   type_id,
   user_id
 }: {
-  category_id: number
+  category_id?: number
   type_id: number
   user_id: number
 }) => {
@@ -30,20 +30,6 @@ export const getDocumentByIdAction = async (id: string) => {
   try {
     const { data } = await axios.get(`/api/document/${id}`)
     return data
-  } catch (err: any) {
-    toast.error(err.response.data.message)
-    throw err
-  }
-}
-
-export const getDocumentVideoAction = async ({ user_id }: { user_id: number }) => {
-  try {
-    const { data } = await axios.post(`/api/movie/`, {
-      params: {
-        user_id
-      }
-    })
-    return data.movies
   } catch (err: any) {
     toast.error(err.response.data.message)
     throw err
