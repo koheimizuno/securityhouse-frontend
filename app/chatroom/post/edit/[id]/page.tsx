@@ -127,6 +127,7 @@ const EditPostPage = () => {
     e.preventDefault()
     if (validateForm()) {
       const postPayload = new FormData()
+      if (typeof id === 'string') postPayload.append('id', id)
       postPayload.append('title', formData.title)
       postPayload.append('content', formData.content)
       postPayload.append('hashtag', formData.hashtag)
