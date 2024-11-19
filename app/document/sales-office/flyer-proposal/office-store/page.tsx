@@ -1,20 +1,27 @@
 'use client'
 
-import { useRef } from 'react'
-import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
 
 import PageHeader from '@/components/common/PageHeader'
 import SectionTitle from '@/components/common/SectionTitle'
 import Container from '@/components/layout/Container'
-import DocCardButton from '@/views/document/DocCardButton'
 import DocumentCard from '@/views/document/DocumentCard'
-import { Divider } from '@nextui-org/react'
+import { Image } from '@nextui-org/react'
+
+import { getDocumentsAction } from '@/actions/documentAction'
+import { useAuthentication } from '@/hooks/AuthContext'
+import { DocumentType } from '@/types/documentType'
 
 const DocummentOfficeStorePage = () => {
   const officeRef = useRef<HTMLDivElement>(null)
   const storeRef = useRef(null)
   const robberyRef = useRef(null)
   const proposalRef = useRef<HTMLDivElement>(null)
+  const { session_user_id } = useAuthentication()
+  const [businessDocData, setBusinessDocData] = useState<DocumentType[] | null>([])
+  const [storeDocData, setStoreDocData] = useState<DocumentType[] | null>([])
+  const [robberyDocData, setRobberyDocData] = useState<DocumentType[] | null>([])
+  const [proposalDocData, setProposalDocData] = useState<DocumentType[] | null>([])
 
   const scrollToRef = (ref: React.RefObject<HTMLDivElement>, offset = 150) => {
     if (ref.current) {
@@ -25,6 +32,13 @@ const DocummentOfficeStorePage = () => {
       })
     }
   }
+
+  useEffect(() => {
+    getDocumentsAction({ type_id: 1, category_id: 18, user_id: session_user_id }).then(data => setBusinessDocData(data))
+    getDocumentsAction({ type_id: 1, category_id: 19, user_id: session_user_id }).then(data => setStoreDocData(data))
+    getDocumentsAction({ type_id: 1, category_id: 20, user_id: session_user_id }).then(data => setRobberyDocData(data))
+    getDocumentsAction({ type_id: 1, category_id: 21, user_id: session_user_id }).then(data => setProposalDocData(data))
+  }, [session_user_id])
 
   return (
     <Container className='py-16 flex flex-col gap-8'>
@@ -64,206 +78,38 @@ const DocummentOfficeStorePage = () => {
           <section className='flex flex-col gap-6' ref={officeRef}>
             <SectionTitle title='事務所向け' bar={true} divider={true} />
             <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
-              <DocumentCard title='守り方改革チラシ.pdf(000KB)' img='/images/doc-office-img01.png' />
-              <DocumentCard title='選挙事務所対応.pdf(000KB)' img='/images/doc-office-img02.png' />
+              {businessDocData &&
+                businessDocData.map((doc, key) => (
+                  <DocumentCard key={key} title={doc.title} img={doc.image} attachment={doc.attachment} />
+                ))}
             </div>
           </section>
           <section className='flex flex-col gap-6' ref={storeRef}>
             <SectionTitle title='店舗向け' bar={true} divider={true} />
             <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
-              <DocumentCard title='住居併用型向自主機械警備.pdf(000KB)' img='/images/doc-store-img01.png' />
-              <DocumentCard title='ワイヤレス非常沿革通報システム.pdf(000KB)' img='/images/doc-store-img02.png' />
-              <DocumentCard title='調剤薬局／ドラッグストア.pdf(000KB)' img='/images/doc-store-img03.png' />
+              {storeDocData &&
+                storeDocData.map((doc, key) => (
+                  <DocumentCard key={key} title={doc.title} img={doc.image} attachment={doc.attachment} />
+                ))}
             </div>
           </section>
           <section className='flex flex-col gap-6' ref={robberyRef}>
             <SectionTitle title='強盗対策' bar={true} divider={true} />
             <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
-              <DocumentCard title='強盗・不審者対策.pdf(000KB)' img='/images/doc-robbery-img01.png' />
+              {robberyDocData &&
+                robberyDocData.map((doc, key) => (
+                  <DocumentCard key={key} title={doc.title} img={doc.image} attachment={doc.attachment} />
+                ))}
             </div>
           </section>
           <section className='flex flex-col gap-6' ref={proposalRef}>
             <SectionTitle title='提案書' bar={true} divider={true} />
-            <div className='flex justify-between flex-wrap gap-8'>
-              <h4 className='md:py-4 md:max-w-[220px]'>KDDI様向けi-NEXTのご提案</h4>
-              <div className='flex flex-col gap-2 md:w-[480px]'>
-                <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' file='' size='sm' />
-                <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
-                <DocCardButton
-                  title='商談中に使う'
-                  icon='/images/icons/people-icon.svg'
-                  subicon='/images/icons/video-icon-circle.svg'
-                  file=''
-                  size='sm'
-                />
-              </div>
+            <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
+              {proposalDocData &&
+                proposalDocData.map((doc, key) => (
+                  <DocumentCard key={key} title={doc.title} img={doc.image} attachment={doc.attachment} />
+                ))}
             </div>
-            <Divider />
-            <div className='flex justify-between flex-wrap gap-8'>
-              <h4 className='md:py-4 md:max-w-[220px]'>チェーン店様向けセキュリティシステムのご提案</h4>
-              <div className='flex flex-col gap-2 md:w-[480px]'>
-                <DocCardButton title='KDDI様向けi-NEXTのご提案.pdf(000KB)' file='' size='sm' />
-                <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
-                <DocCardButton
-                  title='商談中に使う'
-                  icon='/images/icons/people-icon.svg'
-                  subicon='/images/icons/video-icon-circle.svg'
-                  file=''
-                  size='sm'
-                />
-              </div>
-            </div>
-            <Divider />
-            <div className='flex justify-between flex-wrap gap-8'>
-              <h4 className='md:py-4 md:max-w-[220px]'>店舗向けWDR-H401提案書</h4>
-              <div className='flex flex-col gap-2 md:w-[480px]'>
-                <DocCardButton title='店舗向けWDR-H401提案書.pdf(000KB)' file='' size='sm' />
-                <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
-                <DocCardButton
-                  title='商談中に使う'
-                  icon='/images/icons/people-icon.svg'
-                  subicon='/images/icons/video-icon-circle.svg'
-                  file=''
-                  size='sm'
-                />
-              </div>
-            </div>
-            <Divider />
-            <div className='flex justify-between flex-wrap gap-8'>
-              <h4 className='md:py-4 md:max-w-[220px]'>コンビニ向け提案書</h4>
-              <div className='flex flex-col gap-2 md:w-[480px]'>
-                <DocCardButton title='コンビニ向け提案書.pdf(000KB)' file='' size='sm' />
-                <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
-                <DocCardButton
-                  title='商談中に使う'
-                  icon='/images/icons/people-icon.svg'
-                  subicon='/images/icons/video-icon-circle.svg'
-                  file=''
-                  size='sm'
-                />
-              </div>
-            </div>
-            <Divider />
-            <div className='flex justify-between flex-wrap gap-8'>
-              <h4 className='md:py-4 md:max-w-[220px]'>薬局向け セキュリティシステムご提案書</h4>
-              <div className='flex flex-col gap-2 md:w-[480px]'>
-                <DocCardButton title='薬局向けセキュリティシステムご提案書.pdf(000KB)' file='' size='sm' />
-                <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
-                <DocCardButton
-                  title='商談中に使う'
-                  icon='/images/icons/people-icon.svg'
-                  subicon='/images/icons/video-icon-circle.svg'
-                  file=''
-                  size='sm'
-                />
-              </div>
-            </div>
-            <Divider />
-            <div className='flex justify-between flex-wrap gap-8'>
-              <h4 className='md:py-4 md:max-w-[220px]'>auショップ様向けご提案書【WJ-700SH＋フォグガード】</h4>
-              <div className='flex flex-col gap-2 md:w-[480px]'>
-                <DocCardButton title='auショップ様向けご提案書.pdf(000KB)' file='' size='sm' />
-                <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
-                <DocCardButton
-                  title='商談中に使う'
-                  icon='/images/icons/people-icon.svg'
-                  subicon='/images/icons/video-icon-circle.svg'
-                  file=''
-                  size='sm'
-                />
-              </div>
-            </div>
-            <Divider />
-            <div className='flex justify-between flex-wrap gap-8'>
-              <h4 className='md:py-4 md:max-w-[220px]'>ドコモショップ様向けご提案書 【見える防犯＋フォグガード】</h4>
-              <div className='flex flex-col gap-2 md:w-[480px]'>
-                <DocCardButton title='ドコモショップ様向けご提案書.pdf(000KB)' file='' size='sm' />
-                <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
-                <DocCardButton
-                  title='商談中に使う'
-                  icon='/images/icons/people-icon.svg'
-                  subicon='/images/icons/video-icon-circle.svg'
-                  file=''
-                  size='sm'
-                />
-              </div>
-            </div>
-            <Divider />
-            <div className='flex justify-between flex-wrap gap-8'>
-              <h4 className='md:py-4 md:max-w-[220px]'>霧噴射装置（フォグガード） ＦＧ－Ｓ販売提案</h4>
-              <div className='flex flex-col gap-2 md:w-[480px]'>
-                <DocCardButton title='霧噴射装置（フォグガード）ＦＧ－Ｓ販売提案.pdf(000KB)' file='' size='sm' />
-                <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
-                <DocCardButton
-                  title='商談中に使う'
-                  icon='/images/icons/people-icon.svg'
-                  subicon='/images/icons/video-icon-circle.svg'
-                  file=''
-                  size='sm'
-                />
-              </div>
-            </div>
-            <Divider />
-            <div className='flex justify-between flex-wrap gap-8'>
-              <h4 className='md:py-4 md:max-w-[220px]'>犯行を諦めさせる フォグガードご提案書</h4>
-              <div className='flex flex-col gap-2 md:w-[480px]'>
-                <DocCardButton title='犯行を諦めさせるフォグガードご提案書.pdf(000KB)' file='' size='sm' />
-                <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
-                <DocCardButton
-                  title='商談中に使う'
-                  icon='/images/icons/people-icon.svg'
-                  subicon='/images/icons/video-icon-circle.svg'
-                  file=''
-                  size='sm'
-                />
-              </div>
-            </div>
-            <Divider />
-            <div className='flex justify-between flex-wrap gap-8'>
-              <h4 className='md:py-4 md:max-w-[220px]'>金融機関向け提案書</h4>
-              <div className='flex flex-col gap-2 md:w-[480px]'>
-                <DocCardButton title='金融機関向け提案書.pdf(000KB)' file='' size='sm' />
-                <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
-                <DocCardButton
-                  title='商談中に使う'
-                  icon='/images/icons/people-icon.svg'
-                  subicon='/images/icons/video-icon-circle.svg'
-                  file=''
-                  size='sm'
-                />
-              </div>
-            </div>
-            <Divider />
-            <div className='flex justify-between flex-wrap gap-8'>
-              <h4 className='md:py-4 md:max-w-[220px]'>食品加工工場様向けご提案書</h4>
-              <div className='flex flex-col gap-2 md:w-[480px]'>
-                <DocCardButton title='薬局向けセキュリティシステムご提案書.pdf(000KB)' file='' size='sm' />
-                <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
-                <DocCardButton
-                  title='商談中に使う'
-                  icon='/images/icons/people-icon.svg'
-                  subicon='/images/icons/video-icon-circle.svg'
-                  file=''
-                  size='sm'
-                />
-              </div>
-            </div>
-            <Divider />
-            <div className='flex justify-between flex-wrap gap-8'>
-              <h4 className='md:py-4 md:max-w-[220px]'>盗難防止システムのご提案書 （窃盗対策）</h4>
-              <div className='flex flex-col gap-2 md:w-[480px]'>
-                <DocCardButton title='盗難防止システムのご提案書（窃盗対策）.pdf(000KB)' file='' size='sm' />
-                <DocCardButton title='圧縮版PDF(00KB)' file='' size='sm' />
-                <DocCardButton
-                  title='商談中に使う'
-                  icon='/images/icons/people-icon.svg'
-                  subicon='/images/icons/video-icon-circle.svg'
-                  file=''
-                  size='sm'
-                />
-              </div>
-            </div>
-            <Divider />
           </section>
         </div>
       </div>
