@@ -16,7 +16,7 @@ const ProductContent = () => {
   const catParams = searchParams.get('cat')
 
   useEffect(() => {
-    getDocumentsAction({ category_id: 1, type_id: 1, user_id: session_user_id }).then(data => {
+    getDocumentsAction({ type_id: 1, category_id: 1, user_id: session_user_id }).then(data => {
       const params = catParams ? catParams : 2024
       const yearFilter = Number(params)
       setDocData(

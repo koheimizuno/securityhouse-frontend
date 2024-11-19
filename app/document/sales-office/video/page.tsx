@@ -9,7 +9,6 @@ import DocCardButton from '@/views/document/DocCardButton'
 import { useAuthentication } from '@/hooks/AuthContext'
 import { getDocumentVideoAction } from '@/actions/documentAction'
 import { VideoType } from '@/types/videoType'
-import { handleDownload } from '@/utils/handleDownload'
 
 const DocumentVideoPage = () => {
   const [seminarVideos, setSeminarVideos] = useState<VideoType[] | null>(null)

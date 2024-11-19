@@ -6,11 +6,12 @@ import Image from 'next/image'
 import DocCardButton from './DocCardButton'
 
 type DocumentCardProps = {
-  img: string
   title: string
+  img: string
+  attachment: string
 }
 
-const DocumentCard = ({ img, title }: DocumentCardProps) => {
+const DocumentCard = ({ img, title, attachment }: DocumentCardProps) => {
   return (
     <div className='w-[265px] flex flex-col gap-5'>
       <div className='relative h-[187px] bg-colorGray1 flex justify-center items-center max-w-full'>
@@ -24,7 +25,7 @@ const DocumentCard = ({ img, title }: DocumentCardProps) => {
         />
       </div>
       <p>{title}</p>
-      <DocCardButton title='ダウンロード' file=''/>
+      <DocCardButton title='ダウンロード' file={attachment} />
     </div>
   )
 }

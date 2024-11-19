@@ -3,7 +3,7 @@ export type DocumentType = {
   title: string
   content: string
   attachment: string
-  image: string | null
+  image: string
   category_id: string
   user_id: string
   type_id: string

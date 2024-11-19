@@ -45,9 +45,9 @@ const DocumentPhotosPanelPage = () => {
         <div className='md:w-[calc(100%-246px)] flex flex-col gap-8'>
           <SectionTitle title='商品展示会' bar={true} divider={true} />
           <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
-            <DocumentCard title='i-NEXT超防犯' img='/images/doc-office-img01.png' />
-            <DocumentCard title='防犯のプロとしてのこだわり防犯魂' img='/images/doc-office-img02.png' />
-            <DocumentCard title='どこでもカメラ' img='/images/doc-store-img01.png' />
+            <DocumentCard title='i-NEXT超防犯' img='/images/doc-office-img01.png' attachment='' />
+            <DocumentCard title='防犯のプロとしてのこだわり防犯魂' img='/images/doc-office-img02.png' attachment='' />
+            <DocumentCard title='どこでもカメラ' img='/images/doc-store-img01.png' attachment='' />
           </div>
         </div>
       </div>

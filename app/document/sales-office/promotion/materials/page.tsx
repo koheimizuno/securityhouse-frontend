@@ -49,9 +49,9 @@ const DocumentVideoMaterialsPage = () => {
           </ul>
         </div>
         <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
-          <DocumentCard title='写真等に使用する場合' img='/images/doc-office-img01.png' />
-          <DocumentCard title='バックが白場の場合' img='/images/doc-office-img02.png' />
-          <DocumentCard title='名刺サイズ' img='/images/doc-store-img01.png' />
+          <DocumentCard title='写真等に使用する場合' img='/images/doc-office-img01.png' attachment='' />
+          <DocumentCard title='バックが白場の場合' img='/images/doc-office-img02.png'  attachment=''/>
+          <DocumentCard title='名刺サイズ' img='/images/doc-store-img01.png' attachment='' />
         </div>
       </section>
     </Container>
