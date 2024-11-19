@@ -104,7 +104,7 @@ const DocumentProposalPage = () => {
               <DataLink title='カメラシステム' href='flyer-proposal/camera-system' />
               <DataLink title='超防犯' href='flyer-proposal/super-security' />
               <DataLink title='自主機器警備システム' href='flyer-proposal/self-maintenance-system' />
-              <DataLink title='強盗対策' href='/' />
+              <DataLink title='強盗対策' href='flyer-proposal/robbery-measure' />
             </ul>
             <Divider className='my-8' />
             <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5'>
