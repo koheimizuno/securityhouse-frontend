@@ -102,7 +102,7 @@ const DocumentProposalPage = () => {
               <DataLink title='i-NEXT' href='flyer-proposal/i-next' />
               <DataLink title='外周警備システム' href='flyer-proposal/security-system' />
               <DataLink title='カメラシステム' href='flyer-proposal/camera-system' />
-              <DataLink title='超防犯' href='/' />
+              <DataLink title='超防犯' href='flyer-proposal/super-security' />
               <DataLink title='自主機器警備システム' href='/' />
               <DataLink title='強盗対策' href='/' />
             </ul>

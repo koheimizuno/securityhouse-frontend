@@ -22,7 +22,7 @@ const SecuritySystemPage = () => {
 
   return (
     <Container className='py-16 flex flex-col gap-12'>
-      <PageHeader title='i-NEXT' subtitle='資料集' />
+      <PageHeader title='外周警備システム' subtitle='資料集' />
       <section className='flex flex-col gap-6'>
         <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
           {securitySystemDocData &&
