@@ -7,7 +7,7 @@ export const handleDownload = async (url: string) => {
     // Create a temporary URL for the Blob and trigger the download
     const link = document.createElement('a')
     link.href = URL.createObjectURL(blob)
-    link.download = 'video.mp4' // Specify a filename
+    link.download = url.substring(url.lastIndexOf('/') + 1) // Specify a filename
 
     // Append link to body and trigger the click
     document.body.appendChild(link)

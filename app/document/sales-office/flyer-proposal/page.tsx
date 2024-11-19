@@ -10,39 +10,58 @@ import ProductContent from '@/views/document/salesoffice/flyer-proposal/ProductC
 import DataLink from '@/components/common/DataLink'
 import { Divider } from '@nextui-org/react'
 import SubSectionTitle from '@/components/common/SubSectionTitle'
+import DangerInfo from '@/views/document/salesoffice/flyer-proposal/DangerInfo'
 
 const categories = [
   {
     id: '1',
-    title: '2023年'
+    title: '2024年',
+    category_id: '2024'
+  },
+  {
+    id: '1',
+    title: '2023年',
+    category_id: '2023'
   },
   {
     id: '2',
-    title: '2022年'
+    title: '2022年',
+    category_id: '2022'
   },
   {
     id: '3',
-    title: '2021年'
+    title: '2021年',
+    category_id: '2021'
   },
   {
     id: '4',
-    title: '2020年'
+    title: '2020年',
+    category_id: '2020'
   },
   {
     id: '5',
-    title: '2019年'
+    title: '2019年',
+    category_id: '2019'
   },
   {
     id: '6',
-    title: '2018年'
+    title: '2018年',
+    category_id: '2018'
   },
   {
     id: '7',
-    title: '2017年'
+    title: '2017年',
+    category_id: '2017'
   },
   {
     id: '8',
-    title: '2016年'
+    title: '2016年',
+    category_id: '2016'
+  },
+  {
+    id: '8',
+    title: '2015年',
+    category_id: '2015'
   }
 ]
 
@@ -117,7 +136,7 @@ const DocumentProposalPage = () => {
       </section>
       <section className='flex flex-col gap-8'>
         <SectionTitle title='販売方法についての注意案内' bar={true} divider={true} />
-        <p>「販売方法についての注意案内」の内容が入ります</p>
+        <DangerInfo />
       </section>
     </Container>
   )

@@ -1,31 +1,19 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 
 import DocCardButton from '@/views/document/DocCardButton'
 import { getDocumentsAction } from '@/actions/documentAction'
 import { useAuthentication } from '@/hooks/AuthContext'
 import { DocumentType } from '@/types/documentType'
 
-const ProductContent = () => {
-  const searchParams = useSearchParams()
+const DangerInfo = () => {
   const [docData, setDocData] = useState<DocumentType[] | null>([])
   const { session_user_id } = useAuthentication()
 
-  const catParams = searchParams.get('cat')
-
   useEffect(() => {
-    getDocumentsAction({ category_id: 1, type_id: 1, user_id: session_user_id }).then(data => {
-      const params = catParams ? catParams : 2024
-      const yearFilter = Number(params)
-      setDocData(
-        data.filter(
-          (item: DocumentType) => !isNaN(yearFilter) && new Date(item.created_at).getFullYear() === yearFilter
-        )
-      )
-    })
-  }, [session_user_id, catParams])
+    getDocumentsAction({ category_id: 2, type_id: 1, user_id: session_user_id }).then(data => setDocData(data))
+  }, [session_user_id])
 
   return (
     <div className='md:w-[calc(100%-246px)] flex flex-col gap-2'>
@@ -40,4 +28,4 @@ const ProductContent = () => {
   )
 }
 
-export default ProductContent
+export default DangerInfo

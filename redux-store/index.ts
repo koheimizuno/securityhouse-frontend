@@ -6,7 +6,6 @@ import postTypeSlice from './slices/postTypeSlice'
 import categorySlice from './slices/categorySlice'
 import groupSlice from './slices/groupSlice'
 import commentSlice from './slices/commentSlice'
-import documentSlice from './slices/documentSlice'
 import messageSlice from './slices/messageSlice'
 import newsSlice from './slices/newsSlice'
 import badgeSlice from './slices/badgeSlice'
@@ -20,7 +19,6 @@ const rootReducer = combineReducers({
   category: categorySlice.reducer,
   group: groupSlice.reducer,
   comment: commentSlice.reducer,
-  document: documentSlice.reducer,
   message: messageSlice.reducer,
   news: newsSlice.reducer,
   badge: badgeSlice.reducer,
