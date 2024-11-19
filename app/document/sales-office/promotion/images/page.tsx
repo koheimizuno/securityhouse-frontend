@@ -33,23 +33,27 @@ const DocumentPromotionImagesPage = () => {
       <PageHeader title='ロゴ／イラスト／バナー素材' subtitle='資料集' />
       <section className='flex flex-col gap-6'>
         <SectionTitle title='くらし守るバナー' bar={true} divider={true} />
-        {protectBannerData && protectBannerData.length !== 0 ? (
-          protectBannerData.map((doc, key) => (
-            <DocumentCard key={key} title={doc.title} img={doc.image} attachment={doc.attachment} />
-          ))
-        ) : (
-          <p className='py-12 text-lg'>表示する資料がありません。</p>
-        )}
+        <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
+          {protectBannerData && protectBannerData.length !== 0 ? (
+            protectBannerData.map((doc, key) => (
+              <DocumentCard key={key} title={doc.title} img={doc.image} attachment={doc.attachment} />
+            ))
+          ) : (
+            <p className='py-12 text-lg'>表示する資料がありません。</p>
+          )}
+        </div>
       </section>
       <section className='flex flex-col gap-6'>
         <SectionTitle title='リクルート用バナー' bar={true} divider={true} />
-        {recruitBannerData && recruitBannerData.length !== 0 ? (
-          recruitBannerData.map((doc, key) => (
-            <DocumentCard key={key} title={doc.title} img={doc.image} attachment={doc.attachment} />
-          ))
-        ) : (
-          <p className='py-12 text-lg'>表示する資料がありません。</p>
-        )}
+        <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
+          {recruitBannerData && recruitBannerData.length !== 0 ? (
+            recruitBannerData.map((doc, key) => (
+              <DocumentCard key={key} title={doc.title} img={doc.image} attachment={doc.attachment} />
+            ))
+          ) : (
+            <p className='py-12 text-lg'>表示する資料がありません。</p>
+          )}
+        </div>
       </section>
     </Container>
   )
