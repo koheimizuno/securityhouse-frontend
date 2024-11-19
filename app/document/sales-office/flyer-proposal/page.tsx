@@ -113,7 +113,7 @@ const DocumentProposalPage = () => {
               <DataLink title='病院・福祉・障碍者施設向け' href='flyer-proposal/hospital' />
               <DataLink title='事務所向け・店舗向け' href='flyer-proposal/office-store' />
               <DataLink title='教育施設・大学向け' href='flyer-proposal/university' />
-              <DataLink title='物流・運送業向け' href='/' />
+              <DataLink title='物流・運送業向け' href='flyer-proposal/transport' />
             </ul>
             <Divider className='my-8' />
             <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5'>
