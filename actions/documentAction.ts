@@ -26,10 +26,21 @@ export const getDocumentsAction = async ({
   }
 }
 
-export const getDocumentByIdAction = async (id: string) => {
+export const getINextBrandDocumentsAction = async ({
+  category_id,
+  user_id
+}: {
+  category_id: number
+  user_id: number
+}) => {
   try {
-    const { data } = await axios.get(`/api/document/${id}`)
-    return data
+    const { data } = await axios.get('/api/inextbrand/', {
+      params: {
+        category_id,
+        user_id
+      }
+    })
+    return data.inext
   } catch (err: any) {
     toast.error(err.response.data.message)
     throw err

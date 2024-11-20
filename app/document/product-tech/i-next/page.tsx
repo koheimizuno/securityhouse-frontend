@@ -13,7 +13,7 @@ const DocumentINextPage = () => {
         <DataLink title='登録関係' href='i-next/registration' />
         <DataLink title='技術資料' href='i-next/tech-doc' />
         <DataLink title='提案書／動画' href='i-next/proposal-video' />
-        <DataLink title='チラシ／掲載事例' href='i-next/flyer-casestudy' />
+        <DataLink title='チラシ／掲載事例' href='document/sales-office/flyer-proposal/i-next' />
       </ul>
     </Container>
   )
