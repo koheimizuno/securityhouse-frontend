@@ -34,6 +34,18 @@ export const editUserAction: any = createAsyncThunk('editUserAction', async (pay
   }
 })
 
+export const deleteUserAction: any = createAsyncThunk('deleteUserAction', async (id: number) => {
+  try {
+    return await axios.delete(`/api/user/`, {
+      params: {
+        id
+      }
+    })
+  } catch (err: any) {
+    return err.response.data
+  }
+})
+
 export const forgotPasswordAction: any = createAsyncThunk(
   'forgotPasswordAction',
   async ({ email }: { email: string }) => {
@@ -113,6 +125,16 @@ export const authSlice = createSlice({
         toast.success('ユーザー情報の変更に成功しました。')
       })
       .addCase(editUserAction.rejected, (state, { payload }) => {
+        state.isLoading = false
+        state.error = true
+        toast.error(payload.message)
+      })
+      .addCase(deleteUserAction.fulfilled, state => {
+        state.isLoading = false
+        state.success = true
+        toast.success('ユーザー情報の削除に成功しました。')
+      })
+      .addCase(deleteUserAction.rejected, (state, { payload }) => {
         state.isLoading = false
         state.error = true
         toast.error(payload.message)
