@@ -26,7 +26,8 @@ export const getPostByIdAction = async ({ user_id, id }: { user_id: string; id: 
   try {
     const { data } = await axios.get(`/api/post/${id}`, {
       params: {
-        user_id
+        user_id,
+        id
       }
     })
     return data

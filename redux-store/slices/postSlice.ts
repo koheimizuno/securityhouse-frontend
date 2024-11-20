@@ -32,7 +32,7 @@ export const deletePostAction: any = createAsyncThunk('deletePostAction', async 
 
 export const postReportAction: any = createAsyncThunk('postReportAction', async (id: string) => {
   try {
-    await axios.post(`/api/report/`, { id })
+    await axios.post(`/api/report/`, { params: { id } })
   } catch (err: any) {
     return err.response.data
   }
