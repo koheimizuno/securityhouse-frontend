@@ -7,7 +7,6 @@ import categorySlice from './slices/categorySlice'
 import groupSlice from './slices/groupSlice'
 import commentSlice from './slices/commentSlice'
 import messageSlice from './slices/messageSlice'
-import newsSlice from './slices/newsSlice'
 import badgeSlice from './slices/badgeSlice'
 import challengeSlice from './slices/challengeSlice'
 import rankingSlice from './slices/rankingSlice'
@@ -20,7 +19,6 @@ const rootReducer = combineReducers({
   group: groupSlice.reducer,
   comment: commentSlice.reducer,
   message: messageSlice.reducer,
-  news: newsSlice.reducer,
   badge: badgeSlice.reducer,
   challenge: challengeSlice.reducer,
   ranking: rankingSlice.reducer
