@@ -157,7 +157,7 @@ const EditPostPage = () => {
   return (
     <div className='bg-bgSemiblue px-4 pt-12 pb-[140px]'>
       <div className='max-w-[800px] m-auto'>
-        <SectionTitle title='トークルームに投稿する' icon='/images/icons/edit-secondary.svg' />
+        <SectionTitle title='投稿を編集する' icon='/images/icons/edit-secondary.svg' />
         <form
           className='bg-white rounded-xl mt-6 px-6 py-8 sm:px-12 sm:py-10 flex flex-col gap-6'
           onSubmit={handleSubmit}
