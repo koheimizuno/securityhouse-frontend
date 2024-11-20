@@ -20,11 +20,11 @@ const DocumentVideoPhotosPage = () => {
   useEffect(() => {
     getDocumentsAction({ type_id: 2, category_id: 26, user_id: session_user_id }).then(data => {
       setFaxAppFormData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '32')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 32)
         else return null
       })
       setAnywhereCameraData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '33')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 33)
         else return null
       })
     })

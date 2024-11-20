@@ -17,11 +17,11 @@ const DocumentVideoPage = () => {
   useEffect(() => {
     getDocumentsAction({ type_id: 3, user_id: session_user_id }).then(data => {
       setSeminarVideos(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '22')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 22)
         else return null
       })
       setPromotionVideos(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '23')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 23)
         else return null
       })
     })

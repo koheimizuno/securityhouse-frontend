@@ -18,11 +18,11 @@ const DocumentPromotionImagesPage = () => {
   useEffect(() => {
     getDocumentsAction({ type_id: 2, category_id: 24, user_id: session_user_id }).then(data => {
       setProtectBannerData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '28')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 28)
         else return null
       })
       setRecruitBannerData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '29')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 29)
         else return null
       })
     })

@@ -18,11 +18,11 @@ const DocumentVideoOrderFormPage = () => {
   useEffect(() => {
     getDocumentsAction({ type_id: 2, category_id: 25, user_id: session_user_id }).then(data => {
       setPromotionToolData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '30')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 30)
         else return null
       })
       setVariousOrderFormData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '31')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 31)
         else return null
       })
     })

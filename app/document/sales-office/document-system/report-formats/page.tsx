@@ -17,7 +17,7 @@ const DocumentReportFormatsPage = () => {
   useEffect(() => {
     getDocumentsAction({ type_id: 4, category_id: 41, user_id: session_user_id }).then(data => {
       setReportDocData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '42')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 42)
         else return null
       })
     })

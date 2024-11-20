@@ -39,7 +39,7 @@ const DocumentPhotosPanelPage = () => {
   useEffect(() => {
     getDocumentsAction({ type_id: 1, category_id: 26, user_id: session_user_id }).then(data => {
       setPhotosDocData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id !== '32' && item.category_id !== '33')
+        if (prev) return data.filter((item: DocumentType) => item.category_id !== 32 && item.category_id !== 33)
       })
     })
   }, [session_user_id])
@@ -65,7 +65,7 @@ const DocumentPhotosPanelPage = () => {
           <div className='flex flex-col md:flex-row md:flex-wrap items-center gap-4'>
             {photosDocData && photosDocData.length !== 0 ? (
               photosDocData
-                .filter(item => item.category_id === categoryId)
+                .filter(item => item.category_id === Number(categoryId))
                 .map((doc, key) => (
                   <DocumentCard key={key} title={doc.title} img={doc.image} attachment={doc.attachment} />
                 ))

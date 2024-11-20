@@ -36,19 +36,19 @@ const DocumentProPosalINextPage = () => {
   useEffect(() => {
     getDocumentsAction({ type_id: 1, category_id: 3, user_id: session_user_id }).then(data => {
       setBusinessDocData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '18')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 18)
         else return null
       })
       setStoreDocData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '19')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 19)
         else return null
       })
       setRobberyDocData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '20')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 20)
         else return null
       })
       setProposalDocData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '21')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 21)
         else return null
       })
     })

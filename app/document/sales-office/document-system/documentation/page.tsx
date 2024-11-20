@@ -33,15 +33,15 @@ const DocumentDocumentationPage = () => {
   useEffect(() => {
     getDocumentsAction({ type_id: 1, category_id: 12, user_id: session_user_id }).then(data => {
       setSecurityDocData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '42')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 42)
         else return null
       })
       setContractDocData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '43')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 43)
         else return null
       })
       setMaintenanceDocData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '44')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 44)
         else return null
       })
     })

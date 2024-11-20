@@ -20,15 +20,15 @@ const DocumentVideoMaterialsPage = () => {
   useEffect(() => {
     getDocumentsAction({ type_id: 2, category_id: 27, user_id: session_user_id }).then(data => {
       setMaterialCollectionData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '37')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 37)
         else return null
       })
       setVideoData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '38')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 38)
         else return null
       })
       setAttackDefenseData(prev => {
-        if (prev) return data.filter((item: DocumentType) => item.category_id === '39')
+        if (prev) return data.filter((item: DocumentType) => item.category_id === 39)
         else return null
       })
     })
