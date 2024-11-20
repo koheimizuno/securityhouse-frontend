@@ -46,3 +46,24 @@ export const getINextBrandDocumentsAction = async ({
     throw err
   }
 }
+
+export const getTakexBrandDocumentsAction = async ({
+  category_id,
+  user_id
+}: {
+  category_id: number
+  user_id: number
+}) => {
+  try {
+    const { data } = await axios.get('/api/takexbrand/', {
+      params: {
+        category_id,
+        user_id
+      }
+    })
+    return data.takexbrand
+  } catch (err: any) {
+    toast.error(err.response.data.message)
+    throw err
+  }
+}
