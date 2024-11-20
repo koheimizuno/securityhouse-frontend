@@ -2,6 +2,27 @@
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
+export const getDocumentCategoriesAction = async ({
+  category_id,
+  type_id
+}: {
+  category_id?: number
+  type_id: number
+}) => {
+  try {
+    const { data } = await axios.get('/api/document_category/', {
+      params: {
+        category_id,
+        type_id
+      }
+    })
+    return data.document_category
+  } catch (err: any) {
+    toast.error(err.response.data.message)
+    throw err
+  }
+}
+
 export const getDocumentsAction = async ({
   category_id,
   type_id,
