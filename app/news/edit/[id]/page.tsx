@@ -61,7 +61,7 @@ const EditNewPage = () => {
           }
         }))
       })
-  }, [id])
+  }, [id, session_user_id])
 
   useEffect(() => {
     dispatch(
@@ -131,7 +131,7 @@ const EditNewPage = () => {
   return (
     <div className='bg-bgSemiblue px-4 pt-12 pb-[140px]'>
       <div className='max-w-[800px] m-auto'>
-        <SectionTitle title='お知らせ登録' icon='/images/icons/edit-secondary.svg' />
+        <SectionTitle title='お知らせ編集' icon='/images/icons/edit-secondary.svg' />
         <form
           className='bg-white rounded-xl mt-6 px-6 py-8 sm:px-12 sm:py-10 flex flex-col gap-6'
           onSubmit={handleSubmit}

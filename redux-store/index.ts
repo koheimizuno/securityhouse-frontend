@@ -10,6 +10,7 @@ import messageSlice from './slices/messageSlice'
 import badgeSlice from './slices/badgeSlice'
 import challengeSlice from './slices/challengeSlice'
 import rankingSlice from './slices/rankingSlice'
+import newsSlice from './slices/newsSlice'
 
 const rootReducer = combineReducers({
   user: authSlice.reducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   group: groupSlice.reducer,
   comment: commentSlice.reducer,
   message: messageSlice.reducer,
+  news: newsSlice.reducer,
   badge: badgeSlice.reducer,
   challenge: challengeSlice.reducer,
   ranking: rankingSlice.reducer
