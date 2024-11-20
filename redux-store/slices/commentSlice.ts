@@ -101,7 +101,7 @@ export const commentSlice = createSlice({
       .addCase(commentHideAction.fulfilled, state => {
         state.isLoading = false
         state.success = true
-        toast.success('Success')
+        toast.success('コメントが正常に隠しました。')
       })
       .addCase(commentHideAction.rejected, (state, { payload }) => {
         state.isLoading = false
