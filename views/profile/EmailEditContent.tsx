@@ -11,9 +11,11 @@ import { editUserAction } from '@/redux-store/slices/authSlice'
 import { useToggle } from '@uidotdev/usehooks'
 import CheckBox from '@/components/form/CheckBox'
 import { Button, Input } from '@nextui-org/react'
+import { useAuthentication } from '@/hooks/AuthContext'
 
 const EmailEditContent = ({ userData }: { userData: UsersType | null }) => {
   const dispatch = useDispatch()
+  const { session_user_id } = useAuthentication()
   const [email, setEmail] = useState({ new: '' })
   const [errors, setErrors] = useState({ new: '' })
   const [commentNot, setCommentNot] = useToggle(false)
@@ -46,15 +48,15 @@ const EmailEditContent = ({ userData }: { userData: UsersType | null }) => {
     switch (name) {
       case 'comment_not':
         setCommentNot(checked)
-        dispatch(editUserAction({ comment_not: payload }))
+        dispatch(editUserAction({ comment_not: payload, user_id: session_user_id }))
         break
       case 'news_not':
         setNewsNot(checked)
-        dispatch(editUserAction({ news_not: payload }))
+        dispatch(editUserAction({ news_not: payload, user_id: session_user_id }))
         break
       case 'dm_not':
         setDmNot(checked)
-        dispatch(editUserAction({ dm_not: payload }))
+        dispatch(editUserAction({ dm_not: payload, user_id: session_user_id }))
         break
       default:
         break
@@ -70,7 +72,7 @@ const EmailEditContent = ({ userData }: { userData: UsersType | null }) => {
       }))
       return
     }
-    dispatch(editUserAction({ email: email.new }))
+    dispatch(editUserAction({ email: email.new, user_id: session_user_id }))
   }
 
   return (

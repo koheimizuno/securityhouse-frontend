@@ -11,6 +11,7 @@ import { editUserAction } from '@/redux-store/slices/authSlice'
 import { Button, Input, Textarea } from '@nextui-org/react'
 import { UsersType } from '@/types/userType'
 import { getImageAlt } from '@/utils/getImageAlt'
+import { useAuthentication } from '@/hooks/AuthContext'
 
 type editDataType = {
   thumbnail: {
@@ -23,6 +24,7 @@ type editDataType = {
 
 const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
   const dispatch = useDispatch()
+  const { session_user_id } = useAuthentication()
   const [formData, setFormData] = useState<editDataType>({
     thumbnail: {
       file: '',
@@ -98,6 +100,7 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
     if (validateForm()) {
       const payloadForm = new FormData()
 
+      payloadForm.append('user_id', session_user_id)
       payloadForm.append('name', formData.name)
       payloadForm.append('intro', formData.intro)
       payloadForm.append('thumbnail', formData.thumbnail.file)

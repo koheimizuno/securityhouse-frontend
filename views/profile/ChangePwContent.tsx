@@ -10,10 +10,12 @@ import { getUserByIdAction } from '@/actions/authAction'
 import { editUserAction } from '@/redux-store/slices/authSlice'
 import { Button, Input } from '@nextui-org/react'
 import InputPasswordEye from '@/components/form/InputPasswordEye'
+import { useAuthentication } from '@/hooks/AuthContext'
 
 const ChangePwContent = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
+  const { session_user_id } = useAuthentication()
   const [formData, setFormData] = useState({
     current_pw: '',
     new_pw: '',
@@ -78,7 +80,7 @@ const ChangePwContent = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (await validateForm()) {
-      dispatch(editUserAction({ password: formData.new_pw }))
+      dispatch(editUserAction({ password: formData.new_pw, user_id: session_user_id }))
     }
   }
 
