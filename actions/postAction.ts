@@ -46,7 +46,7 @@ export const postBookmarkAction = async ({ post_id, user_id }: { post_id: number
       }
     })
     toast.success('ブックマークに追加されました。')
-    return data.bookmarks_flag
+    return data.bookmark_flag
   } catch (err: any) {
     toast.error(err.response.data.message)
     throw err
@@ -62,7 +62,7 @@ export const deletePostBookmarkAction = async ({ post_id, user_id }: { post_id: 
       }
     })
     toast.success('ブックマークから削除されました。')
-    return data.bookmarks_flag
+    return data.bookmark_flag
   } catch (err: any) {
     toast.error(err.response.data.message)
     throw err
