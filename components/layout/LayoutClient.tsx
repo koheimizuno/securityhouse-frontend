@@ -23,7 +23,7 @@ const LayoutClient = ({
         <>
           <Header />
           <Breadcrumb />
-          <SearchBar />
+          {!pathname.includes('profile') && <SearchBar />}
           <main>{children}</main>
           <Footer />
         </>
