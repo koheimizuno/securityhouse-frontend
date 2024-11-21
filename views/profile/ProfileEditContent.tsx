@@ -18,6 +18,7 @@ type editDataType = {
     file: any
     preview: string
   }
+  id: string
   name: string
   intro: string
 }
@@ -30,11 +31,13 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
       file: '',
       preview: ''
     },
+    id: '',
     name: '',
     intro: ''
   })
   const [errors, setErrors] = useState({
     thumbnail: '',
+    id: '',
     name: '',
     intro: ''
   })
@@ -44,6 +47,7 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
       setFormData(prevState => ({
         ...prevState,
         thumbnail: { ...prevState.thumbnail, preview: userData.thumbnail },
+        id: userData.id,
         name: userData.name,
         intro: userData.intro
       }))
@@ -78,6 +82,11 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
       isValid = false
     }
 
+    if (!formData.id) {
+      newErrors.id = 'IDは必須です'
+      isValid = false
+    }
+
     if (!formData.name.trim()) {
       newErrors.name = '表示名は必須です'
       isValid = false
@@ -95,12 +104,15 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
     return isValid
   }
 
+  console.log(formData.id)
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (validateForm()) {
       const payloadForm = new FormData()
 
       payloadForm.append('user_id', session_user_id)
+      payloadForm.append('id', formData.id)
       payloadForm.append('name', formData.name)
       payloadForm.append('intro', formData.intro)
       payloadForm.append('thumbnail', formData.thumbnail.file)
@@ -136,6 +148,21 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
             height={50}
           />
         )}
+        <Input
+          type='text'
+          name='id'
+          label='ID'
+          placeholder='ID'
+          className='font-bold'
+          labelPlacement='outside'
+          isInvalid={errors.id ? true : false}
+          color={errors.id ? 'danger' : 'default'}
+          errorMessage={errors.id}
+          value={formData.id}
+          onChange={handleChange}
+          size='lg'
+          isRequired
+        />
         <Input
           type='text'
           name='name'
