@@ -2,16 +2,13 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
-import Link from 'next/link'
-import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 
 import PageHeader from '@/components/common/PageHeader'
 import Container from '@/components/layout/Container'
 import Category from '@/components/common/Category'
 import MainItem from '@/components/common/MainItem'
-import { Button, Pagination } from '@nextui-org/react'
+import { Pagination } from '@nextui-org/react'
 
 import { NewsType } from '@/types/newsType'
 import { RootState } from '@/redux-store'
@@ -69,19 +66,8 @@ const NewsPage = () => {
 
   return (
     <NewsContext.Provider value={{ categories: categories }}>
-      <Container className='py-12 flex flex-col gap-8'>
+      <Container className='py-16 flex flex-col gap-12'>
         <PageHeader title='お知らせ一覧' className='text-center' />
-        <Link href='/news/create' className='text-right'>
-          <Button
-            className='rounded-full'
-            color='primary'
-            startContent={
-              <Image src='/images/icons/edit-white.svg' alt='edit-white' className='w-5 h-5' width={16} height={16} />
-            }
-          >
-            登録
-          </Button>
-        </Link>
         <div className={`inline-block md:hidden ${isOpen && 'change'}`} onClick={handleMenu}>
           <div className='bar1'></div>
           <div className='bar2'></div>

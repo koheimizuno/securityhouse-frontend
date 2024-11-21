@@ -7,7 +7,7 @@ export const getCommentsAction = async ({ post_id }: { post_id: string }) => {
     const { data } = await axios.get(`/api/comment/`, { params: { post_id } })
     return data.comments
   } catch (err: any) {
-    toast.error(err.response.data.message)
+    toast.error(err.response?.data.message)
     throw err
   }
 }
@@ -17,7 +17,7 @@ export const getCommentByIdAction = async (id: string) => {
     const { data } = await axios.get(`/api/comment/${id}`)
     return data
   } catch (err: any) {
-    toast.error(err.response.data.message)
+    toast.error(err.response?.data.message)
     throw err
   }
 }
@@ -28,7 +28,7 @@ export const createCommentAction = async (payload: FormData) => {
     toast.success('コメントが正常に作成されました。')
     return data
   } catch (err: any) {
-    toast.error(err.response.data.message)
+    toast.error(err.response?.data.message)
     throw err
   }
 }

@@ -162,9 +162,11 @@ const MainItem = ({
           </Button>
         </div>
         <Dropdown>
-          <DropdownTrigger className='cursor-pointer'>
-            <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
-          </DropdownTrigger>
+          {user_id === session_user_id && !newsFlag && (
+            <DropdownTrigger className='cursor-pointer'>
+              <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
+            </DropdownTrigger>
+          )}
           {user_id === session_user_id ? (
             <DropdownMenu aria-label='Static Actions'>
               <DropdownItem key='edit'>
@@ -175,11 +177,13 @@ const MainItem = ({
               </DropdownItem>
             </DropdownMenu>
           ) : (
-            <DropdownMenu aria-label='Static Actions'>
-              <DropdownItem key='report' onClick={handleReport}>
-                通報する
-              </DropdownItem>
-            </DropdownMenu>
+            !newsFlag && (
+              <DropdownMenu aria-label='Static Actions'>
+                <DropdownItem key='report' onClick={handleReport}>
+                  通報する
+                </DropdownItem>
+              </DropdownMenu>
+            )
           )}
         </Dropdown>
       </div>
