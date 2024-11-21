@@ -37,6 +37,7 @@ const Header = () => {
           >
             <Link href='/dm'>
               <Button
+                color='primary'
                 className='rounded-full w-[200px]'
                 startContent={
                   <Image
@@ -55,11 +56,12 @@ const Header = () => {
               <>
                 <Link href='/chatroom/post/bookmark/'>
                   <Button
+                    color='primary'
                     className='rounded-full w-[200px]'
                     startContent={
                       <Image
-                        src='/images/icons/bookmark-icon-black.svg'
-                        alt='bookmark-icon-black'
+                        src='/images/icons/bookmark-icon-white.svg'
+                        alt='bookmark-icon-white'
                         className='w-5 h-5'
                         width={16}
                         height={16}

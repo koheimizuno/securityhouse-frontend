@@ -23,6 +23,7 @@ import {
 } from '@/actions/postAction'
 import Loading from '@/components/common/Loading'
 import { useAuthentication } from '@/hooks/AuthContext'
+import { getImageAlt } from '@/utils/getImageAlt'
 
 const MainItemContent = ({ data }: { data: PostType[] | null }) => {
   return (
@@ -123,8 +124,8 @@ const ProfilePage = () => {
       <section className='bg-bgSemiblue rounded-xl ps-9 pe-[60px] py-12 flex justify-between gap-9'>
         <div>
           <Image
-            src='/images/icons/user-icon00.svg'
-            alt='user-icon00'
+            src={userData?.thumbnail ? userData.thumbnail : '/images/icons/user-icon00.svg'}
+            alt={(userData?.thumbnail && getImageAlt(userData.thumbnail)) || ''}
             className='object-contain w-[125px] h-[125px]'
             width={125}
             height={125}

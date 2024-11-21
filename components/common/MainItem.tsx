@@ -72,7 +72,7 @@ const MainItem = ({
 
   const imgData = useMemo(() => {
     if (thumbnail) {
-      return { src: '/' + thumbnail, alt: getImageAlt(thumbnail) }
+      return { src: thumbnail, alt: getImageAlt(thumbnail) }
     } else {
       return { src: '/images/icons/user-icon00.svg', alt: getImageAlt('/images/icons/user-icon00.svg') }
     }
