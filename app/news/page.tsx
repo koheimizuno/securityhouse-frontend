@@ -33,6 +33,8 @@ const NewsPage = () => {
   })
   const { categories } = useSelector((state: RootState) => state.category)
 
+  const category_id = searchParams.get('cat') || '0'
+
   useEffect(() => {
     getNewsAction({ user_id: session_user_id }).then(data => setNews(data))
   }, [session_user_id])
@@ -47,16 +49,19 @@ const NewsPage = () => {
   }, [dispatch])
 
   useEffect(() => {
-    const catQuery = searchParams.get('cat')
-    if (catQuery && catQuery !== 'all') {
+    getNewsAction({ user_id: session_user_id, category_id: category_id }).then(data => setNews(data))
+  }, [session_user_id, category_id])
+
+  useEffect(() => {
+    if (categories && category_id && category_id !== 'all') {
       categories.map((category: CategoryType) => {
-        if (category.title === catQuery)
+        if (category.id === category_id)
           setSelectedCat(prevState => ({ ...prevState, title: category.title, description: category.description }))
       })
     } else {
       setSelectedCat(prevState => ({ ...prevState, title: 'すべて', description: '' }))
     }
-  }, [categories, searchParams])
+  }, [categories, searchParams, category_id])
 
   const handleMenu = useCallback(() => {
     setIsOpen(prevState => !prevState)

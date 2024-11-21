@@ -16,14 +16,14 @@ const WorkRoomContent = () => {
   const category_id = searchParams.get('cat') || '0'
 
   const [selectedCat, setSelectedCat] = useState<CategoryType>({
-    title: '',
+    title: 'すべて',
     description: ''
   })
 
   useEffect(() => {
     if (category_id && category_id !== 'all') {
       categories.map((category: CategoryType) => {
-        if (category.category_id === category_id)
+        if (category.id === category_id)
           setSelectedCat(prevState => ({ ...prevState, title: category.title, description: category.description }))
       })
     } else {

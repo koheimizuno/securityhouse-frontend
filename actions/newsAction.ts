@@ -2,10 +2,10 @@
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
-export const getNewsAction = async ({ user_id }: { user_id: string }) => {
+export const getNewsAction = async ({ user_id, category_id }: { user_id: string; category_id?: string }) => {
   try {
     const { data } = await axios.get(`/api/news/`, {
-      params: { user_id }
+      params: { user_id, category_id }
     })
     return data.news
   } catch (err: any) {

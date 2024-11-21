@@ -11,7 +11,7 @@ type CategoryItemProps = {
 
 const CategoryItem = ({ item, cat, handleCategory, toggleMenu }: CategoryItemProps) => {
   const handleClick = () => {
-    if (item.category_id) handleCategory(item.category_id)
+    if (item.id) handleCategory(item.id)
     toggleMenu()
   }
   return (
