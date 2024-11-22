@@ -35,6 +35,7 @@ const BookmarkedPostPage = () => {
                 title={item.title}
                 content={item.content}
                 category_name={item.category_name}
+                user_id={item.user_id}
                 user_name={item.name}
                 affiliation_name={item.affiliation_name}
                 thumbnail={item.thumbnail}
