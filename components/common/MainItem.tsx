@@ -72,7 +72,7 @@ const MainItem = ({
 
   const imgData = useMemo(() => {
     if (thumbnail) {
-      return { src: thumbnail, alt: getImageAlt(thumbnail) }
+      return { src: '/', thumbnail, alt: getImageAlt(thumbnail) }
     } else {
       return { src: '/images/icons/user-icon00.svg', alt: getImageAlt('/images/icons/user-icon00.svg') }
     }
@@ -161,31 +161,31 @@ const MainItem = ({
             {category_name}
           </Button>
         </div>
-        <Dropdown>
-          {user_id === session_user_id && !newsFlag && (
+        {user_id === session_user_id && !newsFlag && (
+          <Dropdown>
             <DropdownTrigger className='cursor-pointer'>
               <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
             </DropdownTrigger>
-          )}
-          {user_id === session_user_id ? (
-            <DropdownMenu aria-label='Static Actions'>
-              <DropdownItem key='edit'>
-                <Link href={`${newsFlag ? `/news/${id}` : `/chatroom/post/edit/${id}`}`}>編集する</Link>
-              </DropdownItem>
-              <DropdownItem key='delete' className='text-danger' color='danger' onClick={openModal}>
-                削除する
-              </DropdownItem>
-            </DropdownMenu>
-          ) : (
-            !newsFlag && (
+            {user_id === session_user_id ? (
               <DropdownMenu aria-label='Static Actions'>
-                <DropdownItem key='report' onClick={handleReport}>
-                  通報する
+                <DropdownItem key='edit'>
+                  <Link href={`${newsFlag ? `/news/${id}` : `/chatroom/post/edit/${id}`}`}>編集する</Link>
+                </DropdownItem>
+                <DropdownItem key='delete' className='text-danger' color='danger' onClick={openModal}>
+                  削除する
                 </DropdownItem>
               </DropdownMenu>
-            )
-          )}
-        </Dropdown>
+            ) : (
+              !newsFlag && (
+                <DropdownMenu aria-label='Static Actions'>
+                  <DropdownItem key='report' onClick={handleReport}>
+                    通報する
+                  </DropdownItem>
+                </DropdownMenu>
+              )
+            )}
+          </Dropdown>
+        )}
       </div>
       <Link href={`/${newsFlag ? 'news' : 'chatroom/post'}/${id}`}>
         <h3 className='underline'>{title}</h3>
