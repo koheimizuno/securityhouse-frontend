@@ -161,7 +161,23 @@ const MainItem = ({
             {category_name}
           </Button>
         </div>
-        {user_id === session_user_id && !newsFlag && (
+        {newsFlag ? (
+          user_id === session_user_id && (
+            <Dropdown>
+              <DropdownTrigger className='cursor-pointer'>
+                <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
+              </DropdownTrigger>
+              <DropdownMenu aria-label='Static Actions'>
+                <DropdownItem key='edit'>
+                  <Link href={`${newsFlag ? `/news/${id}` : `/chatroom/post/edit/${id}`}`}>編集する</Link>
+                </DropdownItem>
+                <DropdownItem key='delete' className='text-danger' color='danger' onClick={openModal}>
+                  削除する
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          )
+        ) : (
           <Dropdown>
             <DropdownTrigger className='cursor-pointer'>
               <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
@@ -176,13 +192,11 @@ const MainItem = ({
                 </DropdownItem>
               </DropdownMenu>
             ) : (
-              !newsFlag && (
-                <DropdownMenu aria-label='Static Actions'>
-                  <DropdownItem key='report' onClick={handleReport}>
-                    通報する
-                  </DropdownItem>
-                </DropdownMenu>
-              )
+              <DropdownMenu aria-label='Static Actions'>
+                <DropdownItem key='report' onClick={handleReport}>
+                  通報する
+                </DropdownItem>
+              </DropdownMenu>
             )}
           </Dropdown>
         )}
