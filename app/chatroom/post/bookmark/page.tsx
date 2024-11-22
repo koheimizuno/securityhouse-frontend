@@ -19,8 +19,6 @@ const BookmarkedPostPage = () => {
     })
   }, [session_user_id])
 
-  console.log(bookmarkedPost)
-
   return (
     <Container className='py-16 flex flex-col gap-8'>
       <PageHeader title='ブックマーク' subtitle='マイページ' />
