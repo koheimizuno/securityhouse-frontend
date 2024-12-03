@@ -6,35 +6,35 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { storeInitialType } from '@/types/storeInitialType'
 import { PostType } from '@/types/postType'
 
-export const createPostAction: any = createAsyncThunk('createPostAction', async (payload: PostType) => {
+export const createPostAction: any = createAsyncThunk('createPostAction', async (payload: PostType, thunkApi) => {
   try {
     await axios.post(`/api/post/`, payload)
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const editPostAction: any = createAsyncThunk('editPostAction', async (payload: PostType) => {
+export const editPostAction: any = createAsyncThunk('editPostAction', async (payload: PostType, thunkApi) => {
   try {
     await axios.put(`/api/post/`, payload)
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const deletePostAction: any = createAsyncThunk('deletePostAction', async (id: string) => {
+export const deletePostAction: any = createAsyncThunk('deletePostAction', async (id: string, thunkApi) => {
   try {
     await axios.delete(`/api/post/`, { params: { id } })
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const postReportAction: any = createAsyncThunk('postReportAction', async (id: string) => {
+export const postReportAction: any = createAsyncThunk('postReportAction', async (id: string, thunkApi) => {
   try {
     await axios.post(`/api/report/`, { params: { id } })
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 

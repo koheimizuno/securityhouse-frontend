@@ -6,35 +6,35 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { UsersType } from '@/types/userType'
 import { storeInitialType } from '@/types/storeInitialType'
 
-export const registerAction: any = createAsyncThunk('registerAction', async (payload: UsersType) => {
+export const registerAction: any = createAsyncThunk('registerAction', async (payload: UsersType, thunkApi) => {
   try {
     return await axios.post(`/api/user/`, payload)
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
 export const loginAction: any = createAsyncThunk(
   'loginAction',
-  async ({ email, password }: { email: string; password: string }) => {
+  async ({ email, password }: { email: string; password: string }, thunkApi) => {
     try {
       const { data } = await axios.post(`/api/login/`, { email, password })
       return data
     } catch (err: any) {
-      return err.response.data
+      return thunkApi.rejectWithValue(err.response.data)
     }
   }
 )
 
-export const editUserAction: any = createAsyncThunk('editUserAction', async (payload: any) => {
+export const editUserAction: any = createAsyncThunk('editUserAction', async (payload: any, thunkApi) => {
   try {
     return await axios.put(`/api/user/`, payload)
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const deleteUserAction: any = createAsyncThunk('deleteUserAction', async (id: number) => {
+export const deleteUserAction: any = createAsyncThunk('deleteUserAction', async (id: number, thunkApi) => {
   try {
     return await axios.delete(`/api/user/`, {
       params: {
@@ -42,29 +42,29 @@ export const deleteUserAction: any = createAsyncThunk('deleteUserAction', async 
       }
     })
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
 export const forgotPasswordAction: any = createAsyncThunk(
   'forgotPasswordAction',
-  async ({ email }: { email: string }) => {
+  async ({ email }: { email: string }, thunkApi) => {
     try {
       const { data } = await axios.post(`/api/forgot-password/`, { email })
       return data
     } catch (err: any) {
-      return err.response.data
+      return thunkApi.rejectWithValue(err.response.data)
     }
   }
 )
 
 export const changePasswordAction: any = createAsyncThunk(
   'changePasswordAction',
-  async ({ id, password }: { id: number; password: string }) => {
+  async ({ id, password }: { id: number; password: string }, thunkApi) => {
     try {
       return await axios.patch(`/api/forgot-password/`, { id, password })
     } catch (err: any) {
-      return err.response.data
+      return thunkApi.rejectWithValue(err.response.data)
     }
   }
 )

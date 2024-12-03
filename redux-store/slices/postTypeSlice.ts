@@ -4,12 +4,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { PostType_Type } from '@/types/postType'
 import { storeInitialType } from '@/types/storeInitialType'
 
-export const getPostTypeAction: any = createAsyncThunk('getPostTypeAction', async () => {
+export const getPostTypeAction: any = createAsyncThunk('getPostTypeAction', async (_, thunkApi) => {
   try {
     const res = await axios.get(`/api/post_type/`)
     return res.data
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 

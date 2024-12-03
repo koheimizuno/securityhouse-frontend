@@ -6,37 +6,37 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { storeInitialType } from '@/types/storeInitialType'
 import { BadgeType } from '@/types/badgeType'
 
-export const createBadgeAction: any = createAsyncThunk('createBadgeAction', async (payload: BadgeType) => {
+export const createBadgeAction: any = createAsyncThunk('createBadgeAction', async (payload: BadgeType, thunkApi) => {
   try {
     await axios.post(`/api/badge/`, payload)
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const editBadgeAction: any = createAsyncThunk('editBadgeAction', async (payload: BadgeType) => {
+export const editBadgeAction: any = createAsyncThunk('editBadgeAction', async (payload: BadgeType, thunkApi) => {
   try {
     await axios.put(`/api/badge/`, payload)
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const deleteBadgeAction: any = createAsyncThunk('deleteBadgeAction', async (id: string) => {
+export const deleteBadgeAction: any = createAsyncThunk('deleteBadgeAction', async (id: string, thunkApi) => {
   try {
     await axios.delete(`/api/badge/`, { params: { id } })
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
 export const acquireBadgeAction: any = createAsyncThunk(
   'acquireBadgeAction',
-  async ({ badge_id }: { badge_id: string }) => {
+  async ({ badge_id }: { badge_id: string }, thunkApi) => {
     try {
       await axios.post(`/api/badge/acquire/`, { badge_id })
     } catch (err: any) {
-      return err.response.data
+      return thunkApi.rejectWithValue(err.response.data)
     }
   }
 )

@@ -7,7 +7,7 @@ import { storeInitialType } from '@/types/storeInitialType'
 
 export const getCategoryAction: any = createAsyncThunk(
   'getCategoryAction',
-  async ({ pageFlag, type_id }: { pageFlag: string; type_id: string }) => {
+  async ({ pageFlag, type_id }: { pageFlag: string; type_id: string }, thunkApi) => {
     try {
       const res = await axios.get(`/api/category/`, {
         params: {
@@ -17,7 +17,7 @@ export const getCategoryAction: any = createAsyncThunk(
       })
       return res.data
     } catch (err: any) {
-      return err.response.data
+      return thunkApi.rejectWithValue(err.response.data)
     }
   }
 )

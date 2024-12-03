@@ -5,11 +5,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { storeInitialType } from '@/types/storeInitialType'
 
-export const deleteMessageAction: any = createAsyncThunk('deleteMessageAction', async (id: string) => {
+export const deleteMessageAction: any = createAsyncThunk('deleteMessageAction', async (id: string, thunkApi) => {
   try {
     await axios.delete(`/api/message/`, { params: { id: id } })
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
