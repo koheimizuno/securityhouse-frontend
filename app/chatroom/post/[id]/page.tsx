@@ -76,12 +76,13 @@ const SHRoomPostDetailPage = () => {
   }, [id, session_user_id])
 
   useEffect(() => {
-    dispatch(
-      getCategoryAction({
-        pageFlag: '0',
-        type_id: postData?.type_id
-      })
-    )
+    if (postData?.type_id)
+      dispatch(
+        getCategoryAction({
+          pageFlag: '0',
+          type_id: postData?.type_id
+        })
+      )
   }, [dispatch, postData?.type_id])
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -247,7 +248,7 @@ const SHRoomPostDetailPage = () => {
           <h3 className='text-xl font-bold truncate text-txtColor'>{postData?.title}</h3>
           <p>{postData?.content}</p>
           <Image
-            src={postData.attachments}
+            src={postData.attachments || ''}
             alt={getImageAlt(postData.attachments) || ''}
             className='w-full h-auto max-h-[300px]'
             width={40}
