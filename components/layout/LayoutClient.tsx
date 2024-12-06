@@ -8,7 +8,7 @@ import Breadcrumb from '@/components/breadcrumb'
 import SearchBar from '@/components/common/SearchBar'
 
 import Providers from './providers'
-import { isDisplayHeaderPage } from '@/utils/isPublicPage'
+import { isDisplayHeaderPage, isUserPage } from '@/utils/isPublicPage'
 
 const LayoutClient = ({
   children
@@ -17,21 +17,22 @@ const LayoutClient = ({
 }>) => {
   const pathname = usePathname()
   const isDisplayHeader = isDisplayHeaderPage(pathname)
+  const isUser = isUserPage(pathname)
   return (
     <Providers>
       {isDisplayHeader ? (
         <>
           <Header />
-          <Breadcrumb />
-          {!pathname.includes('profile') && <SearchBar />}
+          {isUser && <Breadcrumb />}
+          {!pathname.includes('profile') && isUser && <SearchBar />}
           <main>{children}</main>
-          <Footer />
+          {isUser && <Footer />}
         </>
       ) : (
         <>
           <Header />
           <main className='mt-20 md:mt-[123px]'>{children}</main>
-          <Footer />
+          {isUser && <Footer />}
         </>
       )}
     </Providers>
