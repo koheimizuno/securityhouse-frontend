@@ -5,7 +5,6 @@ import React from 'react';
 import Container from '@/components/layout/Container';
 import Sidemenu from '@/components/admin/SideMenu';
 import { Button } from '@nextui-org/react';
-import Link from 'next/link';
 
 const AdminImportUser = () => {
 
