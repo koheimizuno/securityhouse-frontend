@@ -113,7 +113,7 @@ const PostCard = ({
       <Link href={`/chatroom/post/${id}`}>
         <h3 className='underline truncate text-txtColor'>{title}</h3>
       </Link>
-      <p className='text-sm line-clamp-3'>{content}</p>
+      <p className='text-sm truncate'>{content}</p>
       <div className='grid grid-cols-2 gap-4 mt-[22px] mb-4'>
         <div className='flex items-center gap-1'>
           <Image
