@@ -328,7 +328,7 @@ const SHRoomPostDetailPage = () => {
       </section>
       <section className='flex flex-col gap-8'>
         <SectionTitle title='コメント' icon='/images/icons/comment-icon-secondary.svg' />
-        {comments ? (
+        {comments && (
           <ul className='flex flex-col gap-8'>
             {comments
               .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
@@ -343,8 +343,6 @@ const SHRoomPostDetailPage = () => {
                 />
               ))}
           </ul>
-        ) : (
-          <Loading flag='2' />
         )}
       </section>
       <DeletePostModal isOpen={isOpen} onClose={closeModal} onSubmit={handleDeletePost} />

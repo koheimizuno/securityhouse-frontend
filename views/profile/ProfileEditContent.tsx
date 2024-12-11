@@ -18,7 +18,7 @@ type editDataType = {
     file: any
     preview: string
   }
-  id: string
+  uid: string
   name: string
   intro: string
 }
@@ -31,13 +31,13 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
       file: '',
       preview: ''
     },
-    id: '',
+    uid: '',
     name: '',
     intro: ''
   })
   const [errors, setErrors] = useState({
     thumbnail: '',
-    id: '',
+    uid: '',
     name: '',
     intro: ''
   })
@@ -47,7 +47,7 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
       setFormData(prevState => ({
         ...prevState,
         thumbnail: { ...prevState.thumbnail, preview: userData.thumbnail },
-        id: userData.id,
+        uid: userData.uid,
         name: userData.name,
         intro: userData.intro
       }))
@@ -59,7 +59,6 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
     if (type === 'file') {
       const file = files ? files[0] : null
       const imageUrl = file ? URL.createObjectURL(file) : ''
-      console.log(imageUrl)
       setFormData(prev => ({
         ...prev,
         [name]: {
@@ -82,8 +81,8 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
       isValid = false
     }
 
-    if (!formData.id) {
-      newErrors.id = 'IDは必須です'
+    if (!formData.uid) {
+      newErrors.uid = 'IDは必須です'
       isValid = false
     }
 
@@ -104,7 +103,7 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
     return isValid
   }
 
-  console.log(formData.id)
+  console.log(formData.uid)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -112,7 +111,7 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
       const payloadForm = new FormData()
 
       payloadForm.append('user_id', session_user_id)
-      payloadForm.append('id', formData.id)
+      payloadForm.append('uid', formData.uid)
       payloadForm.append('name', formData.name)
       payloadForm.append('intro', formData.intro)
       payloadForm.append('thumbnail', formData.thumbnail.file)
@@ -150,15 +149,15 @@ const ProfileEditContent = ({ userData }: { userData: UsersType | null }) => {
         )}
         <Input
           type='text'
-          name='id'
+          name='uid'
           label='ID'
           placeholder='ID'
           className='font-bold'
           labelPlacement='outside'
-          isInvalid={errors.id ? true : false}
-          color={errors.id ? 'danger' : 'default'}
-          errorMessage={errors.id}
-          value={formData.id}
+          isInvalid={errors.uid ? true : false}
+          color={errors.uid ? 'danger' : 'default'}
+          errorMessage={errors.uid}
+          value={formData.uid}
           onChange={handleChange}
           size='lg'
           isRequired

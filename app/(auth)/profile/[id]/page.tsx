@@ -138,7 +138,7 @@ const ProfilePage = () => {
               <h2 className='text-xl font-bold'>
                 {userData?.name}／{userData?.affiliation_name}
               </h2>
-              <p className='text-xs'>@{userData?.uid}</p>
+              <p className='text-xs'>{userData?.uid}</p>
             </div>
             <Link href={`/profile/edit/${id}`}>
               <Button color='primary' className='rounded-full'>
