@@ -17,13 +17,15 @@ const LayoutClient = ({
 }>) => {
   const pathname = usePathname()
   const isDisplayHeader = isDisplayHeaderPage(pathname)
+  const isHiddenSearchBar = pathname.includes('profile') || pathname.includes('post/bookmark')
+
   return (
     <Providers>
       {isDisplayHeader ? (
         <>
           <Header />
           <Breadcrumb />
-          {!pathname.includes('profile') && <SearchBar />}
+          {!isHiddenSearchBar && <SearchBar />}
           <main>{children}</main>
           <Footer />
         </>
