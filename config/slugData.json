@@ -209,4 +209,14 @@
     "slug": "tech-doc",
     "validSlug": true
   }
+  ,{
+    "label": "管理画面",
+    "slug": "admin",
+    "validSlug": true
+  }
+  ,{
+    "label": "ユーザー一覧",
+    "slug": "users",
+    "validSlug": true
+  }
 ]

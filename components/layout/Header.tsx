@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { Button } from '@nextui-org/react'
-import { isDisplayHeaderPage } from '@/utils/isPublicPage'
+import { isDisplayHeaderPage, isUserPage } from '@/utils/isPublicPage'
 import { useAuthentication } from '@/hooks/AuthContext'
 
 const Header = () => {
@@ -14,6 +14,7 @@ const Header = () => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false)
   const { isAuthenticated } = useAuthentication()
   const isDisplayHeader = isDisplayHeaderPage(pathname)
+  const isUser = isUserPage(pathname)
 
   const handleHamburger = () => {
     setIsHamburgerOpen(!isHamburgerOpen)
@@ -27,89 +28,93 @@ const Header = () => {
               <Image src='/images/icons/logo.svg' className='object-contain' alt='Logo' width={217} height={40} />
             </Link>
             <Link href='/sh-club' className='text-[15px] font-bold text-[#333] ps-2 md:ps-0'>
-              SH会員専用ページ
+              {!isUser ? ('管理者ページ') : ('SH会員専用ページ')}
             </Link>
           </div>
-          <div
-            className={`absolute top-[95.5px] right-0 z-20 w-full bg-white shadow-md flex-col gap-6 sm:static sm:shadow-none sm:top-0 sm:right-0 sm:w-auto sm:max-h-full flex sm:flex-row items-center sm:gap-2 transition-all duration-300 ease-in-out ${
-              isHamburgerOpen ? 'max-h-[1000px] overflow-visible py-8' : 'max-h-0 overflow-hidden'
-            }`}
-          >
-            <Link href='/dm'>
-              <Button
-                color='primary'
-                className='rounded-full w-[200px]'
-                startContent={
-                  <Image
-                    src='/images/icons/message-icon.svg'
-                    alt='message-icon'
-                    className='w-5 h-5'
-                    width={16}
-                    height={16}
-                  />
-                }
-              >
-                メッセージ
-              </Button>
-            </Link>
-            {isAuthenticated ? (
-              <>
-                <Link href='/chatroom/post/bookmark/'>
+          {isUser && (
+            <div
+              className={`absolute top-[95.5px] right-0 z-20 w-full bg-white shadow-md flex-col gap-6 sm:static sm:shadow-none sm:top-0 sm:right-0 sm:w-auto sm:max-h-full flex sm:flex-row items-center sm:gap-2 transition-all duration-300 ease-in-out ${
+                isHamburgerOpen ? 'max-h-[1000px] overflow-visible py-8' : 'max-h-0 overflow-hidden'
+              }`}
+            >
+              <Link href='/dm'>
+                <Button
+                  color='primary'
+                  className='rounded-full w-[200px]'
+                  startContent={
+                    <Image
+                      src='/images/icons/message-icon.svg'
+                      alt='message-icon'
+                      className='w-5 h-5'
+                      width={16}
+                      height={16}
+                    />
+                  }
+                >
+                  メッセージ
+                </Button>
+              </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link href='/chatroom/post/bookmark/'>
+                    <Button
+                      color='primary'
+                      className='rounded-full w-[200px]'
+                      startContent={
+                        <Image
+                          src='/images/icons/bookmark-icon-white.svg'
+                          alt='bookmark-icon-white'
+                          className='w-5 h-5'
+                          width={16}
+                          height={16}
+                        />
+                      }
+                    >
+                      ブックマーク
+                    </Button>
+                  </Link>
+                  <Link href='/profile/1'>
+                    <Button
+                      color='primary'
+                      className='rounded-full w-[200px]'
+                      startContent={
+                        <Image
+                          src='/images/icons/user-icon.svg'
+                          alt='user-icon'
+                          className='w-5 h-5'
+                          width={16}
+                          height={16}
+                        />
+                      }
+                    >
+                      マイページ
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <Link href='/login'>
                   <Button
-                    color='primary'
                     className='rounded-full w-[200px]'
                     startContent={
-                      <Image
-                        src='/images/icons/bookmark-icon-white.svg'
-                        alt='bookmark-icon-white'
-                        className='w-5 h-5'
-                        width={16}
-                        height={16}
-                      />
-                    }
-                  >
-                    ブックマーク
-                  </Button>
-                </Link>
-                <Link href='/profile/1'>
-                  <Button
-                    color='primary'
-                    className='rounded-full w-[200px]'
-                    startContent={
-                      <Image
-                        src='/images/icons/user-icon.svg'
-                        alt='user-icon'
-                        className='w-5 h-5'
-                        width={16}
-                        height={16}
-                      />
+                      <Image src='/images/icons/login.svg' alt='login' className='w-5 h-5' width={16} height={16} />
                     }
                   >
                     マイページ
                   </Button>
                 </Link>
-              </>
-            ) : (
-              <Link href='/login'>
-                <Button
-                  className='rounded-full w-[200px]'
-                  startContent={
-                    <Image src='/images/icons/login.svg' alt='login' className='w-5 h-5' width={16} height={16} />
-                  }
-                >
-                  マイページ
-                </Button>
-              </Link>
-            )}
-          </div>
-          <div className={`${isHamburgerOpen ? 'change' : ''} sm:hidden`} onClick={handleHamburger}>
-            <div className='bar1'></div>
-            <div className='bar2'></div>
-            <div className='bar3'></div>
-          </div>
+              )}
+            </div>
+          )}
+          {isUser && (
+            <div className={`${isHamburgerOpen ? 'change' : ''} sm:hidden`} onClick={handleHamburger}>
+              <div className='bar1'></div>
+              <div className='bar2'></div>
+              <div className='bar3'></div>
+            </div>
+          )}
         </div>
       </nav>
-      {isDisplayHeader && (
+      {isDisplayHeader && isUser && (
         <ul className='sm:grid sm:grid-cols-4 bg-primary'>
           <li className='border-b sm:border-r border-colorGray1'>
             <Link
