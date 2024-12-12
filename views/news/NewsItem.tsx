@@ -9,6 +9,7 @@ import { NewsType } from '@/types/newsType'
 import { formatDate } from '@/utils/formatDate'
 import { useAuthentication } from '@/hooks/AuthContext'
 import { deleteNewsBookmarkAction, newsBookmarkAction } from '@/actions/newsAction'
+import { getImageAlt } from '@/utils/getImageAlt'
 
 const NewsItem = ({
   id,
@@ -16,6 +17,7 @@ const NewsItem = ({
   content,
   user_name,
   affiliation_name,
+  thumbnail,
   category_name,
   bookmark_flag,
   created_at
@@ -37,7 +39,7 @@ const NewsItem = ({
         <div className='flex justify-between md:justify-start items-center gap-6'>
           <span className='text-xs text-colorGray4 hidden md:block'>{created_at && formatDate(created_at)}</span>
           <p className='flex items-center gap-3'>
-            <Image src='/images/icons/user-icon00.svg' alt='user-icon-sm' width={12} height={12} />
+            <Image src={thumbnail || ''} alt={getImageAlt(thumbnail || '') || ''} width={12} height={12} />
             <span className='text-xs'>
               {user_name}／{affiliation_name}
             </span>
