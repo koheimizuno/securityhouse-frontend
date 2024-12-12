@@ -10,7 +10,7 @@ import MainItem from '@/components/common/MainItem'
 import Container from '@/components/layout/Container'
 import SectionTitle from '@/components/common/SectionTitle'
 import PageHeader from '@/components/common/PageHeader'
-import { Button, Tab, Tabs } from '@nextui-org/react'
+import { Button, Card, CardBody, CardHeader, CircularProgress, Tab, Tabs } from '@nextui-org/react'
 
 import { UsersType } from '@/types/userType'
 import { PostType } from '@/types/postType'
@@ -121,39 +121,110 @@ const ProfilePage = () => {
   return (
     <Container className='py-20 flex flex-col gap-12'>
       <PageHeader title='マイページ' subtitle='マイページ' />
-      <section className='bg-bgSemiblue rounded-xl ps-9 pe-[60px] py-12 flex justify-between gap-9'>
-        <div>
-          <Image
-            src={userData?.thumbnail ? userData.thumbnail : '/images/icons/user-icon00.svg'}
-            alt={(userData?.thumbnail && getImageAlt(userData.thumbnail)) || ''}
-            className='object-contain w-[125px] h-[125px]'
-            width={125}
-            height={125}
-            priority
-          />
-        </div>
+      <section className='flex flex-col-reverse md:flex-row justify-between gap-4 md:gap-9 bg-bgSemiblue rounded-xl px-5 py-8 md:ps-9 md:pe-[60px] md:py-12'>
         <div className='w-full flex flex-col gap-2'>
-          <div className='flex justify-between'>
+          <div className='flex flex-col md:flex-row gap-9'>
+            <Image
+              src={userData?.thumbnail ? userData.thumbnail : '/images/icons/user-icon00.svg'}
+              alt={(userData?.thumbnail && getImageAlt(userData.thumbnail)) || ''}
+              className='object-contain w-10 h-10 md:w-[125px] md:h-[125px]'
+              width={125}
+              height={125}
+              priority
+            />
             <div className='flex flex-col gap-2'>
               <h2 className='text-xl font-bold'>
                 {userData?.name}／{userData?.affiliation_name}
               </h2>
               <p className='text-xs'>{userData?.uid}</p>
+              <p>{userData?.intro}</p>
             </div>
-            <Link href={`/profile/edit/${id}`}>
-              <Button color='primary' className='rounded-full'>
-                アカウント設定
-              </Button>
-            </Link>
           </div>
-          <p>{userData?.intro}</p>
         </div>
+        {/* {session_user_id === id && ( */}
+        <div className='flex justify-end'>
+          <Link href={`/profile/edit/${id}`}>
+            <Button color='primary' className='rounded-full' size={window.innerWidth > 768 ? 'md' : 'sm'}>
+              アカウント設定
+            </Button>
+          </Link>
+        </div>
+        {/* )} */}
       </section>
       <section className='flex flex-col gap-4'>
         <SectionTitle title='アクティビティ' icon='/images/icons/line-chart.svg' />
-        <div className='flex gap-10 p-1'>
-          <Image src='/images/point-img.png' alt='point-img' width={100} height={100} />
-          <Image src='/images/badget-img.png' alt='badget-img' width={100} height={100} />
+        <div className='flex flex-col md:flex-row gap-6 md:gap-10 p-1'>
+          <Card className='border-none'>
+            <CardHeader className='flex justify-between items-center px-3 py-2 border-none bg-[#eaeaea]'>
+              <h3 className='text-sm font-bold'>ポイント</h3>
+              <Link href='#' className='text-xs underline hover:text-primary'>
+                詳細
+              </Link>
+            </CardHeader>
+            <CardBody className='justify-center items-center'>
+              <CircularProgress
+                classNames={{
+                  svg: 'w-[200px] h-[200px] drop-shadow-md',
+                  indicator: 'stroke-secondary',
+                  value: 'text-3xl font-semibold'
+                }}
+                showValueLabel={true}
+                strokeWidth={3}
+                valueLabel={
+                  <div className='flex flex-col items-center gap-3'>
+                    <div className='flex flex-col items-center'>
+                      <span className='font-bold'>{userData?.points}</span>
+                      <span className='text-sm font-bold'>ポイント</span>
+                    </div>
+                    <div className='flex flex-col items-center'>
+                      <span className='text-xs'>{`${userData?.ranking_name}まで`}</span>
+                      <span className='text-xs'>{`${userData?.point_difference}ポイント`}</span>
+                    </div>
+                  </div>
+                }
+                value={userData?.points && (userData?.points / (userData?.points + userData?.point_difference)) * 100}
+              />
+            </CardBody>
+          </Card>
+          <Card className='border-none'>
+            <CardHeader className='px-3 py-2 border-none bg-[#eaeaea]'>
+              <h3 className='text-sm font-bold'>バッジ</h3>
+            </CardHeader>
+            <CardBody>
+              <div className='w-full md:w-[200px] flex justify-center items-center gap-x-5 flex-wrap'>
+                {userData?.badge_id.includes(1) && (
+                  <div className='flex flex-col items-center'>
+                    <Image src='/images/icons/badge-bronze.svg' alt='バッジ' width={80} height={80} />
+                    <span className='text-xs font-bold text-center'>
+                      ログイン30回
+                      <br />
+                      達成!
+                    </span>
+                  </div>
+                )}
+                {userData?.badge_id.includes(2) && (
+                  <div className='flex flex-col items-center'>
+                    <Image src='/images/icons/badge-silver.svg' alt='バッジ' width={80} height={80} />
+                    <span className='text-xs font-bold text-center'>
+                      ログイン100回
+                      <br />
+                      達成!
+                    </span>
+                  </div>
+                )}
+                {userData?.badge_id.includes(3) && (
+                  <div className='flex flex-col items-center'>
+                    <Image src='/images/icons/badge-gold.svg' alt='バッジ' width={80} height={80} />
+                    <span className='text-xs font-bold text-center'>
+                      投稿10回
+                      <br />
+                      達成!
+                    </span>
+                  </div>
+                )}
+              </div>
+            </CardBody>
+          </Card>
         </div>
       </section>
       <section>
@@ -169,7 +240,7 @@ const ProfilePage = () => {
           onSelectionChange={handleSelectionChange}
         >
           {tabs.map(item => (
-            <Tab key={item.id} title={item.label}>
+            <Tab key={item.id} title={item.label} className='text-sm md:text-base'>
               {item.isLoading ? <Loading flag='2' /> : item.content}
             </Tab>
           ))}
