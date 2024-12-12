@@ -93,7 +93,7 @@ const NewsPage = () => {
                     title={newItem.title}
                     content={newItem.content}
                     category_name={newItem.category_name}
-                    user_name={newItem.user_name}
+                    user_name={newItem.name}
                     affiliation_name={newItem.affiliation_name}
                     thumbnail={newItem.thumbnail}
                     nice_flag={newItem.nice_flag}
