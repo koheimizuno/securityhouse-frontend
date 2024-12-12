@@ -20,6 +20,7 @@ const NewsSection = () => {
     getNewsAction({ user_id: session_user_id }).then(data => setNews(data))
   }, [session_user_id])
 
+  console.log(news)
   return (
     <Container>
       <div className='flex flex-col gap-4 items-center md:flex-row md:items-start md:gap-[40px] xl:gap-[96px]'>
@@ -55,9 +56,9 @@ const NewsSection = () => {
                 <NewsItem
                   key={newItem.id}
                   id={newItem.id}
-                  user_name={newItem.user_name}
+                  user_name={newItem.name}
                   affiliation_name={newItem.affiliation_name}
-                  thumbnail=''
+                  thumbnail={newItem.thumbnail}
                   category_name={newItem.category_name}
                   title={newItem.title}
                   content={newItem.content}
