@@ -20,7 +20,6 @@ const NewsSection = () => {
     getNewsAction({ user_id: session_user_id }).then(data => setNews(data))
   }, [session_user_id])
 
-  console.log(news)
   return (
     <Container>
       <div className='flex flex-col gap-4 items-center md:flex-row md:items-start md:gap-[40px] xl:gap-[96px]'>

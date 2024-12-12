@@ -223,7 +223,7 @@ const SHRoomPostDetailPage = () => {
                 {postData.category_name && postData.category_name}
               </Button>
             </div>
-            <Dropdown>
+            <Dropdown placement='bottom-end'>
               <DropdownTrigger className='cursor-pointer'>
                 <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
               </DropdownTrigger>

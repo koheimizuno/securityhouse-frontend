@@ -4,7 +4,6 @@ import React, { memo, useCallback, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 
@@ -38,7 +37,6 @@ const PostCard = ({
   bookmark_flag,
   created_at
 }: Partial<PostType>) => {
-  const pathname = usePathname()
   const dispatch = useDispatch()
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [niceObj, setNiceObj] = useState({
@@ -146,27 +144,26 @@ const PostCard = ({
       </div>
       <div className='flex items-center justify-between'>
         <p className='text-sm text-colorGray4'>{created_at && formatDate(created_at)}</p>
-        <Dropdown>
+        <Dropdown placement='bottom-end'>
           <DropdownTrigger className='cursor-pointer'>
             <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
           </DropdownTrigger>
-          {pathname !== '/' &&
-            (user_id === session_user_id ? (
-              <DropdownMenu aria-label='Static Actions'>
-                <DropdownItem key='edit'>
-                  <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
-                </DropdownItem>
-                <DropdownItem key='delete' className='text-danger' color='danger' onClick={openModal}>
-                  削除する
-                </DropdownItem>
-              </DropdownMenu>
-            ) : (
-              <DropdownMenu aria-label='Static Actions'>
-                <DropdownItem key='report' onClick={handleReport}>
-                  通報する
-                </DropdownItem>
-              </DropdownMenu>
-            ))}
+          {user_id === session_user_id ? (
+            <DropdownMenu aria-label='Static Actions'>
+              <DropdownItem key='edit'>
+                <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
+              </DropdownItem>
+              <DropdownItem key='delete' className='text-danger' color='danger' onClick={openModal}>
+                削除する
+              </DropdownItem>
+            </DropdownMenu>
+          ) : (
+            <DropdownMenu aria-label='Static Actions'>
+              <DropdownItem key='report' onClick={handleReport}>
+                通報する
+              </DropdownItem>
+            </DropdownMenu>
+          )}
         </Dropdown>
       </div>
       <DeletePostModal isOpen={isOpen} onClose={closeModal} onSubmit={handleDeletePost} />
