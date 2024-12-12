@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useFetchDetail } from '@/actions/adminAction'; 
-import { User } from '@/types/userDetailType'
+import { userDetailType } from '@/types/userDetailType'
 
 import Container from '@/components/layout/Container';
 import Sidemenu from '@/components/admin/SideMenu';
@@ -15,7 +15,7 @@ const AdminEditUser: React.FC = () => {
   const searchParams = useSearchParams();
   const userId = searchParams.get('id');
 
-  const { data: user } = useFetchDetail<User>(
+  const { data: user } = useFetchDetail<userDetailType>(
     'http://localhost:4000/users/detail',
     { id: userId }
   );
@@ -78,11 +78,11 @@ const AdminEditUser: React.FC = () => {
               <dl>
                 <dt className='font-bold'>名前</dt>
                 <dd className='border-b mt-2 pb-4'>
-                  <input type='text' className='rounded px-4 py-2 border w-80 max-w-full' value={user ? user.name : ''} readOnly />
+                  <input type='text' className='rounded px-4 py-2 border w-80 max-w-full' value={user ? user.name : ''} />
                 </dd>
                 <dt className='font-bold mt-6'>メールアドレス</dt>
                 <dd className='border-b mt-2 pb-4'>
-                  <input type='email' className='rounded px-4 py-2 border w-80 max-w-full' value={user ? user.email : ''} readOnly />
+                  <input type='email' className='rounded px-4 py-2 border w-80 max-w-full' value={user ? user.email : ''} />
                 </dd>
                 <dt className='font-bold mt-6'>パスワード</dt>
                 <dd className='border-b mt-2 pb-4'>
