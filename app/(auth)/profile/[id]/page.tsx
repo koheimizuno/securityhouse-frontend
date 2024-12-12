@@ -149,8 +149,12 @@ const ProfilePage = () => {
           <p>{userData?.intro}</p>
         </div>
       </section>
-      <section>
+      <section className='flex flex-col gap-4'>
         <SectionTitle title='アクティビティ' icon='/images/icons/line-chart.svg' />
+        <div className='flex gap-10 p-1'>
+          <Image src='/images/point-img.png' alt='point-img' width={100} height={100} />
+          <Image src='/images/badget-img.png' alt='badget-img' width={100} height={100} />
+        </div>
       </section>
       <section>
         <SectionTitle title='投稿履歴' icon='/images/icons/talk-room.svg' />
