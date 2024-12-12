@@ -17,14 +17,18 @@ const LayoutClient = ({
 }>) => {
   const pathname = usePathname()
   const isDisplayHeader = isDisplayHeaderPage(pathname)
+
   const isUser = isUserPage(pathname)
+
   return (
     <Providers>
       {isDisplayHeader ? (
         <>
           <Header />
+
           {isUser && <Breadcrumb />}
           {!pathname.includes('profile') && isUser && <SearchBar />}
+
           <main>{children}</main>
           {isUser && <Footer />}
         </>
