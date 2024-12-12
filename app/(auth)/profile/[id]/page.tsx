@@ -192,36 +192,63 @@ const ProfilePage = () => {
             </CardHeader>
             <CardBody>
               <div className='w-full md:w-[200px] flex justify-center items-center gap-x-5 flex-wrap'>
-                {userData?.badge_id.includes(1) && (
-                  <div className='flex flex-col items-center'>
-                    <Image src='/images/icons/badge-bronze.svg' alt='バッジ' width={80} height={80} />
-                    <span className='text-xs font-bold text-center'>
-                      ログイン30回
-                      <br />
-                      達成!
-                    </span>
-                  </div>
-                )}
-                {userData?.badge_id.includes(2) && (
-                  <div className='flex flex-col items-center'>
-                    <Image src='/images/icons/badge-silver.svg' alt='バッジ' width={80} height={80} />
-                    <span className='text-xs font-bold text-center'>
-                      ログイン100回
-                      <br />
-                      達成!
-                    </span>
-                  </div>
-                )}
-                {userData?.badge_id.includes(3) && (
-                  <div className='flex flex-col items-center'>
-                    <Image src='/images/icons/badge-gold.svg' alt='バッジ' width={80} height={80} />
-                    <span className='text-xs font-bold text-center'>
-                      投稿10回
-                      <br />
-                      達成!
-                    </span>
-                  </div>
-                )}
+                <div className='flex flex-col items-center'>
+                  <Image
+                    src={
+                      userData?.badge_id.includes(1)
+                        ? '/images/icons/badge-bronze.svg'
+                        : '/images/icons/badge-inactive.svg'
+                    }
+                    alt='badge-bronze'
+                    width={80}
+                    height={80}
+                  />
+                  <span
+                    className={`text-xs font-bold text-center ${!userData?.badge_id.includes(1) && 'text-[#e5e2e2]'}`}
+                  >
+                    ログイン30回
+                    <br />
+                    達成!
+                  </span>
+                </div>
+                <div className='flex flex-col items-center'>
+                  <Image
+                    src={
+                      userData?.badge_id.includes(2)
+                        ? '/images/icons/badge-silver.svg'
+                        : '/images/icons/badge-inactive.svg'
+                    }
+                    alt='badge-silver'
+                    width={80}
+                    height={80}
+                  />
+                  <span
+                    className={`text-xs font-bold text-center ${!userData?.badge_id.includes(2) && 'text-[#e5e2e2]'}`}
+                  >
+                    ログイン100回
+                    <br />
+                    達成!
+                  </span>
+                </div>
+                <div className='flex flex-col items-center'>
+                  <Image
+                    src={
+                      userData?.badge_id.includes(3)
+                        ? '/images/icons/badge-gold.svg'
+                        : '/images/icons/badge-inactive.svg'
+                    }
+                    alt='バッジ'
+                    width={80}
+                    height={80}
+                  />
+                  <span
+                    className={`text-xs font-bold text-center ${!userData?.badge_id.includes(3) && 'text-[#e5e2e2]'}`}
+                  >
+                    投稿10回
+                    <br />
+                    達成!
+                  </span>
+                </div>
               </div>
             </CardBody>
           </Card>
