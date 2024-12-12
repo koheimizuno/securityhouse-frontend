@@ -13,7 +13,7 @@ const Companies = () => {
       totalPages,
       onSearch,
       setCurrentPage,
-    } = useSearchableData('http://localhost:4000/companies/', ['name', 'furigana', 'group'], 0);
+    } = useSearchableData('http://localhost:4000/companies/', ['name', 'furigana', 'phone', 'address'], 0);
   
   
     return (
