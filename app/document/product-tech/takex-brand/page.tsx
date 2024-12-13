@@ -11,6 +11,7 @@ import { useAuthentication } from '@/hooks/AuthContext'
 import { DocumentType } from '@/types/documentType'
 import DocCardButton from '@/views/document/DocCardButton'
 
+
 const DocumentTAKEXBrandPage = () => {
   const { session_user_id } = useAuthentication()
   const [pressureSensCodeData, setPressureSensCodeData] = useState<DocumentType[] | null>(null)
@@ -21,11 +22,38 @@ const DocumentTAKEXBrandPage = () => {
     )
   }, [session_user_id])
 
+  //リダイレクト先URL
+  const TAKEX_REDIRECT_URL = 'https://www.takex-eng.co.jp'
+  // リダイレクト処理
+  const handleRedirect = () => {
+    // localStorageからJWTトークンを取得
+    const token = localStorage.getItem('auth')
+    if (!token) {
+      console.error('JWTトークンが存在しません')
+      return
+    }
+
+    // リダイレクト先のPATH
+    const targetPath = '/rlogin.php' // 遷移先の竹中エンジニアリングWebサイトのパス
+
+    // リダイレクト用URLの生成
+    const redirectUrl = `${TAKEX_REDIRECT_URL}?jwt=${encodeURIComponent(token)}&path=${encodeURIComponent(targetPath)}`
+
+    // リダイレクトを実行
+    window.location.href = redirectUrl
+  }
+
   return (
     <Container className='py-16 flex flex-col gap-16'>
       <PageHeader title='TAKEXブランド' subtitle='資料集' />
       <section className='flex flex-col gap-8'>
-        <p className='min-h-[293px] bg-bgSemiblue flex justify-center items-center'>TAKEXブランドはこちら</p>
+        {/* リダイレクト用のクリック可能な要素 */}
+        <p
+          className='min-h-[293px] bg-bgSemiblue flex justify-center items-center cursor-pointer'
+          onClick={handleRedirect}
+        >
+          TAKEXブランドはこちら
+        </p>
         <ul className='grid grid-cols-2 gap-8'>
           <DataLink title='テクニカルレポート' href='takex-brand/tech-report' />
           <DataLink title='防犯工事トクトク情報' href='takex-brand/security-construct' />

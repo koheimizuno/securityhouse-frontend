@@ -4,7 +4,6 @@ import React, { memo, useCallback, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 
@@ -38,7 +37,6 @@ const PostCard = ({
   bookmark_flag,
   created_at
 }: Partial<PostType>) => {
-  const pathname = usePathname()
   const dispatch = useDispatch()
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [niceObj, setNiceObj] = useState({
@@ -113,7 +111,7 @@ const PostCard = ({
       <Link href={`/chatroom/post/${id}`}>
         <h3 className='underline truncate text-txtColor'>{title}</h3>
       </Link>
-      <p className='text-sm line-clamp-3'>{content}</p>
+      <p className='text-sm truncate'>{content}</p>
       <div className='grid grid-cols-2 gap-4 mt-[22px] mb-4'>
         <div className='flex items-center gap-1'>
           <Image
@@ -146,27 +144,26 @@ const PostCard = ({
       </div>
       <div className='flex items-center justify-between'>
         <p className='text-sm text-colorGray4'>{created_at && formatDate(created_at)}</p>
-        <Dropdown>
+        <Dropdown placement='bottom-end'>
           <DropdownTrigger className='cursor-pointer'>
             <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
           </DropdownTrigger>
-          {pathname !== '/' &&
-            (user_id === session_user_id ? (
-              <DropdownMenu aria-label='Static Actions'>
-                <DropdownItem key='edit'>
-                  <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
-                </DropdownItem>
-                <DropdownItem key='delete' className='text-danger' color='danger' onClick={openModal}>
-                  削除する
-                </DropdownItem>
-              </DropdownMenu>
-            ) : (
-              <DropdownMenu aria-label='Static Actions'>
-                <DropdownItem key='report' onClick={handleReport}>
-                  通報する
-                </DropdownItem>
-              </DropdownMenu>
-            ))}
+          {user_id === session_user_id ? (
+            <DropdownMenu aria-label='Static Actions'>
+              <DropdownItem key='edit'>
+                <Link href={`/chatroom/post/edit/${id}`}>編集する</Link>
+              </DropdownItem>
+              <DropdownItem key='delete' className='text-danger' color='danger' onClick={openModal}>
+                削除する
+              </DropdownItem>
+            </DropdownMenu>
+          ) : (
+            <DropdownMenu aria-label='Static Actions'>
+              <DropdownItem key='report' onClick={handleReport}>
+                通報する
+              </DropdownItem>
+            </DropdownMenu>
+          )}
         </Dropdown>
       </div>
       <DeletePostModal isOpen={isOpen} onClose={closeModal} onSubmit={handleDeletePost} />

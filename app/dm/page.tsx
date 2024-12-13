@@ -45,7 +45,7 @@ const DirectMessagePage = () => {
 
   useEffect(() => {
     getUsersAction().then(data => {
-      setUsers(data)
+      setUsers(data.filter((user: UsersType) => user.id !== session_user_id))
       getMessageAction({
         sender: session_user_id,
         receiver: data[0].id

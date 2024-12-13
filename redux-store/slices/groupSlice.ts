@@ -6,36 +6,36 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { GroupType } from '@/types/groupType'
 import { storeInitialType } from '@/types/storeInitialType'
 
-export const createGroupAction: any = createAsyncThunk('createGroupAction', async (payload: GroupType) => {
+export const createGroupAction: any = createAsyncThunk('createGroupAction', async (payload: GroupType, thunkApi) => {
   try {
     await axios.post(`/api/group/`, payload)
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const getGroupAction: any = createAsyncThunk('getGroupAction', async () => {
+export const getGroupAction: any = createAsyncThunk('getGroupAction', async (_, thunkApi) => {
   try {
     const res = await axios.get(`/api/group/`)
     return res.data
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const editGroupAction: any = createAsyncThunk('editGroupAction', async (payload: GroupType) => {
+export const editGroupAction: any = createAsyncThunk('editGroupAction', async (payload: GroupType, thunkApi) => {
   try {
     await axios.put(`/api/group/`, payload)
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const deleteGroupAction: any = createAsyncThunk('deleteGroupAction', async (id: string) => {
+export const deleteGroupAction: any = createAsyncThunk('deleteGroupAction', async (id: string, thunkApi) => {
   try {
     await axios.delete(`/api/group/`, { params: { id: id } })
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 

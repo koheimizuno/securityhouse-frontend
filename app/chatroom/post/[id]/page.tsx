@@ -76,12 +76,13 @@ const SHRoomPostDetailPage = () => {
   }, [id, session_user_id])
 
   useEffect(() => {
-    dispatch(
-      getCategoryAction({
-        pageFlag: '0',
-        type_id: postData?.type_id
-      })
-    )
+    if (postData?.type_id)
+      dispatch(
+        getCategoryAction({
+          pageFlag: '0',
+          type_id: postData?.type_id
+        })
+      )
   }, [dispatch, postData?.type_id])
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -222,7 +223,7 @@ const SHRoomPostDetailPage = () => {
                 {postData.category_name && postData.category_name}
               </Button>
             </div>
-            <Dropdown>
+            <Dropdown placement='bottom-end'>
               <DropdownTrigger className='cursor-pointer'>
                 <Image src='/images/icons/more-icon.svg' alt='more-icon' width={32} height={32} />
               </DropdownTrigger>
@@ -247,7 +248,7 @@ const SHRoomPostDetailPage = () => {
           <h3 className='text-xl font-bold truncate text-txtColor'>{postData?.title}</h3>
           <p>{postData?.content}</p>
           <Image
-            src={postData.attachments}
+            src={postData.attachments || ''}
             alt={getImageAlt(postData.attachments) || ''}
             className='w-full h-auto max-h-[300px]'
             width={40}
@@ -327,7 +328,7 @@ const SHRoomPostDetailPage = () => {
       </section>
       <section className='flex flex-col gap-8'>
         <SectionTitle title='コメント' icon='/images/icons/comment-icon-secondary.svg' />
-        {comments ? (
+        {comments && (
           <ul className='flex flex-col gap-8'>
             {comments
               .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
@@ -342,8 +343,6 @@ const SHRoomPostDetailPage = () => {
                 />
               ))}
           </ul>
-        ) : (
-          <Loading flag='2' />
         )}
       </section>
       <DeletePostModal isOpen={isOpen} onClose={closeModal} onSubmit={handleDeletePost} />

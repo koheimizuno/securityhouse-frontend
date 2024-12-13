@@ -55,9 +55,9 @@ const NewsSection = () => {
                 <NewsItem
                   key={newItem.id}
                   id={newItem.id}
-                  user_name={newItem.user_name}
+                  user_name={newItem.name}
                   affiliation_name={newItem.affiliation_name}
-                  thumbnail=''
+                  thumbnail={newItem.thumbnail}
                   category_name={newItem.category_name}
                   title={newItem.title}
                   content={newItem.content}

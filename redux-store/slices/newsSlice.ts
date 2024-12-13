@@ -6,27 +6,27 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { storeInitialType } from '@/types/storeInitialType'
 import { NewsType } from '@/types/newsType'
 
-export const createNewsAction: any = createAsyncThunk('createNewsAction', async (payload: NewsType) => {
+export const createNewsAction: any = createAsyncThunk('createNewsAction', async (payload: NewsType, thunkApi) => {
   try {
     await axios.post(`/api/news/`, payload)
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const editNewsAction: any = createAsyncThunk('editNewsAction', async (payload: NewsType) => {
+export const editNewsAction: any = createAsyncThunk('editNewsAction', async (payload: NewsType, thunkApi) => {
   try {
     await axios.put(`/api/news/`, payload)
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const deleteNewsAction: any = createAsyncThunk('deleteNewsAction', async (id: string) => {
+export const deleteNewsAction: any = createAsyncThunk('deleteNewsAction', async (id: string, thunkApi) => {
   try {
     await axios.delete(`/api/news/`, { params: { id } })
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 

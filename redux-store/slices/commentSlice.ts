@@ -6,45 +6,51 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { storeInitialType } from '@/types/storeInitialType'
 import { CommentType } from '@/types/commentType'
 
-export const editCommentAction: any = createAsyncThunk('editCommentAction', async (payload: CommentType) => {
+export const editCommentAction: any = createAsyncThunk('editCommentAction', async (payload: CommentType, thunkApi) => {
   try {
     await axios.put(`/api/comment/`, payload)
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const deleteCommentAction: any = createAsyncThunk('deleteCommentAction', async (id: string) => {
+export const deleteCommentAction: any = createAsyncThunk('deleteCommentAction', async (id: string, thunkApi) => {
   try {
     await axios.delete(`/api/comment/`, { params: { id } })
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const commentLikeAction: any = createAsyncThunk('commentLikeAction', async (id: string) => {
+export const commentLikeAction: any = createAsyncThunk('commentLikeAction', async (id: string, thunkApi) => {
   try {
     await axios.post(`/api/comment/like/${id}`)
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const deleteCommentLikeAction: any = createAsyncThunk('deleteCommentLikeAction', async (id: string) => {
-  try {
-    await axios.delete(`/api/comment/like/${id}`)
-  } catch (err: any) {
-    return err.response.data
+export const deleteCommentLikeAction: any = createAsyncThunk(
+  'deleteCommentLikeAction',
+  async (id: string, thunkApi) => {
+    try {
+      await axios.delete(`/api/comment/like/${id}`)
+    } catch (err: any) {
+      return thunkApi.rejectWithValue(err.response.data)
+    }
   }
-})
+)
 
-export const commentHideAction: any = createAsyncThunk('commentHideAction', async ({ id }: { id: string }) => {
-  try {
-    await axios.post(`/api/comment/hide/`, { id })
-  } catch (err: any) {
-    return err.response.data
+export const commentHideAction: any = createAsyncThunk(
+  'commentHideAction',
+  async ({ id }: { id: string }, thunkApi) => {
+    try {
+      await axios.post(`/api/comment/hide/`, { id })
+    } catch (err: any) {
+      return thunkApi.rejectWithValue(err.response.data)
+    }
   }
-})
+)
 
 const initialState: storeInitialType = {
   success: false,

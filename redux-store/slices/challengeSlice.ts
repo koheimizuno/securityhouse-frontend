@@ -6,37 +6,43 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { storeInitialType } from '@/types/storeInitialType'
 import { ChallengeType } from '@/types/challengeType'
 
-export const createChallengeAction: any = createAsyncThunk('createChallengeAction', async (payload: ChallengeType) => {
-  try {
-    await axios.post(`/api/challenge/`, payload)
-  } catch (err: any) {
-    return err.response.data
+export const createChallengeAction: any = createAsyncThunk(
+  'createChallengeAction',
+  async (payload: ChallengeType, thunkApi) => {
+    try {
+      await axios.post(`/api/challenge/`, payload)
+    } catch (err: any) {
+      return thunkApi.rejectWithValue(err.response.data)
+    }
   }
-})
+)
 
-export const editChallengeAction: any = createAsyncThunk('editChallengeAction', async (payload: ChallengeType) => {
-  try {
-    await axios.put(`/api/challenge/`, payload)
-  } catch (err: any) {
-    return err.response.data
+export const editChallengeAction: any = createAsyncThunk(
+  'editChallengeAction',
+  async (payload: ChallengeType, thunkApi) => {
+    try {
+      await axios.put(`/api/challenge/`, payload)
+    } catch (err: any) {
+      return thunkApi.rejectWithValue(err.response.data)
+    }
   }
-})
+)
 
-export const deleteChallengeAction: any = createAsyncThunk('deleteChallengeAction', async (id: string) => {
+export const deleteChallengeAction: any = createAsyncThunk('deleteChallengeAction', async (id: string, thunkApi) => {
   try {
     await axios.delete(`/api/challenge/`, { params: { id } })
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
 export const completeChallengeAction: any = createAsyncThunk(
   'completeChallengeAction',
-  async ({ challenge_id }: { challenge_id: string }) => {
+  async ({ challenge_id }: { challenge_id: string }, thunkApi) => {
     try {
       await axios.post(`/api/challenge/complete/`, { challenge_id })
     } catch (err: any) {
-      return err.response.data
+      return thunkApi.rejectWithValue(err.response.data)
     }
   }
 )

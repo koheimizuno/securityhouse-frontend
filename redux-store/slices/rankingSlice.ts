@@ -6,27 +6,30 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RankingType } from '@/types/rankingType'
 import { storeInitialType } from '@/types/storeInitialType'
 
-export const createRankingAction: any = createAsyncThunk('createRankingAction', async (payload: RankingType) => {
-  try {
-    await axios.post(`/api/ranking/`, payload)
-  } catch (err: any) {
-    return err.response.data
+export const createRankingAction: any = createAsyncThunk(
+  'createRankingAction',
+  async (payload: RankingType, thunkApi) => {
+    try {
+      await axios.post(`/api/ranking/`, payload)
+    } catch (err: any) {
+      return thunkApi.rejectWithValue(err.response.data)
+    }
   }
-})
+)
 
-export const editRankingAction: any = createAsyncThunk('editRankingAction', async (payload: RankingType) => {
+export const editRankingAction: any = createAsyncThunk('editRankingAction', async (payload: RankingType, thunkApi) => {
   try {
     await axios.put(`/api/ranking/`, payload)
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 
-export const deleteRankingAction: any = createAsyncThunk('deleteRankingAction', async (id: string) => {
+export const deleteRankingAction: any = createAsyncThunk('deleteRankingAction', async (id: string, thunkApi) => {
   try {
     await axios.delete(`/api/ranking/`, { params: { id: id } })
   } catch (err: any) {
-    return err.response.data
+    return thunkApi.rejectWithValue(err.response.data)
   }
 })
 

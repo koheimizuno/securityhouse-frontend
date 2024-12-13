@@ -10,6 +10,7 @@ import SearchBar from '@/components/common/SearchBar'
 import Providers from './providers'
 import { isDisplayHeaderPage, isUserPage } from '@/utils/isPublicPage'
 
+
 const LayoutClient = ({
   children
 }: Readonly<{
@@ -17,14 +18,23 @@ const LayoutClient = ({
 }>) => {
   const pathname = usePathname()
   const isDisplayHeader = isDisplayHeaderPage(pathname)
+  const isHiddenSearchBar = pathname.includes('profile') || pathname.includes('post/bookmark')
+
+  
+
+
   const isUser = isUserPage(pathname)
+
   return (
     <Providers>
       {isDisplayHeader ? (
         <>
           <Header />
+
           {isUser && <Breadcrumb />}
-          {!pathname.includes('profile') && isUser && <SearchBar />}
+          {!isHiddenSearchBar && <SearchBar />}
+
+
           <main>{children}</main>
           {isUser && <Footer />}
         </>
