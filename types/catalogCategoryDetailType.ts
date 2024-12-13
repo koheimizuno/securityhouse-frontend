@@ -1,4 +1,4 @@
-export interface catalogCategorieDetailType {
+export interface catalogCategoryDetailType {
   id: number;
   title: string;
   created_at: string;
