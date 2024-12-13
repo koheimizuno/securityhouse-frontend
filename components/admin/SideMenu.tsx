@@ -55,7 +55,7 @@ const Sidemenu = () => {
       >
         <ul className='flex flex-col gap-2'>
           {menuItems.map((item) => {
-            const isActive = pathname.startsWith(item.href)
+            const isActive = pathname === item.href
 
             return (
               <li
