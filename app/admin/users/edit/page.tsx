@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
+import Select, { MultiValue } from 'react-select';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useFetchDetail } from '@/actions/adminAction'; 
@@ -10,6 +11,11 @@ import Container from '@/components/layout/Container';
 import Sidemenu from '@/components/admin/SideMenu';
 import { Button } from '@nextui-org/react';
 import Link from 'next/link';
+
+type GroupOption = {
+  value: string;
+  label: string;
+};
 
 const AdminEditUser: React.FC = () => {
   const searchParams = useSearchParams();
@@ -23,8 +29,8 @@ const AdminEditUser: React.FC = () => {
   const [companies, setCompanies] = useState<{ id: number; name: string }[]>([]);
   const [groups, setGroups] = useState<{ id: number; name: string }[]>([]);
 
-  const [selectedCompany, setSelectedCompany] = useState<string | null>(null);  // ここをstringに変更
-  const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
+  const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
+  const [selectedGroups, setSelectedGroups] = useState<string[] | null>(null);
   
   useEffect(() => {
     const fetchCompanyData = async () => {
@@ -42,10 +48,12 @@ const AdminEditUser: React.FC = () => {
   useEffect(() => {
     const fetchGroupData = async () => {
       try {
-        const response = await axios.get<{ id: number; name: string }[]>('http://localhost:4000/groups');
+        const response = await axios.get<{ id: number; name: string }[]>(
+          "http://localhost:4000/groups"
+        );
         setGroups(response.data);
       } catch (error) {
-        console.error('データ取得エラー:', error);
+        console.error("データ取得エラー:", error);
       }
     };
 
@@ -55,7 +63,7 @@ const AdminEditUser: React.FC = () => {
   useEffect(() => {
     if (user && selectedCompany === null) {
       setSelectedCompany(user.company ?? null);
-      setSelectedGroup(user.group ?? null);
+      setSelectedGroups(user.group); // 直接 group をセット
     }
   }, [user, selectedCompany]);
 
@@ -63,8 +71,8 @@ const AdminEditUser: React.FC = () => {
     setSelectedCompany(e.target.value || null);
   };
 
-  const handleGroupChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedGroup(e.target.value || null);
+  const handleGroupChange = (selectedOptions: MultiValue<GroupOption>) => {
+    setSelectedGroups(selectedOptions.map(option => option.label));
   };
 
   return (
@@ -104,17 +112,13 @@ const AdminEditUser: React.FC = () => {
                 </dd>
                 <dt className='font-bold mt-6'>グループ</dt>
                 <dd className='border-b mt-2 pb-4'>
-                  <select
-                    className="rounded px-4 py-2 border w-80 max-w-full"
-                    value={selectedGroup ?? ""}
+                  <Select
+                    options={groups.map(group => ({ value: group.name, label: group.name }))}
+                    value={selectedGroups?.map(group => ({ label: group, value: group })) || []}
                     onChange={handleGroupChange}
-                  >
-                    {groups.map((group) => (
-                      <option key={group.id} value={group.name}>
-                        {group.name}
-                      </option>
-                    ))}
-                  </select>
+                    isMulti
+                    isClearable
+                  />
                 </dd>
               </dl>
             </form>

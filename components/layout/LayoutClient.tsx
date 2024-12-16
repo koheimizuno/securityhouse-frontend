@@ -32,7 +32,7 @@ const LayoutClient = ({
           <Header />
 
           {isUser && <Breadcrumb />}
-          {!isHiddenSearchBar && <SearchBar />}
+          {!isHiddenSearchBar && isUser && <SearchBar />}
 
 
           <main>{children}</main>
