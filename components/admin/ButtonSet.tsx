@@ -13,7 +13,6 @@ interface ButtonSetProps {
 const ButtonSet: React.FC<ButtonSetProps> = ({
   onSearchSubmit = (keyword) => console.log(`検索: ${keyword}`), // デフォルト動作
   links = [
-    { label: 'CSVインポート', href: '/import' },
     { label: '新規登録', href: '/create' },
   ],
 }) => {
@@ -27,7 +26,7 @@ const ButtonSet: React.FC<ButtonSetProps> = ({
   };
 
   return (
-    <div className="mb-4 flex justify-end items-center gap-2">
+    <div className="mb-4 flex flex-wrap justify-end items-center gap-2">
       {/* 検索フォーム */}
       <form className="flex items-center" onSubmit={handleSubmit}>
         <input

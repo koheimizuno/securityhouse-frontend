@@ -97,7 +97,7 @@ const Table = ({columns, data, baseUrl, currentPage, setCurrentPage, totalPages 
                   {row[column.key] || 'N/A'}
                 </td>
               ))}
-              <td className="px-4 py-2 whitespace-nowrap">
+              <td className="px-4 py-2 whitespace-nowrap min-w-[140px]">
                 <button
                   className="px-2 py-1 hover:opacity-60 transition"
                 >
