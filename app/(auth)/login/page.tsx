@@ -27,6 +27,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (isAuthenticated) router.push('/')
   }, [isAuthenticated, router])
+  
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target

@@ -108,7 +108,11 @@ export const authSlice = createSlice({
         if (payload.token) localStorage.setItem('auth', JSON.stringify(payload))
         toast.success('ログインに成功しました。')
         setTimeout(() => {
-          window.location.href = '/'
+          if (payload.role_id === 2) {
+        window.location.href = '/admin/users'
+          } else {
+        window.location.href = '/'
+          }
         }, 2000)
       })
       .addCase(loginAction.rejected, (state, { payload }) => {

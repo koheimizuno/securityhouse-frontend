@@ -11,7 +11,6 @@ import { useAuthentication } from '@/hooks/AuthContext'
 import { DocumentType } from '@/types/documentType'
 import DocCardButton from '@/views/document/DocCardButton'
 
-
 const DocumentTAKEXBrandPage = () => {
   const { session_user_id } = useAuthentication()
   const [pressureSensCodeData, setPressureSensCodeData] = useState<DocumentType[] | null>(null)
@@ -22,8 +21,6 @@ const DocumentTAKEXBrandPage = () => {
     )
   }, [session_user_id])
 
-  //リダイレクト先URL
-  const TAKEX_REDIRECT_URL = 'https://www.takex-eng.co.jp'
   // リダイレクト処理
   const handleRedirect = () => {
     // localStorageからJWTトークンを取得
@@ -34,11 +31,12 @@ const DocumentTAKEXBrandPage = () => {
     }
 
     // リダイレクト先のPATH
-    const targetPath = '/rlogin.php' // 遷移先の竹中エンジニアリングWebサイトのパス
+    const targetPath = 'QvdSyD2Htnu54vWwuYwP6sYU' // 遷移先の竹中エンジニアリングWebサイトのパス
 
     // リダイレクト用URLの生成
-    const redirectUrl = `${TAKEX_REDIRECT_URL}?jwt=${encodeURIComponent(token)}&path=${encodeURIComponent(targetPath)}`
-
+    const TAKEX_REDIRECT_URL = 'https://www.takex-eng.co.jp/rlogin.php'
+    const redirectUrl = `${TAKEX_REDIRECT_URL}?jwt=${encodeURIComponent(token)}`
+    // &path=${encodeURIComponent(targetPath)
     // リダイレクトを実行
     window.location.href = redirectUrl
   }
