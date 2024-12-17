@@ -58,13 +58,28 @@ export function useSearchableData<T>(
   const onSearch = (keyword: string) => {
     setCurrentPage(1); // ページ番号をリセット
     const lowerKeyword = keyword.toLowerCase();
-    const filtered = data.filter(item =>
+  
+    // 最初に現れる配列を取得
+    const getDataArray = (data: any) => {
+      if (Array.isArray(data)) return data;
+      for (const value of Object.values(data)) {
+        if (Array.isArray(value)) return value;  // 最初に現れた配列を返す
+      }
+      return [];  // 配列が見つからなければ空配列を返す
+    }
+  
+    const dataArray = getDataArray(data); // dataから最初の配列を抽出
+  
+    // 検索処理
+    const filtered = dataArray.filter(item =>
       searchFields.some(field =>
         String(item[field]).toLowerCase().includes(lowerKeyword)
       )
     );
+  
     setFilteredData(filtered);
   };
+  
 
   // データ取得
   useEffect(() => {
