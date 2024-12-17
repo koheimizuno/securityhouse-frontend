@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { TableProps } from '@/types/adminTableType'
 import Pagination from '@/components/admin/Pagination'
 
-const Table = ({columns, data, baseUrl, currentPage, setCurrentPage, totalPages }: TableProps) => {
+const Table = ({ columns, data, baseUrl, currentPage, setCurrentPage, totalPages }: TableProps) => {
   const [sortKey, setSortKey] = useState<string | null>(null)
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
   const itemsPerPage = 10
@@ -46,7 +46,7 @@ const Table = ({columns, data, baseUrl, currentPage, setCurrentPage, totalPages 
       alert('削除をキャンセルしました。');
     }
   };
-  
+
   return (
     <div className='w-full overflow-x-auto'>
       <table className='min-w-full border-collapse'>
@@ -91,13 +91,25 @@ const Table = ({columns, data, baseUrl, currentPage, setCurrentPage, totalPages 
             >
               {columns.map((column) => (
                 <td
-                  key={`${column.key}-${row[columns[0].key]}-${index}`}
-                  className="px-4 py-2"
-                >
-                  {row[column.key] || 'N/A'}
-                </td>
+                key={`${row[column.key] || 'unknown'}-${index}`}
+                className="px-4 py-2"
+              >
+                {Array.isArray(row[column.key]) ? (
+                  <>
+                    {row[column.key].map((item: string, idx: number) => (
+                      <React.Fragment key={idx}>
+                        {item || 'N/A'}
+                        {idx < row[column.key].length - 1 && <br />}
+                      </React.Fragment>
+                    ))}
+                  </>
+                ) : (
+                  // 配列でない場合はそのまま表示
+                  row[column.key] || 'N/A'
+                )}
+              </td>              
               ))}
-              <td className="px-4 py-2 whitespace-nowrap w-[140px]">
+              <td className="px-4 py-2 whitespace-nowrap min-w-[140px]">
                 <button
                   className="px-2 py-1 hover:opacity-60 transition"
                 >
@@ -120,6 +132,7 @@ const Table = ({columns, data, baseUrl, currentPage, setCurrentPage, totalPages 
                 </button>
               </td>
             </tr>
+
           ))}
         </tbody>
       </table>
