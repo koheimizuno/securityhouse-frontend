@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Select, { MultiValue } from 'react-select';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
@@ -19,11 +19,13 @@ type GroupOption = {
 
 const AdminEditUser: React.FC = () => {
   const searchParams = useSearchParams();
-  const userId = searchParams.get('id');
+  const id = searchParams.get('id');
+
+  const params = useMemo(() => ({ id }), [id]); // id が変わらない限り、同じ参照を保持する
 
   const { data: user } = useFetchDetail<userDetailType>(
     'http://localhost:4000/users/detail',
-    { id: userId }
+    params
   );
   
   const [companies, setCompanies] = useState<{ id: number; name: string }[]>([]);

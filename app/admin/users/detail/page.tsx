@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useFetchDetail } from '@/actions/adminAction';
 import { userDetailType } from '@/types/userDetailType'
@@ -15,9 +15,11 @@ const AdminUserDetail: React.FC = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
 
+  const params = useMemo(() => ({ id }), [id]); // id が変わらない限り、同じ参照を保持する
+
   const { data: user, loading, error } = useFetchDetail<userDetailType>(
-    'http://localhost:4000/users/detail', // APIエンドポイント
-    { id: id } // クエリパラメータ
+    'http://localhost:4000/users/detail',
+    params
   );
 
   if (loading) return <div>Loading...</div>;

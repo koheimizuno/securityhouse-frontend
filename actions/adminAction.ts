@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 type FetchDetailHook<T> = {
   data: T | null;
@@ -12,25 +12,25 @@ export const useFetchDetail = <T>(apiUrl: string, params: Record<string, any>): 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchDetail = async () => {
-      try {
-        const { data } = await axios.get(apiUrl, { params });
-        setData(data);
-        setLoading(false);
-      } catch (err: any) {
-        setError('データの取得に失敗しました。');
-        setLoading(false);
-      }
-    };
+  const fetchDetail = useCallback(async () => {
+    try {
+      const { data } = await axios.get(apiUrl, { params });
+      setData(data);
+      setLoading(false);
+    } catch (err: any) {
+      setError('データの取得に失敗しました。');
+      setLoading(false);
+    }
+  }, [apiUrl, params]);
 
+  useEffect(() => {
     if (params) {
       fetchDetail();
     } else {
       setError('パラメータが指定されていません。');
       setLoading(false);
     }
-  }, [apiUrl, params]);
+  }, [fetchDetail]);
 
   return { data, loading, error };
 };
