@@ -13,7 +13,7 @@ const Users = () => {
       totalPages,
       onSearch,
       setCurrentPage,
-    } = useSearchableData('http://localhost:4000/users/', ['name', 'email', 'group'], 0);
+    } = useSearchableData('http://localhost:4000/users/', ['name', 'email', 'group'], 0, 'userList');
   
   
     return (

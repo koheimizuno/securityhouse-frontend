@@ -46,7 +46,8 @@ export type SearchableDataHook<T> = {
 export function useSearchableData<T>(
   apiUrl: string,
   searchFields: (keyof T)[],
-  itemsPerPage: number = 10
+  itemsPerPage: number = 10,
+  dataKey?: string 
 ): SearchableDataHook<T> {
   const [data, setData] = useState<T[]>([]);
   const [filteredData, setFilteredData] = useState<T[]>([]);
@@ -78,7 +79,7 @@ export function useSearchableData<T>(
     };
 
     fetchData();
-  }, [apiUrl]);
+  }, [apiUrl, dataKey]);
 
   // ページ数の計算
   useEffect(() => {
