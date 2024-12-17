@@ -11,10 +11,20 @@ const Table = ({ columns, data, baseUrl, currentPage, setCurrentPage, totalPages
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
   const itemsPerPage = 10
 
+  // 最初の配列を探してデータを抽出
+  const getDataArray = (data: any) => {
+    if (Array.isArray(data)) return data;
+    for (const value of Object.values(data)) {
+      if (Array.isArray(value)) return value;  // 最初に現れた配列を返す
+    }
+    return [];  // 配列が見つからなければ空配列を返す
+  }
+
   // ソート処理
   const sortedData = React.useMemo(() => {
-    if (!sortKey) return data
-    const sorted = [...data].sort((a, b) => {
+    const dataArray = getDataArray(data); // dataから最初の配列を抽出
+    if (!sortKey) return dataArray;
+    const sorted = [...dataArray].sort((a, b) => {
       if (a[sortKey] < b[sortKey]) return sortOrder === 'asc' ? -1 : 1
       if (a[sortKey] > b[sortKey]) return sortOrder === 'asc' ? 1 : -1
       return 0
@@ -91,23 +101,23 @@ const Table = ({ columns, data, baseUrl, currentPage, setCurrentPage, totalPages
             >
               {columns.map((column) => (
                 <td
-                key={`${row[column.key] || 'unknown'}-${index}`}
-                className="px-4 py-2"
-              >
-                {Array.isArray(row[column.key]) ? (
-                  <>
-                    {row[column.key].map((item: string, idx: number) => (
-                      <React.Fragment key={idx}>
-                        {item || 'N/A'}
-                        {idx < row[column.key].length - 1 && <br />}
-                      </React.Fragment>
-                    ))}
-                  </>
-                ) : (
-                  // 配列でない場合はそのまま表示
-                  row[column.key] || 'N/A'
-                )}
-              </td>              
+                  key={`${row[column.key] || 'unknown'}-${index}`}
+                  className="px-4 py-2"
+                >
+                  {Array.isArray(row[column.key]) ? (
+                    <>
+                      {row[column.key].map((item: string, idx: number) => (
+                        <React.Fragment key={idx}>
+                          {item || 'N/A'}
+                          {idx < row[column.key].length - 1 && <br />}
+                        </React.Fragment>
+                      ))}
+                    </>
+                  ) : (
+                    // 配列でない場合はそのまま表示
+                    row[column.key] || 'N/A'
+                  )}
+                </td>              
               ))}
               <td className="px-4 py-2 whitespace-nowrap w-[140px]">
                 <button
@@ -132,14 +142,13 @@ const Table = ({ columns, data, baseUrl, currentPage, setCurrentPage, totalPages
                 </button>
               </td>
             </tr>
-
           ))}
         </tbody>
       </table>
 
       <Pagination
         currentPage={currentPage}
-        totalPages={Math.ceil(data.length / itemsPerPage)} // データの総数に応じてページ数を計算
+        totalPages={Math.ceil(sortedData.length / itemsPerPage)} // データの総数に応じてページ数を計算
         onPageChange={(page) => setCurrentPage(page)}
       />
     </div>
