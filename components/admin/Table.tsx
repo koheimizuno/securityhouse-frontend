@@ -14,18 +14,17 @@ const Table = ({ columns, data, baseUrl, currentPage, setCurrentPage, totalPages
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
   const itemsPerPage = 10
 
-  // 最初の配列を探してデータを抽出
   const getDataArray = (data: any) => {
     if (Array.isArray(data)) return data;
     for (const value of Object.values(data)) {
-      if (Array.isArray(value)) return value;  // 最初に現れた配列を返す
+      if (Array.isArray(value)) return value;
     }
-    return [];  // 配列が見つからなければ空配列を返す
+    return [];
   }
 
   // ソート処理
   const sortedData = React.useMemo(() => {
-    const dataArray = getDataArray(data); // dataから最初の配列を抽出
+    const dataArray = getDataArray(data);
     if (!sortKey) return dataArray;
     const sorted = [...dataArray].sort((a, b) => {
       if (a[sortKey] < b[sortKey]) return sortOrder === 'asc' ? -1 : 1
@@ -56,12 +55,10 @@ const Table = ({ columns, data, baseUrl, currentPage, setCurrentPage, totalPages
   
     if (confirmation) {
       try {
-        // APIのURLを適切に設定
-        const response = await axios.delete(`/api/manege_user_delete?userId=${row.id}`); // `row.id`が削除対象のIDだと仮定
+        const response = await axios.delete(`/api/manege_user_delete?userId=${row.id}`);
   
         if (response.status === 200) {
           toast.success('削除しました');
-          // ページをリフレッシュしてリストを再取得
           window.location.reload(); 
         } else {
           toast.error('削除に失敗しました');
