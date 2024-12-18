@@ -29,7 +29,7 @@ const News = () => {
                 />
                 <Table
                     columns={[
-                        { key: 'name', label: 'タイトル' },
+                        { key: 'title', label: 'タイトル' },
                     ]}
                     data={data}
                     baseUrl="/news"
