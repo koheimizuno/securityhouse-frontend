@@ -40,6 +40,7 @@ const Users = () => {
                     currentPage={currentPage}
                     totalPages={totalPages}
                     setCurrentPage={setCurrentPage}
+                    deleteUrl="/api/manege_user_delete"
                 />
             </div>
         </div>

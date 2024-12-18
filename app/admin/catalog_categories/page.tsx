@@ -36,6 +36,7 @@ const CatalogCategories = () => {
                     currentPage={currentPage}
                     totalPages={totalPages}
                     setCurrentPage={setCurrentPage}
+                    deleteUrl='hogehoge'
                 />
             </div>
         </div>

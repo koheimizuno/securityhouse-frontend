@@ -36,6 +36,7 @@ const News = () => {
                     currentPage={currentPage}
                     totalPages={totalPages}
                     setCurrentPage={setCurrentPage}
+                    deleteUrl = 'api/hogehoge'
                 />
             </div>
         </div>
