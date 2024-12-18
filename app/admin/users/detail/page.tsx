@@ -18,7 +18,7 @@ const AdminUserDetail: React.FC = () => {
   const params = useMemo(() => ({ id }), [id]); // id が変わらない限り、同じ参照を保持する
 
   const { data: user, loading, error } = useFetchDetail<userDetailType>(
-    'http://localhost:4000/users/detail',
+    '/api/manege_user_detail/',
     params
   );
 

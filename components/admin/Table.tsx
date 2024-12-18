@@ -1,6 +1,9 @@
 'use client'
 
 import React, { useState } from 'react'
+import axios from 'axios'
+import toast from 'react-hot-toast'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { TableProps } from '@/types/adminTableType'
@@ -48,10 +51,25 @@ const Table = ({ columns, data, baseUrl, currentPage, setCurrentPage, totalPages
     }
   }
 
-  const handleDelete = (row: any) => {
+  const handleDelete = async (row: any) => {
     const confirmation = window.confirm('データを削除しますか？');
+  
     if (confirmation) {
-      alert('データを削除しました。');
+      try {
+        // APIのURLを適切に設定
+        const response = await axios.delete(`/api/manege_user_delete?userId=${row.id}`); // `row.id`が削除対象のIDだと仮定
+  
+        if (response.status === 200) {
+          toast.success('削除しました');
+          // ページをリフレッシュしてリストを再取得
+          window.location.reload(); 
+        } else {
+          toast.error('削除に失敗しました');
+        }
+      } catch (error) {
+        console.error('削除エラー:', error);
+        toast.error('削除に失敗しました');
+      }
     } else {
       alert('削除をキャンセルしました。');
     }
