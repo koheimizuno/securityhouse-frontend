@@ -16,4 +16,5 @@ export type TableProps = {
   currentPage: number;
   setCurrentPage: (page: number) => void;
   totalPages: number;
+  deleteUrl: string;
 }

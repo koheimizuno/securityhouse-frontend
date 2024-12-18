@@ -9,7 +9,7 @@ import Link from 'next/link'
 import { TableProps } from '@/types/adminTableType'
 import Pagination from '@/components/admin/Pagination'
 
-const Table = ({ columns, data, baseUrl, currentPage, setCurrentPage, totalPages }: TableProps) => {
+const Table = ({ columns, data, baseUrl, currentPage, setCurrentPage, totalPages, deleteUrl,}: TableProps) => {
   const [sortKey, setSortKey] = useState<string | null>(null)
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
   const itemsPerPage = 10
@@ -51,26 +51,26 @@ const Table = ({ columns, data, baseUrl, currentPage, setCurrentPage, totalPages
   }
 
   const handleDelete = async (row: any) => {
-    const confirmation = window.confirm('データを削除しますか？');
+    const confirmation = window.confirm('データを削除しますか？')
   
     if (confirmation) {
       try {
-        const response = await axios.delete(`/api/manege_user_delete?userId=${row.id}`);
+        const response = await axios.delete(`${deleteUrl}?id=${row.id}`)
   
         if (response.status === 200) {
-          toast.success('削除しました');
-          window.location.reload(); 
+          toast.success('削除しました')
+          window.location.reload()
         } else {
-          toast.error('削除に失敗しました');
+          toast.error('削除に失敗しました')
         }
       } catch (error) {
-        console.error('削除エラー:', error);
-        toast.error('削除に失敗しました');
+        console.error('削除エラー:', error)
+        toast.error('削除に失敗しました')
       }
     } else {
-      alert('削除をキャンセルしました。');
+      alert('削除をキャンセルしました。')
     }
-  };
+  }
 
   return (
     <div className='w-full overflow-x-auto'>
